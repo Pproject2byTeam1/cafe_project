@@ -2,7 +2,7 @@ package kr.or.kosa.dto;
 
 import java.util.Date;
 
-public class Connents {
+public class Comments {
 
 	private int co_idx;
 	private int idx;

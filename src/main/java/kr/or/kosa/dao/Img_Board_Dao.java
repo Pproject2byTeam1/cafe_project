@@ -92,6 +92,34 @@ public class Img_Board_Dao {
 		return row;
 	}
 	
+	//이미지 게시판 특정 글 수정
+	public int updateImg_Board(Img_Board img_board) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "update Img_Board set img_name where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, img_board.getImg_name());
+			pstmt.setInt(2, img_board.getIdx());
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
 	//이미지 게시판 특정 글 삭제
 	public int deleteImg_Board(int idx) {
 		Connection conn = null;

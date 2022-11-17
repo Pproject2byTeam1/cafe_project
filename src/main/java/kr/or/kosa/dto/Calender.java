@@ -1,6 +1,6 @@
 package kr.or.kosa.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Calender {
 	private int b_idx;
