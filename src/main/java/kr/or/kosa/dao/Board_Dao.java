@@ -24,7 +24,7 @@ public class Board_Dao {
 	}
 	
 	//게시글 전체 조회
-	public List<Board> getBoardListAll(){
+	public List<Board> getBoardListAll(int cpage, int pagesize){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;

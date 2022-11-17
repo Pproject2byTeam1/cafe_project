@@ -100,6 +100,67 @@ public class Market_Board_Dao {
 		return row;
 	}
 	
+	//거래 게시판 특정 글 수정
+	public int updateMarket_Board(Market_Board market_board) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "update Market_Board set m_mode=?, cate=?, price=?, sold=? where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, market_board.getM_mode());
+			pstmt.setString(2, market_board.getCate());
+			pstmt.setInt(3, market_board.getPrice());
+			pstmt.setString(4, market_board.getSold());
+			pstmt.setInt(5, market_board.getIdx());
+			
+			row = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
+	//거래 게시판 특정 글 판매 상태 수정
+	public int updateMarket_Board_Sold(String sold, int idx) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "update Market_Board sold=? where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, sold);
+			pstmt.setInt(2, idx);
+			
+			row = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
 	//거래 게시판 특정 글 삭제
 	public int deleteMarket_Board(int idx) {
 		Connection conn = null;

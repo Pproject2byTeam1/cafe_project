@@ -9,29 +9,28 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import kr.or.kosa.dto.Calender;
+import kr.or.kosa.dto.Data_Board;
+import kr.or.kosa.dto.Regular_Board;
 
-public class Calender_Dao {
-
+public class Data_Board_Dao {
 	DataSource ds = null;
 
-	public Calender_Dao() throws NamingException {
+	public Data_Board_Dao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
 
-	//달력 특정 게시글 조회
-	public Calender getCalenderByIdx(int idx) {
-		
+	//자료 게시판 특정 글 조회
+	public Data_Board getData_BoardByIdx(int idx){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Calender calender = new Calender();
+		Data_Board data_board = new Data_Board(); 
 		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select b_idx, idx, start_date, end_date, finish from Calender where idx=?";
+			String sql = "select b_idx, idx, ori_name, save_name, volume, refer, depth, step from Data_Board where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, idx);
@@ -40,11 +39,14 @@ public class Calender_Dao {
 			
 			if(rs.next()) {
 				
-				calender.setB_idx(rs.getInt("b_idx"));
-				calender.setIdx(rs.getInt("idx"));
-				calender.setStart_date(rs.getDate("start_date"));
-				calender.setEnd_date(rs.getDate("end_date"));
-				calender.setFinish(rs.getString("finish"));
+				data_board.setB_idx(rs.getInt("b_idx"));
+				data_board.setIdx(rs.getInt(rs.getInt("idx")));
+				data_board.setOri_name(rs.getString("ori_name"));
+				data_board.setSave_name(rs.getString("save_name"));
+				data_board.setVolume(rs.getInt("volume"));
+				data_board.setRefer(rs.getInt("refer"));
+				data_board.setDepth(rs.getInt("depth"));
+				data_board.setStep(rs.getInt("step"));
 				
 			}else {
 				System.out.println("조회 데이터 없음");
@@ -61,11 +63,11 @@ public class Calender_Dao {
 			}
 		}
 		
-		return calender;
+		return data_board;
 	}
 	
-	//달력 특정 글 삽입
-	public int insertCalender(Calender calender) {
+	//자료 게시판 특정 글 삽입
+	public int insertData_Board(Data_Board data_board) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -74,13 +76,16 @@ public class Calender_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "insert into Calender(idx, start_date, end_date, finish) values(?, ?, ?, ?)";
+			String sql = "insert into Regualr_Board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, calender.getIdx());
-			pstmt.setDate(2, calender.getStart_date());
-			pstmt.setDate(3, calender.getEnd_date());
-			pstmt.setString(4, calender.getFinish());
+			pstmt.setInt(1, data_board.getIdx());
+			pstmt.setString(2, data_board.getOri_name());
+			pstmt.setString(3, data_board.getSave_name());
+			pstmt.setInt(4, data_board.getVolume());
+			pstmt.setInt(5, data_board.getRefer());
+			pstmt.setInt(6, data_board.getDepth());
+			pstmt.setInt(7, data_board.getStep());
 			
 			row = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -96,8 +101,9 @@ public class Calender_Dao {
 		return row;
 	}
 	
-	//달력 특정 글 수정
-	public int updateCalender(Calender calender) {
+	//자료 게시판 특정 글 수정
+	public int updateData_Board(Data_Board data_board) {
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
@@ -105,12 +111,13 @@ public class Calender_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "update Calender set start_date=?, end_date=?, finish=? where idx=?";
+			String sql = "update Data_Board set ori_name=?, save_name=? volume=? where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setDate(1, calender.getStart_date());
-			pstmt.setDate(2, calender.getEnd_date());
-			pstmt.setString(3, calender.getFinish());
+			pstmt.setString(1, data_board.getOri_name());
+			pstmt.setString(2, data_board.getSave_name());
+			pstmt.setInt(3, data_board.getVolume());
+			pstmt.setInt(4, data_board.getIdx());
 			
 			row = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -126,8 +133,8 @@ public class Calender_Dao {
 		return row;
 	}
 	
-	//달력 특정 글 삭제
-	public int deleteCalender(int idx) {
+	//자료 게시판 특정 글 삭제
+	public int deleteData_Board(int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
@@ -135,7 +142,7 @@ public class Calender_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "delete from Calender where idx=?";
+			String sql = "delete from Data_Board where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, idx);
@@ -153,5 +160,7 @@ public class Calender_Dao {
 		
 		return row;
 	}
-	
+
 }
+
+
