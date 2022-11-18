@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Img_Board;
 
 //이미지 게시판 특정 게시판
@@ -25,50 +26,50 @@ public class Img_Board_Dao {
 	
 	//이미지 게시판 전체 이미지 조회
 	public List<Img_Board> getImg_BoadList(int cpage, int pagesize){
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Img_Board> img_boardlist = new ArrayList<Img_Board>();
+		List<Img_Board> boardlist = null;
 		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select *"
-						+ "from (select rownum rn, b_idx, idx, img_name"
-							+ "from img_board)"
-						+ "where rn between ? and ?";
+			String sql = "select * from (select rownum rn, b_idx, idx, img_name from img_board) where rn <= ? and rn >= ?";
+			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, cpage);
-			pstmt.setInt(2, pagesize);
+			int start = cpage * pagesize - (pagesize -1);
+			int end = cpage * pagesize;
+			
+			pstmt.setInt(1, end);
+			pstmt.setInt(2, start);
 			
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
-				do {
-					Img_Board img_board = new Img_Board();
-					img_board.setB_idx(rs.getInt("b_idx"));
-					img_board.setIdx(rs.getInt("idx"));
-					img_board.setImg_name(rs.getString("img_name"));
-					
-					img_boardlist.add(img_board);
-				}while(rs.next());
-			}else {
-				System.out.println("조회 데이터 없음");
+			boardlist = new ArrayList<Img_Board>();
+			
+			while(rs.next()) {
+				Img_Board board = new Img_Board();
+				board.setB_idx(rs.getInt("b_idx"));
+				board.setIdx(rs.getInt("idx"));
+				board.setImg_name(rs.getString("img_name"));
+				
+				boardlist.add(board);
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
+			System.out.println("오류 :" + e.getMessage());
+		}finally {
 			try {
-				rs.close();
 				pstmt.close();
-				conn.close();
+				rs.close();
+				conn.close();//반환
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
 		}
 		
-		return img_boardlist;
+		return boardlist;
 	}
 	
 	//이미지 게시판 특정 게시글 조회
