@@ -116,7 +116,6 @@ public class Board_Dao {
 			
 			while(rs.next()) {
 				Board board = new Board();
-				Board board = new Board();
 				board.setIdx(rs.getInt("idx"));
 				board.setTitle(rs.getString("title"));
 				board.setNick(rs.getString("nick"));
