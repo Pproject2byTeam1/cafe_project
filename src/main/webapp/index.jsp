@@ -59,6 +59,8 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
+    
+    <p><a href="board_list.do?b_code=4">이미지 게시판</a></p>
 
     <section class="section dashboard">
       <div class="row">
