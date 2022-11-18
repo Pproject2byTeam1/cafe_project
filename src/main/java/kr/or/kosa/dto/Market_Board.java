@@ -7,6 +7,8 @@ public class Market_Board {
 	private String cate;
 	private int price;
 	private String sold;
+	private String img_name;
+	
 	public int getB_idx() {
 		return b_idx;
 	}
@@ -43,11 +45,16 @@ public class Market_Board {
 	public void setSold(String sold) {
 		this.sold = sold;
 	}
-	
+	public String getImg_name() {
+		return img_name;
+	}
+	public void setImg_name(String img_name) {
+		this.img_name = img_name;
+	}
 	@Override
 	public String toString() {
 		return "Market_Board [b_idx=" + b_idx + ", idx=" + idx + ", m_mode=" + m_mode + ", cate=" + cate + ", price="
-				+ price + ", sold=" + sold + "]";
+				+ price + ", sold=" + sold + ", img_name=" + img_name + "]";
 	}
 	
 }

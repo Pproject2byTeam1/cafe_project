@@ -24,7 +24,7 @@ public class Comments_Dao {
 	}
 	
 	//특정 게시글에 대한 댓글 전체 조회
-	public List<Comments> getCommentListByIdx(int idx){
+	public List<Comments> getCommentListByIdx(int idx, int cpage, int pagesize){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -34,7 +34,8 @@ public class Comments_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select co_idx, idx, content, email_id, nick, w_date, report_count, refer, depth, step from Comments where idx=?";
+			String sql = "select co_idx, idx, content, email_id, nick, w_date, report_count, refer, depth, step"
+						+ "from Comments where idx=? order by co_idx desc";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, idx);
@@ -87,7 +88,15 @@ public class Comments_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "";
+			String sql = "insert into comments(idx, content, email_id, nick, refer, depth, step)"
+						+ "values(?, ?, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, comments.getIdx());
+			pstmt.setString(2, comments.getContent());
+			pstmt.setString(3, comments.getEmail_id());
+			pstmt.setString(4, comments.getNick());
+			pstmt.setInt(5, row);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
