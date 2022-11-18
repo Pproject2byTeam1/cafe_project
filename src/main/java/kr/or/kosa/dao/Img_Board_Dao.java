@@ -3,6 +3,8 @@ package kr.or.kosa.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -19,6 +21,54 @@ public class Img_Board_Dao {
 	public Img_Board_Dao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
+	}
+	
+	//이미지 게시판 전체 이미지 조회
+	public List<Img_Board> getImg_BoadList(int cpage, int pagesize){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Img_Board> img_boardlist = new ArrayList<Img_Board>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select *"
+						+ "from (select rownum rn, b_idx, idx, img_name"
+							+ "from img_board)"
+						+ "where rn between ? and ?";
+			
+			pstmt.setInt(1, cpage);
+			pstmt.setInt(2, pagesize);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					Img_Board img_board = new Img_Board();
+					img_board.setB_idx(rs.getInt("b_idx"));
+					img_board.setIdx(rs.getInt("idx"));
+					img_board.setImg_name(rs.getString("img_name"));
+					
+					img_boardlist.add(img_board);
+				}while(rs.next());
+			}else {
+				System.out.println("조회 데이터 없음");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return img_boardlist;
 	}
 	
 	//이미지 게시판 특정 게시글 조회
