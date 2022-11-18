@@ -51,7 +51,7 @@ public class Img_Board_List_Service implements Action {
 				pagecount = (totalboardcount / pagesize) + 1; 
 			}
 			
-			List<Board> list = dao.getBoardListByB_code(b_code, cpage, pagesize);
+			List<Board> list = dao.getImg_boardList(b_code, cpage, pagesize);
 			
 			Img_Board_Dao board_dao = new Img_Board_Dao();
 			List<Img_Board> img_list = board_dao.getImg_BoadList(cpage, pagesize);
@@ -65,7 +65,7 @@ public class Img_Board_List_Service implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("imgboard_list.jsp");
+		  	forward.setPath("/WEB-INF/view/imgboard_list.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

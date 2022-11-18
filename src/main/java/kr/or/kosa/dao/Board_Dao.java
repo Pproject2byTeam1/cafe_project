@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Img_Board;
 
 //게시판 글
 //건들지 마세요 추수 수정 예정
@@ -83,92 +84,117 @@ public class Board_Dao {
 		return boardlist;
 	}
 	
-	//특정 카테고리별 조회
-	public List<Board> getBoardListByB_code(int b_code, int cpage, int pagesize){
-		
+	//자유 게시판 전체 조회
+	public List<Board> getRegular_boardList(int b_code, int cpage, int pagesize){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs1 = null;
 		ResultSet rs = null;
-		List<Board> boardlist = new ArrayList<Board>();
+		List<Board> boardlist = null;
 		
 		try {
+			
 			conn = ds.getConnection();
-			
-			//게시판 형식이 무엇인지 파악
-			//b1 or b4일 경우 계층형 게시판
-			String sql = "select b_type from board_info where b_type in ('b1', 'b4') and b_code=?";
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, b_code);
-			
-			rs1 = pstmt.executeQuery();
-			
-			String sql1 = "";
-			
-			if(rs1.getString("b_type").equals("b1")) {
-				sql1 = "select *"
+			String sql = "select *"
 						+ "from ( select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, b.w_date, b.report_count, b.notic, b.email_id, b.b_code, r.b_idx, r.refer, r.depth, r.step"
-								+ "from board b join regular_board r"
-								+ "on b.idx = r.idx"
-								+ "where b.b_code = ?"
-								+ "order by refer desc, step asc )"
+							+ "from board b join regular_board r"
+							+ "on b.idx = r.idx"
+							+ "where b.b_code = ?"
+							+ "order by refer desc, step asc )"
 						+ "where rn between ? and ?";
-			}else if(rs1.getString("b_type").equals("b4")) {
-				sql1 = "select *"
-						+ "from ( select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, b.w_date, b.report_count, b.notic, b.email_id, b.b_code, d.b_idx, d.refer, d.depth, d.step"
-								+ "from board b join data_board d"
-								+ "on b.idx = d.idx"
-								+ "where b.b_code = ?"
-								+ "order by refer desc, step asc)"
-						+ "where rn between ? and ?";
-			}else {
-				sql1 = "select * "
-						+ "from (select rownum rn, idx, title, nick, content, hits, w_date, report_count, email_id, b_code"
-								+ "from Board where b_code=?)"
-						+ "where rn between ? and ?";
-			}
-			
-			pstmt = conn.prepareStatement(sql1);
+			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
 			int end = cpage * pagesize;
 			
 			pstmt.setInt(1, b_code);
-			pstmt.setInt(2, start);
-			pstmt.setInt(3, end);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
 			
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
-				do {
-					Board board = new Board();
-					board.setIdx(rs.getInt("idx"));
-					board.setTitle(rs.getString("title"));
-					board.setNick(rs.getString("nick"));
-					board.setContent(rs.getString("content"));
-					board.setHits(rs.getInt("hits"));
-					board.setW_date(rs.getDate("w_date"));
-					board.setReport_count(rs.getInt("report_count"));
-					board.setEmail_id(rs.getString("email_id"));
-					board.setB_code(rs.getInt("b_code"));
-					
-					boardlist.add(board);
-				}while(rs.next());
-			} else {
-				System.out.println("조회 데이터 없음");
+			boardlist = new ArrayList<Board>();
+			
+			while(rs.next()) {
+				Board board = new Board();
+				Board board = new Board();
+				board.setIdx(rs.getInt("idx"));
+				board.setTitle(rs.getString("title"));
+				board.setNick(rs.getString("nick"));
+				board.setContent(rs.getString("content"));
+				board.setHits(rs.getInt("hits"));
+				board.setW_date(rs.getDate("w_date"));
+				board.setReport_count(rs.getInt("report_count"));
+				board.setEmail_id(rs.getString("email_id"));
+				board.setB_code(rs.getInt("b_code"));
+				
+				boardlist.add(board);
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
+			System.out.println("오류 :" + e.getMessage());
+		}finally {
 			try {
-				rs1.close();
-				rs.close();
 				pstmt.close();
-				conn.close();
+				rs.close();
+				conn.close();//반환
 			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
+				
+			}
+		}
+		
+		
+		return boardlist;
+	}
+	
+	//이미지 게시판 전체 조회
+	public List<Board> getImg_boardList(int b_code, int cpage, int pagesize){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Board> boardlist = null;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select * from (select rownum rn, idx, title, nick, content, hits, w_date, report_count, email_id, b_code from Board where b_code=?) where rn <= ? and rn >= ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			int start = cpage * pagesize - (pagesize -1);
+			int end = cpage * pagesize;
+			
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
+			
+			rs = pstmt.executeQuery();
+			
+			boardlist = new ArrayList<Board>();
+			
+			while(rs.next()) {
+				Board board = new Board();
+				board.setIdx(rs.getInt("idx"));
+				board.setTitle(rs.getString("title"));
+				board.setNick(rs.getString("nick"));
+				board.setContent(rs.getString("content"));
+				board.setHits(rs.getInt("hits"));
+				board.setW_date(rs.getDate("w_date"));
+				board.setReport_count(rs.getInt("report_count"));
+				board.setEmail_id(rs.getString("email_id"));
+				board.setB_code(rs.getInt("b_code"));
+				
+				boardlist.add(board);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환
+			} catch (Exception e2) {
+				
 			}
 		}
 		
@@ -187,6 +213,9 @@ public class Board_Dao {
 			conn = ds.getConnection();
 			String sql = "select count(*) cnt from board where b_code=?";
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, b_code);
+			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
