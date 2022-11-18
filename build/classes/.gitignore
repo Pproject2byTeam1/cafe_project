@@ -1,2 +1,5 @@
-/controller/
-/kr/
+/.metadata/
+/.recommenders/
+.classpath
+.project
+.settings/
