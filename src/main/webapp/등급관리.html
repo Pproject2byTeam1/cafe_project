@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+<title>카페人중독</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+
+<!-- Favicons -->
+<link href="assets/img/favicon.png" rel="icon">
+<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+<!-- Google Fonts -->
+<link href="https://fonts.gstatic.com" rel="preconnect">
+<link
+   href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+   rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css"
+   rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+   rel="stylesheet">
+<link href="assets/vendor/boxicons/css/boxicons.min.css"
+   rel="stylesheet">
+<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link href="assets/css/style.css" rel="stylesheet">
+
+
+<!-- bootstrap4 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<style>
+
+
+
+/* .btn-success btn-lg {
+   float: right;
+} */
+.selectpicker{
+width:75px;height:35px; border-radius: 5px;
+}
+._3Espq6{
+width :38px;
+height:22px;
+font-size:0.9rem;
+ text-align:center;
+}
+.parent{
+	width :500px;
+ display: flex;
+  flex-direction: column;
+}
+.name{
+font-size:0.9rem;
+  margin-top:auto;
+
+vertical-align :bottom;
+
+}
+._1R-fi-{
+margin-bottom: 0.5rem;
+    color: #2b2d36;
+    line-height: 1.5;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.01875rem;
+    margin-bottom: 0;
+    color: var(--gray-600);
+    text-align: center;
+}
+
+
+.jdc{
+text-align: center;
+}
+ 
+.son_name{
+	font-size: 13px; font-weight:bold;
+}
+.son_date{
+	font-size: 13px;
+}
+.son_time{
+	font-size: 13px; 
+}
+     
+</style>
+</head>
+
+<body>
+
+   <!-- ======= Header ======= -->
+   <header id="header" class="header fixed-top d-flex align-items-center">
+
+      <jsp:include page="/common/top.jsp"></jsp:include>
+
+   </header>
+   <!-- End Header -->
+
+   <!-- ======= Sidebar ======= -->
+
+   <jsp:include page="/common/side.jsp"></jsp:include>
+
+   <!-- End Sidebar -->
+
+   <main id="main" class="main">
+
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+               <p class="h1" style="text-decoration: underline; text-underline-position:under;">회원관리 > 등급관리</p>
+               <tr></tr>
+                
+               <button type="button" class="btn float-right btn-lg btn-success">
+                  저장하기
+               </button>
+               <br><br><br>
+
+               <table class="table text-center">
+                  <thead class="thead-light">
+                     <tr>
+                        <th>
+                           등급레벨
+                        </th>
+                        <th>
+                           등급 이름 변경
+                        </th>
+                        <th>
+                           등급 기준 설정
+                        </th>
+                        <th>
+                           삭제
+                        </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td>
+                           1
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" id="기입하세용" placeholder="준회원">
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" id="기입하세용" placeholder="0점 이상" readonly>
+                        </td>
+                        <td>
+                           
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           2
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" id="기입하세용" placeholder="정회원">
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" id="기입하세용" placeholder="100점 이상">
+                        </td>
+                        <td>
+                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           3
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" id="기입하세용" placeholder="특별회원">
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" id="기입하세용" placeholder="200점 이상">
+                        </td>
+                        <td>
+                           <input type="button" class="btn btn-danger " onclick="alert('삭제되었습니다!')" value="삭제">
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           4
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" id="기입하세용" placeholder="우수회원">
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" id="기입하세용" placeholder="300점 이상">
+                        </td>
+                        <td>
+                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           
+                        </td>
+                        <td>
+                           
+                        </td>
+                        <td>
+                           <button type="button" class="btn btn btn-secondary">
+                              추가하기
+                           </button>
+                        </td>
+                        <td>
+                        </td>
+                     </tr>
+                     
+                  </tbody>
+               </table>
+            </div>
+            
+         </div>
+      </div>
+   </main>
+   <!-- End #main -->
+
+   <!-- ======= Footer ======= -->
+   <footer id="footer" class="footer">
+      <div class="copyright">
+         &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights
+         Reserved
+      </div>
+      <div class="credits">
+         <!-- All the links in the footer should remain intact. -->
+         <!-- You can delete the links only if you purchased the pro version. -->
+         <!-- Licensing information: https://bootstrapmade.com/license/ -->
+         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+   </footer>
+   <!-- End Footer -->
+
+   <a href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+   <!-- Vendor JS Files -->
+   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <script src="assets/vendor/chart.js/chart.min.js"></script>
+   <script src="assets/vendor/echarts/echarts.min.js"></script>
+   <script src="assets/vendor/quill/quill.min.js"></script>
+   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+   <script src="assets/vendor/php-email-form/validate.js"></script>
+
+   <!-- Template Main JS File -->
+   <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
