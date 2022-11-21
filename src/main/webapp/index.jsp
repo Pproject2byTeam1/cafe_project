@@ -62,6 +62,7 @@
     
     <p><a href="img_board_list.do?b_code=4">이미지 게시판</a></p>
     <p><a href="calendar_list.do">캘린더</a></p>
+    <button onclick="new_window()"> 쪽지 리스트</button>
 
     <section class="section dashboard">
       <div class="row">
@@ -727,6 +728,15 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="text/javascript">
+	  function new_window() {
+	    window.open(
+	      "memo_list.do",
+	      "쪽지함",
+	      "width=500, height=600, top=100, left=300"
+	    );
+	  }
+  </script>
 
 </body>
 
