@@ -2,7 +2,6 @@ package kr.or.kosa.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,16 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.dao.Board_Dao;
-import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Calender;
+import kr.or.kosa.dao.Img_Board_Dao;
+import kr.or.kosa.dto.Img_Board;
 import net.sf.json.JSONArray;
 
 
-@WebServlet("/CalendarList")
-public class CalendarList extends HttpServlet {
+@WebServlet("/ImgSearch")
+public class ImgSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    public ImgSearch() {
+        super();
+    }
+
+    private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -29,11 +32,10 @@ public class CalendarList extends HttpServlet {
     	
     	try {  		
     		int b_code = Integer.parseInt(request.getParameter("b_code"));
-			String year = request.getParameter("year");
-			String month = request.getParameter("month");
+    		String search = request.getParameter("search");
 			
-			Board_Dao dao = new Board_Dao(); 
-			List<Calender> list = dao.getCalender_list(b_code, year, month);
+			Img_Board_Dao dao = new Img_Board_Dao(); 
+			List<Img_Board> list = dao.searchImg(b_code, search);
 			
 			JSONArray jsonlist = JSONArray.fromObject(list);
 			
@@ -44,7 +46,7 @@ public class CalendarList extends HttpServlet {
     	}
     	
 	}
-    
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}

@@ -1,6 +1,5 @@
 package kr.or.kosa.dto;
 
-import java.sql.Date;
 
 public class Calender extends Board {
 	private int b_idx;
