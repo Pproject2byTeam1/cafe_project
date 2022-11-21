@@ -1,7 +1,10 @@
 @charset "UTF-8";
+<<<<<<< Updated upstream
 #YES {
 	width: 50px;
 }
+=======
+>>>>>>> Stashed changes
 
 #columns {
    column-width: 350px;
@@ -42,6 +45,7 @@
 
 .replyinput {
    border-radius: 30px;
+<<<<<<< Updated upstream
 }
 
 .product-title {
@@ -164,4 +168,6 @@
 	.card:nth-child(odd) {
 		flex: 1 1;
 	}
+=======
+>>>>>>> Stashed changes
 }

@@ -30,14 +30,21 @@
 
   	<!-- Template Main CSS File -->
   	<link href="assets/css/style.css" rel="stylesheet">
-  	<link href="assets/css/imgboard.css" rel="stylesheet">
+  	<link href="assets/css/calendar.css" rel="stylesheet">
   	
   	 <!--fullcalendar css-->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+	<script src="https://unpkg.com/tippy.js@6"></script>
+	
+	<!-- sweetalert -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   	
   	<script type="text/javascript">
+  	
+  	//https://amadoo.tistory.com/89 캘린더 이벤트 관련 사이트
   	
   		document.addEventListener('DOMContentLoaded', function() {
   			
@@ -48,6 +55,10 @@
   			
   			const requestdata = {"b_code": 3, "year": year, "month": month};
   			
+  			function calEventClick(){
+  				alert("일정 이벤트 클릭");
+  			}
+  			
   			function loadlist(){
   				$.ajax({
   					type: "POST",
@@ -56,35 +67,52 @@
   					dataType: "JSON",
   					success: function(data){
   						
-  						console.log(data);
+  						let datelist = new Array();
   						
   						$(data).each(function(){
-  							console.log(this.title);
+  							const date = {title: this.title, start: this.start_date, end: this.end_date}
   							
+  							datelist.push(date);
   						});
   						
   						let calendarEl = document.getElementById('calendar');
+  						
   						let calendar = new FullCalendar.Calendar(calendarEl, {
+  							customButtons: {
+  								parkCustomButton: {
+  									text: '추가',
+  									click: function(){
+  										alert('일정 추가 누름');
+  										if(document.getElementById("add").classList.item(3) == null){
+  											document.getElementById("add").className += " d-none";
+  							            }else{
+  							                document.getElementById("add").classList.remove("d-none");
+  							            }
+  									}
+  								}
+  							},
+  							themeSystem: 'bootstrap5',
   							initialView : 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
   			  				headerToolbar : { // 헤더에 표시할 툴 바
-  			  					start : 'prev next today',
+  			  					start : 'parkCustomButton today',
   			  					center : 'title',
-  			  					end : 'dayGridMonth,dayGridWeek,dayGridDay'
+  			  					end : 'prev,next dayGridMonth,dayGridWeek,dayGridDay'
   			  				},
   			  				titleFormat : function(date) {
   			  					return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
   			  				},
+  			  				dateClick: function(info){
+  			  					alert('Clicked on : ' + info.dateStr);//클릭한 날짜
+  			  				},
   			  				selectable : true, // 달력 일자 드래그 설정가능
+  			  				unselectAuto: true, //드래그 후 다른 곳 클릭 시 드래그 지우기
   			  				droppable : true,
   			  				editable : true,
   			  				nowIndicator: true, // 현재 시간 마크
   			  				locale: 'ko', // 한국어 설정
-  			  				events: [
-  			  					{
-  			  						title: data[0].title,
-  			  						start: data[0].start_date
-  			  					}
-  			  					]
+  	  						dayMaxEventRows:true,
+  			  				events: datelist,
+  			  				eventClick: calEventClick, //이벤트 클릭시 
   						});
   						
   						calendar.render();
@@ -131,10 +159,13 @@
   		
   		
 	  	<div class="container">
-	        <div class="row">
-	            <div id="calendar"></div>
-	        </div>
-	    </div>
+			<div class="row">
+				<div id="calendar" class="col"></div>
+				<div id="add" class="col-md-6 park-card p-4 d-none">
+					<div class="park-card-body row"></div>
+				</div>
+			</div>
+		</div>
 	    
 	    <c:forEach var="list" items="${list}">
 	    	<p>${list.title}</p>
