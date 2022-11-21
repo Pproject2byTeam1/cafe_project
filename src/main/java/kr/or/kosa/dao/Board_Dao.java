@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Calender;
 import kr.or.kosa.dto.Img_Board;
 
 //게시판 글
@@ -37,7 +38,7 @@ public class Board_Dao {
 			
 			conn = ds.getConnection();
 			String sql = "select * from"
-						+ "(select rownum rn, idx, title, nick, content, hits, w_date, report_count, email_id, b_code from Board)"
+						+ "(select rownum rn, idx, title, nick, content, hits, to_char(w_date, 'yyyy-MM-dd') as w_date, report_count, email_id, b_code from Board)"
 						+ "where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -58,7 +59,7 @@ public class Board_Dao {
 					board.setNick(rs.getString("nick"));
 					board.setContent(rs.getString("content"));
 					board.setHits(rs.getInt("hits"));
-					board.setW_date(rs.getDate("w_date"));
+					board.setW_date(rs.getString("w_date"));
 					board.setReport_count(rs.getInt("report_count"));
 					board.setEmail_id(rs.getString("email_id"));
 					board.setB_code(rs.getInt("b_code"));
@@ -95,7 +96,7 @@ public class Board_Dao {
 			
 			conn = ds.getConnection();
 			String sql = "select *"
-						+ "from ( select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, b.w_date, b.report_count, b.notic, b.email_id, b.b_code, r.b_idx, r.refer, r.depth, r.step"
+						+ "from ( select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, r.b_idx, r.refer, r.depth, r.step"
 							+ "from board b join regular_board r"
 							+ "on b.idx = r.idx"
 							+ "where b.b_code = ?"
@@ -121,7 +122,7 @@ public class Board_Dao {
 				board.setNick(rs.getString("nick"));
 				board.setContent(rs.getString("content"));
 				board.setHits(rs.getInt("hits"));
-				board.setW_date(rs.getDate("w_date"));
+				board.setW_date(rs.getString("w_date"));
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
@@ -156,7 +157,7 @@ public class Board_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select * from (select rownum rn, idx, title, nick, content, hits, w_date, report_count, email_id, b_code from Board where b_code=?) where rn <= ? and rn >= ?";
+			String sql = "select * from (select rownum rn, idx, title, nick, content, hits, to_char(w_date, 'yyyy-MM-dd') as w_date, report_count, email_id, b_code from Board where b_code=?) where rn <= ? and rn >= ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
@@ -177,7 +178,7 @@ public class Board_Dao {
 				board.setNick(rs.getString("nick"));
 				board.setContent(rs.getString("content"));
 				board.setHits(rs.getInt("hits"));
-				board.setW_date(rs.getDate("w_date"));
+				board.setW_date(rs.getString("w_date"));
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
@@ -199,6 +200,74 @@ public class Board_Dao {
 		
 		return boardlist;
 	}
+	
+	//일정 관리 캘린더 전체 조회
+	public List<Calender> getCalender_list(int b_code, String year, String month){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Calender> calenderlist = null;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, c.b_idx, to_char(c.start_date, 'yyyy-MM-dd') as start_date, to_char(c.end_date, 'yyyy-MM-dd') as end_date, c.finish "
+						+ "from board b join calender c "
+						+ "on b.idx = c.idx "
+						+ "where b.b_code=? and c.start_date between to_date(?, 'YY/MM/DD') and to_date(?, 'YY/MM/DD')";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, b_code);
+			String req1 = year.concat("/").concat(month).concat("/").concat("01");
+			pstmt.setString(2, req1);
+			
+			int[] maxDate = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+			int y = Integer.parseInt(year);
+			if(y % 4 ==0 && y % 100 !=0 || y % 400 ==0) {
+				maxDate[1]=29; // 윤년일 경우
+			}
+			int date = maxDate[Integer.parseInt(month)]-1;
+			String req2 = year.concat("/").concat(month).concat("/").concat(String.valueOf(date));
+			pstmt.setString(3, req2);
+			
+			rs = pstmt.executeQuery();
+			
+			calenderlist = new ArrayList<Calender>();
+			
+			while(rs.next()) {
+				Calender board = new Calender();
+				board.setIdx(rs.getInt("idx"));
+				board.setTitle(rs.getString("title"));
+				board.setNick(rs.getString("nick"));
+				board.setContent(rs.getString("content"));
+				board.setHits(rs.getInt("hits"));
+				board.setW_date(rs.getString("w_date"));
+				board.setReport_count(rs.getInt("report_count"));
+				board.setEmail_id(rs.getString("email_id"));
+				board.setB_code(rs.getInt("b_code"));
+				board.setB_idx(rs.getInt("b_idx"));
+				board.setStart_date(rs.getString("start_date"));
+				board.setEnd_date(rs.getString("end_date"));
+				board.setFinish(rs.getString("finish"));
+				
+				calenderlist.add(board);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환
+			} catch (Exception e2) {
+				
+			}
+		}
+		
+		return calenderlist;
+	} 
 	
 	//특정 카테고리 총 게시물 건수
 	public int totalBoardCountByB_code(int b_code) {
@@ -247,7 +316,7 @@ public class Board_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select idx, title, nick, content, hits, w_date, report_count, email_id, b_code from Board where idx=?";
+			String sql = "select idx, title, nick, content, hits, to_char(w_date, 'yyyy-MM-dd') as w_date, report_count, email_id, b_code from Board where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, idx);
@@ -260,7 +329,7 @@ public class Board_Dao {
 				board.setNick(rs.getString("nick"));
 				board.setContent(rs.getString("content"));
 				board.setHits(rs.getInt("hits"));
-				board.setW_date(rs.getDate("w_date"));
+				board.setW_date(rs.getString("w_date"));
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
