@@ -82,7 +82,6 @@
   								parkCustomButton: {
   									text: '추가',
   									click: function(){
-  										alert('일정 추가 누름');
   										if(document.getElementById("add").classList.item(3) == null){
   											document.getElementById("add").className += " d-none";
   							            }else{
@@ -160,17 +159,70 @@
   		
 	  	<div class="container">
 			<div class="row">
-				<div id="calendar" class="col"></div>
-				<div id="add" class="col-md-6 park-card p-4 d-none">
-					<div class="park-card-body row"></div>
+				<div id="calendar" class="col mb-5"></div>
+				<div id="add" class="mt-10 col-md-6 park-card p-4"><!-- d-none -->
+					<div class="park-card-body row">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title"><strong>일정 추가</strong></h5>
+
+								<!-- Floating Labels Form -->
+								<form class="row g-3">
+									<div class="col-md-12">
+										<div class="form-floating">
+											<input type="text" class="form-control" id="floatingName"
+												placeholder="Title"> <label for="floatingName">일정</label>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-floating">
+											
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-floating">
+											
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating">
+											<textarea class="form-control" placeholder="Content"
+												id="floatingTextarea" style="height: 100px;"></textarea>
+											<label for="floatingTextarea">상세 일정</label>
+										</div>
+									</div>
+									<div class="col-md-6">
+										
+									</div>
+									<div class="col-md-4">
+										<div class="form-floating mb-3">
+											<select class="form-select" id="floatingSelect"
+												aria-label="State">
+												<option selected>New York</option>
+												<option value="1">Oregon</option>
+												<option value="2">DC</option>
+											</select> <label for="floatingSelect">State</label>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-floating">
+											<input type="text" class="form-control" id="floatingZip"
+												placeholder="Zip"> <label for="floatingZip">Zip</label>
+										</div>
+									</div>
+									<div class="text-center">
+										<button type="submit" class="btn btn-primary">Submit</button>
+										<button type="reset" class="btn btn-secondary">Reset</button>
+									</div>
+								</form>
+								<!-- End floating Labels Form -->
+
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	    
-	    <c:forEach var="list" items="${list}">
-	    	<p>${list.title}</p>
-	    	<p>${list.start_date}</p>
-	    </c:forEach>
   
   	<!-- 여기까지만 작성  -->
   	</main>
