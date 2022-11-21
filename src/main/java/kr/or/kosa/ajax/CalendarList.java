@@ -21,7 +21,7 @@ import net.sf.json.JSONArray;
 public class CalendarList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -35,11 +35,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 			Board_Dao dao = new Board_Dao(); 
 			List<Calender> list = dao.getCalender_list(b_code, year, month);
 			
-			System.out.println("haha");
-			
 			JSONArray jsonlist = JSONArray.fromObject(list);
-			
-			System.out.println("hah");
 			
 			out.print(jsonlist);
     		

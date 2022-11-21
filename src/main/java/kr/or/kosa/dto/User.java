@@ -7,7 +7,7 @@ public class User {
 	private String password;
 	private String name;
 	private String nick;
-	private Date birth;
+	private String birth;
 	private int point;
 	private String isAdmin;
 	public String getEmail_id() {
@@ -34,10 +34,10 @@ public class User {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-	public Date getBirth() {
+	public String getBirth() {
 		return birth;
 	}
-	public void setBirth(Date birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 	public int getPoint() {

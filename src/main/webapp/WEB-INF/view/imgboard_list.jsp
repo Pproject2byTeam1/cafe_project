@@ -35,17 +35,44 @@
   	<!-- 무한 스크롤 -->
   	<script src="https://unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
 	
-  	<!-- 무한 스크롤 js 코드 -->
   	<script type="text/javascript">
   	
   		$(document).ready(function(){
   			
+  			/* <!-- 무한 스크롤 js 코드 --> */
   			$('#autoScroll').jscroll({
   				autoTrigger: true,
   				loadingHtml: '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>',
   				nextSelector: 'a.nextPage:last',
-  				contentSelector: '#columns',
+  				contentSelector: '#imglist',
   				padding: 20
+  			});
+  			
+  			/* 검색 비동기 */
+  			$("#pbtn").click(function(){
+  				
+  				const requestdata = {"b_code": 4, "search": $("#searchInput").val()};
+  				
+  				$.ajax({
+  					type: "POST",
+  					url: "ImgSearch",
+  					data: requestdata,
+  					dataType: "JSON",
+  					success: function(data){
+  						console.log(data);
+  						
+  						$("#columns").empty();
+  						
+  						$(data).each(function(){
+  							html = '<figure>';
+  								html += '<img src="image/imgTest/' + this.img_name + '">';
+  								html += '<figcaption>' + this.b_idx + '.' + this.title + '</figcaption>'
+  							html += "</figure>";
+  							console.log(html);
+  							$('#columns').append(html);
+  						});
+  					}
+  				});
   			});
   			
   		});
@@ -67,20 +94,30 @@
   
 	<main id="main" class="main">
   	<!-- 여기서부터 작성 와랄ㄹ라  -->
-  
-  		<div class="pagetitle">
-  			<h1>IMG BOARD</h1> <!-- 게시판 이름 끌고오기 b_name -->
-  			<nav>
-  				<ol class="breadcrumb">
-  					<li class="breadcrumb-item">
-  						<a href="index.html">Home</a>
-  					</li>
-  					<li class="breadcrumb-item active">IMG BOARD</li>
-  				</ol>
-  			</nav>
-  		</div>
-  		
-  		<div class="scroll" id="autoScroll">
+  	
+  		<header id="parkimg" class="mt-10 header d-flex align-items-center mt-10 mb-5">
+			<div class="flex-fill">
+				<div class="p-5 search-form d-flex align-items-center">
+					<input class="flex-fill" type="text" id="searchInput" placeholder="Search" title="Enter search keyword">
+					<button class="flex-fill" type="button" title="Search" id="pbtn">
+						<i class="bi bi-search"></i>
+					</button>
+				</div>
+			</div>
+		</header>
+
+		<div class="pagetitle">
+			<h1>IMG BOARD</h1>
+			<!-- 게시판 이름 끌고오기 b_name -->
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active">IMG BOARD</li>
+				</ol>
+			</nav>
+		</div>
+		
+		<div id="imglist" class="scroll" id="autoScroll">
   		
   			<div id="columns">
   			
@@ -89,7 +126,7 @@
   				</c:if>
   				
   				<c:forEach var="list" items="${list}" varStatus="status">
-	  				<figure>
+	  				<figure id="imgtag">
 	            		<img src="image/imgTest/${img_list[status.index].img_name}">
 	            		<figcaption>${img_list[status.index].b_idx}. ${list.title}</figcaption>
 	        		</figure>
