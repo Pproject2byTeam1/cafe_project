@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+#columns {
+   column-width: 300px;
+   column-gap: 20px;
+}
+
+#columns figure {
+   display: inline-block;
+   margin: 0;
+   margin-bottom: 15px;
+}
+
+#columns figure img {
+   width: 100%;
+   border-radius: 5%;
+}
+
+#columns figure figcaption {
+   padding: 10px;
+}
+
+.marketcard {
+  background-color : white;
+  margin-bottom: 30px;
+  border-radius: 3%;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  padding : 15px;
+}
+
+.marketcard-body {
+  padding: 10px 10px 10px 10px;
+}
+
+.marketcard-body img{
+   width: 100%;
+   border-radius: 5%;
+}
+
+.replyinput {
+   border-radius: 30px;
+}

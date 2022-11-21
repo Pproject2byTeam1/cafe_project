@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+	
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.jsp" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
@@ -9,22 +9,47 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
+
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
         <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
         </li><!-- End Search Icon-->
+		
 
+	<!-- <c:if test="${userid.id.equals('admin')}"> -->
+       <ul class="header-nav ms-auto">
+           <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>메인관리</a>
+               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                   <li><a class="dropdown-item" href="#!">메인페이지 관리</a></li>
+               </ul>
+           </li>
+       </ul>
+       <ul class="header-nav ms-auto">
+           <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>회원관리</a>
+               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                   <li><a class="dropdown-item" href="#!">회원 조회</a></li>
+                   <li><a class="dropdown-item" href="#!">신고 현황</a></li>
+               </ul>
+           </li>
+       </ul>
+       <ul class="header-nav ms-auto">
+           <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>통계분석</a>
+               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                   <li><a class="dropdown-item" href="#!">활동 분석</a></li>
+                   <li><a class="dropdown-item" href="#!">회원 분석</a></li>
+               </ul>
+           </li>
+       </ul>
+    <!-- </c:if> -->
+
+         
+
+         
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
