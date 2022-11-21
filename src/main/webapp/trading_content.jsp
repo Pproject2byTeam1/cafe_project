@@ -6,7 +6,9 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
+<script
+	src="https://cdn.tiny.cloud/1/avqk22ebgv68f2q9uzprdbapxmxjwdbke8xixhbo24x2iyvp/tinymce/6/tinymce.min.js"
+	referrerpolicy="origin"></script>
 <title>카페人중독</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
@@ -113,7 +115,14 @@
 	height: 50px;
 	border-radius: 5px;
 }
+
+
 </style>
+<script>
+	tinymce.init({
+		selector : '#mytextarea'
+	});
+</script>
 </head>
 
 <body>
@@ -133,41 +142,112 @@
 	<!-- End Sidebar -->
 
 	<main id="main" class="main">
-
+		<div class="pagetitle">
+			<h1>거래 글쓰기</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active">거래 글쓰기</li>
+				</ol>
+			</nav>
+		</div>
 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-1"></div>
 				<div class="col-md-4">
-				
+
 					<img src="./image/marketboard_img/1.jpg">
-				
+
 				</div>
 				<div class="col-md-6">
-				
-				
-				
-				
-				
+
+
+					<!-- Table with stripped rows -->
+					<table class="table">
+						<!--필수값입력하는 거 만들기  -->
+						<tr>
+							<th scope="col" class="table-active">가격</th>
+							<th scope="col"><input type="text" value="가격을 입력하세요">
+							</th>
+						</tr>
+						<tr>
+							<th scope="col" class="table-active">거래방법</th>
+							<th scope="col"><input type="radio"> 택배거래
+								&nbsp;&nbsp; <input type="radio"> 직거래</th>
+						</tr>
+						<tr>
+							<th scope="col" class="table-active">상품카테고리</th>
+							<th scope="col"><input type="text" value="카테고리를 입력하세요"></th>
+						</tr>
+						<tr>
+							<th scope="col" class="table-active">판매여부</th>
+							<th scope="col"><select>
+									<option value="">판매중</option>
+									<option value="">판매완료</option>
+									<option value="">예약중</option>
+
+							</select></th>
+						</tr>
+
+					</table>
+					<!-- End Table with stripped rows -->
+
+
 				</div>
 				<div class="col-md-1"></div>
 			</div>
 		</div>
-		  <!-- Table with stripped rows -->
-              <table class="table table-striped">
-             
-                  <tr>
-                    <th scope="col">가격</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                  </tr>
-              
-             
-              </table>
-              <!-- End Table with stripped rows -->
+	<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-10">
+		<br>
+		<hr>
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+</div>
+			<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-10">
+		<div class="row">
+			<div class="col-md-10">
+             <div class="form-floating">
+               <input type="text"class="form-control" name="query" placeholder="Search" title="Enter search keyword"></div>
+            </div>
+            <div class="col-md-2" align="right">
+                   <button type="button" class="btn btn-outline-info btn-lg">등록</button>
+            </div>
+		</div>
+		<br>
+		<div class="col-md-1">
+		</div>
+		</div>
+	</div>
+</div>
+			   
+		<div class="container-fluid">
+		<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-10">
+		<textarea >
+   		글을 작성해주세요.
+  		</textarea>
+
 		
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+	</div>
+	
+
 
 	</main>
 	<!-- End #main -->
@@ -201,9 +281,23 @@
 	<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 	<script src="assets/vendor/tinymce/tinymce.min.js"></script>
 	<script src="assets/vendor/php-email-form/validate.js"></script>
-
-	<!-- Template Main JS File -->
-	<script src="assets/js/main.js"></script>
+	<script>
+		tinymce
+				.init({
+					selector : 'textarea',
+					plugins : 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+					toolbar : 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+					tinycomments_mode : 'embedded',
+					tinycomments_author : 'Author name',
+					mergetags_list : [ {
+						value : 'First.Name',
+						title : 'First Name'
+					}, {
+						value : 'Email',
+						title : 'Email'
+					}, ]
+				});
+	</script>
 
 </body>
 
