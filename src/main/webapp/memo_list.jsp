@@ -168,7 +168,7 @@
 			  chk_arr.push($(this).val());
 		  })
 		  const data = {
-			  "m_idx" : chk_arr,
+			  "idxarr" : chk_arr,
 			  "delCheckNo": chk_arr.length
 			  } 
 		  console.log(chk_arr);
