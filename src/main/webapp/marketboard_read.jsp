@@ -83,10 +83,10 @@
 					<span id="marketB_Title">맥북 팝니다!</span><p>
 					<hr>
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-md-9">
 							<img class="product-img" src="image/marketboard_img/1detail.jpg">
 						</div>
-						<div align="center" class="col-md-4">
+						<div align="center" class="col-md-3">
 							<p>
 							<span id="marketB_Price">1,300,000</span>
 							<p>
