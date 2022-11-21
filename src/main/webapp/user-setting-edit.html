@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -18,129 +20,138 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>  
   
-  <style>
-   .moving{
-      transition: width 2s;
-   }
-
-  </style>
-  
 </head>
-<body style="background-color: #f6f9ff;">
+<body>
   
   
-  <main id="main" class="main">
+   <main id="main" class="main" style="background-color: #f6f9ff; border-radius: 25px;">
   <!-- 여기서부터 작성 와랄ㄹ라  -->
-    <div class="pagetitle" >
-         <h1>회원등급</h1>
-         <br>
+      <div class="pagetitle" >
          
-         <p>카페 등급 기준</p>
-    </div>
-
-    <br><br>
-
-  	<div class="container">
-         <div class="row">
-            <div></div>
-              
-
-            <!-- 회원 퍼센트 만지는곳 -->
-                <div class="progress" style="height:30px; position: relative; border-radius: 5px; border: 1px solid grey; padding: 0;">
-                  <div style="background-color: grey; width : 1px; height: 40px; position: absolute; left: 25%;"></div>
-                  <div style="background-color: grey; width : 1px; height: 40px; position: absolute; left: 50%;"></div>
-                  <div style="background-color: grey; width : 1px; height: 40px; position: absolute; left: 75%;"></div>
-                    <div class="progress-bar progress-bar-striped moving" style="width:0%;height:30px;"></div>
-                </div>
-
-                <br><br>
-
-
-            <!-- 회원 등급 적는곳 -->
-               <table class="table">
-                  <thead>
-                     <tr>
-                        <th>
-                           이미지
-                        </th>
-                        <th>
-                           등급 이름
-                        </th>
-                        <th>
-                            포인트
-                        </th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr onclick="a(25)">
-                        <div>
-                           <td>
-                              <img src="image/rank_icon/0.gif" alt="">
-                           </td>
-                           <td>
-                              <p >준회원</p>
-                           </td>
-                           <td>
-                              <a>0~99P</a><br>
-                              <a>회원 가입 시,</a>
-                           </td>
-                        </div>
-                     </tr>
-                     <tr onclick="a(50)">
-                        <div>
-                           <td>
-                              <img src="image/rank_icon/1.gif" alt="">
-                           </td>
-                           <td>
-                              <p >정회원</p>
-                           </td>
-                           <td>
-                              <a>100~199P</a>
-                           </td>
-                        </div>
-                     </tr>
-                     <tr onclick="a(75)">
-                        <div>
-                          <td>
-                           <img src="image/rank_icon/2.gif" alt="">
-                        </td>
-                        <td>
-                           <p >우수회원</p>
-                        </td>
-                        <td>
-                           <a>200~299P</a>
-                           
-                        </td>  
-                        </div>
-                       
-                     </tr>
-                     <tr onclick="a(100)">
-                        <div>
-                           <td>
-                              <img src="image/rank_icon/3.gif" alt="">
-                           </td>
-                           <td>
-                              <p >특별회원</p>
-                           </td>
-                           <td>
-                              <a>300~399P</a>
-                              
-                           </td>
-                        </div>
-                       
-                     </tr>
-                    
-                  </tbody>
-               </table>
-            
-            <div class="col-md-10">
-               <a>- 보유 포인트에 따라 레벨이 정해집니다.</a>
-               <p>- 해당 레벨 포인트에 도달했음에도 레벨 업이 이루어지지 않는 경우 로그아웃후 다시 로그인 해주세요.</p>
-            </div>
-           
-            
-         </div>
+         <p><h1>&nbsp;회원 조회</h1></p>
+         
+         <nav>
+            <ol class="breadcrumb">
+            </ol>
+         </nav>
       </div>
+
+
+      <!-- 서블릿 아래 action에다가 적어주세용 -->
+      <form action="">
+         <div class="container">
+            <div class="row col-md-10">  
+               <div>
+                  <div class="mb-3 row">
+                     <label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
+                     <div class="col-sm-10">
+                       <input type="text" class="form-control-plaintext" id="staticEmail" value="#####@naver.com 이메일 값 가져옴" readonly>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="mb-3 row">
+                     <label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
+                     <div class="col-sm-8">
+                       <input type="password" class="form-control" id="inputPassword" value="비번 값 가져옴">
+                     </div>
+                     <div class="col-sm-2">
+                        <input type="button" class="form-control" value="show" onclick="HidenShow()">
+                      </div>
+                  </div>
+                  <hr>
+                  <div class="mb-3 row">
+                     <label for="inputNickname" class="col-sm-2 col-form-label">별명</label>
+                     <div class="col-sm-8">
+                       <input type="text" class="form-control" id="inputNickname" value="별명 값 가져옴">
+                     </div>
+                  </div>
+                  <hr>
+               </div> 
+            </div>
+         </div>
+   
+   
+         <br><br>
+   
+   
+         <div class="pagetitle" >
+            
+            <p><h1>&nbsp;부가설정</h1></p>
+            <nav>
+               <ol class="breadcrumb">
+               </ol>
+            </nav>
+         </div>
+   
+         
+         
+   
+   
+         <div class="container">
+            <div class="row col-md-10">  
+               <div>
+                  <div class="mb-5 row">
+                     <label for="inputPassword" class="col-sm-2 col-form-label text-center pt-5">포인트</label>
+   
+                     <div class="col-sm-10">
+                        <div class="row">
+                           <div class="col-sm-3">
+                              <label class="col-form-label">현재포인트:</label>
+                           </div>
+                           <div class="col-sm-5">
+                              <!-- 여기 id="userpoint" 의 value값을 바꾸면 id="inputUserPoint"도 같이 바뀌도록 설정해놓음 -->
+                              <input type="text" class="form-control-plaintext text-left" id="userpoint" value="350" readonly>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-sm-5">
+                              <input type="text" class="form-control" id="inputUserPoint">
+                           </div>
+   
+                           <div class="col-sm-5">
+                              <select class="form-select" id="selectPoint">
+                                 <option value="0">준회원(0p)</option>
+                                 <option value="100">정회원(100p)</option>
+                                 <option value="200">우수회원(200p)</option>
+                                 <option value="300">특별회원(300p)</option>
+                              </select>
+                           </div>
+                           
+                        </div>
+                        
+                        
+                       <br>
+   
+                        <input type="button" class="btn btn-danger btn-sm" value="-100" id="minus100">
+                        <input type="button" class="btn btn-danger btn-sm" value="-50" id="minus50">
+                        <input type="button" class="btn btn-danger btn-sm" value="-10" id="minus10">
+   
+                        <input type="button" class="btn btn-info btn-sm" value="+10" id="plus10">
+                        <input type="button" class="btn btn-info btn-sm" value="+50" id="plus50">
+                        <input type="button" class="btn btn-info btn-sm" value="+100" id="plus100">
+                        
+                        <script>
+                      
+                           
+                           
+
+                           
+                        </script>
+   
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="d-grid gap-2">
+                     <button class="btn btn-primary" type="submit">바꾸기</button>
+                  </div>
+               </div> 
+            </div>
+         </div>
+      </form>
+  	   
+
+
+      
   <!-- 여기까지만 작성  -->
   </main>
 
@@ -149,8 +160,54 @@
 </body>
 
 <script>
-   function a (i){
-      document.querySelector('.moving').style.width = i+'%';
+
+   
+   
+   /* 회원 비밀번호 보이기 닫기 */
+   function HidenShow() {
+   let x = document.getElementById("inputPassword");
+      if (x.type === "password") {
+         x.type = "text";
+      } else {
+         x.type = "password";
+      }
    }
+   
+	
+   
+   
+   /* 회원의 포인트값 text쪽에 넣어주기 */
+   document.getElementById("inputUserPoint").value = document.getElementById('userpoint').value
+   
+   
+   
+   /* 회원의 포인트값 지정 */
+   document.getElementById("minus100").onclick = () =>{
+       document.getElementById("inputUserPoint").value -= 100;
+    }
+    document.getElementById("minus50").onclick = () =>{
+       document.getElementById("inputUserPoint").value -= 50;
+    }
+    document.getElementById("minus10").onclick = () =>{
+       document.getElementById("inputUserPoint").value -= 10;
+    }
+
+    document.getElementById("plus100").onclick = () =>{
+       let a = document.getElementById("inputUserPoint").value
+       document.getElementById("inputUserPoint").value = Number(a) + Number(100);
+    }
+    document.getElementById("plus50").onclick = () =>{
+       let a = document.getElementById("inputUserPoint").value
+       document.getElementById("inputUserPoint").value = Number(a) + Number(50);
+    }
+    document.getElementById("plus10").onclick = () =>{
+       let a = document.getElementById("inputUserPoint").value
+       document.getElementById("inputUserPoint").value = Number(a) + Number(10);
+    }
+
+    document.getElementById("selectPoint").addEventListener("click", ()=>{
+       document.getElementById("inputUserPoint").value = document.getElementById("selectPoint").value
+    });
+
  </script>
 </html>
