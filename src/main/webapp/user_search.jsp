@@ -108,9 +108,7 @@
     display: block;
   	overflow: auto; 
   } */
-  .selectpicker  .electpicker2{
-width:100px;height:50px; border-radius: 5px;
-}
+
 </style>
 </head>
 
@@ -131,6 +129,53 @@ width:100px;height:50px; border-radius: 5px;
 	<!-- End Sidebar -->
 
 	<main id="main" class="main">
+	
+		<div class="pagetitle">
+			<h1>회원조회</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active">회원조회</li>
+				</ol>
+			</nav>
+		</div>
+		
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8">
+		</div>
+		<div class="col-md-2">
+		<div class="row">
+		<select class="selectpicker  col-md-6"  >
+                 <option>전체등급</option>
+                  <option>준회원</option>
+                  <option>일반회원</option>
+             </select> &nbsp;
+		
+		<select class="selectpicker2  col-md-6" >
+                 <option>전체조회</option>
+                  <option>OO조회</option>
+                  <option>OO조회</option>
+                  
+             </select>
+		
+		</div>
+		</div>
+		<div class="col-md-2">
+		  	
+		    <div class="search-bar">
+		    
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+			<button type="submit" title="Search"><i class="bi bi-search"></i></button>
+			    </form>
+			  
+		</div>
+	
+	</div>
+</div>
+
+		
 		<div class="card-body">
 				<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 				<!-- Table with hoverable rows -->
@@ -157,7 +202,10 @@ width:100px;height:50px; border-radius: 5px;
 						<th scope="col">010-1234-1234</th>
 						<th scope="col">901030</th>
 						<th scope="col">남</th>
-						<th scope="col"><button type="button" class="btn btn-danger">신고페이지</button></th>
+						<th scope="col">   <button type="button" class="btn btn-primary">활동내역</button>
+                <button type="button" class="btn btn-primary">등급설정</button>
+                <button type="button" class="btn btn-danger">신고</button>
+              </th>
 						
 					</tr>
 
@@ -167,7 +215,7 @@ width:100px;height:50px; border-radius: 5px;
 				</table>
 				<!-- End Table with hoverable rows -->
 	
-
+</div>
 
 	</main>
 	<!-- End #main -->
