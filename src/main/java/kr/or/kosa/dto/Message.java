@@ -9,7 +9,7 @@ public class Message {
 	private String receive_id;
 	private String receive_nick;
 	private String m_content;
-	private Date m_date;
+	private String m_date;
 	public int getM_idx() {
 		return m_idx;
 	}
@@ -46,10 +46,10 @@ public class Message {
 	public void setM_content(String m_content) {
 		this.m_content = m_content;
 	}
-	public Date getM_date() {
+	public String getM_date() {
 		return m_date;
 	}
-	public void setM_date(Date m_date) {
+	public void setM_date(String m_date) {
 		this.m_date = m_date;
 	}
 	@Override

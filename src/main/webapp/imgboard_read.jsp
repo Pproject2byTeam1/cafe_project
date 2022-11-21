@@ -32,52 +32,6 @@
   	<link href="assets/css/style.css" rel="stylesheet">
   	<link href="assets/css/imgboard.css" rel="stylesheet">
   	
-  	<!-- 무한 스크롤 -->
-  	<script src="https://unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
-	
-  	<script type="text/javascript">
-  	
-  		$(document).ready(function(){
-  			
-  			/* <!-- 무한 스크롤 js 코드 --> */
-  			$('#autoScroll').jscroll({
-  				autoTrigger: true,
-  				loadingHtml: '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>',
-  				nextSelector: 'a.nextPage:last',
-  				contentSelector: '#imglist',
-  				padding: 20
-  			});
-  			
-  			/* 검색 비동기 */
-  			$("#pbtn").click(function(){
-  				
-  				const requestdata = {"b_code": 4, "search": $("#searchInput").val()};
-  				
-  				$.ajax({
-  					type: "POST",
-  					url: "ImgSearch",
-  					data: requestdata,
-  					dataType: "JSON",
-  					success: function(data){
-  						console.log(data);
-  						
-  						$("#columns").empty();
-  						
-  						$(data).each(function(){
-  							html = '<figure>';
-  								html += '<img src="image/imgTest/' + this.img_name + '">';
-  								html += '<figcaption>' + this.b_idx + '.' + this.title + '</figcaption>'
-  							html += "</figure>";
-  							console.log(html);
-  							$('#columns').append(html);
-  						});
-  					}
-  				});
-  			});
-  			
-  		});
-  	
-  	</script>
   	
 </head>
 <body>
@@ -95,16 +49,6 @@
 	<main id="main" class="main">
   	<!-- 여기서부터 작성 와랄ㄹ라  -->
   	
-  		<header id="parkimg" class="mt-10 header d-flex align-items-center mt-10 mb-5">
-			<div class="flex-fill">
-				<div class="p-5 search-form d-flex align-items-center">
-					<input class="flex-fill" type="text" id="searchInput" placeholder="Search" title="Enter search keyword">
-					<button class="flex-fill" type="button" title="Search" id="pbtn">
-						<i class="bi bi-search"></i>
-					</button>
-				</div>
-			</div>
-		</header>
 
 		<div class="pagetitle">
 			<h1>IMG BOARD</h1>
@@ -112,35 +56,75 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-					<li class="breadcrumb-item active">IMG BOARD</li>
+					<li class="breadcrumb-item"><a href="#">IMG BOARD</a></li>
+					<li class="breadcrumb-item active">IMG</li>
 				</ol>
 			</nav>
 		</div>
 		
-		<div id="imglist" class="scroll" id="autoScroll">
-  		
-  			<div id="columns">
-  			
-  				<c:if test="${list == null}">
-  					<p>데이터가 없습니다</p>
-  				</c:if>
-  				
-  				<c:forEach var="list" items="${list}" varStatus="status">
-	  				<figure id="imgtag">
-	            		<img src="image/imgTest/${img_list[status.index].img_name}">
-	            		<figcaption>${img_list[status.index].b_idx}. ${list.title}</figcaption>
-	        		</figure>
-  				</c:forEach>
-  				
-  			</div>
-  		
-  			<div class="next">
-	  			<c:if test="${cpage < pagecount}">
-					<a class="nextPage" href="img_board_list.do?b_code=4&cp=${cpage+1}&ps=${pagesize}"></a>
-				</c:if>
-  			</div>
-  			
-  		</div>
+		<div class="container">
+			<div class="row"> 
+				<div class="col-1">
+				
+				</div>
+				
+				<div class="col-10">
+					<div class="park-card p-4">
+						<div class="park-card-body row">
+							<div class="col-md-6 col mb-3">
+								<img src="image/imgTest/1.jpg">
+							</div>
+							<div class="col-md-6">
+								<div class="ps-2 ms-10 row justify-content-between">
+									<div class="col navbar-nav">
+										<div class="row mt-2 ms-2">
+											<h3 class="col-3 nav-item mt-1"><i class="bi bi-cloud-arrow-down"></i></h3>
+											<h3 class="col-3 nav-item"><i class="bi bi-exclamation-triangle"></i></h3>
+										</div>
+									</div>
+									<div class="col navbar-nav">
+										<button type="button" class="nav-item btn btn-danger">저장</button>
+									</div>
+								</div>
+								<div class="mt-2">
+									<h2><strong>나는 너구리가 아닌 고양이</strong></h2>
+								</div>
+								<div class="mt-2">
+									<p>핳하하핳하 나는 고양이야 발을 맛보고 있어 아주 맛나네 야무져 아주 귀엽고 깜찍하당</p>
+								</div>
+							</div>
+						</div>
+						<div class="mb-4 park-card-body">
+						
+							<div class="row mb-3">
+								<h5 class="col-sm-2 mt-2"><Strong>댓글 2개</Strong></h5>
+								<div class="col-sm-7">
+									<input type="text" class="form-control replyinput">
+								</div>
+								<div class="col-sm-3">
+									<button type="button" class="btn btn-outline-secondary btn-sm rounded-pill">완료</button>
+									<button type="button" class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>
+								</div>
+							</div>
+
+							<div class="timeline ms-2">
+								<div class="reply-container">
+									<Strong>작성자</Strong> <br />
+									<p class="ms-2">이것은 댓글 내용이들어갈 거얌 근데 고양이 졸라 귀엽다ㅏ다다닫 고양이는 세계 제일!!!!!!!!!!</p>
+								</div>
+								
+								<div class="reply-container">
+									<Strong>작성자</Strong> <br />
+									<p class="ms-2">이것은 댓글 내용이들어갈 거얌 근데 고양이 졸라 귀엽다ㅏ다다닫 고양이는 세계 제일!!!!!!!!!!</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-1"></div>
+			</div>
+		</div>
   
   	<!-- 여기까지만 작성  -->
   	</main>
