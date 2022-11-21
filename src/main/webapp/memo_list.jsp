@@ -88,9 +88,9 @@
 					             <td>
 					             <a data-bs-toggle="dropdown"><h5 class="card-title">${list.send_nick}</h5></a>
 					             	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-					                    <li><a class="dropdown-item" href="#">게시글 쓰기</a></li>
-					                    <li><a class="dropdown-item" href="#">쪽지보내기</a></li>
-					                  </ul>
+				                    	<li><a class="dropdown-item" href="#">게시글 보기</a></li>
+				                    	<li><a class="dropdown-item sendToMemo" href="#">쪽지보내기</a></li>
+				                    </ul>
 					             </td>
 					             <td>${list.m_date}</td>
 				             </tr>
@@ -158,9 +158,6 @@
 	  $("#close").click(function(){
 	    window.close();
 	  });
-	  $("#close").click(function(){
-		    window.close();
-		  });
 	  
 	  $(document).on('click', '#deleteMemo', function(){//삭제시 재갱신s
 		  var chk_arr = [];
