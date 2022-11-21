@@ -35,6 +35,7 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/free.css" rel="stylesheet">
 <style>
 /* .btn-success btn-lg {
    float: right;
@@ -92,22 +93,7 @@
 .son_time {
 	gk font-size: 13px;
 }
-/*  표 style */
-.card-body {
-	overflow-x: auto;
-}
 
-.table table-hover {
-	width: 100%;
-	min-width: 500px;
-	display: block;
-	overflow: auto;
-}
-
-/* .table-hover{
-    display: block;
-  	overflow: auto; 
-  } */
 
 </style>
 </head>

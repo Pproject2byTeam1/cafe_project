@@ -37,6 +37,7 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/free.css" rel="stylesheet">
 <style>
 /* .btn-success btn-lg {
    float: right;
