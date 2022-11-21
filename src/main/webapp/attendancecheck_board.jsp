@@ -156,7 +156,15 @@
 	            </div>
 	              <div class="col-sm-1 align-self-center text-lg-end"><em class="rank2">2등</em></div>
 	              <div class="col-sm-6 align-self-center"><p class="text-justify ">ㅊㅊ</p></div>
-	              <div class="col-sm-3 align-self-center text-lg-end">11 / 25 | 01 : 10 <a href="#" class="btn btn-warning">삭제</a></div>
+	              <div class="col-sm-3 align-self-center text-lg-end">
+	              <nav style="--bs-breadcrumb-divider: '|';">
+	                <ol class="breadcrumb">
+	                  <li class="breadcrumb-item">11 / 25</li>
+	                  <li class="breadcrumb-item">01 : 02</li>
+	                  <li class="breadcrumb-item active"><a href="#" class="btn btn-warning">삭제</a></li>
+	                </ol>
+	              </nav>
+	              </div>
 	              <hr>
 	            </div>
 	            <div class="card-body row">
@@ -170,7 +178,14 @@
 	            </div>
 	              <div class="col-sm-1 align-self-center text-lg-end"><em class="rank1">1등</em></div>
 	              <div class="col-sm-6 align-self-center"><p class="text-justify">ㅊㅊㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</p></div>
-	              <div class="col-sm-3 align-self-center text-lg-end">11 / 25 | 01 : 02 <a href="#" hidden="" class="btn btn-warning">삭제</a></div>
+	              <div class="col-sm-3 align-self-center text-lg-end">
+	              <nav style="--bs-breadcrumb-divider: '|';">
+	                <ol class="breadcrumb">
+	                  <li class="breadcrumb-item">11 / 25</li>
+	                  <li class="breadcrumb-item">01 : 02</li>
+	                  <!-- <li class="breadcrumb-item active"><a href="#" hidden="" class="btn btn-warning">삭제</a></li> -->
+	                </ol>
+	              </nav>
 	              <hr>
 	            </div>
 				<ul class="pagination justify-content-center">

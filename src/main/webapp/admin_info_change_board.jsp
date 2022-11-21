@@ -68,24 +68,24 @@
           	  <!-- 정보변경 -->
 	          <div class="card">
 	            <div class="card-body">
-	              <h5 class="card-title">Admin 정보변경</h5>
+	              <h3 class="card-title">Admin 정보변경</h3>
 	            
                 <div class="row mb-3">
-                  <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                  <div class="col-sm-10">
+                  <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+                  <div class="col-sm-9">
                     <input type="email" class="form-control">
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                  <div class="col-sm-10">
+                  <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
+                  <div class="col-sm-9">
                     <input type="password" class="form-control">
                     <p>최소 8자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수문자로 되어야 합니다.</p>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Password 재확인</label>
-                  <div class="col-sm-7">
+                  <label for="inputPassword" class="col-sm-3 col-form-label">Password 재확인</label>
+                  <div class="col-sm-6">
                     <input type="password" class="form-control">
                   </div>
                   <div class="col-sm-3">
@@ -93,8 +93,8 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">별명</label>
-                  <div class="col-sm-7">
+                  <label for="inputText" class="col-sm-3 col-form-label">닉네임</label>
+                  <div class="col-sm-6">
                     <input type="text" class="form-control">
                     <p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
                   </div>
@@ -103,20 +103,20 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">출생년도</label>
-                  <div class="col-sm-10">
+                  <label for="inputNumber" class="col-sm-3 col-form-label">출생년도</label>
+                  <div class="col-sm-9">
                     <input type="number" class="form-control" value="2000">
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputDate" class="col-sm-2 col-form-label">생일</label>
-                  <div class="col-sm-10">
+                  <label for="inputDate" class="col-sm-3 col-form-label">생일</label>
+                  <div class="col-sm-9">
                     <input type="date" class="form-control">
                   </div>
                 </div>
 					<fieldset class="row mb-3">
-	                  <legend class="col-form-label col-sm-2 pt-0">성별</legend>
-	                  <div class="col-sm-10">
+	                  <legend class="col-form-label col-sm-3 pt-0">성별</legend>
+	                  <div class="col-sm-9">
 	                    <div class="form-check">
 	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
 	                      <label class="form-check-label" for="gridRadios1">

@@ -35,6 +35,7 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/free.css" rel="stylesheet">
 <style>
 /* .btn-success btn-lg {
    float: right;
@@ -86,23 +87,7 @@ text-align: center;
 .son_time{
    font-size: 13px; 
 }
-     /*여기부터  */
-     .ri-account-circle-fill{
-     color:#2353a5;font-size:75px;
-     }
-     .area{
-     float:left;
-     
-     }
-   .insertbutton{
-   
-    padding: 2;
-    margin: 0;
-    box-sizing: border-box;
-    font-size: 0;
-    letter-spacing: 0;
-    word-spacing: 0;
-   }
+ 
 </style>
 </head>
 
@@ -170,16 +155,17 @@ text-align: center;
 	            <div class="card-body row">
 	            <h5 class="card-title">댓글</h5>
 	            <hr><br>
-	            <div class="form-floating col-lg-10 area">
+	            <div>
+	            <div class="form-floating col-lg-10 ">
                       <textarea class="form-control" placeholder="답글을 작성해주세요" style="height: 50px;"></textarea>
-                         <button type="submit" class="btn btn-primary">작성</button>
+                      
                       
                 </div>
 	             <div class="insertbutton">
                     <button type="submit" class="btn btn-primary">작성</button>
                   </div>
               
-	            
+	            </div>
 	            <div class="col-sm-2">
 	              <table>
 		             <tr>
