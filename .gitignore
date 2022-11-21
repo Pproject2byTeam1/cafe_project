@@ -3,6 +3,7 @@
 
 ### Eclipse ###
 .metadata
+/kr/
 bin/
 tmp/
 *.tmp
