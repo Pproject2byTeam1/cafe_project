@@ -9,7 +9,7 @@ public class Board {
 	private String nick;
 	private String content;
 	private int hits;
-	private Date w_date;
+	private String w_date;
 	private int report_count;
 	private String notic;
 	private String email_id;
@@ -46,10 +46,10 @@ public class Board {
 	public void setHits(int hits) {
 		this.hits = hits;
 	}
-	public Date getW_date() {
+	public String getW_date() {
 		return w_date;
 	}
-	public void setW_date(Date w_date) {
+	public void setW_date(String w_date) {
 		this.w_date = w_date;
 	}
 	public int getReport_count() {
