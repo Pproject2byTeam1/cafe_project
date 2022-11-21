@@ -9,7 +9,7 @@ public class User_Details extends User {
 	private int visit_count;
 	private int w_count;
 	private int re_count;
-	private int year_birth;
+	private String year_birth;
 	private String gender;
 	private String phone;
 	
@@ -49,10 +49,10 @@ public class User_Details extends User {
 	public void setRe_count(int re_count) {
 		this.re_count = re_count;
 	}
-	public int getYear_birth() {
+	public String getYear_birth() {
 		return year_birth;
 	}
-	public void setYear_birth(int year_birth) {
+	public void setYear_birth(String year_birth) {
 		this.year_birth = year_birth;
 	}
 	public String getPhone() {

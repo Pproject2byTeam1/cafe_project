@@ -63,6 +63,11 @@
 							<!-- 회원 퍼센트 만지는곳 -->
 							<div class="progress" style="height: 30px; position: relative; border-radius: 5px; border: 1px solid grey; padding: 0;">
 
+								<div
+									style="background-color: grey; width: 1px; height: 40px; position: absolute; left: 25%;">
+								</div>
+								
+
 								<div class="progress-bar progress-bar-striped moving" style="width: 0%; height: 30px;">
 									
 								</div>
@@ -151,15 +156,23 @@
 		document.querySelector('.moving').style.width = i + '%';
 	}
 
-
-	
-	/* reqdata=회원수 회원수에 따라 늘어나는 칸 */
-	let reqdata = 4;
-	let b = 100/reqdata; //20 40 60 80 100
-	
-	for(let a=1; a<=reqdata; a++){
-		$(".progress").prepend("<div style='background-color: grey; width: 1px; height: 40px; position: absolute; left: " + b*a + "%;'> </div>")	
+	for (let index=4; index/100;) {
+		$(".progress").append("<div style='background-color: grey; width: 1px; height: 40px; position: absolute; left: " + 4/100 + "%;'> </div>")
 	}
+	
+	( 5 / 100 ) * 5
+
+	for (let index = 5; index < array.length; index++) {
+		const element = array[index];
+		
+	}
+
+	let reqdata = 5;
+	let b = 100/reqdata; //20 40 60 80 100
+	$(".progress").append("<div style='background-color: grey; width: 1px; height: 40px; position: absolute; left: " + b*1 + "%;'> </div>")
+	// for (let a = 1; a<=reqdata; a++) {
+		
+	// }
 	
 </script>
 

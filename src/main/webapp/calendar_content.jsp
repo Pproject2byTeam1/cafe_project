@@ -116,7 +116,11 @@ text-align: center;
 			  <div class="card">
             <div class="card-body">
               <h5 class="card-title">정모하는 날</h5>
-
+			<div>
+				시작일 &emsp;  &emsp;  &emsp; &emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;종료일
+			
+			
+			</div>
               <!-- Floating Labels Form -->
               <form class="row g-3">
                 <div class="col-md-3">
@@ -157,12 +161,14 @@ text-align: center;
 	            <hr><br>
 	            <div>
 	            <div class="form-floating col-lg-10 ">
+	            <div class="row">
                       <textarea class="form-control" placeholder="답글을 작성해주세요" style="height: 50px;"></textarea>
                       
                       
                 </div>
-	             <div class="insertbutton">
+	             <div class="insertbutton col-lg-2 ">
                     <button type="submit" class="btn btn-primary">작성</button>
+                  </div>
                   </div>
               
 	            </div>
