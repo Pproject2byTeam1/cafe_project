@@ -26,24 +26,38 @@
   </style>
   
 </head>
-<body style="background-color: #f6f9ff;">
+<body>
   
   
-  <main id="main" class="main">
+  <main id="main" class="main" style="background-color: #f6f9ff; border-radius: 25px;">
   <!-- 여기서부터 작성 와랄ㄹ라  -->
-    <div class="pagetitle" >
-         <h1>회원등급</h1>
-         <br>
+      <div class="pagetitle" >
          
-         <p>카페 등급 기준</p>
-    </div>
-
-    <br><br>
+         <p><h1>&nbsp;등급 알림</h1></p>
+         <nav>
+            <ol class="breadcrumb">
+            </ol>
+         </nav>
+      </div>
 
   	<div class="container">
-         <div class="row">
-            <div></div>
-              
+         <div class="row col-md-10">   
+            <table class="table text-center" >
+                  <tr>
+                     <th>
+                        준회원
+                     </th>
+                     <th>
+                        정회원
+                     </th>
+                     <th>
+                        우수회원
+                     </th>
+                     <th>
+                        특별회원
+                     </th>
+                  </tr>
+            </table>
 
             <!-- 회원 퍼센트 만지는곳 -->
                 <div class="progress" style="height:30px; position: relative; border-radius: 5px; border: 1px solid grey; padding: 0;">
@@ -53,7 +67,7 @@
                     <div class="progress-bar progress-bar-striped moving" style="width:0%;height:30px;"></div>
                 </div>
 
-                <br><br>
+                <br><br><br>
 
 
             <!-- 회원 등급 적는곳 -->

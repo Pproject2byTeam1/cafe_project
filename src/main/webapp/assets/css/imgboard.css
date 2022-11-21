@@ -1,21 +1,21 @@
 @charset "UTF-8";
 
 #columns {
-	column-width: 300px;
-	column-gap: 20px;
+   column-width: 300px;
+   column-gap: 20px;
 }
 
 #columns figure {
-	display: inline-block;
-	margin: 0;
-	margin-bottom: 15px;
+   display: inline-block;
+   margin: 0;
+   margin-bottom: 15px;
 }
 
 #columns figure img {
-	width: 100%;
-	border-radius: 5%;
+   width: 100%;
+   border-radius: 5%;
 }
 
 #columns figure figcaption {
-	padding: 10px;
+   padding: 10px;
 }

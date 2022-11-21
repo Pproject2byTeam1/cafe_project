@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class User_Details extends User {
 	private String email_id;
-	private Date join_date;
-	private Date last_visit_date;
+	private String join_date;
+	private String last_visit_date;
 	private int visit_count;
 	private int w_count;
 	private int re_count;
@@ -19,16 +19,16 @@ public class User_Details extends User {
 	public void setEmail_id(String email_id) {
 		this.email_id = email_id;
 	}
-	public Date getJoin_date() {
+	public String getJoin_date() {
 		return join_date;
 	}
-	public void setJoin_date(Date join_date) {
+	public void setJoin_date(String join_date) {
 		this.join_date = join_date;
 	}
-	public Date getLast_visit_date() {
+	public String getLast_visit_date() {
 		return last_visit_date;
 	}
-	public void setLast_visit_date(Date last_visit_date) {
+	public void setLast_visit_date(String last_visit_date) {
 		this.last_visit_date = last_visit_date;
 	}
 	public int getVisit_count() {
