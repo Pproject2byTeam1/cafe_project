@@ -50,4 +50,46 @@ text-align: center;
 .son_time{
 	font-size: 13px; 
 }
+.card-body {
+	overflow-x: auto;
+}
+
+.table table-hover {
+	width: 100%;
+	min-width: 500px;
+	display: block;
+	overflow: auto;
+}
+  .ri-account-circle-fill{
+     color:#2353a5;font-size:75px;
+     }
+     .area{
+     float:left;
+     
+     }
+   .insertbutton{
+   
+    padding: 2;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 0;
+    letter-spacing: 0;
+    word-spacing: 0;
+   }
+   .selectpicker  .electpicker2 {
+	width: 100px;
+	height: 50px;
+	border-radius: 5px;
+}
+
+.inputtitle{
+
+width :200px;
+height : 50px;
+
+
+}
+  .selectpicker  .electpicker2{
+width:100px;height:50px; border-radius: 5px;
+}
      
