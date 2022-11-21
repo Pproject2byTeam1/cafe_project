@@ -1,6 +1,6 @@
 package kr.or.kosa.dto;
 
-public class Regular_Board{
+public class Regular_Board extends Board{
 	private int b_idx;
 	private int idx;
 	private int refer;

@@ -2,7 +2,7 @@ package kr.or.kosa.dto;
 
 import java.util.Date;
 
-public class User_Details {
+public class User_Details extends User {
 	private String email_id;
 	private Date join_date;
 	private Date last_visit_date;

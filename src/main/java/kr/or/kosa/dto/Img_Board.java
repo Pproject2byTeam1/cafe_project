@@ -1,6 +1,6 @@
 package kr.or.kosa.dto;
 
-public class Img_Board{
+public class Img_Board extends Board{
 	private int b_idx;
 	private int idx;
 	private String img_name;
