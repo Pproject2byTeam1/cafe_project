@@ -37,6 +37,7 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
+<link href="assets/css/free.css" rel="stylesheet">
 <style>
 /* .btn-success btn-lg {
    float: right;
@@ -106,23 +107,8 @@
 	overflow: auto;
 }
 
-/* .table-hover{
-    display: block;
-  	overflow: auto; 
-  } */
-.selectpicker  .electpicker2 {
-	width: 100px;
-	height: 50px;
-	border-radius: 5px;
-}
-
-.inputtitle{
-
-width :200px;
-height : 50px;
 
 
-}
 
 </style>
 <script>
