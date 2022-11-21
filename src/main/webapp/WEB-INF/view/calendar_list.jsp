@@ -48,18 +48,91 @@
   	
   		document.addEventListener('DOMContentLoaded', function() {
   			
+  			$("#read_reset").click(function(){
+  				document.getElementById("read").className += " d-none";
+  			});
+  			$("#add_reset").click(function(){
+  				document.getElementById("add").className += " d-none";
+  			});
+  			
 			let today = new Date();
   			
   			let year = today.getFullYear();
   			let month = today.getMonth() + 1;
   			
-  			const requestdata = {"b_code": 3, "year": year, "month": month};
+  			let idx = "";
   			
-  			function calEventClick(){
-  				alert("일정 이벤트 클릭");
+  			function calEventClick(info, dateList, yesList){ //일정 읽기
+  				
+  				$('#caltitle').text(info.event.title);
+  				$('#calcontent').text();
+  				
+  				$(dateList).each(function(){
+  					if(this.title == info.event.title){
+  						$('#calcontent').text(this.content);
+  						$('#read-startdate').val(this.start_date);
+  						$('#read-enddate').val(this.end_date);
+  						idx = this.idx;
+  						$(yesList).each(function(){
+  							if(this.idx == idx){
+  								$("#gridCheck2").prop("checked", true);
+  							}
+  						});
+  					}
+  				})
+  				
+  				if(document.getElementById("add").classList.item(4) == null){
+					document.getElementById("add").className += " d-none";
+		        }
+  				
+  				if(document.getElementById("read").classList.item(4) == null){
+					document.getElementById("read").className += " d-none";
+		        }else{
+		        	document.getElementById("read").classList.remove("d-none");
+		        }
+  				
+  				//나중에 member 페이지 만들면 email_id 수정해야함
+  	  			const requestdata1 = {"email_id": "T1@naver.com", "idx": idx};
+  	  			
+  	  			//참석 여부
+  	  			$('#gridCheck2').click(function(){
+  	  				if($('#gridCheck2').is(':checked')){
+  	  					$.ajax({
+  	  						type: "POST",
+  	  						url: "CalendarCheck",
+  	  						data: requestdata1,
+  	  						dataType: "JSON",
+  	  						success: function(data){
+  	  							console.log(data);
+  	  							Swal.fire({
+  	  								icon: 'success',
+  	  								title: data
+  	  							});
+  	  						}
+  	  					});
+  	  				}else{
+  	  					$.ajax({
+  	  					type: "POST",
+	  						url: "CalendarCheckRemove",
+	  						data: requestdata1,
+	  						dataType: "JSON",
+	  						success: function(data){
+	  							console.log(data);
+	  							Swal.fire({
+  	  								icon: 'success',
+  	  								title: data
+  	  							});
+	  						}
+  	  					});
+  	  				}
+  	  			});
+  				
   			}
   			
-  			function loadlist(){
+  			//나중에 member 페이지 만들면 email_id 수정해야함
+  			const requestdata = {"b_code": 3, "year": year, "month": month, "email_id": "T1@naver.com"};
+  			
+  			function loadlist(){ //달력 생성
   				$.ajax({
   					type: "POST",
   					url: "CalendarList",
@@ -67,12 +140,16 @@
   					dataType: "JSON",
   					success: function(data){
   						
-  						let datelist = new Array();
+  						console.log(data);
   						
-  						$(data).each(function(){
-  							const date = {title: this.title, start: this.start_date, end: this.end_date}
+  						let datelist = new Array();
+  						const dateList = new Array(); //일정 전체 데이터
+  						
+  						$(data[0]).each(function(){
+  							const date = {title: this.title, start: this.start_date, end: this.end_date};
   							
   							datelist.push(date);
+  							dateList.push(this);
   						});
   						
   						let calendarEl = document.getElementById('calendar');
@@ -82,7 +159,11 @@
   								parkCustomButton: {
   									text: '추가',
   									click: function(){
-  										if(document.getElementById("add").classList.item(3) == null){
+  										if(document.getElementById("read").classList.item(4) == null){
+  											document.getElementById("read").className += " d-none";
+  								        }
+  										
+  										if(document.getElementById("add").classList.item(4) == null){
   											document.getElementById("add").className += " d-none";
   							            }else{
   							                document.getElementById("add").classList.remove("d-none");
@@ -111,7 +192,9 @@
   			  				locale: 'ko', // 한국어 설정
   	  						dayMaxEventRows:true,
   			  				events: datelist,
-  			  				eventClick: calEventClick, //이벤트 클릭시 
+  			  				eventClick: function(info){//이벤트 클릭시 
+  			  					calEventClick(info, dateList, data[1]);
+  			  				}, 
   						});
   						
   						calendar.render();
@@ -122,7 +205,6 @@
   					}
   				});
   			}
-  			
   			loadlist();
   		});
   	
@@ -160,14 +242,26 @@
 	  	<div class="container">
 			<div class="row">
 				<div id="calendar" class="col mb-5"></div>
-				<div id="add" class="mt-10 col-md-6 park-card p-4"><!-- d-none -->
+				
+				<!-- 일정 추가 -->
+				<div id="add" class="mt-10 col-md-6 park-card p-4 d-none">
 					<div class="park-card-body row">
 						<div class="card">
 							<div class="card-body">
-								<h5 class="card-title"><strong>일정 추가</strong></h5>
+							
+								<div class="row mt-2">
+									<h4 class="col card-title"><strong>일정 추가</strong></h4>
+									<div class="col mt-3">
+										<select class="form-select" id="floatingSelect">
+											<option selected>Not Started</option>
+											<option value="1">In progress</option>
+											<option value="2">Done</option>
+										</select>
+									</div>
+								</div>
 
 								<!-- Floating Labels Form -->
-								<form class="row g-3">
+								<form class="row g-3 mt-2">
 									<div class="col-md-12">
 										<div class="form-floating">
 											<input type="text" class="form-control" id="floatingName"
@@ -176,12 +270,22 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-floating">
-											
+											<div class="row mb-3">
+												<label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+												<div class="col-sm-10">
+													<input type="date" class="form-control">
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-floating">
-											
+											<div class="row mb-3">
+												<label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+												<div class="col-sm-10">
+													<input type="date" class="form-control">
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="col-12">
@@ -191,28 +295,82 @@
 											<label for="floatingTextarea">상세 일정</label>
 										</div>
 									</div>
-									<div class="col-md-6">
+									<div class="text-center">
+										<button type="button" class="btn btn-primary">확인</button>
+										<button type="reset" id="add_reset" class="btn btn-secondary">취소</button>
+									</div>
+								</form>
+								<!-- End floating Labels Form -->
+
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 일정 내용 보기 -->
+				<div id="read" class="mt-10 col-md-6 park-card p-4 d-none">
+					<div class="park-card-body row">
+						<div class="card">
+							<div class="card-body">
+							
+								<div class="row mt-2">
+									<h4 class="col card-title"><strong>일정</strong></h4>
+									<div class="col mt-3">
+										<select class="form-select" id="floatingSelect">
+											<option selected>Not Started</option>
+											<option value="1">In progress</option>
+											<option value="2">Done</option>
+										</select>
+									</div>
+								</div>
+
+								<!-- Floating Labels Form -->
+								<form class="row g-3 mt-2">
+									<div class="col-md-12">
+										<div class="form-floating">
+											<h4 id="caltitle"></h4>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-floating">
+											<div class="row mb-3">
+												<label for="inputDate" class="col-sm-2 col-form-label">시작일</label>
+												<div class="col-sm-10">
+													<input type="date" id="read-startdate" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-floating">
+											<div class="row mb-3">
+												<label for="inputDate" class="col-sm-2 col-form-label">종료일</label>
+												<div class="col-sm-10">
+													<input type="date" id="read-enddate" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating">
+											<p id="calcontent"></p>
+										</div>
+									</div>
+									<div class="col-md-4">
+									</div>
+									<div class="col-md-4">
 										
 									</div>
 									<div class="col-md-4">
-										<div class="form-floating mb-3">
-											<select class="form-select" id="floatingSelect"
-												aria-label="State">
-												<option selected>New York</option>
-												<option value="1">Oregon</option>
-												<option value="2">DC</option>
-											</select> <label for="floatingSelect">State</label>
-										</div>
-									</div>
-									<div class="col-md-2">
-										<div class="form-floating">
-											<input type="text" class="form-control" id="floatingZip"
-												placeholder="Zip"> <label for="floatingZip">Zip</label>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox"
+												id="gridCheck2"> <label
+												class="form-check-label" for="gridCheck2">참석 여부</label>
 										</div>
 									</div>
 									<div class="text-center">
-										<button type="submit" class="btn btn-primary">Submit</button>
-										<button type="reset" class="btn btn-secondary">Reset</button>
+										<button type="button" class="btn btn-primary">확인</button>
+										<button type="reset" id="read_reset" class="btn btn-secondary">취소</button>
 									</div>
 								</form>
 								<!-- End floating Labels Form -->
