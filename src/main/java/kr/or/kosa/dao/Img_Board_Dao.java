@@ -114,6 +114,67 @@ public class Img_Board_Dao {
 		return img_board;
 	}
 	
+	//이미지 게시판 검색
+	public List<Img_Board> searchImg(int b_code, String search){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Img_Board> imglist = null;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, i.b_idx, i.img_name "
+						+ "from board b join img_board i "
+						+ "on b.idx = i.idx "
+						+ "where title like ? and b.b_code=? "
+						+ "order by b.idx desc";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "%" + search + "%");
+			pstmt.setInt(2, b_code);
+			
+			rs = pstmt.executeQuery();
+			
+			imglist = new ArrayList<Img_Board>();
+			
+			if(rs.next()) {
+				do {
+					Img_Board board = new Img_Board();
+					board.setIdx(rs.getInt("idx"));
+					board.setTitle(rs.getString("title"));
+					board.setNick(rs.getString("nick"));
+					board.setContent(rs.getString("content"));
+					board.setHits(rs.getInt("hits"));
+					board.setW_date(rs.getString("w_date"));
+					board.setReport_count(rs.getInt("report_count"));
+					board.setNotic(rs.getString("notic"));
+					board.setEmail_id(rs.getString("email_id"));
+					board.setB_code(rs.getInt("b_code"));
+					board.setB_idx(rs.getInt("b_idx"));
+					board.setImg_name(rs.getString("img_name"));
+					
+					imglist.add(board);
+				}while(rs.next());
+			}else {
+				System.out.println("조회 데이터 없음");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return imglist;
+	}
+	
 	//이미지 게시판 특정 글 삽입
 	public int insertImg_Board(Img_Board img_board) {
 		Connection conn = null;
