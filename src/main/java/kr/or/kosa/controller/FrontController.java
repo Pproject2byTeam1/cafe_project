@@ -1,4 +1,4 @@
-package controller;
+package kr.or.kosa.controller;
 
 import java.io.IOException;
 
@@ -33,13 +33,19 @@ public class FrontController extends HttpServlet {
 		Action action = null;
 		ActionForward forward = null;
 
-		if(urlcommand.equals("/board_list.do")) { //게시판 목록
+		if(urlcommand.equals("/img_board_list.do")) { //게시판 목록
 			
 			action = new Img_Board_List_Service();
 			forward = action.execute(request, response);
 			
-		} 
-
+		} else if(urlcommand.equals("/calendar_list.do")) {
+			
+			forward = new ActionForward();
+	        forward.setRedirect(false);
+	        forward.setPath("/WEB-INF/view/calendar_list.jsp");
+		}
+		
+		
 		if (forward != null) {
 			if (forward.isRedirect()) { // true 페이지 재 요청 (location.href="페이지"
 				response.sendRedirect(forward.getPath());

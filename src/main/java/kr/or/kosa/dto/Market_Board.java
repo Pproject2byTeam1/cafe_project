@@ -1,6 +1,6 @@
 package kr.or.kosa.dto;
 
-public class Market_Board {
+public class Market_Board extends Board{
 	private int b_idx;
 	private int idx;
 	private String m_mode;

@@ -32,22 +32,71 @@
   	<link href="assets/css/style.css" rel="stylesheet">
   	<link href="assets/css/imgboard.css" rel="stylesheet">
   	
-  	<!-- 무한 스크롤 -->
-  	<script src="https://unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
-	
-  	<!-- 무한 스크롤 js 코드 -->
+  	 <!--fullcalendar css-->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.js"></script>
+  	
   	<script type="text/javascript">
   	
-  		$(document).ready(function(){
+  		document.addEventListener('DOMContentLoaded', function() {
   			
-  			$('#autoScroll').jscroll({
-  				autoTrigger: true,
-  				loadingHtml: '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>',
-  				nextSelector: 'a.nextPage:last',
-  				contentSelector: '#columns',
-  				padding: 20
-  			});
+			let today = new Date();
   			
+  			let year = today.getFullYear();
+  			let month = today.getMonth() + 1;
+  			
+  			const requestdata = {"b_code": 3, "year": year, "month": month};
+  			
+  			function loadlist(){
+  				$.ajax({
+  					type: "POST",
+  					url: "CalendarList",
+  					data: requestdata,
+  					dataType: "JSON",
+  					success: function(data){
+  						
+  						console.log(data);
+  						
+  						$(data).each(function(){
+  							console.log(this.title);
+  							
+  						});
+  						
+  						let calendarEl = document.getElementById('calendar');
+  						let calendar = new FullCalendar.Calendar(calendarEl, {
+  							initialView : 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+  			  				headerToolbar : { // 헤더에 표시할 툴 바
+  			  					start : 'prev next today',
+  			  					center : 'title',
+  			  					end : 'dayGridMonth,dayGridWeek,dayGridDay'
+  			  				},
+  			  				titleFormat : function(date) {
+  			  					return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
+  			  				},
+  			  				selectable : true, // 달력 일자 드래그 설정가능
+  			  				droppable : true,
+  			  				editable : true,
+  			  				nowIndicator: true, // 현재 시간 마크
+  			  				locale: 'ko', // 한국어 설정
+  			  				events: [
+  			  					{
+  			  						title: data[0].title,
+  			  						start: data[0].start_date
+  			  					}
+  			  					]
+  						});
+  						
+  						calendar.render();
+  						
+  					},
+  					error: function(){
+  						alert("error");
+  					}
+  				});
+  			}
+  			
+  			loadlist();
   		});
   	
   	</script>
@@ -69,41 +118,28 @@
   	<!-- 여기서부터 작성 와랄ㄹ라  -->
   
   		<div class="pagetitle">
-  			<h1>IMG BOARD</h1> <!-- 게시판 이름 끌고오기 b_name -->
+  			<h1>Calendar</h1> <!-- 게시판 이름 끌고오기 b_name -->
   			<nav>
   				<ol class="breadcrumb">
   					<li class="breadcrumb-item">
   						<a href="index.html">Home</a>
   					</li>
-  					<li class="breadcrumb-item active">IMG BOARD</li>
+  					<li class="breadcrumb-item active">Calendar</li>
   				</ol>
   			</nav>
   		</div>
   		
-  		<div class="scroll" id="autoScroll">
   		
-  			<div id="columns">
-  			
-  				<c:if test="${list == null}">
-  					<p>데이터가 없습니다</p>
-  				</c:if>
-  				
-  				<c:forEach var="list" items="${list}" varStatus="status">
-	  				<figure>
-	            		<img src="image/imgTest/${img_list[status.index].img_name}">
-	            		<figcaption>${img_list[status.index].b_idx}. ${list.title}</figcaption>
-	        		</figure>
-  				</c:forEach>
-  				
-  			</div>
-  		
-  			<div class="next">
-	  			<c:if test="${cpage < pagecount}">
-					<a class="nextPage" href="img_board_list.do?b_code=4&cp=${cpage+1}&ps=${pagesize}"></a>
-				</c:if>
-  			</div>
-  			
-  		</div>
+	  	<div class="container">
+	        <div class="row">
+	            <div id="calendar"></div>
+	        </div>
+	    </div>
+	    
+	    <c:forEach var="list" items="${list}">
+	    	<p>${list.title}</p>
+	    	<p>${list.start_date}</p>
+	    </c:forEach>
   
   	<!-- 여기까지만 작성  -->
   	</main>
