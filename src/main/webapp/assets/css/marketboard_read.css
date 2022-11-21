@@ -1,4 +1,7 @@
 @charset "UTF-8";
+#YES {
+	width: 50px;
+}
 
 #columns {
    column-width: 300px;
@@ -39,4 +42,126 @@
 
 .replyinput {
    border-radius: 30px;
+}
+
+.product-title {
+    text-align:center;
+    display:table;
+    border:0.5px solid #cecece;
+    width:100%;
+    height:100%;
+}
+
+.product-img-div {
+    display:table-cell;
+    vertical-align:middle;
+}
+
+.product-img {
+    max-width:100%;
+    max-height:100%;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+#marketB_Title {
+	font-size: 36px;
+	color: #012970;
+	font-family: "Poppins", sans-serif;
+}
+
+#marketB_Text {
+	font-size: 24px;
+	font-weight: 500;
+	color: #012970;
+	font-family: "Poppins", sans-serif;
+}
+
+.marketB_img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.ns {
+	color: red;
+}
+
+#marketB_Price {
+	font-size: 36px;
+	color: orange;
+	font-family: "Poppins", sans-serif, bold;
+}
+
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	margin-inline: auto;
+}
+
+.container__content--flow {
+	padding-block: 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.container__content--flow>* {
+	flex-grow: 1;
+	margin: 10px 10px 10px 0;
+	flex-basis: calc(( 30rem - 100%)* 999);
+	min-width: 300px;
+	max-width: 300px;
+}
+
+.mcard {
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+	border-radius: 0.5em;
+	box-shadow: 0 0.125em 0.25em #0004;
+	transition: all 400ms ease;
+	position: relative;
+	padding: 10px;
+}
+
+.mcard::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	border-radius: inherit;
+	transition: opacity 300ms ease;
+	box-shadow: 0 0.125em 0.25em #0003, 0 0.65em 0.85em #0003, 0 0.96em
+		1.35em #0002;
+}
+
+.mcard:hover::before {
+	opacity: 1;
+}
+
+.mcard:nth-child(odd) {
+	flex: 1 1 25%;
+}
+
+.container__content--flow:hover .mcard:not(:hover) {
+	background-color: #fff6;
+	box-shadow: none;
+	opacity: 0.8;
+}
+
+.mcard:hover {
+	scale: 1.05;
+}
+
+@media ( max-width : 830px) {
+	.card:nth-child(odd) {
+		flex: 1 1;
+	}
 }
