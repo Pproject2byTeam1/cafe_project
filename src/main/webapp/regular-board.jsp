@@ -35,59 +35,8 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
-<style>
-/* .btn-success btn-lg {
-   float: right;
-} */
-.selectpicker{
-width:75px;height:35px; border-radius: 5px;
-}
-._3Espq6{
-width :38px;
-height:22px;
-font-size:0.9rem;
- text-align:center;
-}
-.parent{
-	width :500px;
- display: flex;
-  flex-direction: column;
-}
-.name{
-font-size:0.9rem;
-  margin-top:auto;
+<link rel="stylesheet" type="text/css" href="assets/css/free.css">
 
-vertical-align :bottom;
-
-}
-._1R-fi-{
-margin-bottom: 0.5rem;
-    color: #2b2d36;
-    line-height: 1.5;
-    font-weight: 700;
-    font-size: 1.5rem;
-    letter-spacing: -0.01875rem;
-    margin-bottom: 0;
-    color: var(--gray-600);
-    text-align: center;
-}
-
-
-.jdc{
-text-align: center;
-}
- 
-.son_name{
-	font-size: 13px; font-weight:bold;
-}
-.son_date{
-	font-size: 13px;
-}
-.son_time{
-	font-size: 13px; 
-}
-     
-</style>
 </head>
 
 <body>
@@ -109,11 +58,11 @@ text-align: center;
    <main id="main" class="main">
 
       <div class="pagetitle" >
-         <h1>자료 게시판</h1>
+         <h1>자유 게시판</h1>
          <nav>
             <ol class="breadcrumb">
                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-               <li class="breadcrumb-item active">자료게시판</li>
+               <li class="breadcrumb-item active">자유게시판</li>
             </ol>
          </nav>
       </div>

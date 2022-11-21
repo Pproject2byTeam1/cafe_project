@@ -109,7 +109,7 @@ text-align: center;
    <main id="main" class="main">
 
       <div class="pagetitle" >
-         <h1>자유 게시판</h1>
+         <h1>자료 게시판</h1>
          <nav>
             <ol class="breadcrumb">
                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
