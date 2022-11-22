@@ -5,7 +5,7 @@
 }
 
 #marketB_Title {
-	font-size: 18px;
+	font-size: 24px;
 	color: #012970;
 	font-family: "Poppins", sans-serif;
 }
@@ -17,15 +17,25 @@
 	font-family: "Poppins", sans-serif;
 }
 
+#marketB_info {
+	font-size: 14px;
+	font-weight: 500;
+	color: #012970;
+	font-family: "Poppins", sans-serif;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
 .ns {
 	color: red;
 }
 
 #marketB_Price {
-	font-size: 18px;
+	font-size: 24px;
 	color: orange;
 	font-family: "Poppins", sans-serif, bold;
-	text-align: right;
+	align-items: right;
 }
 
 *, *::before, *::after {
