@@ -33,117 +33,8 @@
 <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
 <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 <!-- 거래게시판 CSS 시작 -->
-<style type="text/css">
-#YES {
-	width: 50px;
-}
-
-#marketB_Title {
-	font-size: 18px;
-	color: #012970;
-	font-family: "Poppins", sans-serif;
-}
-
-#marketB_Text {
-	font-size: 14px;
-	font-weight: 500;
-	color: #012970;
-	font-family: "Poppins", sans-serif;
-}
-
-.ns {
-	color: red;
-}
-
-#marketB_Price {
-	font-size: 18px;
-	color: orange;
-	font-family: "Poppins", sans-serif, bold;
-	text-align: right;
-}
-
-*, *::before, *::after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-#mimg {
-	width: 280px;
-	height: 280px;
-	object-fit: cover;
-	border-radius: 5px;
-	margin: 0 0 10px 0;
-}
-
-.container {
-	display: flex;
-	justify-content: center;
-	margin-inline: auto;
-}
-
-.container__content--flow {
-	padding-block: 1rem;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1rem;
-}
-
-.container__content--flow>* {
-	flex-grow: 1;
-	margin: 10px 10px 10px 0;
-	flex-basis: calc(( 30rem - 100%)* 999);
-	min-width: 300px;
-	max-width: 300px;
-}
-
-.mcard {
-	display: flex;
-	flex-direction: column;
-	background-color: #fff;
-	border-radius: 0.5em;
-	box-shadow: 0 0.125em 0.25em #0004;
-	transition: all 400ms ease;
-	position: relative;
-	padding: 10px;
-}
-
-.mcard::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	opacity: 0;
-	border-radius: inherit;
-	transition: opacity 300ms ease;
-	box-shadow: 0 0.125em 0.25em #0003, 0 0.65em 0.85em #0003, 0 0.96em
-		1.35em #0002;
-}
-
-.mcard:hover::before {
-	opacity: 1;
-}
-
-.mcard:nth-child(odd) {
-	flex: 1 1 25%;
-}
-
-.container__content--flow:hover .mcard:not(:hover) {
-	background-color: #fff6;
-	box-shadow: none;
-	opacity: 0.8;
-}
-
-.mcard:hover {
-	scale: 1.05;
-}
-
-@media ( max-width : 830px) {
-	.card:nth-child(odd) {
-		flex: 1 1;
-	}
-}
+<link href="assets/css/marketboard_list.css" rel="stylesheet">
 <!-- 거래게시판 CSS 끝 -->
-</style>
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 </head>
@@ -217,7 +108,7 @@
 					<!-- 보드 리스트 출력 끝 -->
 
 					<div class="container container__content--flow">
-						<div class="mcard" onclick="location.href='http://192.168.0.58:8090/WebCafe_Project/marketboard_read.jsp'">
+						<div class="mcard" onclick="location.href='marketboard_read.jsp'">
 							<img src="image/marketboard_img/2.jpeg" id="mimg" loading="lazy" />
 							<span id="marketB_Title">맥북 팝니다!</span> <span id="marketB_Text">직거래는
 								혜화에서 가능...3개월정도 사용했고 상태 좋습니다. 직거래는 혜화에서 가능...</span> <span
