@@ -109,20 +109,64 @@
 
 					<div class="container container__content--flow">
 						<div class="mcard" onclick="location.href='marketboard_read.jsp'">
-							<img src="image/marketboard_img/2.jpeg" id="mimg" loading="lazy" />
+							<div class="mimg">
+							<img src="image/marketboard_img/2.jpeg" id="mimg"/>
+							</div>
+							<span id="marketB_Text.ns">직거래 | 판매중 | 전자제품</span>
+							<p>
+							<span id="marketB_Title">맥북 팝니다!</span>
+							<br>
+							<span id="marketB_Text">직거래는
+								혜화에서 가능...3개월정도 사용했고 상태 좋습니다. 직거래는 혜화에서 가능...</span>
+							<span id="marketB_Price">1,300,000</span>
+							<br>
+							<span id="marketB_info">조회수 : 120 | 댓글 : 3 | 찜 : 3</span>
+							<br>
+								<span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"
+									class="rounded-circle"> USER_NICK | 22.11.18 12:10</span>
+						</div>
+
+						<div class="mcard">
+							<div class="mimg">
+								<img src="image/marketboard_img/3.png" id="mimg"/>
+							</div>
 							<span id="marketB_Title">맥북 팝니다!</span> <span id="marketB_Text">직거래는
 								혜화에서 가능...3개월정도 사용했고 상태 좋습니다. 직거래는 혜화에서 가능...</span> <span
 								id="marketB_Price">1,300,000</span>
 							<p>
 								<span id="marketB_Text.ns">직거래</span> |<span
-									id="marketB_Text.ns">판매중</span><br>
+									id="marketB_Text.ns">판매중</span> |<span
+									id="marketB_Text.ns">전자제품</span><br>
 							<h6>
 								<img src="image/rank_icon/1.gif" alt="Profile"
 									class="rounded-circle"> USER_NICK
 							</h6>
 							<span id="marketB_Text.ns">22.11.18 12:10</span>
 							<p>
-								<span id="marketB_Text.ns">조회수 : 120</span> <span
+								<span id="marketB_Text.ns">조회수 : 120</span> |<span
+									id="marketB_Text.ns">댓글 : 3</span> |<span
+									id="marketB_Text.ns">찜 : 3</span>
+						</div>
+
+						<div class="mcard">
+							<div class="mimg">
+								<img src="image/marketboard_img/3.png" id="mimg"/>
+							</div>
+							<span id="marketB_Title">맥북 팝니다!</span> <span id="marketB_Text">직거래는
+								혜화에서 가능...3개월정도 사용했고 상태 좋습니다. 직거래는 혜화에서 가능...</span> <span
+								id="marketB_Price">1,300,000</span>
+							<p>
+								<span id="marketB_Text.ns">직거래</span> |<span
+									id="marketB_Text.ns">판매중</span> |<span
+									id="marketB_Text.ns">전자제품</span><br>
+							<h6>
+								<img src="image/rank_icon/1.gif" alt="Profile"
+									class="rounded-circle"> USER_NICK
+							</h6>
+							<span id="marketB_Text.ns">22.11.18 12:10</span>
+							<p>
+								<span id="marketB_Text.ns">조회수 : 120</span> |<span
+									id="marketB_Text.ns">댓글 : 3</span> |<span
 									id="marketB_Text.ns">찜 : 3</span>
 						</div>
 
@@ -135,14 +179,16 @@
 								id="marketB_Price">1,300,000</span>
 							<p>
 								<span id="marketB_Text.ns">직거래</span> |<span
-									id="marketB_Text.ns">판매중</span><br>
+									id="marketB_Text.ns">판매중</span> |<span
+									id="marketB_Text.ns">전자제품</span><br>
 							<h6>
 								<img src="image/rank_icon/1.gif" alt="Profile"
 									class="rounded-circle"> USER_NICK
 							</h6>
 							<span id="marketB_Text.ns">22.11.18 12:10</span>
 							<p>
-								<span id="marketB_Text.ns">조회수 : 120</span> <span
+								<span id="marketB_Text.ns">조회수 : 120</span> |<span
+									id="marketB_Text.ns">댓글 : 3</span> |<span
 									id="marketB_Text.ns">찜 : 3</span>
 						</div>
 
@@ -155,14 +201,16 @@
 								id="marketB_Price">1,300,000</span>
 							<p>
 								<span id="marketB_Text.ns">직거래</span> |<span
-									id="marketB_Text.ns">판매중</span><br>
+									id="marketB_Text.ns">판매중</span> |<span
+									id="marketB_Text.ns">전자제품</span><br>
 							<h6>
 								<img src="image/rank_icon/1.gif" alt="Profile"
 									class="rounded-circle"> USER_NICK
 							</h6>
 							<span id="marketB_Text.ns">22.11.18 12:10</span>
 							<p>
-								<span id="marketB_Text.ns">조회수 : 120</span> <span
+								<span id="marketB_Text.ns">조회수 : 120</span> |<span
+									id="marketB_Text.ns">댓글 : 3</span> |<span
 									id="marketB_Text.ns">찜 : 3</span>
 						</div>
 
@@ -175,14 +223,16 @@
 								id="marketB_Price">1,300,000</span>
 							<p>
 								<span id="marketB_Text.ns">직거래</span> |<span
-									id="marketB_Text.ns">판매중</span><br>
+									id="marketB_Text.ns">판매중</span> |<span
+									id="marketB_Text.ns">전자제품</span><br>
 							<h6>
 								<img src="image/rank_icon/1.gif" alt="Profile"
 									class="rounded-circle"> USER_NICK
 							</h6>
 							<span id="marketB_Text.ns">22.11.18 12:10</span>
 							<p>
-								<span id="marketB_Text.ns">조회수 : 120</span> <span
+								<span id="marketB_Text.ns">조회수 : 120</span> |<span
+									id="marketB_Text.ns">댓글 : 3</span> |<span
 									id="marketB_Text.ns">찜 : 3</span>
 						</div>
 
@@ -195,14 +245,16 @@
 								id="marketB_Price">1,300,000</span>
 							<p>
 								<span id="marketB_Text.ns">직거래</span> |<span
-									id="marketB_Text.ns">판매중</span><br>
+									id="marketB_Text.ns">판매중</span> |<span
+									id="marketB_Text.ns">전자제품</span><br>
 							<h6>
 								<img src="image/rank_icon/1.gif" alt="Profile"
 									class="rounded-circle"> USER_NICK
 							</h6>
 							<span id="marketB_Text.ns">22.11.18 12:10</span>
 							<p>
-								<span id="marketB_Text.ns">조회수 : 120</span> <span
+								<span id="marketB_Text.ns">조회수 : 120</span> |<span
+									id="marketB_Text.ns">댓글 : 3</span> |<span
 									id="marketB_Text.ns">찜 : 3</span>
 						</div>
 
@@ -215,54 +267,16 @@
 								id="marketB_Price">1,300,000</span>
 							<p>
 								<span id="marketB_Text.ns">직거래</span> |<span
-									id="marketB_Text.ns">판매중</span><br>
+									id="marketB_Text.ns">판매중</span> |<span
+									id="marketB_Text.ns">전자제품</span><br>
 							<h6>
 								<img src="image/rank_icon/1.gif" alt="Profile"
 									class="rounded-circle"> USER_NICK
 							</h6>
 							<span id="marketB_Text.ns">22.11.18 12:10</span>
 							<p>
-								<span id="marketB_Text.ns">조회수 : 120</span> <span
-									id="marketB_Text.ns">찜 : 3</span>
-						</div>
-
-						<div class="mcard">
-							<div class="mimg">
-								<img src="image/marketboard_img/3.png" id="mimg" loading="lazy" />
-							</div>
-							<span id="marketB_Title">맥북 팝니다!</span> <span id="marketB_Text">직거래는
-								혜화에서 가능...3개월정도 사용했고 상태 좋습니다. 직거래는 혜화에서 가능...</span> <span
-								id="marketB_Price">1,300,000</span>
-							<p>
-								<span id="marketB_Text.ns">직거래</span> |<span
-									id="marketB_Text.ns">판매중</span><br>
-							<h6>
-								<img src="image/rank_icon/1.gif" alt="Profile"
-									class="rounded-circle"> USER_NICK
-							</h6>
-							<span id="marketB_Text.ns">22.11.18 12:10</span>
-							<p>
-								<span id="marketB_Text.ns">조회수 : 120</span> <span
-									id="marketB_Text.ns">찜 : 3</span>
-						</div>
-
-						<div class="mcard">
-							<div class="mimg">
-								<img src="image/marketboard_img/3.png" id="mimg" loading="lazy" />
-							</div>
-							<span id="marketB_Title">맥북 팝니다!</span> <span id="marketB_Text">직거래는
-								혜화에서 가능...3개월정도 사용했고 상태 좋습니다. 직거래는 혜화에서 가능...</span> <span
-								id="marketB_Price">1,300,000</span>
-							<p>
-								<span id="marketB_Text.ns">직거래</span> |<span
-									id="marketB_Text.ns">판매중</span><br>
-							<h6>
-								<img src="image/rank_icon/1.gif" alt="Profile"
-									class="rounded-circle"> USER_NICK
-							</h6>
-							<span id="marketB_Text.ns">22.11.18 12:10</span>
-							<p>
-								<span id="marketB_Text.ns">조회수 : 120</span> <span
+								<span id="marketB_Text.ns">조회수 : 120</span> |<span
+									id="marketB_Text.ns">댓글 : 3</span> |<span
 									id="marketB_Text.ns">찜 : 3</span>
 						</div>
 
@@ -290,6 +304,7 @@
 						</ul>
 					</nav>
 				</div>
+			</div>
 				<!-- 보드 페이지 끝 -->
 		</section>
 	</main>
