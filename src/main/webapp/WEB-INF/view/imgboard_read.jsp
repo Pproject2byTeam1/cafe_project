@@ -32,7 +32,6 @@
   	<link href="assets/css/style.css" rel="stylesheet">
   	<link href="assets/css/imgboard.css" rel="stylesheet">
   	
-  	
 </head>
 <body>
   	<!-- ======= Header ======= -->
@@ -72,7 +71,7 @@
 					<div class="park-card p-4">
 						<div class="park-card-body row">
 							<div class="col-md-6 col mb-3">
-								<img src="image/imgTest/1.jpg">
+								<img width="500" src="image/imgTest/${imgboard.img_name}">
 							</div>
 							<div class="col-md-6">
 								<div class="ps-2 ms-10 row justify-content-between">
@@ -87,10 +86,10 @@
 									</div>
 								</div>
 								<div class="mt-2">
-									<h2><strong>나는 너구리가 아닌 고양이</strong></h2>
+									<h2><strong>${imgboard.title}</strong></h2>
 								</div>
 								<div class="mt-2">
-									<p>핳하하핳하 나는 고양이야 발을 맛보고 있어 아주 맛나네 야무져 아주 귀엽고 깜찍하당</p>
+									<p>${imgboard.content}</p>
 								</div>
 							</div>
 						</div>
