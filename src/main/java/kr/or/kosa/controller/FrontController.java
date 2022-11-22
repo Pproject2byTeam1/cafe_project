@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.service.Data_Board_List_Service;
 import kr.or.kosa.service.Img_Board_List_Service;
+import kr.or.kosa.service.Img_Board_Read_Service;
 import kr.or.kosa.service.Message_Delete_Service;
 import kr.or.kosa.service.Message_List_Service;
 import kr.or.kosa.service.User_List_Service;
@@ -36,9 +38,14 @@ public class FrontController extends HttpServlet {
 		Action action = null;
 		ActionForward forward = null;
 
-		if(urlcommand.equals("/img_board_list.do")) { //게시판 목록
+		if(urlcommand.equals("/img_board_list.do")) { //이미지 게시판 목록
 			
 			action = new Img_Board_List_Service();
+			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/img_board_read.do")) {
+			
+			action = new Img_Board_Read_Service();
 			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/calendar_list.do")) {

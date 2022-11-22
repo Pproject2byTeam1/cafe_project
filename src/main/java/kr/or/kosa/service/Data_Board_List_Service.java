@@ -1,4 +1,4 @@
-package kr.or.kosa.controller;
+package kr.or.kosa.service;
 
 import java.util.List;
 
