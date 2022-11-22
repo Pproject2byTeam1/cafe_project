@@ -2,7 +2,6 @@ package kr.or.kosa.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.dao.Board_Dao;
-import kr.or.kosa.dto.Board;
+import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Calender;
+import kr.or.kosa.dto.Yes;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 
 @WebServlet("/CalendarList")
@@ -37,7 +38,18 @@ public class CalendarList extends HttpServlet {
 			
 			JSONArray jsonlist = JSONArray.fromObject(list);
 			
-			out.print(jsonlist);
+			String email_id = request.getParameter("email_id");
+			
+			Yes_Dao yesdao = new Yes_Dao();
+			List<Yes> yes = yesdao.getYesBy_idx(email_id);
+			
+			JSONArray jsonlist1 = JSONArray.fromObject(yes);
+			
+			JSONArray json = new JSONArray();
+			json.add(jsonlist);
+			json.add(jsonlist1);
+			
+			out.print(json);
     		
     	} catch(Exception e) {
     		System.out.println(e.getMessage());
