@@ -36,66 +36,8 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/free.css" rel="stylesheet">
-<style>
-/* .btn-success btn-lg {
-   float: right;
-} */
-.selectpicker {
-   width: 75px;
-   height: 35px;
-   border-radius: 5px;
-}
-
-._3Espq6 {
-   width: 38px;
-   height: 22px;
-   font-size: 0.9rem;
-   text-align: center;
-}
-
-.parent {
-   width: 500px;
-   display: flex;
-   flex-direction: column;
-}
-
-.name {
-   font-size: 0.9rem;
-   margin-top: auto;
-   vertical-align: bottom;
-}
-
-._1R-fi- {
-   margin-bottom: 0.5rem;
-   color: #2b2d36;
-   line-height: 1.5;
-   font-weight: 700;
-   font-size: 1.5rem;
-   letter-spacing: -0.01875rem;
-   margin-bottom: 0;
-   color: var(- -gray-600);
-   text-align: center;
-}
-
-.jdc {
-   text-align: center;
-}
-
-.son_name {
-   font-size: 13px;
-   font-weight: bold;
-}
-
-.son_date {
-   font-size: 13px;
-}
-
-.son_time {
-   gk font-size: 13px;
-}
 
 
-</style>
 </head>
 
 <body>
@@ -114,97 +56,95 @@
 
    <!-- End Sidebar -->
 
-   <main id="main" class="main">
-   
-      <div class="pagetitle">
-         <h1>회원조회</h1>
-         <nav>
-            <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-               <li class="breadcrumb-item active">회원조회</li>
-            </ol>
-         </nav>
-      </div>
-      
-<div class="container-fluid">
-   <div class="row">
-      <div class="col-md-8">
-      </div>
-      <div class="col-md-2">
-      <div class="row">
-      <select class="selectpicker  col-md-6"  >
-                 <option>전체등급</option>
-                  <option>준회원</option>
-                  <option>일반회원</option>
-             </select> &nbsp;
-      
-      <select class="selectpicker2  col-md-6" >
-                 <option>전체조회</option>
-                  <option>OO조회</option>
-                  <option>OO조회</option>
-                  
-             </select>
-      
-      </div>
-      </div>
-      <div class="col-md-2">
-           
-          <div class="search-bar">
-          
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-             </form>
-           
-      </div>
-   
-   </div>
-</div>
+	<main id="main" class="main">
 
-      
-      <div class="card-body">
-            <!-- <h5 class="card-title">Table with hoverable rows</h5>-->
-            <!-- Table with hoverable rows -->
-            <table class="table table-hover">
+		<div class="pagetitle">
+			<h1>회원조회</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item active">회원조회</li>
+				</ol>
+			</nav>
+		</div>
 
-               <tr>
-                  <th scope="col">등급</th>
-                  <th scope="col">이메일</th>
-                  <th scope="col">닉네임</th>
-                  <th scope="col">이름</th>
-                  <th scope="col">휴대폰</th>
-                  <th scope="col">생년월일</th>
-                  <th scope="col">성별</th>
-                  <th scope="col">관리</th>
-               
-               </tr>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-5"></div>
+				<div class="col-md-4">
+					<div class="row">
+						<select class="selectpicker col-md-6">
+							<option>전체등급</option>
+							<option>준회원</option>
+							<option>일반회원</option>
+						</select> &nbsp;&nbsp; <select class="selectpicker2 col-md-6">
+							<option>전체조회</option>
+							<option>OO조회</option>
+							<option>OO조회</option>
+						</select>
+
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="search-bar">
+						<form class="search-form d-flex align-items-center" method="POST"
+							action="#">
+							<input type="text" name="query" placeholder="Search"
+								class="form-control" title="Enter search keyword">
+							<button type="submit" title="Search">
+								<i class="bi bi-search"></i>
+							</button>
+						</form>
+					</div>
+
+				</div>
+			</div>
 
 
-               <tr>
-                  <th scope="col">준회원(1)</th>
-                  <th scope="col">kosa@1004.com</th>
-                  <th scope="col">개발자</th>
-                  <th scope="col">홍길동</th>
-                  <th scope="col">010-1234-1234</th>
-                  <th scope="col">901030</th>
-                  <th scope="col">남</th>
-                  <th scope="col">   <button type="button" class="btn btn-primary">활동내역</button>
-                <button type="button" class="btn btn-primary">등급설정</button>
-                <button type="button" class="btn btn-danger">신고</button>
-              </th>
-                  
-               </tr>
+			<div class="card-body">
+				<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
+				<!-- Table with hoverable rows -->
+				<table class="table table-hover">
 
-            
+					<tr>
+						<th scope="col">등급</th>
+						<th scope="col">이메일</th>
+						<th scope="col">닉네임</th>
+						<th scope="col">이름</th>
+						<th scope="col">휴대폰</th>
+						<th scope="col">생년월일</th>
+						<th scope="col">성별</th>
+						<th scope="col">관리</th>
+
+					</tr>
 
 
-            </table>
-            <!-- End Table with hoverable rows -->
-   
-</div>
+					<tr>
+						<td scope="col">준회원(1)</td>
+						<td scope="col">kosa@1004.com
+						</td>
+						<td scope="col">개발자</td>
+						<td scope="col">홍길동</td>
+						<td scope="col">010-1234-1234</td>
+						<td scope="col">901030</td>
+						<td scope="col">남</td>
+						<td scope="col">
+							<div class="btn-group" role="group" aria-label="Basic example">
+								<button type="button" class="btn btn-primary btn-sm">활동내역</button>
+								<button type="button" class="btn btn-primary btn-sm">등급설정</button>
+								<button type="button" class="btn btn-danger btn-sm">신고</button>
+							</div>
+							
+						</td>
 
-   </main>
-   <!-- End #main -->
+					</tr>
+
+				</table>
+				<!-- End Table with hoverable rows -->
+			</div>
+	</main>
+	<!-- End #main -->
 
    <!-- ======= Footer ======= -->
    <footer id="footer" class="footer">

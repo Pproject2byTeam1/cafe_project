@@ -37,7 +37,7 @@ public class Board_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select * from"
+			String sql = "select * from "
 						+ "(select rownum rn, idx, title, nick, content, hits, to_char(w_date, 'yyyy-MM-dd') as w_date, report_count, email_id, b_code from Board)"
 						+ "where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);

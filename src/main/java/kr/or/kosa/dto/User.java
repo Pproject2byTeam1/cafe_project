@@ -10,6 +10,14 @@ public class User {
 	private String birth;
 	private int point;
 	private String isAdmin;
+	private int rank;
+	
+	public int getRank() {
+		return rank;
+	}
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
 	public String getEmail_id() {
 		return email_id;
 	}
@@ -55,9 +63,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [email_id=" + email_id + ", password=" + password + ", name=" + name + ", nick=" + nick
-				+ ", birth=" + birth + ", point=" + point + ", isAdmin=" + isAdmin + "]";
+				+ ", birth=" + birth + ", point=" + point + ", isAdmin=" + isAdmin + ", rank=" + rank + "]";
 	}
-	
 	
 	
 }
