@@ -46,6 +46,7 @@ public class FrontController extends HttpServlet {
 			forward = new ActionForward();
 	        forward.setRedirect(false);
 	        forward.setPath("/WEB-INF/view/calendar_list.jsp");
+	        
 		} else if(urlcommand.equals("/memo_list.do")) {//메모 리스트 보기
 			
 			action = new Message_List_Service();
@@ -57,9 +58,15 @@ public class FrontController extends HttpServlet {
 			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/user_list.do")) { //유저 정보들 보기
-			System.out.println("깐트로라~");
+			
 			action = new User_List_Service();
 			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/databoard_list.do")){ // 데이터 게시판 리스트
+			
+			action = new Data_Board_List_Service();
+			forward = action.execute(request, response);
+			
 		}
 		
 		
