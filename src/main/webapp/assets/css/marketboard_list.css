@@ -4,84 +4,27 @@
 	width: 50px;
 }
 
-#col {
-   column-width: 350px;
-   column-gap: 10px;
-}
-
-#col figure {
-   display: inline-block;
-   margin: 0;
-   margin-bottom: 15px;
-}
-
-#columns figure img {
-   width: 100%;
-   border-radius: 5%;
-}
-
-#columns figure figcaption {
-   padding: 10px;
-}
-
-.marketcard {
-  background-color : white;
-  margin-bottom: 30px;
-  border-radius: 5%;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-  padding : 15px;
-}
-
-.marketcard-body {
-  padding: 10px 10px 10px 10px;
-}
-
-.marketcard-body img{
-   width: 100%;
-   border-radius: 5%;
-}
-
-.replyinput {
-   border-radius: 30px;
-}
-
-.product-title {
-    text-align:center;
-    display:table;
-    border:0.5px solid #cecece;
-    width:100%;
-    height:100%;
-}
-
-.product-img-div {
-    display:table-cell;
-    vertical-align:middle;
-}
-
-.product-img {
-    max-width:100%;
-    max-height:100%;
-    object-fit: contain;
-    border-radius: 5px;
-}
-
 #marketB_Title {
-	font-size: 36px;
+	font-size: 24px;
 	color: #012970;
 	font-family: "Poppins", sans-serif;
 }
 
 #marketB_Text {
-	font-size: 24px;
+	font-size: 14px;
 	font-weight: 500;
 	color: #012970;
 	font-family: "Poppins", sans-serif;
 }
 
-.marketB_img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
+#marketB_info {
+	font-size: 14px;
+	font-weight: 500;
+	color: #012970;
+	font-family: "Poppins", sans-serif;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .ns {
@@ -89,15 +32,24 @@
 }
 
 #marketB_Price {
-	font-size: 36px;
+	font-size: 24px;
 	color: orange;
 	font-family: "Poppins", sans-serif, bold;
+	align-items: right;
 }
 
 *, *::before, *::after {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+#mimg {
+	width: 280px;
+	height: 280px;
+	object-fit: cover;
+	border-radius: 5px;
+	margin: 0 0 10px 0;
 }
 
 .container {

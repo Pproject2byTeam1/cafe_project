@@ -14,7 +14,7 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Message_Delete_Service;
 import kr.or.kosa.service.Message_List_Service;
-import kr.or.kosa.service.User_Search_Service;
+import kr.or.kosa.service.User_List_Service;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -46,6 +46,7 @@ public class FrontController extends HttpServlet {
 			forward = new ActionForward();
 	        forward.setRedirect(false);
 	        forward.setPath("/WEB-INF/view/calendar_list.jsp");
+	        
 		} else if(urlcommand.equals("/memo_list.do")) {//메모 리스트 보기
 			
 			action = new Message_List_Service();
@@ -56,9 +57,16 @@ public class FrontController extends HttpServlet {
 			action = new Message_Delete_Service();
 			forward = action.execute(request, response);
 			
-		} else if(urlcommand.equals("/user_search.do")) { //유저 정보들 보기
-			action = new User_Search_Service();
+		} else if(urlcommand.equals("/user_list.do")) { //유저 정보들 보기
+			
+			action = new User_List_Service();
 			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/databoard_list.do")){ // 데이터 게시판 리스트
+			
+			action = new Data_Board_List_Service();
+			forward = action.execute(request, response);
+			
 		}
 		
 		

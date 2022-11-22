@@ -62,8 +62,9 @@
     
     <p><a href="img_board_list.do?b_code=4">이미지 게시판</a></p>
     <p><a href="calendar_list.do">캘린더</a></p>
-    <p><a href="user_search.do">회원리스트</a></p>
+    <p><a href="user_list.do">회원목록</a></p>
     <button onclick="new_window()"> 쪽지 리스트</button>
+    <p><a href="databoard_list.do">거래 게시판</a></p>
 
     <section class="section dashboard">
       <div class="row">

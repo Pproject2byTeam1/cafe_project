@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+   
 <!DOCTYPE html>
 <html>
 
@@ -91,7 +94,9 @@ text-align: center;
 </head>
 
 <body>
-
+<c:set var="pagesize" value='<%=request.getAttribute("pagesize")%>' />
+	<c:set var="cpage" value='<%=request.getAttribute("cpage")%>' />
+	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
    <!-- ======= Header ======= -->
    <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -121,7 +126,10 @@ text-align: center;
       <!--글쓰기 버튼  -->
       <div align="right">
          <button type="button" class="btn btn-success">글쓰기</button>&nbsp;
-            <select class="selectpicker" data-width="75px">
+            <select class="selectpicker" data-width="75px" name="ps" onchange="submit()">
+              
+              
+              
                  <option>10개씩</option>
                   <option>15개씩</option>
                   <option>20개씩</option>
@@ -134,7 +142,7 @@ text-align: center;
          <div class="card-body">
 
             <!-- Table with hoverable rows -->
-            <table class="table table-hover">
+            <table class="table table-hover" >
                <thead>
                   <tr>
                    <th scope="col"></th>
