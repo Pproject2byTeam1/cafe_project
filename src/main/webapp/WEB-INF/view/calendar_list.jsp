@@ -40,7 +40,7 @@
 	<script src="https://unpkg.com/tippy.js@6"></script>
 	
 	<!-- sweetalert -->
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   	
   	<script type="text/javascript">
   	
@@ -62,6 +62,42 @@
   			
   			let idx = "";
   			
+  			//일정 추가 버튼 클릭
+  			$("#add_btn").click(function(){
+  				
+  				let requestdata3 = {
+  						"title": $("#caltitle").val(), 
+  						"start_date":$("#calstart_date").val() , 
+  						"end_date":$("#calend_date").val() , 
+  						"content":$("#calcontent").val() , 
+  						"finish":$("#addSelect option:selected").val() , 
+  						"email_id": "T1@naver.com", 
+  						"nick": "치츠스콘", 
+  						"b_code": 3
+  					};
+  				
+  				$.ajax({
+  					type: "POST",
+					url: "AddCalender",
+					data: requestdata3,
+					dataType: "HTML",
+					success: function(data){
+						console.log(data);
+						swal(data);
+						
+						document.getElementById("add").className += " d-none";
+						$("#caltitle").val('');
+						$("#calstart_date").val('');
+						$("#calend_date").val('');
+						$("#calcontent").val('');
+						$('#addSelect').val("");
+						
+						loadlist();
+					}
+  				});
+  				
+  			});
+  			
   			function calEventClick(info, dateList, yesList){ //일정 읽기
   				
   				$('#caltitle').text(info.event.title);
@@ -73,6 +109,16 @@
   						$('#read-startdate').val(this.start_date);
   						$('#read-enddate').val(this.end_date);
   						idx = this.idx;
+  						
+  						if(this.finish == "F"){
+  							$("#readSelect").val("2").prop("disabled", true);
+  						}else if(this.finish == "T"){
+  							$("#readSelect").val("3").prop("disabled", true);
+  						}else{
+  							$("#readSelect").val("1").prop("disabled", true);
+  						}
+  						
+  						
   						$(yesList).each(function(){
   							if(this.idx == idx){
   								$("#gridCheck2").prop("checked", true);
@@ -126,7 +172,7 @@
   	  				if($('#gridCheck2').is(':checked')){
   	  					$.ajax({
   	  						type: "POST",
-  	  						url: "CalendarCheck",
+  	  						url: "Yes",
   	  						data: requestdata1,
   	  						dataType: "JSON",
   	  						success: function(data){
@@ -136,7 +182,7 @@
   	  				}else{
   	  					$.ajax({
   	  					type: "POST",
-	  						url: "CalendarCheckRemove",
+	  						url: "YesRemove",
 	  						data: requestdata1,
 	  						dataType: "JSON",
 	  						success: function(data){
@@ -177,15 +223,15 @@
   							customButtons: {
   								parkCustomButton: {
   									text: '추가',
-  									click: function(){
+  									click: function(){	//일정 추가
   										if(document.getElementById("read").classList.item(4) == null){
   											document.getElementById("read").className += " d-none";
   								        }
   										
-  										if(document.getElementById("add").classList.item(4) == null){
+  										if(document.getElementById("add").classList.item(4) == null){ //사라지게 하기
   											document.getElementById("add").className += " d-none";
   							            }else{
-  							                document.getElementById("add").classList.remove("d-none");
+  							                document.getElementById("add").classList.remove("d-none"); //나타내기
   							            }
   									}
   								}
@@ -271,7 +317,7 @@
 								<div class="row mt-2">
 									<h4 class="col card-title"><strong>일정 추가</strong></h4>
 									<div class="col mt-3">
-										<select class="form-select" id="floatingSelect">
+										<select class="form-select" id="addSelect">
 											<option selected>Not Started</option>
 											<option value="1">In progress</option>
 											<option value="2">Done</option>
@@ -283,16 +329,16 @@
 								<form class="row g-3 mt-2">
 									<div class="col-md-12">
 										<div class="form-floating">
-											<input type="text" class="form-control" id="floatingName"
+											<input type="text" class="form-control" id="caltitle"
 												placeholder="Title"> <label for="floatingName">일정</label>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-floating">
 											<div class="row mb-3">
-												<label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+												<label for="inputDate" class="col-sm-2 col-form-label">시작일</label>
 												<div class="col-sm-10">
-													<input type="date" class="form-control">
+													<input type="date" id="calstart_date" class="form-control">
 												</div>
 											</div>
 										</div>
@@ -300,9 +346,9 @@
 									<div class="col-md-6">
 										<div class="form-floating">
 											<div class="row mb-3">
-												<label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+												<label for="inputDate" class="col-sm-2 col-form-label">종료일</label>
 												<div class="col-sm-10">
-													<input type="date" class="form-control">
+													<input type="date" id="calend_date" class="form-control">
 												</div>
 											</div>
 										</div>
@@ -310,12 +356,12 @@
 									<div class="col-12">
 										<div class="form-floating">
 											<textarea class="form-control" placeholder="Content"
-												id="floatingTextarea" style="height: 100px;"></textarea>
+												id="calcontent" style="height: 100px;"></textarea>
 											<label for="floatingTextarea">상세 일정</label>
 										</div>
 									</div>
 									<div class="text-center">
-										<button type="button" class="btn btn-primary">확인</button>
+										<button type="button" id="add_btn" class="btn btn-primary">확인</button>
 										<button type="reset" id="add_reset" class="btn btn-secondary">취소</button>
 									</div>
 								</form>
@@ -335,10 +381,10 @@
 								<div class="row mt-2">
 									<h4 class="col card-title"><strong>일정</strong></h4>
 									<div class="col mt-3">
-										<select class="form-select" id="floatingSelect">
-											<option selected>Not Started</option>
-											<option value="1">In progress</option>
-											<option value="2">Done</option>
+										<select class="form-select" id="readSelect">
+											<option value="1">Not Started</option>
+											<option value="2">In progress</option>
+											<option value="3">Done</option>
 										</select>
 									</div>
 								</div>
@@ -355,7 +401,7 @@
 											<div class="row mb-3">
 												<label for="inputDate" class="col-sm-2 col-form-label">시작일</label>
 												<div class="col-sm-10">
-													<input type="date" id="read-startdate" class="form-control">
+													<input type="date" id="read-startdate" class="form-control" readonly>
 												</div>
 											</div>
 										</div>
@@ -365,7 +411,7 @@
 											<div class="row mb-3">
 												<label for="inputDate" class="col-sm-2 col-form-label">종료일</label>
 												<div class="col-sm-10">
-													<input type="date" id="read-enddate" class="form-control">
+													<input type="date" id="read-enddate" class="form-control" readonly>
 												</div>
 											</div>
 										</div>
@@ -387,9 +433,12 @@
 												class="form-check-label" for="gridCheck2">참석 여부</label>
 										</div>
 									</div>
-									<div class="text-center">
+									<!-- <div class="text-center">
 										<button type="button" class="btn btn-primary">확인</button>
 										<button type="reset" id="read_reset" class="btn btn-secondary">취소</button>
+									</div> -->
+									<div class="text-center">
+										<button type="reset" id="read_reset" class="btn btn-secondary">닫기</button>
 									</div>
 								</form>
 								<!-- End floating Labels Form -->

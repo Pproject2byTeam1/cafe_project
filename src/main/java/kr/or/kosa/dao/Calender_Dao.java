@@ -3,8 +3,6 @@ package kr.or.kosa.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -22,27 +20,71 @@ public class Calender_Dao {
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
 	
-	//일정 참석 여부
-	public int checkCal(String email_id, int idx) {
+	//캘린더 일정 추가 + 트랜잭션 처리
+	public int AddCalender(Calender calender) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		int row = 0;	
-	
+		PreparedStatement pstmt2 = null;
+		int row = 0;
+		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "INSERT INTO YES(yes_idx, email_id, idx) VALUES (yes_idx_seq.nextval, ?, ?)";
+			
+			conn.setAutoCommit(false);
+			
+			//Board 삽입
+			String sql = "insert into board (idx,title,nick,content,email_id,b_code) "
+						+ "values(idx_seq.nextval, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, email_id);
-			pstmt.setInt(2, idx);
+			pstmt.setString(1, calender.getTitle());
+			pstmt.setString(2, calender.getNick());
+			pstmt.setString(3, calender.getContent());
+			pstmt.setString(4, calender.getEmail_id());
+			pstmt.setInt(5, calender.getB_code());
 			
 			row = pstmt.executeUpdate();
+			if(row < 0) {
+				throw new Exception("Board 삽입 실패");
+			}
 			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			//Calender 삽입
+			String sql2 = "insert into calender(b_idx,idx,start_date,end_date,finish) "
+						+ "values(calender_b_idx_seq.nextval, idx_seq.currval, to_date(?, 'yy/mm/dd'), to_date(?, 'yy/mm/dd'), ?)";
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			pstmt2.setString(1, calender.getStart_date());
+			pstmt2.setString(2, calender.getEnd_date());
+			String finish = "";
+			if(calender.getFinish().equals("Not Started")) {
+				finish = "N";
+			}else if(calender.getFinish().equals("In progress")) {
+				finish = "F";
+			}else {
+				finish = "T";
+			}
+			pstmt2.setString(3, finish);
+			
+			row = pstmt2.executeUpdate();
+			if(row < 0) {
+				throw new Exception("Calender 삽입 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
@@ -52,36 +94,4 @@ public class Calender_Dao {
 		
 		return row;
 	}
-	
-	//참석 해제
-	public int checkRemoveCal(String email_id, int idx) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int row = 0;	
-	
-		try {
-			
-			conn = ds.getConnection();
-			String sql = "delete from yes where email_id=? and idx=?";
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, email_id);
-			pstmt.setInt(2, idx);
-			
-			row = pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return row;
-	}
-	
 }
