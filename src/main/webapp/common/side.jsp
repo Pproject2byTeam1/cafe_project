@@ -8,7 +8,7 @@
 	<div class="pagetitle">
 	<h1>카페 정보</h1>
 	  <div class="card-body">
-       <a class="card-title">관리자 <span>| <img src="image/rank_icon/100.gif" alt="Profile" class="rounded-circle"> ADMIN_NICK</span></a><br>
+       <a class="card-title">관리자 <span>| <img src="image/rank_icon/100.gif" alt="Profile"> ADMIN_NICK</span></a><br>
        <a class="card-title">회원수 <span>| 00명 | 등급안내</span></a><br>
        <a class="card-title">카페 관리<span>| (관리자활성)</span></a>
       </div>
@@ -16,7 +16,7 @@
 	<!-- 카페 정보 끝 -->
 	<!-- 프로필 시작-->
 	<div class="pagetitle">
-	  <h1><img src="image/rank_icon/1.gif" alt="Profile" class="rounded-circle"> USER_NICK</h1>
+	  <h1><img src="image/rank_icon/1.gif" alt="Profile" > USER_NICK</h1>
       <nav>
         <div class="card-body">
           <a class="card-title"><span>준회원 | 100P</span></a><br>

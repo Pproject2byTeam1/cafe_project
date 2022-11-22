@@ -11,7 +11,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import kr.or.kosa.dto.Rank;
 import kr.or.kosa.dto.User_Details;
 
 //등급
@@ -35,7 +34,7 @@ public class User_Dao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "select m.rank, m.email_id, m.nick, m.name, u.phone, to_char(u.year_birth, 'yyyy-MM-dd') as year_birth, u.gender "
+			String sql = "select m.rank, m.email_id, m.nick, m.name, u.phone, to_char(u.year_birth, 'yyMMdd') as year_birth, u.gender "
 					+ "from member m join user_details u "
 					+ "on m.email_id = u.email_id";
 			pstmt = conn.prepareStatement(sql);
@@ -53,6 +52,8 @@ public class User_Dao {
 					user.setPhone(rs.getString("phone"));
 					user.setYear_birth(rs.getString("year_birth"));
 					user.setGender(rs.getString("gender"));
+					
+					userlist.add(user);
 					
 				} while (rs.next());
 			} else {

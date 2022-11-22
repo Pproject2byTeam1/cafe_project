@@ -14,7 +14,7 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Message_Delete_Service;
 import kr.or.kosa.service.Message_List_Service;
-import kr.or.kosa.service.User_Search_Service;
+import kr.or.kosa.service.User_List_Service;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -56,8 +56,9 @@ public class FrontController extends HttpServlet {
 			action = new Message_Delete_Service();
 			forward = action.execute(request, response);
 			
-		} else if(urlcommand.equals("/user_search.do")) { //유저 정보들 보기
-			action = new User_Search_Service();
+		} else if(urlcommand.equals("/user_list.do")) { //유저 정보들 보기
+			System.out.println("깐트로라~");
+			action = new User_List_Service();
 			forward = action.execute(request, response);
 		}
 		

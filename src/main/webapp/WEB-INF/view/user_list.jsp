@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 
@@ -10,6 +12,9 @@
 <title>카페人중독</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
+
+<!-- jQuery -->
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
@@ -37,6 +42,8 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/free.css" rel="stylesheet">
 
+<!-- sweetalert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -120,10 +127,9 @@
 					</tr>
 
 
-					<tr>
+					<tr id="userlist">
 						<td scope="col">준회원(1)</td>
-						<td scope="col">kosa@1004.com
-						</td>
+						<td scope="col">kosa@1004.com</td>
 						<td scope="col">개발자</td>
 						<td scope="col">홍길동</td>
 						<td scope="col">010-1234-1234</td>
@@ -135,10 +141,34 @@
 								<button type="button" class="btn btn-primary btn-sm">등급설정</button>
 								<button type="button" class="btn btn-danger btn-sm">신고</button>
 							</div>
-							
 						</td>
-
 					</tr>
+					<c:forEach var="alluser" items="${alluser}">
+						<tr>
+						
+							<td scope="col"><img id="profile" class="col-3" src="image/rank_icon/${alluser.rank}.gif" alt="Profile" height="16" width="16" ></td>
+							<td scope="col">${alluser.email_id}</td>
+							<td scope="col">${alluser.nick}</td>
+							<td scope="col">${alluser.name}</td>
+							<td scope="col">${alluser.phone}</td>
+							<td scope="col">${alluser.year_birth}</td>
+							<td scope="col">${alluser.rank}</td>
+							<td scope="col">
+							<div class="btn-group" role="group" aria-label="Basic example">
+								<button type="button" class="btn btn-primary btn-sm">활동내역</button>
+								<button type="button" class="btn btn-primary btn-sm">등급설정</button>
+								<button type="button" class="btn btn-danger btn-sm">신고</button>
+							</div>
+							</td>
+						</tr>
+						</c:forEach>
+					
+					<script type="text/javascript">
+						/* <c:forEach var="userlist" items="${userlist}" varStatus="status">
+							console.log(${userlist});
+							$('#userlist').prepend(' <td scope="col">'${userlist.email_id}'</td> ')
+						</c:forEach> */
+					</script>
 
 				</table>
 				<!-- End Table with hoverable rows -->

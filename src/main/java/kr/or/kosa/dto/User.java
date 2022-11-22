@@ -12,6 +12,7 @@ public class User {
 	private String isAdmin;
 	private int rank;
 	
+	
 	public int getRank() {
 		return rank;
 	}
