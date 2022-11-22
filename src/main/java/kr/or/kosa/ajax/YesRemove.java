@@ -9,17 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.kosa.dao.Calender_Dao;
+import kr.or.kosa.dao.Yes_Dao;
 
-
-@WebServlet("/CalendarCheck")
-public class CalendarCheck extends HttpServlet {
+@WebServlet("/YesRemove")
+public class YesRemove extends HttpServlet {
 	private static final long serialVersionUID = 1L;
- 
-    public CalendarCheck() {
+
+    public YesRemove() {
         super();
+        // TODO Auto-generated constructor stub
     }
-    
+
     private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	request.setCharacterEncoding("UTF-8");
@@ -30,13 +30,13 @@ public class CalendarCheck extends HttpServlet {
     		String email_id = request.getParameter("email_id");
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			
-			Calender_Dao dao = new Calender_Dao();
-			int row = dao.checkCal(email_id, idx);
+			Yes_Dao dao = new Yes_Dao();
+			int row = dao.checkRemoveCal(email_id, idx);
 			
 			String msg = "";
 			
 			if(row > 0) {
-				msg = "확인";
+				msg = "참석이 취소되었습니다.";
 			}else {
 				msg = "다시 시도해 주세요";
 			}
@@ -56,5 +56,4 @@ public class CalendarCheck extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
-
 }
