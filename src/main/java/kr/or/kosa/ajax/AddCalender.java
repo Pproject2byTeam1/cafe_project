@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.dao.Calender_Dao;
+import kr.or.kosa.dto.Calender;
 
-@WebServlet("/CalendarCheckRemove")
-public class CalendarCheckRemove extends HttpServlet {
+@WebServlet("/AddCalender")
+public class AddCalender extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public CalendarCheckRemove() {
+       
+    public AddCalender() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-    private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -28,20 +28,39 @@ public class CalendarCheckRemove extends HttpServlet {
     	
     	try {  		
     		String email_id = request.getParameter("email_id");
-			int idx = Integer.parseInt(request.getParameter("idx"));
+    		String nick = request.getParameter("nick");
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			String title = request.getParameter("title");
+			String start_date = request.getParameter("start_date");
+			String end_date = request.getParameter("end_date");
+			String content = request.getParameter("content");
+			String finish = request.getParameter("finish");
+			
+			Calender calender = new Calender();
+			calender.setTitle(title);
+			calender.setNick(nick);
+			calender.setContent(content);
+			calender.setEmail_id(email_id);
+			calender.setB_code(b_code);
+			calender.setStart_date(start_date);
+			calender.setEnd_date(end_date);
+			calender.setFinish(finish);
 			
 			Calender_Dao dao = new Calender_Dao();
-			int row = dao.checkRemoveCal(email_id, idx);
+			int row = dao.AddCalender(calender);
 			
 			String msg = "";
 			
 			if(row > 0) {
-				msg = "참석이 취소되었습니다.";
+				msg = "확인";
 			}else {
-				msg = "다시 시도해 주세요";
+				msg = "실패";
 			}
 			
+			System.out.println(msg);
+			
 			out.print(msg);
+			
     		
     	} catch(Exception e) {
     		System.out.println(e.getMessage());
@@ -56,4 +75,5 @@ public class CalendarCheckRemove extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
+
 }
