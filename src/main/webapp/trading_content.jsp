@@ -116,8 +116,6 @@
 	height: 50px;
 	border-radius: 5px;
 }
-
-
 </style>
 <script>
 	tinymce.init({
@@ -152,16 +150,44 @@
 				</ol>
 			</nav>
 		</div>
-
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<div class="row">
+						<div class="col-md-10">
+							<div class="form-floating">
+								<input type="text" class="form-control" name="query"
+									placeholder="Search" title="Enter search keyword">
+							</div>
+						</div>
+						<div class="col-md-2" >
+							<button type="button" class="btn btn-outline-info btn-lg">등록</button>
+						</div>
+					</div>
+					<br>
+					<div class="col-md-1"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<div class="card">
+					
+					
+					
+						<div class="container-fluid">
+			<div class="row">
+			
 				<div class="col-md-4">
 
 					<img src="./image/marketboard_img/1.jpg">
 
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-8">
 
 
 					<!-- Table with stripped rows -->
@@ -169,7 +195,7 @@
 						<!--필수값입력하는 거 만들기  -->
 						<tr>
 							<th scope="col" class="table-active">가격</th>
-							<th scope="col"><input type="text" value="가격을 입력하세요">
+							<th scope="col"><input type="text"  class="form-control"value="가격을 입력하세요">
 							</th>
 						</tr>
 						<tr>
@@ -179,11 +205,11 @@
 						</tr>
 						<tr>
 							<th scope="col" class="table-active">상품카테고리</th>
-							<th scope="col"><input type="text" value="카테고리를 입력하세요"></th>
+							<th scope="col"><input type="text" class="form-control" value="카테고리를 입력하세요"></th>
 						</tr>
 						<tr>
 							<th scope="col" class="table-active">판매여부</th>
-							<th scope="col"><select>
+							<th scope="col"><select class="form-select">
 									<option value="">판매중</option>
 									<option value="">판매완료</option>
 									<option value="">예약중</option>
@@ -196,58 +222,39 @@
 
 
 				</div>
+				
+			</div>
+		</div>
+					
+					
+					
+					
+					
+					
+					
+					</div>
+				
+				
+				</div>
 				<div class="col-md-1"></div>
 			</div>
 		</div>
-	<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-10">
-		<br>
-		<hr>
-		</div>
-		<div class="col-md-1">
-		</div>
-	</div>
-</div>
-			<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-10">
-		<div class="row">
-			<div class="col-md-10">
-             <div class="form-floating">
-               <input type="text"class="form-control" name="query" placeholder="Search" title="Enter search keyword"></div>
-            </div>
-            <div class="col-md-2" align="right">
-                   <button type="button" class="btn btn-outline-info btn-lg">등록</button>
-            </div>
-		</div>
-		<br>
-		<div class="col-md-1">
-		</div>
-		</div>
-	</div>
-</div>
-			   
+
+		
 		<div class="container-fluid">
-		<div class="row">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-10">
-		<textarea >
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<textarea>
    		글을 작성해주세요.
   		</textarea>
 
-		
+
+				</div>
+				<div class="col-md-1"></div>
+			</div>
 		</div>
-		<div class="col-md-1">
-		</div>
-	</div>
-	</div>
-	
+
 
 
 	</main>

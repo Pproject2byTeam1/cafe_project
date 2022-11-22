@@ -106,10 +106,6 @@
 	display: block;
 	overflow: auto;
 }
-
-
-
-
 </style>
 <script>
 	tinymce.init({
@@ -145,78 +141,68 @@
 			</nav>
 		</div>
 
-		
+
+
+
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+
+					<div class="card">
+						<div class="row mt-5 ms-5">
+
+							<div class="col-md-4">
+								<div >
+									<input type="text" class="form-control" value="제목을 작성하세요">
+								</div>
+
+							</div>
+							<div class="col-md-4">
+								<select class="form-select">
+									<option>게시판을 선택해 주세요</option>
+									<option>공지사항</option>
+									<option value="1">사진게시판</option>
+									<option value="2">출석부</option>
+									<option value="3">거래게시판</option>
+									<option value="3">일정게시판</option>
+									<option value="3">자료게시판</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-outline-info">등록</button>
+							</div>
+							<br><br>
+							<div class="col-sm-10 ml-5">
+								<input class="form-control" type="file" id="formFile">
+							</div>
+
+						</div>
+						<br> <br>
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<textarea>
+         글을 작성해주세요.
+        </textarea>
 
 
 				</div>
+
+
 				<div class="col-md-1"></div>
 			</div>
 		</div>
-	<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-10">
-		<br>
-		<hr>
-		</div>
-		<div class="col-md-1">
-		</div>
-	</div>
-</div>
-			<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-10">
-		<div class="col-sm-10">
-                    <input class="form-control" type="file" id="formFile">
-                  </div>
-                  <br>
-						<div class="row">
-			<div class="col-md-10">
-             <div class="form-floating">
-               <input type="text"class="form-control" name="query" placeholder="Search" title="Enter search keyword"></div>
-            </div>
-            <div class="col-md-2" >
-                   <button type="button" class="btn btn-outline-info btn-lg">등록</button>
-            </div>
-		</div>
-		
-              <br>
-        <div class="col-sm-10">
-                    <select class="form-select" aria-label="게시판을 선택해 주세요">
-                      <option >공지사항</option>
-                      <option value="1">사진게시판</option>
-                      <option value="2">출석부</option>
-                      <option value="3">거래게시판</option>
-                      <option value="3">일정게시판</option>
-                      <option value="3">자료게시판</option>
-                    </select>
-                  </div>
-                  <br>
-		</div>
-		<div class="col-md-1">
-		</div>
-	</div>
-</div>
-			   
-		<div class="container-fluid">
-		<div class="row">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-10">
-		<textarea>
-   		글을 작성해주세요.
-  		</textarea>
 
-		
-		</div>
-		<div class="col-md-1">
-		</div>
-	</div>
-	</div>
-	
 
 
 	</main>
