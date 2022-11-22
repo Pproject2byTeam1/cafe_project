@@ -12,8 +12,8 @@
 }
 
 .park-card-body img {
-	width: 100%;
-	border-radius: 5%;
+	width: 60px;
+	height: 60px;
 }
 
 .replyinput {

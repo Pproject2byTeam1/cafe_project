@@ -79,7 +79,34 @@
   							}
   						});
   					}
-  				})
+  					
+  					const requestdata2 = {"idx": idx};
+  					
+  					//그 일정에 대한 댓글 불러오기
+  					$.ajax({
+  						type: "POST",
+  						url: "LoadCalenderComments",
+  						data: requestdata2,
+  						dataType: "JSON",
+  						success: function(data){
+  							console.log("댓글");
+  							console.log(data);
+  							
+  							$(data).each(function(){
+  								html = '<div class="row mb-5">';
+  									html += '<img id="profile" class="col-3 rounded-circle" src="image/rank_icon/1.gif" alt="Profile">';
+  									html += '<div class="col row">';
+  										html += this.nick + ' (' + this.w_date + ')';
+  										html += '<p class="text-justify">'+ this.content +'</p>';
+  									html += '</div>';
+  								html += '</div>';
+  								
+  								$("#comment").append(html);
+  							});
+  							
+  						}
+  					});
+  				});
   				
   				if(document.getElementById("add").classList.item(4) == null){
 					document.getElementById("add").className += " d-none";
@@ -104,10 +131,6 @@
   	  						dataType: "JSON",
   	  						success: function(data){
   	  							console.log(data);
-  	  							Swal.fire({
-  	  								icon: 'success',
-  	  								title: data
-  	  							});
   	  						}
   	  					});
   	  				}else{
@@ -118,10 +141,6 @@
 	  						dataType: "JSON",
 	  						success: function(data){
 	  							console.log(data);
-	  							Swal.fire({
-  	  								icon: 'success',
-  	  								title: data
-  	  							});
 	  						}
   	  					});
   	  				}
@@ -377,6 +396,19 @@
 
 							</div>
 						</div>
+						
+						<!-- 댓글 -->
+						<div class="card">
+							<div class="card-body row ms-2 mt-2">
+								<h5 class="card-title">댓글</h5>
+								<div id="comment">
+									
+								</div>
+
+							</div>
+						</div>
+						<!-- 댓글 끝 -->
+						
 					</div>
 				</div>
 			</div>
