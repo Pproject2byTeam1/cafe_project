@@ -74,39 +74,42 @@
 				</ol>
 			</nav>
 		</div>
-
+		
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-5"></div>
-				<div class="col-md-4">
+			<div class="card">
+			<br>
 					<div class="row">
-						<select class="selectpicker col-md-6">
-							<option>전체등급</option>
-							<option>준회원</option>
-							<option>일반회원</option>
-						</select> &nbsp;&nbsp; <select class="selectpicker2 col-md-6">
-							<option>전체조회</option>
-							<option>OO조회</option>
-							<option>OO조회</option>
-						</select>
-
+					
+						<div class="col-md-3"></div>
+						<div class="col-md-4">
+							<div class="row">
+								<select class="selectpicker col-md-6">
+									<option>전체등급</option>
+									<option>준회원</option>
+									<option>일반회원</option>
+								</select> &nbsp;&nbsp; <select class="selectpicker2 col-md-6">
+									<option>전체조회</option>
+									<option>OO조회</option>
+									<option>OO조회</option>
+								</select>
+		
+							</div>
+						</div>
+		
+						<div class="col-md-4">
+							<div class="search-bar">
+								<form class="search-form d-flex align-items-center" method="POST"
+									action="#">
+									<input type="text" name="query" placeholder="Search"
+										class="form-control" title="Enter search keyword">
+									<button type="submit" title="Search">
+										<i class="bi bi-search"></i>
+									</button>
+								</form>
+							</div>
+		
+						</div>
 					</div>
-				</div>
-
-				<div class="col-md-3">
-					<div class="search-bar">
-						<form class="search-form d-flex align-items-center" method="POST"
-							action="#">
-							<input type="text" name="query" placeholder="Search"
-								class="form-control" title="Enter search keyword">
-							<button type="submit" title="Search">
-								<i class="bi bi-search"></i>
-							</button>
-						</form>
-					</div>
-
-				</div>
-			</div>
 
 
 			<div class="card-body">
@@ -127,25 +130,8 @@
 					</tr>
 
 
-					<tr id="userlist">
-						<td scope="col">준회원(1)</td>
-						<td scope="col">kosa@1004.com</td>
-						<td scope="col">개발자</td>
-						<td scope="col">홍길동</td>
-						<td scope="col">010-1234-1234</td>
-						<td scope="col">901030</td>
-						<td scope="col">남</td>
-						<td scope="col">
-							<div class="btn-group" role="group" aria-label="Basic example">
-								<button type="button" class="btn btn-primary btn-sm">활동내역</button>
-								<button type="button" class="btn btn-primary btn-sm">등급설정</button>
-								<button type="button" class="btn btn-danger btn-sm">신고</button>
-							</div>
-						</td>
-					</tr>
 					<c:forEach var="alluser" items="${alluser}">
 						<tr>
-						
 							<td scope="col"><img id="profile" class="col-3" src="image/rank_icon/${alluser.rank}.gif" alt="Profile" height="16" width="16" ></td>
 							<td scope="col">${alluser.email_id}</td>
 							<td scope="col">${alluser.nick}</td>
@@ -155,24 +141,59 @@
 							<td scope="col">${alluser.rank}</td>
 							<td scope="col">
 							<div class="btn-group" role="group" aria-label="Basic example">
-								<button type="button" class="btn btn-primary btn-sm">활동내역</button>
-								<button type="button" class="btn btn-primary btn-sm">등급설정</button>
-								<button type="button" class="btn btn-danger btn-sm">신고</button>
+								<button type="button" class="btn btn-primary btn-sm" id="EditPoint">등급설정</button>
+								<button type="button" class="btn btn-primary btn-sm" id="UserHistory">활동내역</button>
+								<button type="button" class="btn btn-danger btn-sm" id="Kick">강퇴</button>
 							</div>
 							</td>
 						</tr>
-						</c:forEach>
-					
-					<script type="text/javascript">
-						/* <c:forEach var="userlist" items="${userlist}" varStatus="status">
-							console.log(${userlist});
-							$('#userlist').prepend(' <td scope="col">'${userlist.email_id}'</td> ')
-						</c:forEach> */
-					</script>
+					</c:forEach>
 
 				</table>
 				<!-- End Table with hoverable rows -->
-			</div>
+				<c:if test="${cpage > 1}">
+							<a href="user_list.do?cp=${cpage-1}&ps=${pagesize}">이전</a>
+						</c:if>
+						<!-- page 목록 나열하기 -->
+						<c:forEach var="i" begin="1" end="${pagecount}" step="1">
+							<c:choose>
+								<c:when test="${cpage==i}">
+										<font color="red" >[${i}]</font>
+								</c:when>
+								<c:otherwise>
+									<a href="user_list.do?cp=${i}&ps=${pagesize}">[${i}]</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<!--다음 링크 --> 
+						<c:if test="${cpage < pagecount}">
+							<a href="user_list.do?cp=${cpage+1}&ps=${pagesize}">다음</a>
+						</c:if>
+				<!-- 페이징  -->
+			   <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><<</a>
+                  </li>
+                  
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">4</a></li>
+                  <li class="page-item"><a class="page-link" href="#">5</a></li>
+                  
+                  <li class="page-item">
+                    <a class="page-link" href="#">>></a>
+                  </li>
+                  
+                </ul>
+              </nav>
+              <!-- End Centered Pagination -->
+            </div>
+           </div>
+              
+		</div>
 	</main>
 	<!-- End #main -->
 
@@ -207,7 +228,34 @@
    <script src="assets/vendor/php-email-form/validate.js"></script>
 
    <!-- Template Main JS File -->
-   <script src="assets/js/main.js"></script>
+   
+   <script src="assets/js/main.js"> </script>
+   
+   <script type="text/javascript">
+		document.getElementById("EditPoint").addEventListener("click", ()=>{
+			var checkbtn = $(this);
+			console.log(checkbtn);
+			var tr = checkbtn.parent().parent();
+			console.log(tr);
+			var td = tr.children();
+			console.log(td);
+			
+			//console.log($("EditPoint").parent().parent());
+		});
+		
+		
+		function new_window() {
+			window.open(
+			"memo_list.do",
+			"쪽지함",
+			"width=763, height=753, top=100, left=300"
+			);
+		}
+   </script>
+   	
+   		
+   
+  
 
 </body>
 
