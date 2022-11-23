@@ -108,8 +108,23 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">성별</div>
-                    <div class="col-lg-9 col-md-8">남자</div>
+                    <div class="col-lg-3 col-md-4 label">포인트</div>
+                    <div class="col-lg-9 col-md-8">100</div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">관리등급</div>
+                    <div class="col-lg-9 col-md-8">일반회원</div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">가입일</div>
+                    <div class="col-lg-9 col-md-8">2020.07.03</div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">전화번호</div>
+                    <div class="col-lg-9 col-md-8">010-5555-5555</div>
                   </div>
                   
                   <div class="text-center">
@@ -146,38 +161,15 @@
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">닉네임</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="nickname" type="text" class="form-control" id="nickname" value="스키타는사람">
+                        <p class="text-danger">사용이 불가합니다.</p>
                       </div>
+                      <p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
                     </div>
-					<p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
-					
+                    
                     <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">생년월일</label>
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="birthdate" type="date" class="form-control" id="birthdate" value="1998-05-27">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">성별</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-	                      <label class="form-check-label" for="gridRadios1">
-	                        남성
-	                      </label>
-	                    </div>
-	                    <div class="form-check">
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-	                      <label class="form-check-label" for="gridRadios2">
-	                       여성
-	                      </label>
-	                    </div>
-	                    <div class="form-check">
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios" value="option3">
-	                      <label class="form-check-label" for="gridRadios3">
-	                        제공하지 않음
-	                      </label>
-	                    </div>
+                        <input name="nickname" type="tel" class="form-control" id="tel" value="01055555555">
                       </div>
                     </div>
                     
