@@ -74,7 +74,7 @@
 		<div class="container">
 			<div class="row">
 
-				<div class="col-12">
+				<div class="col-md-12">
 					<div class="marketcard">
 						<div class="marketcard-body">
 
@@ -85,21 +85,28 @@
 									<p>
 									<hr>
 									<div class="row">
-										<div class="col-md-9">
+										<div class="col-lg-9">
 											<img class="product-img"
 												src="image/marketboard_img/1detail.jpg">
 										</div>
-										<div align="center" class="col-md-3">
-											<p>
+										<div align="center" class="col-lg-3">
+											<div class="info-body price">
 												<span id="marketB_Price">1,300,000</span>
-											<p>
-												<span id="marketB_Text.ns">직거래</span> |<span
-													id="marketB_Text.ns">판매중</span><br>
-											<h6>USER_NICK</h6>
-											<span id="marketB_Text.ns">22.11.18 12:10</span>
-											<p>
-												<span id="marketB_Text.ns">조회수 : 120</span> <span
-													id="marketB_Text.ns">찜 : 3</span>
+											</div>
+											<div class="info-body">
+												<span id="marketB_Text.ns">직거래|판매중|전자제품</span>
+											</div>
+											<div class="info-body">
+												<span id="marketB_Text.ns">조회수:120 댓글:3 찜:3</span>
+											</div>
+											<div class="info-body">
+												<img src="image/rank_icon/1.gif" alt="Profile"
+													style="width:15px" class="rounded-circle">
+												<span id="marketB_Text.ns">USER_NICK</span>
+											</div>
+											<div class="info-body">
+												<span id="marketB_Text.ns">22.11.18 12:10</span>
+											</div>
 										</div>
 									</div>
 									<div class="row">
@@ -135,7 +142,7 @@
 										<nav aria-label="Page navigation example">
 											<ul class="pagination justify-content-end">
 
-												<div class="col-sm-2 text-lg-end">
+												<div class="col-md-4 text-lg-end">
 													<br>
 													<button type="button" id="cWrite" 
 														class="btn btn-outline-secondary btn-sm rounded-pill">작성</button>
@@ -261,7 +268,6 @@
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
-
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>

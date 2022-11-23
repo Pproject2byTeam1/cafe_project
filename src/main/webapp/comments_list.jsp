@@ -21,11 +21,8 @@
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
 	rel="stylesheet">
 
-<style type="text/css">
-.comment-reply {
-	left: 20px;
-}
-</style>
+<!-- comment CSS Files -->
+<link href="assets/css/comments.css" rel="stylesheet">
 
 <!-- Vendor CSS Files -->
 <link href="assets/vendor/bootstrap/css/bootstrap.min.css"
@@ -49,20 +46,16 @@
 
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
-
 		<jsp:include page="/common/top.jsp"></jsp:include>
-
 	</header>
 	<!-- End Header -->
 
-	<!-- ======= Sidebar ======= -->
-
+	<!-- Sidebar -->
 	<jsp:include page="/common/side.jsp"></jsp:include>
-
 	<!-- End Sidebar -->
 
 	<main id="main" class="main">
-
+		<!-- Page Title -->
 		<div class="pagetitle">
 			<h1>댓글</h1>
 			<nav>
@@ -72,7 +65,7 @@
 				</ol>
 			</nav>
 		</div>
-		<!-- End Page Title -->
+		<!-- Page Title -->
 
 		<section class="section dashboard">
 			<div class="row">
@@ -80,8 +73,8 @@
 				<div class="col-lg-12">
 
 					<!-- 댓글 카드 섹션 -->
-					<div class="card">
-						<div class="card-body">
+					<div class="ccard">
+						<div class="comment-write">
 							<h5 class="card-title">
 								댓글 <span>/ 4개</span>
 							</h5>
@@ -116,17 +109,22 @@
 					</div>
 
 					<!-- 댓글 목록 카드 섹션 시작 -->
-					<div class="card">
-						<div class="card-body">
-							<div class="message">
+					<div class="ccard">
+						<div class="comment-card">
+							<div class="comment-box">
+								<div class="row">
+								<div class="col">
 								<h5 class="card-title">
 									<img src="image/rank_icon/1.gif" alt="Profile"
 										class="rounded-circle"> USER_NICK
 								</h5>
+								</div>
+								<div class="col comment-date">22.11.21 12:10</div>
+								</div>
 								<h6 class="card-text">댓글의 내용~~~</h6>
 								<h6></h6>
-							</div>
-							<div class="actions">
+							
+							<div align="right" class="actions">
 								<button type="button"
 									class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
 								<button type="button"
@@ -134,18 +132,24 @@
 								<button type="button"
 									class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
 							</div>
+							</div>
 						</div>
 					
-						<div class="card-body">
-							<div class="message">
+						<div class="Recomment-box">
+								<div class="row">
+								<div class="col">
 								<h5 class="card-title">
+									<i class="bi bi-arrow-return-right"></i>
 									<img src="image/rank_icon/1.gif" alt="Profile"
 										class="rounded-circle"> USER_NICK
 								</h5>
-								<h6 class="card-text">댓글의 내용~~~</h6>
+								</div>
+								<div class="col comment-date">22.11.21 12:10</div>
+								</div>
+								<h6 class="Recomment-text">대댓글 대댓글</h6>
 								<h6></h6>
-							</div>
-							<div class="actions">
+								
+							<div align="right" class="actions">
 								<button type="button"
 									class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
 								<button type="button"
@@ -155,16 +159,21 @@
 							</div>
 						</div>
 
-						<div class="card-body">
-							<div class="message">
+						<div class="comment-card">
+							<div class="comment-box">
+								<div class="row">
+								<div class="col">
 								<h5 class="card-title">
 									<img src="image/rank_icon/1.gif" alt="Profile"
 										class="rounded-circle"> USER_NICK
 								</h5>
+								</div>
+								<div class="col comment-date">22.11.21 12:10</div>
+								</div>
 								<h6 class="card-text">댓글의 내용~~~</h6>
 								<h6></h6>
-							</div>
-							<div class="actions">
+							
+							<div align="right" class="actions">
 								<button type="button"
 									class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
 								<button type="button"
@@ -172,8 +181,8 @@
 								<button type="button"
 									class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
 							</div>
-						</div>
-						
+							</div>
+							
 					</div>
 					<!-- 댓글 목록 카드 섹션 끝 -->
 
@@ -183,29 +192,6 @@
 		</section>
 	</main>
 	<!-- End #main -->
-
-	<!-- ======= Footer ======= -->
-	<footer id="footer" class="footer">
-		<div class="copyright">
-			&copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights
-			Reserved
-		</div>
-		<div class="credits">
-			<!-- All the links in the footer should remain intact. -->
-			<!-- You can delete the links only if you purchased the pro version. -->
-			<!-- Licensing information: https://bootstrapmade.com/license/ -->
-			<!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-			Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-		</div>
-	</footer>
-	<!-- End Footer -->
-
-
-	<a href="#"
-		class="back-to-top d-flex align-items-center justify-content-center"><i
-		class="bi bi-arrow-up-short"></i></a>
-
-
 
 </body>
 
