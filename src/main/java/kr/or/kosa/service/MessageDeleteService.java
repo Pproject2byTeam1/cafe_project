@@ -9,10 +9,10 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Message_Dao;
+import kr.or.kosa.dao.MessageDao;
 import kr.or.kosa.dto.Message;
 
-public class Message_Delete_Service implements Action {
+public class MessageDeleteService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -20,7 +20,7 @@ public class Message_Delete_Service implements Action {
 		   
 		try {
 			HttpSession session = request.getSession();
-			Message_Dao dao = new Message_Dao();
+			MessageDao dao = new MessageDao();
 			
 			String[] m_idx = request.getParameterValues("idxarr[]");
 			String delCheckNo = (String)request.getParameter("delCheckNo");

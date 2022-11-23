@@ -11,15 +11,15 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.User_Details;
+import kr.or.kosa.dto.User;
+import kr.or.kosa.dto.UserDetails;
 
 //등급
-public class User_Dao {
+public class UserDao {
 
 	DataSource ds = null;
 
-	public User_Dao() throws NamingException {
+	public UserDao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
@@ -77,11 +77,11 @@ public class User_Dao {
 	
 	
 	//admin 제외한 유저 조회
-	public List<User_Details> list(int cpage , int pagesize) {
+	public List<UserDetails> list(int cpage , int pagesize) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<User_Details> userlist = null;
+		List<UserDetails> userlist = null;
 		try {
 			conn = ds.getConnection();
 			
@@ -102,10 +102,10 @@ public class User_Dao {
 			
 			rs = pstmt.executeQuery();
 			
-			userlist = new ArrayList<User_Details>();
+			userlist = new ArrayList<UserDetails>();
 			
 			while(rs.next()) {
-				User_Details user = new User_Details();
+				UserDetails user = new UserDetails();
 				
 				user.setRank(rs.getInt("rank"));
 				user.setEmail_id(rs.getString("email_id"));
@@ -136,6 +136,88 @@ public class User_Dao {
 		return userlist;
 	}
 	
+	//특정 유저 단순정보 조회
+	public User selectUserById(String userid) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User user = null;
+		
+		try {
+			conn = ds.getConnection(); //dbcp 연결객체 얻기
+			String sql="select email_id, password, name, nick, to_char(birth, 'yyyyMMdd') as birth, point, isadmin, rank from member where email_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				do {
+					user = new User();
+					
+					user.setEmail_id(rs.getString("email_id"));
+					user.setPassword(rs.getString("password"));
+					user.setName(rs.getString("name"));
+					user.setNick(rs.getString("nick"));
+					user.setBirth(rs.getString("birth"));
+					user.setPoint(rs.getInt("point"));
+					user.setIsAdmin(rs.getString("isadmin"));
+					user.setRank(rs.getInt("rank"));
+				}while(rs.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환  connection pool 에 반환하기
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return user;
+	}
+	//특정 유저 상세정보 조회
+		public UserDetails selectUserDetailById(String userid) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			UserDetails user = null;
+			
+			try {
+				conn = ds.getConnection(); //dbcp 연결객체 얻기
+				String sql="select email_id, to_char(join_date, 'yyyyMMdd') as join_date, to_char(last_visit_date, 'yyyyMMdd') as last_visit_date,visit_count,w_count,re_count,to_char(year_birth, 'yyyyMMdd') as year_birth, phone from user_details where email_id =?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, userid);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					do {
+						user = new UserDetails();
+						
+						user.setEmail_id(rs.getString("email_id"));
+						user.setJoin_date(rs.getString("join_date"));
+						user.setLast_visit_date(rs.getString("last_visit_date"));
+						user.setVisit_count(rs.getInt("visit_count"));
+						user.setW_count(rs.getInt("w_count"));
+						user.setRe_count(rs.getInt("re_count"));
+						user.setYear_birth(rs.getString("year_birth"));
+						user.setPhone(rs.getString("phone"));
+					}while(rs.next());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					pstmt.close();
+					rs.close();
+					conn.close();//반환  connection pool 에 반환하기
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return user;
+		}
 	
 	//admin을 제외한 총 유저 인원 구하기
 	public int totalUserCount() {
