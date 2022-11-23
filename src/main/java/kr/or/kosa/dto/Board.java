@@ -49,7 +49,7 @@ public class Board {
 	public String getW_date() {
 		return w_date;
 	}
-	public void setW_date(java.sql.Date date) {
+	public void setW_date(String date) {
 		this.w_date = date;
 	}
 	public int getReport_count() {
