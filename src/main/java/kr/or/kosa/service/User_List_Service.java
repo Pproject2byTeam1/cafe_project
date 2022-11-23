@@ -8,11 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Board_Dao;
-import kr.or.kosa.dao.Img_Board_Dao;
 import kr.or.kosa.dao.User_Dao;
-import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.User_Details;
 
 public class User_List_Service implements Action {
@@ -29,9 +25,38 @@ public class User_List_Service implements Action {
 			
 			User_Dao dao = new User_Dao();
 			
-			List<User_Details> alluser = dao.getUserListAll();
+			int totalusercount = dao.totalUserCount();
 			
+			//상세보기 >> 다시  LIST 넘어올때  >> 현재 페이지 설정
+			String ps = request.getParameter("ps");
+			String cp = request.getParameter("cp");
 			
+			//List 페이지 처음 호출 경우
+			if(ps == null || ps.trim().equals("")) {
+				ps = "5"; //5개씩 
+			}
+			
+			if(cp == null || cp.trim().equals("")) {
+				//default 값 설정
+				cp = "1"; // 1번째 페이지 보겠다 
+			}
+			
+			int pagesize = Integer.parseInt(ps);
+			int cpage = Integer.parseInt(cp);
+			int pagecount=0;
+			
+			if(totalusercount % pagesize == 0) {
+				pagecount = totalusercount / pagesize;
+			}else {
+				pagecount = (totalusercount / pagesize) + 1; 
+			}
+			
+			List<User_Details> alluser = dao.list(cpage, pagesize);
+			
+			request.setAttribute("pagesize", pagesize);
+			request.setAttribute("cpage", cpage);
+			request.setAttribute("pagecount", pagecount);
+			request.setAttribute("totalusercount", totalusercount);
 			request.setAttribute("alluser", alluser);
 			
 			forward = new ActionForward();

@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.Data_Board;
 
 public class Data_Board_Dao {
@@ -163,34 +165,40 @@ public class Data_Board_Dao {
 	}
 
 	// 전체 자료게시판 조회
-	public List<Data_Board> getAllDatalist(int cpage, int pagesize) {
+	public List<Board> getAllDatalist(int b_code, int cpage, int pagesize) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Data_Board> datalist = null;
+		List<Board> datalist = null;
 
 		try {
 
 			conn = ds.getConnection();
-			String sql = "select * from (select rownum rn,idx,refer,depth,step from (select * from data_board order by refer desc, step asc))where rownum <=?";
+			String sql = "select *" + "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, b.w_date,d.depth,d.step,d.refer "
+					+ "        from board b join data_board d" + "        on b.idx = d.idx" + "        where b_code=? "
+					+ "        order by refer desc, step desc) where rn <= ? and rn >= ?";
 			pstmt = conn.prepareStatement(sql);
-
-			datalist = new ArrayList<Data_Board>();
+			
+			datalist = new ArrayList<Board>();
 			int start = cpage * pagesize - (pagesize - 1);
 			int end = cpage * pagesize;
-			pstmt.setInt(1, end);
-			pstmt.setInt(2, start);
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
 
 			rs = pstmt.executeQuery();
-			datalist = new ArrayList<Data_Board>();
+			
+			datalist = new ArrayList<Board>();
 
 			while (rs.next()) {
 				Data_Board data = new Data_Board();
-				data.setB_idx(rs.getInt("B_IDX"));
-				data.setB_idx(rs.getInt("IDX"));
-				data.setRefer(rs.getInt("refer"));
-				data.setDepth(rs.getInt("dapt"));
-				data.setStep(rs.getInt("step"));
+
+				data.setIdx(rs.getInt("idx"));
+				data.setTitle(rs.getString("title"));
+				data.setNick(rs.getString("nick"));
+				data.setContent(rs.getString("content"));
+				data.setHits(rs.getInt("hits"));
+				data.setW_date(rs.getString("w_date"));
 
 				// 계층형
 
@@ -198,6 +206,8 @@ public class Data_Board_Dao {
 				data.setStep(rs.getInt("step"));
 				data.setDepth(rs.getInt("depth"));
 
+				System.out.println(data.getTitle());
+				
 				datalist.add(data);
 
 			}
@@ -214,6 +224,78 @@ public class Data_Board_Dao {
 		}
 
 		return datalist;
+	}
+// 좋아요 개수 
+
+	public int getYes(int idx) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int yes_max = 0;
+
+		try {
+			conn = ds.getConnection();
+			String sql = "select  count(*) as cnt from yes where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1,idx);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				yes_max = rs.getInt("cnt");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			} catch (Exception e) {
+
+			}
+		}
+
+		return yes_max;
+
+	}
+
+	// 댓글개수
+
+	 public int getComments(int idx1) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int co_max = 0;
+
+		try {
+			conn = ds.getConnection();
+			String sql = "select count(*) as cnt from comments where idx=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, idx1);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				co_max = rs.getInt("cnt");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			} catch (Exception e) {
+
+			}
+		}
+
+		return co_max;
+
 	}
 
 	// 글쓰기 refer 값 생성하기
@@ -245,34 +327,33 @@ public class Data_Board_Dao {
 		return refer_max;
 
 	}
-	//게시뭉 총 건수 구학;
+
+	// 게시뭉 총 건수 구학;
 	public int totaldataBoard() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int totalcount = 0;
 		try {
-			conn = ds.getConnection(); 
-			String sql="select count(*) cnt from data_board";
+			conn = ds.getConnection();
+			String sql = "select count(*) cnt from data_board";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				totalcount = rs.getInt("cnt");
 			}
-		}catch (Exception e) {
-			
-		}finally {
+		} catch (Exception e) {
+
+		} finally {
 			try {
 				pstmt.close();
 				rs.close();
 				conn.close();
-			}catch (Exception e) {
-				
+			} catch (Exception e) {
+
 			}
 		}
-		
-		
-		
+
 		return totalcount;
 	}
 }

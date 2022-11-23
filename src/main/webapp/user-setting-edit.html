@@ -25,22 +25,28 @@
   
   
    <main id="main" class="main" style="background-color: #f6f9ff; border-radius: 25px;">
-  <!-- 여기서부터 작성 와랄ㄹ라  -->
-      <div class="pagetitle" >
-         
-         <p><h1>&nbsp;회원 조회</h1></p>
-         
-         <nav>
-            <ol class="breadcrumb">
-            </ol>
-         </nav>
-      </div>
-
-
-      <!-- 서블릿 아래 action에다가 적어주세용 -->
+   
+   
+	<div class="container">
+	<br>
+		<div class="card">
+			<div class="card-body">
+				<div class="pagetitle" >
+				
+				
+				
+				 <!-- 여기서부터 작성 와랄ㄹ라  -->
+			         <p><h1>&nbsp;회원 조회</h1></p>
+			         
+			         <nav>
+			            <ol class="breadcrumb">
+			            </ol>
+			         </nav>
+     			 </div>
+				<!-- 서블릿 아래 action에다가 적어주세용 -->
       <form action="">
          <div class="container">
-            <div class="row col-md-10">  
+            <div class="row col-md-12">  
                <div>
                   <div class="mb-3 row">
                      <label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
@@ -88,7 +94,7 @@
    
    
          <div class="container">
-            <div class="row col-md-10">  
+            <div class="row col-md-12">  
                <div>
                   <div class="mb-5 row">
                      <label for="inputPassword" class="col-sm-2 col-form-label text-center pt-5">포인트</label>
@@ -130,13 +136,7 @@
                         <input type="button" class="btn btn-info btn-sm" value="+50" id="plus50">
                         <input type="button" class="btn btn-info btn-sm" value="+100" id="plus100">
                         
-                        <script>
-                      
-                           
-                           
-
-                           
-                        </script>
+             
    
                      </div>
                   </div>
@@ -148,11 +148,19 @@
             </div>
          </div>
       </form>
-  	   
-
-
+      
       
   <!-- 여기까지만 작성  -->
+			
+			
+			</div>
+		</div>
+		<br>
+	</div>
+ 
+      
+
+
   </main>
 
 
@@ -161,8 +169,6 @@
 
 <script>
 
-   
-   
    /* 회원 비밀번호 보이기 닫기 */
    function HidenShow() {
    let x = document.getElementById("inputPassword");
@@ -174,8 +180,6 @@
    }
    
 	
-   
-   
    /* 회원의 포인트값 text쪽에 넣어주기 */
    document.getElementById("inputUserPoint").value = document.getElementById('userpoint').value
    
@@ -208,6 +212,9 @@
     document.getElementById("selectPoint").addEventListener("click", ()=>{
        document.getElementById("inputUserPoint").value = document.getElementById("selectPoint").value
     });
+    
+    
+    
 
  </script>
 </html>

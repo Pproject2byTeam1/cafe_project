@@ -64,7 +64,7 @@
     <p><a href="calendar_list.do">캘린더</a></p>
     <p><a href="user_list.do">회원목록</a></p>
     <button onclick="new_window()"> 쪽지 리스트</button>
-    <p><a href="databoard_list.do">거래 게시판</a></p>
+    <p><a href="databoard_list.do?b_code=6">자료 게시판</a></p>
 
     <section class="section dashboard">
       <div class="row">

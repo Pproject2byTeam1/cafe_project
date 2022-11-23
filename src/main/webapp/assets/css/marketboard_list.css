@@ -35,7 +35,7 @@
 	font-size: 24px;
 	color: orange;
 	font-family: "Poppins", sans-serif, bold;
-	align-items: right;
+	text-align: right;
 }
 
 *, *::before, *::after {
@@ -71,6 +71,18 @@
 	flex-basis: calc(( 30rem - 100%)* 999);
 	min-width: 300px;
 	max-width: 300px;
+}
+
+.marketcard {
+  background-color : white;
+  margin-bottom: 30px;
+  border-radius: 3em;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  padding : 15px;
+}
+
+.marketcard-body {
+  padding: 10px 10px 10px 10px;
 }
 
 .mcard {
