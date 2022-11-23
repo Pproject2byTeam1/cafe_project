@@ -17,7 +17,7 @@ public class User_List_Service implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		ActionForward forward = new ActionForward();
-		
+		 
 		try {
 			
 			HttpSession session = request.getSession();

@@ -150,7 +150,7 @@
 						
 							<tr>
 								<td scope="col"><img id="profile" class="col-3" src="image/rank_icon/${alluser.rank}.gif" alt="Profile" height="16" width="16" ></td>
-								<td scope="col" class="id">${alluser.email_id}</td>
+								<td scope="col">${alluser.email_id}</td>
 								<td scope="col">${alluser.nick}</td>
 								<td scope="col">${alluser.name}</td>
 								<td scope="col">${alluser.phone}</td>
@@ -158,9 +158,21 @@
 								<td scope="col">${alluser.isAdmin}</td>
 								<td scope="col">
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button type="button" class="btn btn-primary btn-sm EditPoint">등급설정</button>
-									<button type="button" class="btn btn-primary btn-sm UserHistory">활동내역</button>
-									<button type="button" class="btn btn-danger btn-sm Kick">강퇴</button>
+									<form action="user_details.do" method="post">
+										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
+										<input type="text" value="1" name="todo" style="display: none;">
+										<input type="submit" class="btn btn-primary btn-sm EditPoint" value="등급설정">
+									</form>
+									<form action="user_details.do" method="post">
+										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
+										<input type="text" value="2" name="todo" style="display: none;">
+										<input type="submit" class="btn btn-primary btn-sm UserHistory" value="활동내역">
+									</form>
+									<form action="user_details.do" method="post">
+										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
+										<input type="text" value="3" name="todo" style="display: none;">
+										<input type="submit" class="btn btn-danger btn-sm Kick" value="강퇴">
+									</form>
 								</div>
 								</td>
 							</tr>
@@ -243,28 +255,14 @@
    <script src="assets/js/main.js"> </script>
    
    <script type="text/javascript">
-		/* document.getElementById("EditPoint").addEventListener("click", ()=>{
-			var checkbtn = $(this);
-			console.log(checkbtn);
-			var tr = checkbtn.parent().val();
-			console.log(tr);
-			var td = tr.children();
-			console.log(td);
-			
-			//console.log($("EditPoint").parent().parent());
-		}); */
-		
-		
-		console.log($('#EditPoint').parent().val);
-		
-		function new_window() {
-			window.open(
-			"memo_list.do",
-			"쪽지함",
-			"width=763, height=753, top=100, left=300"
-			);
-		}
-   </script>
+	  function new_window() {
+	    window.open(
+	      "memo_list.do",
+	      "쪽지함",
+	      "width=500, height=600, top=100, left=300"
+	    );
+	  }
+  </script>
    	
    		
    

@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.User_Details;
 
 //등급
@@ -164,5 +165,104 @@ public class User_Dao {
 		}
 		return totalcount;
 	}
+	
+	
+	
+	//특정 유저 조회
+	public User idSearchUser(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User userlist = null;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = "select email_id, password, name, point "
+					+"from member "
+					+"where email_id=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			
+			while(rs.next()) {
+				userlist = new User();
+				
+				userlist.setEmail_id(rs.getString("email_id"));
+				userlist.setPassword(rs.getString("password"));
+				userlist.setName(rs.getString("name"));
+				userlist.setPoint(rs.getInt("point"));				
+				
+			}
+			
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환
+			} catch (Exception e2) {
+	
+			}
+		}
+		return userlist;
+	}
+	
+	
+	//특정 유저 비번, 닉네임, 포인트 바꾸기
+		public User editSettingUser(String id, String password, String name, int point) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			User userlist = null;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "UPDATE member SET password=?, name=?, point=? "
+						+ "WHERE email_id=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				
+				pstmt.setString(1, password);
+				pstmt.setString(2, name);
+				pstmt.setInt(3, point);
+				pstmt.setString(4, id);
+				rs = pstmt.executeQuery();
+				
+				
+				while(rs.next()) {
+					userlist = new User();
+					
+					userlist.setEmail_id(rs.getString("email_id"));
+					userlist.setPassword(rs.getString("password"));
+					userlist.setName(rs.getString("name"));
+					userlist.setPoint(rs.getInt("point"));				
+					
+				}
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					rs.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+		
+				}
+			}
+			return userlist;
+		}
+	
+	
+	
+	
 
 }
