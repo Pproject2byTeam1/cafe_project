@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -48,26 +48,26 @@
 	            <div class="card-body">
 	              <h5 class="card-title">쪽지함</h5>
 	              <div class="filter">
-	                  <a class="icon" href="#"><i class="bi bi-x-lg"></i></a>
+	                  <a class="icon" id="close"><i class="bi bi-x-lg"></i></a>
                 </div>
                 <!-- No Labels Form -->
               <form class="row g-3">
                 <div class="col-md-9">
-                  <input type="email" class="form-control" placeholder="보내는 사람" value="${아이디 넣는곳}" readonly="readonly">
+                  <input type="email" class="form-control" placeholder="보내는 사람" value="" readonly="readonly">
                 </div>
                 <div class="col-md-3">
-                  <input class="form-check-input" type="checkbox">
+                  <input class="form-check-input" type="checkbox" id="sendtoMe">
                   <label class="form-check-label" for="gridCheck">내게쓰기</label>
                 </div>
                 <div class="col-md-9">
-                  <input type="email" class="form-control" placeholder="받는 사람">
+                  <input type="email" class="form-control" placeholder="받는 사람" id="respond_Id">
                 </div>
                 <div class="col-md-3">
-                  <button type="button" class="btn btn-success">보내기</button>
+                  <button type="button" class="btn btn-success" id="sendMemo">보내기</button>
                 </div>
                 <div class="col-12">
                   <div class="form-floating">
-                    <textarea class="form-control" placeholder="필수 입력사항을 입력하세요" id="floatingTextarea" style="height: 300px;"></textarea>
+                    <textarea class="form-control" placeholder="필수 입력사항을 입력하세요" id="floatingTextarea" style="height: 200px;"></textarea>
                     <label for="floatingTextarea">필수 입력사항을 입력하세요</label>
                   </div>
                 </div>
@@ -96,6 +96,24 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="text/javascript">
+  $(function () {
+	  $("#close").click(function(){
+		  window.close();
+		  });
+	  $("#sendtoMe").click(function(){
+		  if($(this).is (':checked')){
+			  $('#respond_Id').attr('value','id값');
+		  }else {
+			  $('#respond_Id').attr('value','');
+		  }
+	  })
+
+	  $("#sendMemo").click(function(){//쪽지 보내기(글 작성)
+		  
+	  });
+  });
+  </script>
 
 </body>
 
