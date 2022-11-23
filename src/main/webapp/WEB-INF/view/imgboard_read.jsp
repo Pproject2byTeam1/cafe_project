@@ -32,6 +32,28 @@
   	<link href="assets/css/style.css" rel="stylesheet">
   	<link href="assets/css/imgboard.css" rel="stylesheet">
   	
+  	<script type="text/javascript">
+  		
+  		/* 게시물 좋아요 비동기 처리 */
+  		$.ajax({
+  			type: "POST",
+        	url: "Kanban",
+			data: requestdata,
+        	dataType: "JSON",
+        	success: function(data){
+        		console.log(data);
+        	},
+        	beforeSend: function(){
+				$('.wrap-load').removeClass('display-none');
+			},
+			complete: function(){
+				$('.wrap-loading').addClass('display-none');
+			}
+  		});
+  	
+  	
+  	</script>
+  	
 </head>
 <body>
   	<!-- ======= Header ======= -->
@@ -42,9 +64,7 @@
   	<!-- ======= Sidebar ======= -->
     <jsp:include page="/common/side.jsp"></jsp:include>
   	<!-- End Sidebar -->
-  
-  
-  
+
 	<main id="main" class="main">
   	<!-- 여기서부터 작성 와랄ㄹ라  -->
   	
@@ -71,7 +91,7 @@
 					<div class="park-card p-4">
 						<div class="park-card-body row">
 							<div class="col-md-6 col mb-3">
-								<img width="500" src="image/imgTest/${imgboard.img_name}">
+								<img src="image/imgTest/${imgboard.img_name}">
 							</div>
 							<div class="col-md-6">
 								<div class="ps-2 ms-10 row justify-content-between">
