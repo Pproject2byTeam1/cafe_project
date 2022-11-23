@@ -76,123 +76,124 @@
 		</div>
 		
 		<div class="container-fluid">
-			<div class="card">
-			<br>
+			<div class="row">
+				<div class="col-md-5"></div>
+				<div class="col-md-4">
 					<div class="row">
-					
-						<div class="col-md-3"></div>
-						<div class="col-md-4">
-							<div class="row">
-								<select class="selectpicker col-md-6">
-									<option>전체등급</option>
-									<option>준회원</option>
-									<option>일반회원</option>
-								</select> &nbsp;&nbsp; <select class="selectpicker2 col-md-6">
-									<option>전체조회</option>
-									<option>OO조회</option>
-									<option>OO조회</option>
-								</select>
-		
-							</div>
+						<div class="col-md-5">
+							<select class=" form-select">
+								<option>전체등급</option>
+								<option>준회원</option>
+								<option>일반회원</option>
+							</select>
 						</div>
-		
-						<div class="col-md-4">
-							<div class="search-bar">
-								<form class="search-form d-flex align-items-center" method="POST"
-									action="#">
-									<input type="text" name="query" placeholder="Search"
-										class="form-control" title="Enter search keyword">
-									<button type="submit" title="Search">
-										<i class="bi bi-search"></i>
-									</button>
-								</form>
-							</div>
-		
+						<div class="col-md-1"></div>
+						<div class="col-md-5">
+							<select class="form-select">
+								<option>전체조회</option>
+								<option>OO조회</option>
+								<option>OO조회</option>
+							</select>
 						</div>
 					</div>
-
-
-			<div class="card-body">
-				<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
-				<!-- Table with hoverable rows -->
-				<table class="table table-hover">
-
-					<tr>
-						<th scope="col">등급</th>
-						<th scope="col">이메일</th>
-						<th scope="col">닉네임</th>
-						<th scope="col">이름</th>
-						<th scope="col">휴대폰</th>
-						<th scope="col">생년월일</th>
-						<th scope="col">성별</th>
-						<th scope="col">관리</th>
-
-					</tr>
-
-
-					<c:forEach var="alluser" items="${alluser}">
+				</div>
+	
+				<div class="col-md-3">
+					<div class="search-bar">
+						<form class="search-form d-flex align-items-center" method="POST" action="#">
+							<input type="text" name="query" placeholder="Search" class="form-control" title="Enter search keyword">
+							<button type="submit" title="Search" class="btn btn-secondary"> <i class="bi bi-search"></i></button>
+						</form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="container-fluid">
+			<div class="card">
+			<br>
+					
+				<div class="card-body">
+					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
+					<!-- Table with hoverable rows -->
+					<table class="table table-hover">
+	
 						<tr>
-							<td scope="col"><img id="profile" class="col-3" src="image/rank_icon/${alluser.rank}.gif" alt="Profile" height="16" width="16" ></td>
-							<td scope="col">${alluser.email_id}</td>
-							<td scope="col">${alluser.nick}</td>
-							<td scope="col">${alluser.name}</td>
-							<td scope="col">${alluser.phone}</td>
-							<td scope="col">${alluser.year_birth}</td>
-							<td scope="col">${alluser.rank}</td>
-							<td scope="col">
-							<div class="btn-group" role="group" aria-label="Basic example">
-								<button type="button" class="btn btn-primary btn-sm" id="EditPoint">등급설정</button>
-								<button type="button" class="btn btn-primary btn-sm" id="UserHistory">활동내역</button>
-								<button type="button" class="btn btn-danger btn-sm" id="Kick">강퇴</button>
-							</div>
-							</td>
+							<th scope="col">등급</th>
+							<th scope="col">이메일</th>
+							<th scope="col">닉네임</th>
+							<th scope="col">이름</th>
+							<th scope="col">휴대폰</th>
+							<th scope="col">생년월일</th>
+							<th scope="col">관리등급</th>
+							<th scope="col">설정</th>
+	
 						</tr>
-					</c:forEach>
-
-				</table>
-				<!-- End Table with hoverable rows -->
-				<c:if test="${cpage > 1}">
-							<a href="user_list.do?cp=${cpage-1}&ps=${pagesize}">이전</a>
+						
+						<script type="text/javascript">
+						console.log("${alluser}");
+						</script>
+						<c:if test="${alluser == null}">
+							<tr><td colspan='5'>데이터가 없습니다</td></tr>
 						</c:if>
-						<!-- page 목록 나열하기 -->
-						<c:forEach var="i" begin="1" end="${pagecount}" step="1">
-							<c:choose>
+						<c:forEach var="alluser" items="${alluser}">
+							<tr>
+								<td scope="col"><img id="profile" class="col-3" src="image/rank_icon/${alluser.rank}.gif" alt="Profile" height="16" width="16" ></td>
+								<td scope="col">${alluser.email_id}</td>
+								<td scope="col">${alluser.nick}</td>
+								<td scope="col">${alluser.name}</td>
+								<td scope="col">${alluser.phone}</td>
+								<td scope="col">${alluser.year_birth}</td>
+								<td scope="col"></td>
+								<td scope="col">
+								<div class="btn-group" role="group" aria-label="Basic example">
+									<button type="button" class="btn btn-primary btn-sm" id="EditPoint">등급설정</button>
+									<button type="button" class="btn btn-primary btn-sm" id="UserHistory">활동내역</button>
+									<button type="button" class="btn btn-danger btn-sm" id="Kick">강퇴</button>
+								</div>
+								</td>
+							</tr>
+						</c:forEach>
+	
+					</table>
+					<!-- End Table with hoverable rows -->
+				
+	            </div>
+           </div>
+           
+           <div class="col-md-12">
+           		<!-- 페이징  -->
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+					
+		                <c:if test="${cpage > 1}">
+		                  <li class="page-item">
+		                    <a class="page-link" href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+		                  </li>
+	                    </c:if>
+	                    	
+	                    <c:forEach var="i" begin="1" end="${pagecount}" step="1">
+	                    	<c:choose>
 								<c:when test="${cpage==i}">
-										<font color="red" >[${i}]</font>
+										<li class="page-item"><a class="page-link active" >${i}</a></li>
 								</c:when>
 								<c:otherwise>
-									<a href="user_list.do?cp=${i}&ps=${pagesize}">[${i}]</a>
+		                  			<li class="page-item"><a class="page-link" href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
 								</c:otherwise>
 							</c:choose>
-						</c:forEach>
-						<!--다음 링크 --> 
-						<c:if test="${cpage < pagecount}">
-							<a href="user_list.do?cp=${cpage+1}&ps=${pagesize}">다음</a>
+	                    </c:forEach>
+	                    
+	                    <c:if test="${cpage < pagecount}">
+	                    	<li class="page-item">
+							<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
+							</li>
 						</c:if>
-				<!-- 페이징  -->
-			   <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><<</a>
-                  </li>
-                  
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">4</a></li>
-                  <li class="page-item"><a class="page-link" href="#">5</a></li>
-                  
-                  <li class="page-item">
-                    <a class="page-link" href="#">>></a>
-                  </li>
-                  
-                </ul>
-              </nav>
+					</ul>
+				</nav>
               <!-- End Centered Pagination -->
-            </div>
-           </div>
               
+           </div>
 		</div>
 	</main>
 	<!-- End #main -->

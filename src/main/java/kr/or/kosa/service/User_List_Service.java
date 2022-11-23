@@ -8,11 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Board_Dao;
-import kr.or.kosa.dao.Img_Board_Dao;
 import kr.or.kosa.dao.User_Dao;
-import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.User_Details;
 
 public class User_List_Service implements Action {
@@ -55,7 +51,7 @@ public class User_List_Service implements Action {
 				pagecount = (totalusercount / pagesize) + 1; 
 			}
 			
-			List<User_Details> alluser = dao.getUserListAll();
+			List<User_Details> alluser = dao.list(cpage, pagesize);
 			
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);

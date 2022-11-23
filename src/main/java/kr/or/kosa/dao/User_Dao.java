@@ -52,7 +52,7 @@ public class User_Dao {
 					user.setName(rs.getString("name"));
 					user.setPhone(rs.getString("phone"));
 					user.setYear_birth(rs.getString("year_birth"));
-					user.setGender(rs.getString("gender"));
+					user.setIsAdmin(rs.getString("isadmin"));
 					
 					userlist.add(user);
 					
@@ -76,7 +76,7 @@ public class User_Dao {
 	}
 	
 	
-	//유저 나눠서 조회
+	//admin 제외한 유저 조회
 	public List<User_Details> list(int cpage , int pagesize) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -86,9 +86,10 @@ public class User_Dao {
 			conn = ds.getConnection();
 			
 			String sql = "select * from "
-					+ "(select rownum rn, m.rank, m.email_id, m.nick, m.name, u.phone, to_char(u.year_birth, 'yyMMdd') as year_birth, u.gender "
+					+ "(select rownum rn, m.rank, m.email_id, m.nick, m.name, u.phone, to_char(u.year_birth, 'yyMMdd') as year_birth, m.isadmin "
 					+ "from member m join user_details u "
 					+ "on m.email_id = u.email_id "
+					+ "where not nick ='admin' "
 					+ "order by name) where rn <= ? and rn >= ?";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -111,7 +112,7 @@ public class User_Dao {
 				user.setName(rs.getString("name"));
 				user.setPhone(rs.getString("phone"));
 				user.setYear_birth(rs.getString("year_birth"));
-				user.setGender(rs.getString("gender"));
+				user.setIsAdmin(rs.getString("isadmin"));
 				
 				userlist.add(user);
 			}
@@ -130,11 +131,12 @@ public class User_Dao {
 			}
 			
 		}
+		
 		return userlist;
 	}
 	
 	
-	//총 유저 인원 구하기
+	//admin을 제외한 총 유저 인원 구하기
 	public int totalUserCount() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -142,7 +144,7 @@ public class User_Dao {
 		int totalcount = 0;
 		try {
 			conn = ds.getConnection(); //dbcp 연결객체 얻기
-			String sql="select count(*) cnt from member where NOT email_id='admin'";
+			String sql="select count(*) cnt from member where NOT nick='admin'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
