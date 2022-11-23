@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
-import kr.or.kosa.dao.Market_Board_Dao;
+import kr.or.kosa.dao.Img_Board_Dao;
+import kr.or.kosa.dao.MarketBoardDao;
 import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Market_Board;
+import kr.or.kosa.dto.Img_Board;
+import kr.or.kosa.dto.MarketBoard;
 
-public class Market_Board_List_Service implements Action {
+public class MarketBoardListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -44,17 +46,19 @@ public class Market_Board_List_Service implements Action {
 			int cpage = Integer.parseInt(cp);
 			int pagecount = 0;
 			
-			//23건  % 5
 			if(totalboardcount % pagesize == 0) {
 				pagecount = totalboardcount / pagesize;
 			}else {
 				pagecount = (totalboardcount / pagesize) + 1; 
 			}
 			
-			List<Board> list = dao.getMarket_boardList(b_code, cpage, pagesize);
 			
-			Market_Board_Dao board_dao = new Market_Board_Dao();
-			List<Market_Board> img_list = board_dao.getMarket_BoadList(cpage, pagesize);
+			List<Board> list = dao.getImg_boardList(b_code, cpage, pagesize);
+			Img_Board_Dao board_dao = new Img_Board_Dao();
+			List<Img_Board> img_list = board_dao.getImg_BoadList(cpage, pagesize);
+			
+			
+			
 			
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
@@ -65,7 +69,7 @@ public class Market_Board_List_Service implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/marketboard_list.jsp");
+		  	forward.setPath("/WEB-INF/view/imgboard_list.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

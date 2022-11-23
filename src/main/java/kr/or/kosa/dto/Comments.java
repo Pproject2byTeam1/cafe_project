@@ -14,6 +14,24 @@ public class Comments {
 	private int refer;
 	private int depth;
 	private int step;
+	
+	public Comments() {}
+	
+	public Comments(int co_idx, int idx, String content, String email_id, String nick, String w_date, int report_count,
+			int refer, int depth, int step) {
+		super();
+		this.co_idx = co_idx;
+		this.idx = idx;
+		this.content = content;
+		this.email_id = email_id;
+		this.nick = nick;
+		this.w_date = w_date;
+		this.report_count = report_count;
+		this.refer = refer;
+		this.depth = depth;
+		this.step = step;
+	}
+	
 	public int getCo_idx() {
 		return co_idx;
 	}
@@ -74,7 +92,7 @@ public class Comments {
 	public void setStep(int step) {
 		this.step = step;
 	}
-	
+		
 	@Override
 	public String toString() {
 		return "Connents [co_idx=" + co_idx + ", idx=" + idx + ", content=" + content + ", email_id=" + email_id
