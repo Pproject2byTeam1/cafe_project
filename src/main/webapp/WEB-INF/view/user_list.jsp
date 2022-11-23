@@ -158,7 +158,7 @@
 								<td scope="col">${alluser.isAdmin}</td>
 								<td scope="col">
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<form action="user_details.do" method="post">
+									<form action="user_details.do" method="post" target="payviewer" onsubmit="window.open('user_details.do', 'payviewer', 'width=768, height=753,resizeable, scrollbars');">
 										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
 										<input type="text" value="1" name="todo" style="display: none;">
 										<input type="submit" class="btn btn-primary btn-sm EditPoint" value="등급설정">
@@ -253,20 +253,8 @@
    <!-- Template Main JS File -->
    
    <script src="assets/js/main.js"> </script>
-   
-   <script type="text/javascript">
-	  function new_window() {
-	    window.open(
-	      "memo_list.do",
-	      "쪽지함",
-	      "width=500, height=600, top=100, left=300"
-	    );
-	  }
-  </script>
-   	
-   		
-   
   
+   		
 
 </body>
 

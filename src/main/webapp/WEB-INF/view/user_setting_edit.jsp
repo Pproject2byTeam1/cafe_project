@@ -229,6 +229,8 @@
     
      document.getElementById("change").onclick = () =>{
         alert("정보가 변경되었습니다.");
+        //window.close();
+        
      } 
     
 

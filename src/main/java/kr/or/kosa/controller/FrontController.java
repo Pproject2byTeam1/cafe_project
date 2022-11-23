@@ -17,6 +17,7 @@ import kr.or.kosa.service.Img_Board_Read_Service;
 import kr.or.kosa.service.Message_Delete_Service;
 import kr.or.kosa.service.Message_List_Service;
 import kr.or.kosa.service.Message_Write_Service;
+import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_List_Service;
 import kr.or.kosa.service.User_details;
@@ -94,6 +95,11 @@ public class FrontController extends HttpServlet {
 		}else if(urlcommand.equals("/user_edit.do")) {
 			action = new User_Edit();
 			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/regular_list.do")) {
+			action = new Regular_Board_List_Service();
+			forward = action.execute(request, response);
+			
 		}
 		
 		
