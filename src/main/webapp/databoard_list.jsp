@@ -197,7 +197,7 @@ text-align: center;
                  <%--  </c:forEach> --%>
                  
                 
-             <c:if test="${board.depth>1}">     
+             <c:if test="${board.depth>0}">     
    <tr>	
          <th scope="row"><input type="checkbox"></th>
                      <td>
@@ -241,20 +241,32 @@ text-align: center;
       </div>
       
           <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><<</a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                   <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">>></a>
-                  </li>
-                </ul>
-              </nav><!-- End Centered Pagination -->
+					<ul class="pagination justify-content-center">
+					
+		                <c:if test="${cpage > 1}">
+		                  <li class="page-item">
+		                    <a class="page-link" href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+		                  </li>
+	                    </c:if>
+	                    	
+	                    <c:forEach var="i" begin="1" end="${pagecount}" step="1">
+	                    	<c:choose>
+								<c:when test="${cpage==i}">
+										<li class="page-item"><a class="page-link active" >${i}</a></li>
+								</c:when>
+								<c:otherwise>
+		                  			<li class="page-item"><a class="page-link" href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+								</c:otherwise>
+							</c:choose>
+	                    </c:forEach>
+	                    
+	                    <c:if test="${cpage < pagecount}">
+	                    	<li class="page-item">
+							<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
+							</li>
+						</c:if>
+					</ul>
+				</nav><!-- End Centered Pagination -->
    </main>
    <!-- End #main -->
 

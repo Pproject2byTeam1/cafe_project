@@ -12,6 +12,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Data_Board_Dao;
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Comments;
 
 public class Data_Board_List_Service implements Action {
 
@@ -33,7 +34,7 @@ public class Data_Board_List_Service implements Action {
 			String ps = request.getParameter("ps");
 			String cp = request.getParameter("cp");
 			String b_code = request.getParameter("b_code");
-			
+		
 			if (ps == null || ps.trim().equals("")) {
 				// default 값 설정
 				ps = "5"; // 5개씩
@@ -54,9 +55,12 @@ public class Data_Board_List_Service implements Action {
 				pagecount = (totalboardcount / pagesize) + 1; 
 			}
 			List<Board> datalist = dao.getAllDatalist(code, cpage, pagesize);
+			//댓글
+		List<Comments> comlist =dao.getComment(code, pagecount, cpage, pagesize);
+			
+			
 			
 			List<Integer> countlist = new ArrayList<Integer>();
-			
 			
 			for(Board board : datalist) {
 				int idx = board.getIdx();
@@ -72,6 +76,8 @@ public class Data_Board_List_Service implements Action {
 				
 				yeslist.add(count1);
 			}
+		//List<Comments> comlist1 =dao.getComment(code, pagecount, cpage, pagesize);
+			
 			int cnt =countlist.size();
 			int yes = yeslist.size();
 			request.setAttribute("datalist",datalist);
@@ -84,7 +90,7 @@ public class Data_Board_List_Service implements Action {
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalboardcount", totalboardcount);
-			System.out.println(datalist);
+			
 		
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

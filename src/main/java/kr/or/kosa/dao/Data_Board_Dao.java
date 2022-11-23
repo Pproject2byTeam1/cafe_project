@@ -328,7 +328,7 @@ public class Data_Board_Dao {
 
 	}
 
-	// 게시뭉 총 건수 구학;
+	// 게시물 총 건수 구하기;
 	public int totaldataBoard() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -356,4 +356,71 @@ public class Data_Board_Dao {
 
 		return totalcount;
 	}
+	
+//계층형 답글	
+	public List<Comments> getComment(int b_code,int idx, int cpage, int pagesize) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Comments> comlist = null;
+
+		try {
+
+			conn = ds.getConnection();
+			String sql = "select * from"
+					+ "(select rownum rn, b.idx,c.co_idx,c.content, c.refer, c.depth, c.step"
+					+ "from board b join comments c"
+					+ "on c.idx = b.idx"
+					+ "where b.b_code=?  and b.idx=?"
+					+ "order by refer desc , step desc ) where rn <=? and rn >=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			comlist = new ArrayList<Comments>();
+			int start = cpage * pagesize - (pagesize - 1);
+			int end = cpage * pagesize;
+			
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, idx);
+			pstmt.setInt(3, end);
+			pstmt.setInt(4, start);
+			
+			rs = pstmt.executeQuery();
+			
+			comlist = new ArrayList<Comments>();
+
+			while (rs.next()) {
+				Comments com = new Comments();
+
+				com.setIdx(rs.getInt("idx"));
+				com.setContent(rs.getString("content"));
+				
+			
+				// 계층형
+
+				com.setRefer(rs.getInt("refer"));
+				com.setStep(rs.getInt("step"));
+				com.setDepth(rs.getInt("depth"));
+
+				
+				
+				comlist.add(com);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+
+		return comlist;
+	}
+	
+	
+	
 }
