@@ -1,7 +1,5 @@
 package kr.or.kosa.dto;
 
-import java.util.Date;
-
 public class User {
 	private String email_id;
 	private String password;
