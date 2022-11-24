@@ -10,8 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.Board_Dao;
+import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.Comments;
 
 public class DataBoardListService implements Action {
@@ -25,6 +28,12 @@ public class DataBoardListService implements Action {
 		HttpSession session = request.getSession();
 		try {
 			DataBoardDao dao = new DataBoardDao();
+			
+			//사이드바	
+			   Board_Info_Dao infodao = new Board_Info_Dao();
+		         List<Board_Info> infolist = infodao.getSideBoardList();
+		         
+		         request.setAttribute("infolist", infolist);
 			
 			
 			int totalboardcount = dao.totaldataBoard();

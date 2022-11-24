@@ -12,6 +12,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dto.DataBoard;
 
@@ -50,7 +51,13 @@ public class DataWriteService implements Action {
 		
 				DataBoardDao dao = new DataBoardDao();
 			
-			DataBoard board = new DataBoard();
+			DataBoard board = new DataBoard(); 
+			Board_Dao data = new Board_Dao();
+			
+		
+			
+			
+			
 			board.setB_idx(b_idx);
 			board.setOri_name(ori_name);
 			board.setVolume(volume);
