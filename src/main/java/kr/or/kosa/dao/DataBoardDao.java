@@ -82,23 +82,29 @@ public class DataBoardDao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "insert into data_board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?,?)";
+			String sql = "insert into data_board( ori_name, save_name, volume, refer, depth, step) values( ?, ?, ?,0,0,0)";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, data_board.getIdx());
+	//		pstmt.setInt(1, data_board.getIdx());
 			pstmt.setString(2, data_board.getOri_name());
-			pstmt.setString(3, data_board.getSave_name());
+			pstmt.setString(3, data_board.getOri_name());
 			pstmt.setInt(4, data_board.getVolume());
 			pstmt.setInt(5, data_board.getRefer());
 			pstmt.setInt(6, data_board.getDepth());
 			pstmt.setInt(7, data_board.getStep());
-
+			
+			
+			/*
+			 * int refermax = getMaxRefer(); int refer = refermax+1; pstmt.setInt(8,refer);
+			 */
+			
 			row = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -107,7 +113,7 @@ public class DataBoardDao {
 		return row;
 	}
 	//board 에 자료게시판 글 삽입
-	public int insertBoard(Board board,int b_code) {
+	public int insertBoard(Board board,int bcode) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
@@ -138,6 +144,10 @@ public class DataBoardDao {
 		
 		return row;
 	}
+	
+	
+	
+	
 	// 자료 게시판 특정 글 수정
 	public int updateData_Board(DataBoard data_board) {
 
@@ -173,6 +183,10 @@ public class DataBoardDao {
 		
 		String idx= boarddata.getParameter("idx");
 		String ori_name=boarddata.getParameter("ori_name");
+		String save_name = boarddata.getParameter("save_name");
+		String volume =boarddata.getParameter("volume");
+		
+		
 		Enumeration filenames = boarddata.getFileNames();
 		
 		String file1 = (String) filenames.nextElement();
@@ -190,10 +204,10 @@ public class DataBoardDao {
 		try {
 			conn = ds.getConnection();
 			String sql_idx = "select idx  from data_board where idx=? ";
-			String sql_udpate = "update databoard set ori_name=?, save_name=? volume=? where idx=? where idx=?";
+			String sql_udpate = "update databoard set ori_name=?, save_name=? volume=? where idx=?";
 			pstmt = conn.prepareStatement(sql_idx);
 			pstmt.setString(1, idx);
-			pstmt.setString(2, pwd);
+	
 			
 			rs = pstmt.executeQuery();
 			//판단 (데이터 있다며 : 수정가능 , 없다면 : 수정불가
@@ -202,13 +216,11 @@ public class DataBoardDao {
 				pstmt.close();
 				//업데이트
 				pstmt = conn.prepareStatement(sql_udpate);
-				pstmt.setString(1, writer);
-				pstmt.setString(2, email);
-				pstmt.setString(3, homepage);
-				pstmt.setString(4, subject);
-				pstmt.setString(5, content);
-				pstmt.setString(6, filename1);
-				pstmt.setString(7, idx);
+				pstmt.setString(1,filename1);
+				pstmt.setString(2,filename1);
+				pstmt.setString(3, volume);
+			
+				pstmt.setString(4, idx);
 				row = pstmt.executeUpdate();
 				//System.out.println("row : " + row);
 			}

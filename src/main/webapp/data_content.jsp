@@ -11,6 +11,7 @@
 <script
 	src="https://cdn.tiny.cloud/1/avqk22ebgv68f2q9uzprdbapxmxjwdbke8xixhbo24x2iyvp/tinymce/6/tinymce.min.js"
 	referrerpolicy="origin"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>카페人중독</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
@@ -117,7 +118,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-
 	function check(){
 		if(!bbs.title.value){
 			alert("제목을 입력하세요");
@@ -125,7 +125,7 @@
 			return false;
 		}
 		
-		if(!bbs.select.value){
+		if(!bbs.bcode.value){
 			
 			alert("게시판을 선택해주세요");
 			bbs.select.focus();
@@ -142,7 +142,7 @@
 
 		
 	}
-
+ 
 
 
 
@@ -156,15 +156,16 @@
 </head>
 
 <body>
-
+  <!-- ======= Header ======= -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
 	<!-- ======= Header ======= -->
-	<header id="header" class="header fixed-top d-flex align-items-center">
-
-		<jsp:include page="/common/top.jsp"></jsp:include>
-
-	</header>
-	<!-- End Header -->
-
+	
 	<!-- ======= Sidebar ======= -->
 
 	<jsp:include page="/common/side2.jsp"></jsp:include>
@@ -202,7 +203,7 @@
 
 							</div>
 							<div class="col-md-4">
-								<select class="form-select" name="select">
+								<select class="form-select" name="bcode">
 									<option>게시판을 선택해 주세요</option>
 									<option>공지사항</option>
 									<option value="1">자료게시판</option>
