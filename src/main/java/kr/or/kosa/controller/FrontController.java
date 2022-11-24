@@ -141,13 +141,17 @@ public class FrontController extends HttpServlet {
 			action = new MarketBoardListService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 리스트
+		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 읽기
 			
 			action = new MarketBoardReadService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/userinfo.do")){ // 데이터 게시판 리스트
+		}else if(urlcommand.equals("/marketboard_delete.do")){ // 데이터 게시판 삭제
 			
+			action = new MarketBoardReadService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userinfo.do")){ 
 			action = new UserInfoService();
 			forward = action.execute(request, response);
 			

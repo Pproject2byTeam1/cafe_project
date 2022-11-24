@@ -1,12 +1,16 @@
 package kr.or.kosa.service;
 
+import java.util.List;
+
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.MarketBoardDao;
+import kr.or.kosa.dto.Board_Info;
 
 public class MarketBoardDeleteOk implements Action {
 
@@ -22,6 +26,12 @@ public class MarketBoardDeleteOk implements Action {
 		 
 		MarketBoardDao dao;
 		try {
+			
+			Board_Info_Dao infodao = new Board_Info_Dao();
+		    List<Board_Info> infolist = infodao.getSideBoardList();
+
+	        request.setAttribute("infolist", infolist);
+			
 			dao = new MarketBoardDao();
 			
 			int result = dao.delMarket(idx, email_id);

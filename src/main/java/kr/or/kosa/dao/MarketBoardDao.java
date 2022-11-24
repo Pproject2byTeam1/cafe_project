@@ -10,10 +10,8 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.MarketBoard;
 
@@ -227,26 +225,25 @@ public class MarketBoardDao {
 	}
 
 	// 거래 게시판 글 읽기
-	public List<MarketBoard> readMarket(int idx) {
+	public MarketBoard readMarket(int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<MarketBoard> readmarket = null;
+		MarketBoard read = null;
 
 		try {
 			conn = ds.getConnection();
 			String sql = "select * "
-					+ "from (select m.idx, m.b_idx b_idx ,m.sold, m.m_mode, m.cate, b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, b.report_count, b.email_id, b.b_code"
-					+ " from board b join market_board m" + " on b.idx = m.idx" + " order by b_idx desc) where m.idx=?";
+					+ "from (select m.idx, m.sold, m.m_mode, m.cate, b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, b.report_count, b.email_id"
+					+ " from board b join market_board m on b.idx = m.idx) where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 
-			rs = pstmt.executeQuery();
-
-			readmarket = new ArrayList<MarketBoard>();
+			rs = pstmt.executeQuery();		
+			
+			read = new MarketBoard();
 
 			if (rs.next()) {
-				MarketBoard read = new MarketBoard();
 
 				read.setSold(rs.getString("sold"));
 				read.setM_mode(rs.getString("m_mode"));
@@ -260,9 +257,7 @@ public class MarketBoardDao {
 				read.setW_date(rs.getString("w_date"));
 				read.setReport_count(rs.getInt("report_count"));
 				read.setEmail_id(rs.getString("email_id"));
-				read.setB_code(rs.getInt("b_code"));
 
-				readmarket.add(read);
 			}
 
 		} catch (Exception e) {
@@ -277,7 +272,7 @@ public class MarketBoardDao {
 			}
 		}
 
-		return readmarket;
+		return read;
 	}
 
 	// 유저 거래게시글 삭제하기
