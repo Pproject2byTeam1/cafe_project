@@ -30,6 +30,7 @@ import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
+import kr.or.kosa.service.UserUpdateService;
 
 
 @WebServlet("*.do")
@@ -158,6 +159,11 @@ public class FrontController extends HttpServlet {
 			
 		}else if(urlcommand.equals("/userinfo.do")){ 
 			action = new UserInfoService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userinfo.do")){ // 유저정보 수정
+			
+			action = new UserUpdateService();
 			forward = action.execute(request, response);
 			
 		}

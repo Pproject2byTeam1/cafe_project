@@ -194,8 +194,6 @@ public class UserDao {
 		return totalcount;
 	}
 	
-	
-	
 	//특정 유저 조회
 	public User idSearchUser(String id) {
 		Connection conn = null;
@@ -330,4 +328,65 @@ public class UserDao {
 	}
 	
 
+	//특정 유저 전화번호 바꾸기
+	public int updateUserTelnum(String phone, String email_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = "UPDATE member SET phone=? "
+					+ "WHERE email_id=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, phone);
+			pstmt.setString(2, email_id);
+			row = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();//반환
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return row;
+	}
+	
+	//특정 유저 닉네임 바꾸기
+		public int updateUserNick(String email_id, String NICK) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "UPDATE member SET NICK=? "
+						+ "WHERE email_id=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, NICK);
+				pstmt.setString(2, email_id);
+				row = pstmt.executeUpdate();
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
+		}
 }
