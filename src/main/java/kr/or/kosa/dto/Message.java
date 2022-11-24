@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Message {
 	private int m_idx;
+	private int send_rank;
 	private String send_id;
 	private String send_nick;
 	private String receive_id;
@@ -51,6 +52,12 @@ public class Message {
 	}
 	public void setM_date(String m_date) {
 		this.m_date = m_date;
+	}
+	public int getSend_rank() {
+		return send_rank;
+	}
+	public void setSend_rank(int send_rank) {
+		this.send_rank = send_rank;
 	}
 	@Override
 	public String toString() {

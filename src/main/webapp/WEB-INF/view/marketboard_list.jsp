@@ -37,6 +37,8 @@
 <!-- 거래게시판 CSS 끝 -->
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
+<script type="text/javascript">
+</script>  	
 </head>
 <body>
 	<!-- ======= Header ======= -->
@@ -73,11 +75,6 @@
 			<div class="marketcard">
 				<div class="card-body">
 					<h5 class="card-title">거래 게시판에서 발생하는 모든 문제는 본인에게 있습니다.</h5>
-					
-					<c:if test="${list == null}">
-	  					<p>데이터가 없습니다</p>
-	  				</c:if>
-	  				
 					<!-- Bordered Tabs -->
 					<ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab"
 						role="tablist">
@@ -108,28 +105,26 @@
 						<div></div>
 					</div>
 					<!-- End Bordered Tabs -->
-					<!-- 보드 리스트 출력 시작 -->
-
-					<!-- 보드 리스트 출력 끝 -->
-
+					<!-- 보드	리스트 출력 시작 -->
 					<div class="container container__content--flow">
-						<div class="mcard" onclick="location.href='marketboard_read.jsp'">
+						<c:forEach var="list" items="${list}" varStatus="status">
+						<div class="mcard" onclick="location.href='marketboardread.do?idx=${list.idx}'">
 							<div class="mimg">
-							<img src="image/marketboard_img/2.jpeg" id="mimg"/>
+							<img src="image/board/${list.b_code}/${img_list[status.index].img_name}" id="mimg"/>
 							</div>
-							<span id="marketB_Text.ns">직거래 | 판매중 | 전자제품</span>
+							<span id="marketB_Text.ns">${list.m_mode} | ${list.sold} | ${list.cate}</span>
 							<p>
-							<span id="marketB_Title">맥북 팝니다!</span>
+							<span id="marketB_Title">${list.title}</span>
 							<br>
-							<span id="marketB_Text">직거래는
-								혜화에서 가능...3개월정도 사용했고 상태 좋습니다. 직거래는 혜화에서 가능...</span>
-							<span id="marketB_Price">1,300,000</span>
+							<span id="marketB_Text">${list.content}</span>
+							<span id="marketB_Price">${list.price}</span>
 							<br>
-							<span id="marketB_info">조회수 : 120 | 댓글 : 3 | 찜 : 3</span>
+							<span id="marketB_info">조회수 : ${list.hits} | 댓글 : 3 | 찜 : 3</span>
 							<br>
 								<span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"
-									class="rounded-circle"> USER_NICK | 22.11.18 12:10</span>
+									class="rounded-circle"> ${list.nick} | ${list.w_date}</span>
 						</div>
+						</c:forEach>
 
 						<div class="mcard" onclick="location.href='marketboard_read.jsp'">
 							<div class="mimg">

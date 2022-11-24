@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 
@@ -104,13 +106,13 @@
 	display: block;
 	overflow: auto;
 }
-
-
 </style>
 </head>
 
 <body>
-
+	<c:set var="pagesize" value='<%=request.getAttribute("pagesize")%>' />
+	<c:set var="cpage" value='<%=request.getAttribute("cpage")%>' />
+	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -136,100 +138,127 @@
 				</ol>
 			</nav>
 		</div>
-		<div>
-		<select class="selectpicker" data-width="75px">
-                 <option>전체등급</option>
-                  <option>준회원</option>
-                  <option>일반회원</option>
-             </select>
-		
-		
-		</div>
-		    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
-			<div>
-		<select class="selectpicker2" >
-                 <option>전체조회</option>
-                  <option>OO조회</option>
-                  <option>OO조회</option>
-                  
-             </select>
-		
-		
-		</div>
-		
-		<div class="card">
-			<div></div>
-			<div class="card-body">
-				<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
-				<!-- Table with hoverable rows -->
-				<table class="table table-hover">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-5"></div>
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-5">
+							<select class=" form-select">
+								<option>전체등급</option>
+								<option>준회원</option>
+								<option>일반회원</option>
+							</select>
+						</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-5">
+							<select class="form-select">
+								<option>전체조회</option>
+								<option>OO조회</option>
+								<option>OO조회</option>
+							</select>
+						</div>
+					</div>
+				</div>
 
-					<tr>
-						<th scope="col">등급</th>
-						<th scope="col">이메일</th>
-						<th scope="col">닉네임</th>
-						<th scope="col">이름</th>
-						<th scope="col">휴대폰</th>
-						<th scope="col">생년월일</th>
-						<th scope="col">성별</th>
-						<th scope="col">신고페이지</th>
-						<th scope="col">신고수</th>
-					</tr>
+				<div class="col-md-3">
+					<div class="search-bar">
+						<form class="search-form d-flex align-items-center" method="POST"
+							action="#">
+							<input type="text" name="query" placeholder="Search"
+								class="form-control" title="Enter search keyword">
+							<button type="submit" title="Search" class="btn btn-secondary">
+								<i class="bi bi-search"></i>
+							</button>
+						</form>
+					</div>
+				</div>
 
-
-					<tr>
-						<th scope="col">준회원(1)</th>
-						<th scope="col">kosa@1004.com</th>
-						<th scope="col">개발자</th>
-						<th scope="col">홍길동</th>
-						<th scope="col">010-1234-1234</th>
-						<th scope="col">901030</th>
-						<th scope="col">남</th>
-						<th scope="col"><button type="button" class="btn btn-danger">신고페이지</button></th>
-						<th scope="col">3</th>
-					</tr>
-
-					<tr>
-						<th scope="col">준회원(1)</th>
-						<th scope="col">kosa@1004.com</th>
-						<th scope="col">개발자</th>
-						<th scope="col">홍길동</th>
-						<th scope="col">010-1234-1234</th>
-						<th scope="col">901030</th>
-						<th scope="col">남</th>
-						<th scope="col"><button type="button" class="btn btn-danger">신고페이지</button></th>
-						<th scope="col">3</th>
-					</tr>
-
-
-
-				</table>
-				<!-- End Table with hoverable rows -->
-			<!-- 페이징  -->
-			   <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><<</a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                   <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">>></a>
-                  </li>
-                </ul>
-              </nav><!-- End Centered Pagination -->
 			</div>
 		</div>
 
+		<br>
 
+		<div class="container-fluid">
+			<div class="card">
+				<div></div>
+				<div class="card-body">
+					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
+					<!-- Table with hoverable rows -->
+					<table class="table table-hover">
+
+						<tr>
+						<!-- 	<th scope="col">글/댓글</th>
+							<th scope="col">게시판 종류</th> -->
+							<th scope="col">글제목</th>
+							<th scope="col">닉네임</th>
+							<th scope="col">이메일</th>
+							<th scope="col">조회수</th>
+							<th scope="col">신고수</th>
+							<th scope="col">신고페이지</th>
+
+						</tr>
+
+				<script type="text/javascript">
+						console.log("${member}");
+						</script>
+						<c:if test="${reportlist== null}">
+							<tr>
+								<td >데이터가 없습니다</td>
+							</tr>
+						</c:if>
+							<c:forEach var="reportlist" items="${reportlist}">
+							<tr>
+								<th scope="col">아직</th>
+								<th scope="col">아직</th> 
+								<th scope="col">${reportlist.title}</th>
+								<th scope="col">${reportlist.nick}</th>
+								<th scope="col">${reportlist.email_id}</th>
+								<th scope="col">${reportlist.hits}</th>
+								<th scope="col">${reportlist.report_count}</th>
+								<th scope="col"><button type="button"
+										class="btn btn-danger">신고페이지</button></th>
+							</tr>
+						</c:forEach>
+						
+
+
+
+					</table>
+					<!-- End Table with hoverable rows -->
+					<!-- 페이징  -->
+					<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+					
+		                <c:if test="${cpage > 1}">
+		                  <li class="page-item">
+		                    <a class="page-link" href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+		                  </li>
+	                    </c:if>
+	                    	
+	                    <c:forEach var="i" begin="1" end="${pagecount}" step="1">
+	                    	<c:choose>
+								<c:when test="${cpage==i}">
+										<li class="page-item"><a class="page-link active" >${i}</a></li>
+								</c:when>
+								<c:otherwise>
+		                  			<li class="page-item"><a class="page-link" href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+								</c:otherwise>
+							</c:choose>
+	                    </c:forEach>
+	                    
+	                    <c:if test="${cpage < pagecount}">
+	                    	<li class="page-item">
+							<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>
+					<!-- End Centered Pagination -->
+				</div>
+			</div>
+
+		</div>
 
 
 	</main>

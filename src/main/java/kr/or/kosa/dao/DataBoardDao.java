@@ -13,22 +13,22 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Comments;
-import kr.or.kosa.dto.Data_Board;
+import kr.or.kosa.dto.DataBoard;
 
-public class Data_Board_Dao {
+public class DataBoardDao {
 	DataSource ds = null;
 
-	public Data_Board_Dao() throws NamingException {
+	public DataBoardDao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
 
 	// 자료 게시판 특정 글 조회
-	public Data_Board getData_BoardByIdx(int idx) {
+	public DataBoard getData_BoardByIdx(int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Data_Board data_board = new Data_Board();
+		DataBoard data_board = new DataBoard();
 
 		try {
 
@@ -70,7 +70,7 @@ public class Data_Board_Dao {
 	}
 
 	// 자료 게시판 특정 글 삽입
-	public int insertData_Board(Data_Board data_board) {
+	public int insertData_Board(DataBoard data_board) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -79,7 +79,7 @@ public class Data_Board_Dao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "insert into Regualr_Board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?)";
+			String sql = "insert into data_board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, data_board.getIdx());
@@ -105,7 +105,7 @@ public class Data_Board_Dao {
 	}
 
 	// 자료 게시판 특정 글 수정
-	public int updateData_Board(Data_Board data_board) {
+	public int updateData_Board(DataBoard data_board) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -191,7 +191,7 @@ public class Data_Board_Dao {
 			datalist = new ArrayList<Board>();
 
 			while (rs.next()) {
-				Data_Board data = new Data_Board();
+				DataBoard data = new DataBoard();
 
 				data.setIdx(rs.getInt("idx"));
 				data.setTitle(rs.getString("title"));
@@ -328,7 +328,7 @@ public class Data_Board_Dao {
 
 	}
 
-	// 게시뭉 총 건수 구학;
+	// 게시물 총 건수 구하기;
 	public int totaldataBoard() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -356,4 +356,71 @@ public class Data_Board_Dao {
 
 		return totalcount;
 	}
+	
+//계층형 답글	
+	public List<Comments> getComment(int b_code,int idx, int cpage, int pagesize) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Comments> comlist = null;
+
+		try {
+
+			conn = ds.getConnection();
+			String sql = "select * from"
+					+ "(select rownum rn, b.idx,c.co_idx,c.content, c.refer, c.depth, c.step"
+					+ "from board b join comments c"
+					+ "on c.idx = b.idx"
+					+ "where b.b_code=?  and b.idx=?"
+					+ "order by refer desc , step desc ) where rn <=? and rn >=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			comlist = new ArrayList<Comments>();
+			int start = cpage * pagesize - (pagesize - 1);
+			int end = cpage * pagesize;
+			
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, idx);
+			pstmt.setInt(3, end);
+			pstmt.setInt(4, start);
+			
+			rs = pstmt.executeQuery();
+			
+			comlist = new ArrayList<Comments>();
+
+			while (rs.next()) {
+				Comments com = new Comments();
+
+				com.setIdx(rs.getInt("idx"));
+				com.setContent(rs.getString("content"));
+				
+			
+				// 계층형
+
+				com.setRefer(rs.getInt("refer"));
+				com.setStep(rs.getInt("step"));
+				com.setDepth(rs.getInt("depth"));
+
+				
+				
+				comlist.add(com);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+
+		return comlist;
+	}
+	
+	
+	
 }
