@@ -37,7 +37,7 @@
   		/* 게시물 좋아요 비동기 처리 */
   		$.ajax({
   			type: "POST",
-        	url: "Kanban",
+        	url: "Yes",
 			data: requestdata,
         	dataType: "JSON",
         	success: function(data){
@@ -62,7 +62,7 @@
   	</header><!-- End Header -->
   	
   	<!-- ======= Sidebar ======= -->
-    <jsp:include page="/common/side.jsp"></jsp:include>
+    <jsp:include page="/common/side2.jsp"></jsp:include>
   	<!-- End Sidebar -->
 
 	<main id="main" class="main">
