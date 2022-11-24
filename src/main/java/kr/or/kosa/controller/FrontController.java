@@ -26,6 +26,7 @@ import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
+import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
@@ -143,6 +144,11 @@ public class FrontController extends HttpServlet {
 		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 리스트
 			
 			action = new MarketBoardReadService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userinfo.do")){ // 데이터 게시판 리스트
+			
+			action = new UserInfoService();
 			forward = action.execute(request, response);
 			
 		}
