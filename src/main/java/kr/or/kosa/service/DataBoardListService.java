@@ -15,11 +15,8 @@ import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dao.Yes_Dao;
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.DataBoard;
-import kr.or.kosa.dto.Regular_Board;
 
 public class DataBoardListService implements Action {
 
@@ -73,7 +70,7 @@ public class DataBoardListService implements Action {
 			//댓글
 		
 			
-			List<DataBoard> list = dao.getdata_boardList(b_code, cpage, pagesize);
+		List<DataBoard> list = dao.getdata_boardList(b_code, cpage, pagesize);
 			
 			List<Integer> countlist = new ArrayList<Integer>();
 			List yescountlist = new ArrayList();

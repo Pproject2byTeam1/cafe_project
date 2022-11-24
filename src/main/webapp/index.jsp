@@ -72,7 +72,7 @@
     <p><a href="userinfo.do">마이페이지(일반유저)</a></p>
     <p><a href="regular_list.do?b_code=1">자유 게시판</a></p>
     <p><a href="marketboard_list.do?b_code=5">거래 게시판</a></p>
-    <p><a href="data_contentview.do?b_code=6&idx=46">글목록</a></p>
+
 
     <section class="section dashboard">
       <div class="row">

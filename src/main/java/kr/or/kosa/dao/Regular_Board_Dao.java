@@ -9,6 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Regular_Board;
 
 //자유 게시판
@@ -22,17 +23,17 @@ public class Regular_Board_Dao {
 	}
 	
 	//자유게시판 특정 게시글 조회
-	public Regular_Board getRegular_BoardByIdx(int idx) {
+	public Board getRegular_BoardByIdx(int idx) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Regular_Board regular_board = new Regular_Board(); 
+		Board board = new Board(); 
 		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select b_idx, idx, refer, depth, step from Regular_Board where idx=?";
+			String sql = "select idx, title, nick, content, hits, to_char(w_date, 'YYYY-MM-dd') w_date, report_count, notic, email_id from board where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, idx);
@@ -41,11 +42,16 @@ public class Regular_Board_Dao {
 			
 			if(rs.next()) {
 				
-				regular_board.setB_idx(rs.getInt("b_idx"));
-				regular_board.setIdx(rs.getInt(rs.getInt("idx")));
-				regular_board.setRefer(rs.getInt("refer"));
-				regular_board.setDepth(rs.getInt("depth"));
-				regular_board.setStep(rs.getInt("step"));
+				board.setIdx(rs.getInt("idx"));
+				board.setTitle(rs.getString("title"));
+				board.setNick(rs.getString("nick"));
+				board.setContent(rs.getString("content"));
+				board.setHits(rs.getInt("hits"));
+				board.setW_date(rs.getString("w_date"));
+				board.setEmail_id(rs.getString("email_id"));
+				board.setReport_count(rs.getInt("report_count"));
+				board.setNotic(rs.getString("notic"));
+				board.setEmail_id(rs.getString("email_id"));
 				
 			}else {
 				System.out.println("조회 데이터 없음");
@@ -62,7 +68,7 @@ public class Regular_Board_Dao {
 			}
 		}
 		
-		return regular_board;
+		return board;
 	}
 	
 	//자유 게시판 특정 글 삽입

@@ -132,33 +132,39 @@ public Board getBoard(int b_code, int idx) {
 	
 	
 	// 자료 게시판 특정 글 조회
-	public DataBoard getData_BoardByIdx(int idx) {
+	public Board getData_BoardByIdx(int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		DataBoard data_board = new DataBoard();
+		Board board = new Board(); 
 
-		try {
-
-			conn = ds.getConnection();
-			String sql = "select b_idx, idx, ori_name from Data_Board where idx=?";
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, idx);
-
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-
-				data_board.setB_idx(rs.getInt("b_idx"));
-				data_board.setIdx(rs.getInt(rs.getInt("idx")));
-				data_board.setOri_name(rs.getString("ori_name"));
+	try {
 			
-
-			} else {
+			conn = ds.getConnection();
+			String sql = "select idx, title, nick, content, hits, to_char(w_date, 'YYYY-MM-dd') w_date, report_count, notic, email_id from board where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, idx);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				board.setIdx(rs.getInt("idx"));
+				board.setTitle(rs.getString("title"));
+				board.setNick(rs.getString("nick"));
+				board.setContent(rs.getString("content"));
+				board.setHits(rs.getInt("hits"));
+				board.setW_date(rs.getString("w_date"));
+				board.setEmail_id(rs.getString("email_id"));
+				board.setReport_count(rs.getInt("report_count"));
+				board.setNotic(rs.getString("notic"));
+				board.setEmail_id(rs.getString("email_id"));
+				
+			}else {
 				System.out.println("조회 데이터 없음");
 			}
-
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -169,8 +175,8 @@ public Board getBoard(int b_code, int idx) {
 				System.out.println(e2.getMessage());
 			}
 		}
-
-		return data_board;
+		
+		return board;
 	}
 
 	// 자료 게시판 특정 글 삽입

@@ -170,18 +170,28 @@ text-align: center;
 						</c:if>
 				<!--목록출력하기  -->
              <c:forEach var="board" items="${list}" varStatus="status">
-                  <tr>
+                <tr onclick="location.href='data_post.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
                      <th scope="row"><input type="checkbox"></th>
                      <td>
-                     	<a href="data_contentview.do"?idx=${idx}">
+                     
                      <span class="mt-4 parent"><h3>${board.title}</h3></span><br>
                      <span class="son_name">${board.nick}</span>
                      <span class="son_date">${board.w_date}</span>
                      <span class="son_time"> </span>
                      </td>
-                     <td></td>
-                    
-                  <td class="p-5 jdc"><span class="_3Espq6" >
+								<c:forEach var="i" begin="1" end="${board.depth}" step="1">
+								&nbsp;&nbsp;&nbsp;
+								</c:forEach>	
+								<td>						
+								<c:if test="${board.depth > 0}">
+								<tr onclick="location.href='data_post.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
+									<img src="image/re.gif">
+										${board.title}
+								</c:if>
+								</td>
+								<td></td>
+
+								<td class="p-5 jdc"><span class="_3Espq6" >
                      <span class="_1R-fi-">${board.hits}</span><br>
                      <span>조회</span>
                      </span>
@@ -199,12 +209,14 @@ text-align: center;
                   </td>
                   </tr>
                   
-                
+                     </c:forEach> 
+               </tbody>
+            </table>
                  <%--  </c:forEach> --%>
                  
                 
-             <c:if test="${board.depth>0}">     
-   <tr>	
+      
+   <%-- <tr>	
          <th scope="row"><input type="checkbox"></th>
                      <td>
                    &nbsp;&nbsp;&nbsp;
@@ -230,10 +242,8 @@ text-align: center;
                      <span>추천
                   </td>
                   </tr> 
-                  </c:if>
-                  </c:forEach> 
-               </tbody>
-            </table>
+                --%>
+           
             <!-- End Table with hoverable rows -->
 
          </div>
