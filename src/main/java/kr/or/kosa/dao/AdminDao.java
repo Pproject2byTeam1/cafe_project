@@ -14,10 +14,7 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.Calender;
-import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.User;
-import kr.or.kosa.dto.User_Details;
 
 public class AdminDao {
 
