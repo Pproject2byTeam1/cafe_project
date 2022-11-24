@@ -10,8 +10,6 @@ public class User {
 	private String isAdmin;
 	private int rank;
 	
-	public User() {}
-	
 	public int getRank() {
 		return rank;
 	}

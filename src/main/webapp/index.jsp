@@ -46,7 +46,7 @@
 
   <!-- ======= Sidebar ======= -->
   
-   <jsp:include page="/common/side.jsp"></jsp:include>
+   <jsp:include page="/common/side2.jsp"></jsp:include>
   
   <!-- End Sidebar -->
 
@@ -61,7 +61,9 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    
+    <p><a href="register.do">회원가입(미완)</a></p>
+    <p><a href="login_view.do">로그인</a></p>
+    <br>
     <p><a href="img_board_list.do?b_code=4">이미지 게시판</a></p>
     <p><a href="calendar_list.do">캘린더</a></p>
     <p><a href="user_list.do">회원목록</a></p>
@@ -71,7 +73,7 @@
     
  <p><a href="rapport_list.do">신고현황</a></p>
     <p id = "writememo">쪽지 작성하기</p>
-    <p><a href="user_info_change_board.jsp">마이페이지(일반유저)</a></p>
+    <p><a href="userinfo.do">마이페이지(일반유저)</a></p>
     <p><a href="regular_list.do?b_code=1">자유 게시판</a></p>
     <p><a href="marketboard_list.do?b_code=5">거래 게시판</a></p>
 

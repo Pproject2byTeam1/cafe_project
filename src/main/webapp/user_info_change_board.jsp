@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -11,6 +14,9 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -36,17 +42,13 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-
-  <jsp:include page="/common/top.jsp"></jsp:include>
-
-  </header><!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  
-   <jsp:include page="/common/side.jsp"></jsp:include>
-  
-  <!-- End Sidebar -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
 
   <main id="main" class="main">
 
@@ -89,42 +91,42 @@
                 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">hong002@example.com</div>
+                    <div class="col-lg-9 col-md-8">${user.email_id}</div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Name</div>
-                    <div class="col-lg-9 col-md-8">홍길동</div>
+                    <div class="col-lg-9 col-md-8">${user.name}</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">닉네임</div>
-                    <div class="col-lg-9 col-md-8">스키타는사람</div>
+                    <div class="col-lg-9 col-md-8">${user.nick}</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">생년월일</div>
-                    <div class="col-lg-9 col-md-8">1998.05.27</div>
+                    <div class="col-lg-9 col-md-8"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">포인트</div>
-                    <div class="col-lg-9 col-md-8">100</div>
+                    <div class="col-lg-9 col-md-8">${user.point}</div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">관리등급</div>
-                    <div class="col-lg-9 col-md-8">일반회원</div>
+                    <div class="col-lg-9 col-md-8">${user.isAdmin}</div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">가입일</div>
-                    <div class="col-lg-9 col-md-8">2020.07.03</div>
+                    <div class="col-lg-9 col-md-8">${details.join_date}</div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">전화번호</div>
-                    <div class="col-lg-9 col-md-8">010-5555-5555</div>
+                    <div class="col-lg-9 col-md-8">${phone}</div>
                   </div>
                   
                   <div class="text-center">
@@ -160,7 +162,7 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">닉네임</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="nickname" type="text" class="form-control" id="nickname" value="스키타는사람">
+                        <input name="nickname" type="text" class="form-control" id="nickname" value="${user.nick}">
                         <p class="text-danger">사용이 불가합니다.</p>
                       </div>
                       <p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
@@ -169,12 +171,12 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="nickname" type="tel" class="form-control" id="tel" value="01055555555">
+                        <input name="nickname" type="tel" class="form-control" id="tel" value="${details.phone}" placeholder="'-' 없이 작성해 주세요">
                       </div>
                     </div>
                     
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">변경사항 저장</button>
+                      <button type="submit" class="btn btn-primary" id="chageInfo">변경사항 저장</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -209,7 +211,7 @@
  					
  
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">비밀번호 변경하기</button>
+                      <button type="submit" class="btn btn-primary" id="changepwd">비밀번호 변경하기</button>
                     </div>
                    
                   </form><!-- End Change Password Form -->

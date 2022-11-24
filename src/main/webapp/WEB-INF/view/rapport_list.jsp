@@ -123,7 +123,7 @@
 
 	<!-- ======= Sidebar ======= -->
 
-	<jsp:include page="/common/side.jsp"></jsp:include>
+	<jsp:include page="/common/side2.jsp"></jsp:include>
 
 	<!-- End Sidebar -->
 

@@ -37,7 +37,7 @@ public class Yes_Dao {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, email_id);
-
+			ResultSet rs = null;
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -101,7 +101,35 @@ public class Yes_Dao {
 		return row;
 	}
 
-	// yes 해제
+	
+	public int boardYesCount(int idx) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int totalcount = 0;
+		try {
+			conn = ds.getConnection(); //dbcp 연결객체 얻기
+			String sql="select count(*) cnt from yes where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				totalcount = rs.getInt("cnt");
+			}
+		}catch (Exception e) {
+			
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환  connection pool 에 반환하기
+			}catch (Exception e) {
+				
+			}
+		}
+		return totalcount;
+	}
+	
+	
 	public int checkRemoveCal(String email_id, int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -131,5 +159,6 @@ public class Yes_Dao {
 
 		return row;
 	}
+	
 	
 }

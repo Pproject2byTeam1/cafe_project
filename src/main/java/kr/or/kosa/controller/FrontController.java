@@ -16,6 +16,8 @@ import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
+import kr.or.kosa.service.Login_Service;
+import kr.or.kosa.service.Login_View_Service;
 import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MessageDeleteService;
@@ -24,6 +26,7 @@ import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
+import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
@@ -48,21 +51,33 @@ public class FrontController extends HttpServlet {
 
 		Action action = null;
 		ActionForward forward = null;
-
-		if(urlcommand.equals("/img_board_list.do")) { //이미지 게시판 목록
+		if(urlcommand.equals("/register.do")) { //회원가입
+			
+		} else if(urlcommand.equals("/login_view.do")) { //로그인 화면 뿌리기
+			
+			action = new Login_View_Service();
+			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/loginok.do")) { //로그인 
+			
+			action = new Login_Service();
+			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/img_board_list.do")) { //이미지 게시판 목록
 			
 			action = new Img_Board_List_Service();
 			forward = action.execute(request, response);
 			
-		} else if(urlcommand.equals("/img_board_read.do")) {
+		} else if(urlcommand.equals("/img_board_read.do")) { //일정 게시판 읽기
 			
 			action = new Img_Board_Read_Service();
 			forward = action.execute(request, response);
 			
-		} else if(urlcommand.equals("/calendar_list.do")) { //일정 관리 리스트 목록
+		} else if(urlcommand.equals("/calendar_list.do")) {
 			
-			action = new Calender_Board_List_Service();
-			forward = action.execute(request, response);
+			forward = new ActionForward();
+	        forward.setRedirect(false);
+	        forward.setPath("/WEB-INF/view/calendar_list.jsp");
 	        
 		} else if(urlcommand.equals("/memo_list.do")) {//메모 리스트 보기
 			
@@ -115,9 +130,12 @@ public class FrontController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("/data_content.jsp");
+			
 		}else if(urlcommand.equals("/board_datacontentright.do")) {
+			
 			action = new DataWriteService();
 			forward = action.execute(request, response);
+			
 		}else if(urlcommand.equals("/marketboard_list.do")){ // 데이터 게시판 리스트
 			
 			action = new MarketBoardListService();
@@ -126,6 +144,11 @@ public class FrontController extends HttpServlet {
 		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 리스트
 			
 			action = new MarketBoardReadService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userinfo.do")){ // 데이터 게시판 리스트
+			
+			action = new UserInfoService();
 			forward = action.execute(request, response);
 			
 		}
