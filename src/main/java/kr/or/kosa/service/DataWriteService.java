@@ -58,13 +58,13 @@ public class DataWriteService implements Action {
 			Enumeration filenames = multi.getFileNames();
 		
 			String file1 = (String) filenames.nextElement();
-			String filename1 = multi.getFilesystemName(file1);
+			String ordi_name = multi.getFilesystemName(file1);
 		
 		
 				DataBoardDao dao = new DataBoardDao();
 			
 			DataBoard board = new DataBoard(); 
-			Board_Dao data = new Board_Dao();
+			Board_Dao data = new Board_Dao();//b_code 삽입
 			
 		
 			
@@ -74,10 +74,10 @@ public class DataWriteService implements Action {
 			board.setOri_name(ori_name);
 			board.setVolume(volume);
 			
-			if (filename1 == null) {
+			if (ordi_name == null) {
 				board.setSave_name("");
 			} else {
-				board.setSave_name(filename1);
+				board.setSave_name(ordi_name);
 			}
 
 			result = dao.insertData_Board(board);
@@ -103,7 +103,7 @@ public class DataWriteService implements Action {
 		request.setAttribute("board_msg", msg);
 		request.setAttribute("board_url", url);
 		forward.setRedirect(false);
-		forward.setPath("/data_content.jsp");
+		forward.setPath("/WEB-INF/view/redirect.jsp");
 
 		return forward;
 	}

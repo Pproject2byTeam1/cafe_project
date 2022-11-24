@@ -82,23 +82,25 @@ public class DataBoardDao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "insert into data_board( ori_name, save_name, volume, refer, depth, step) values( ?, ?, ?,0,0,0)";
+			String sql = "insert into data_board(ori_name, save_name, volume, refer, depth, step) values( ?, ?, 0,0,0,0)";
 			pstmt = conn.prepareStatement(sql);
 
 	//		pstmt.setInt(1, data_board.getIdx());
+			pstmt.setString(1, data_board.getOri_name());
 			pstmt.setString(2, data_board.getOri_name());
-			pstmt.setString(3, data_board.getOri_name());
-			pstmt.setInt(4, data_board.getVolume());
-			pstmt.setInt(5, data_board.getRefer());
-			pstmt.setInt(6, data_board.getDepth());
-			pstmt.setInt(7, data_board.getStep());
+			//pstmt.setInt(4, data_board.getVolume());
+			pstmt.setInt(3, data_board.getRefer());
+			pstmt.setInt(4, data_board.getDepth());
+			pstmt.setInt(5, data_board.getStep());
 			
 			
 			/*
 			 * int refermax = getMaxRefer(); int refer = refermax+1; pstmt.setInt(8,refer);
 			 */
+			System.out.println("1."+row);
 			
 			row = pstmt.executeUpdate();
+			System.out.println("2."+row);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {

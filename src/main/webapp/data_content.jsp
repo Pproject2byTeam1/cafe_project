@@ -125,18 +125,14 @@
 			return false;
 		}
 		
-		if(!bbs.bcode.value){
+		if(!bbs.b_code.value){
 			
 			alert("게시판을 선택해주세요");
 			bbs.select.focus();
 			return false;
 			
 		}
-		if(!bbs.ori_name.value){
-			alert("제목을 입력하세요");
-			bbs.file.focus();
-			return false;
-		}
+		
 		
 		document.bbs.submit();
 
@@ -203,7 +199,7 @@
 
 							</div>
 							<div class="col-md-4">
-								<select class="form-select" name="bcode">
+								<select class="form-select" name="b_code">
 									<option>게시판을 선택해 주세요</option>
 									<option>공지사항</option>
 									<option value="1">자료게시판</option>
