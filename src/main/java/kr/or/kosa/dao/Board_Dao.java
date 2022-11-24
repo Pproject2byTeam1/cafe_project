@@ -480,33 +480,4 @@ public class Board_Dao {
 		return row;
 	}
 	
-	//게시글 삭제
-	public int deleteBoard(int idx) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int row = 0;
-		
-		try {
-			
-			conn = ds.getConnection();
-			String sql = "delete from board where idx=?";
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, idx);
-			
-			row = pstmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return row;
-	}
-	
 }

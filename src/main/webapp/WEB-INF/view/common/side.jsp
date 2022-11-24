@@ -60,7 +60,8 @@
 					</a>
 				</c:if> 
 				<c:if test="${infolist.b_type eq 'b6'}">
-					<a class="nav-link " href="calendar_list.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
+					<a class="nav-link " href="calendar_list.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> 
+					<span>${infolist.b_name}</span>
 					</a>
 				</c:if></li>
 		</c:forEach>

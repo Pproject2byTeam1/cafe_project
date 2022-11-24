@@ -137,15 +137,15 @@ public class Img_Board_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, i.b_idx, i.img_name "
+			String sql = "select  b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, i.b_idx, i.img_name "
 						+ "from board b join img_board i "
 						+ "on b.idx = i.idx "
-						+ "where title like ? and b.b_code=? "
-						+ "order by b.idx desc";
+						+ "where title like ? and b.b_code=? order by idx desc";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, "%" + search + "%");
 			pstmt.setInt(2, b_code);
+			
 			
 			rs = pstmt.executeQuery();
 			
@@ -166,6 +166,8 @@ public class Img_Board_Dao {
 					board.setB_code(rs.getInt("b_code"));
 					board.setB_idx(rs.getInt("b_idx"));
 					board.setImg_name(rs.getString("img_name"));
+					
+					System.out.println(board.getTitle());
 					
 					imglist.add(board);
 				}while(rs.next());
