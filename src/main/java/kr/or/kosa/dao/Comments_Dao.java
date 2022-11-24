@@ -43,7 +43,7 @@ public class Comments_Dao {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				do {
+				do { 
 					
 					Comments comments = new Comments();
 					comments.setCo_idx(rs.getInt("co_idx"));

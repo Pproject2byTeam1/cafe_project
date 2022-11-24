@@ -86,6 +86,18 @@ public class FrontController extends HttpServlet {
 			action = new Message_Add_Service();
 			forward = action.execute(request, response);
 			
+		}else if(urlcommand.equals("/user_details.do")) {
+			action = new User_details();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/user_edit.do")) {
+			action = new User_Edit();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/regular_list.do")) {
+			action = new Regular_Board_List_Service();
+			forward = action.execute(request, response);
+			
 		}
 		
 		

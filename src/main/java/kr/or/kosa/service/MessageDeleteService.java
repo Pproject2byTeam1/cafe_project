@@ -17,7 +17,7 @@ public class MessageDeleteService implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
-		   
+		    
 		try {
 			HttpSession session = request.getSession();
 			MessageDao dao = new MessageDao();
