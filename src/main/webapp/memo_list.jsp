@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -74,7 +74,8 @@
 	                  <a class="icon" href="#" id = "close"><i class="bi bi-x-lg"></i></a>
                 </div>
                 <hr>
-                <div class="row" id="memolist"><!-- 쪽지 페이지 1면 -->
+                <div class="row" ><!-- 쪽지 페이지 1면 -->
+                <div id="memolist">
                 <c:if test="${messagelist == null}">
   					<p>보관중인 쪽지가 없습니다</p>
   				</c:if>
@@ -84,26 +85,30 @@
                 	      <input class="form-check-input" type="checkbox" value="${list.m_idx}">
 			              <table>
 				             <tr>
-					             <td><img src="image/rank_icon/${list.m_idx}.gif"></td>
+					             <td><img src="image/rank_icon/${list.send_rank}.gif"></td>
 					             <td>
 					             <a data-bs-toggle="dropdown"><h5 class="card-title">${list.send_nick}</h5></a>
 					             	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-				                    	<li><a class="dropdown-item" href="#">게시글 보기</a></li>
-				                    	<li><a class="dropdown-item sendToMemo" href="#">쪽지보내기</a></li>
+				                    	<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${list.send_id}" >답장 보내기</a></li>
 				                    </ul>
 					             </td>
 					             <td>${list.m_date}</td>
 				             </tr>
 				             <tr>
-				             	<td colspan="2"><p>${list.m_content}</p></td>
+				             	<td colspan="3"><p>${list.m_content}</p></td>
 				             </tr>
-			              </table>
+				          </table>
 		              </div>
 		            </div>
 		            <hr>
   				</c:forEach>
+  				</div>
 		            <!-- 기능버튼들 나중에 작성 -->
-		            <div class="col-sm-9 "></div>
+		            <div class="col-sm-9 ">
+		            	 <a href="write_memo.do"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#disablebackdrop" id="writememo">
+			               쪽지 작성하기
+			              </button></a>
+		            </div>
 		            <div  class="col-sm-3 text-lg-end">
 	              		<!-- Disabled Backdrop Modal -->
 			              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
@@ -121,7 +126,7 @@
 			                    </div>
 			                    <div class="modal-footer">
 			                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-			                      <button type="button" class="btn btn-primary" id="deleteMemo">확인</button>
+			                      <button type="button" class="btn btn-primary" id="deleteMemo" data-bs-dismiss="modal">확인</button>
 			                    </div>
 			                  </div>
 			                </div>

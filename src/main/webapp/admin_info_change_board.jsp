@@ -103,13 +103,7 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-3 col-form-label">출생년도</label>
-                  <div class="col-sm-9">
-                    <input type="number" class="form-control" value="2000">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputDate" class="col-sm-3 col-form-label">생일</label>
+                  <label for="inputDate" class="col-sm-3 col-form-label">생년월일</label>
                   <div class="col-sm-9">
                     <input type="date" class="form-control">
                   </div>

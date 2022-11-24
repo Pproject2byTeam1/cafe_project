@@ -14,11 +14,11 @@ import javax.sql.DataSource;
 import kr.or.kosa.dto.Comments;
 
 //댓글
-public class Comments_Dao {
+public class CommentsDao {
 
 	DataSource ds = null;
 
-	public Comments_Dao() throws NamingException {
+	public CommentsDao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
@@ -43,7 +43,7 @@ public class Comments_Dao {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				do {
+				do { 
 					
 					Comments comments = new Comments();
 					comments.setCo_idx(rs.getInt("co_idx"));

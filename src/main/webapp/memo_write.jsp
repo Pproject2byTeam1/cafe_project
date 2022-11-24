@@ -12,6 +12,9 @@
   <title>카페人중독</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -33,6 +36,7 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+	
 </head>
 
 <body>
@@ -51,23 +55,30 @@
 	                  <a class="icon" id="close"><i class="bi bi-x-lg"></i></a>
                 </div>
                 <!-- No Labels Form -->
-              <form class="row g-3">
+              <form class="row g-3" name="memoboard" action="write_memo_ok.do" method="post">
                 <div class="col-md-9">
-                  <input type="email" class="form-control" placeholder="보내는 사람" value="" readonly="readonly">
+                  <input type="email" id="writer" name="writer" class="form-control" placeholder="보내는 사람" value="${userId}" readonly="readonly">
                 </div>
                 <div class="col-md-3">
-                  <input class="form-check-input" type="checkbox" id="sendtoMe">
+                	<input class="form-check-input" type="checkbox" id="sendtoMe">
                   <label class="form-check-label" for="gridCheck">내게쓰기</label>
                 </div>
                 <div class="col-md-9">
-                  <input type="email" class="form-control" placeholder="받는 사람" id="respond_Id">
+                <c:choose>
+	                <c:when test="${responde_Id != null}">
+	                  <input type="email" name="reader" class="form-control" placeholder="받는 사람" id="respond_Id" value="${responde_Id }">
+	                </c:when>
+	                <c:otherwise>
+	                <input type="email" name="reader" class="form-control" placeholder="받는 사람" id="respond_Id">
+	                </c:otherwise>
+                </c:choose>
                 </div>
                 <div class="col-md-3">
                   <button type="button" class="btn btn-success" id="sendMemo">보내기</button>
                 </div>
                 <div class="col-12">
                   <div class="form-floating">
-                    <textarea class="form-control" placeholder="필수 입력사항을 입력하세요" id="floatingTextarea" style="height: 200px;"></textarea>
+                    <textarea class="form-control" name="content" placeholder="필수 입력사항을 입력하세요" id="floatingTextarea" style="height: 200px;"></textarea>
                     <label for="floatingTextarea">필수 입력사항을 입력하세요</label>
                   </div>
                 </div>
@@ -103,15 +114,34 @@
 		  });
 	  $("#sendtoMe").click(function(){
 		  if($(this).is (':checked')){
-			  $('#respond_Id').attr('value','id값');
+			  $('#respond_Id').attr('value',$('#writer').val());
 		  }else {
-			  $('#respond_Id').attr('value','');
+			  $('#respond_Id').attr('value', "");
 		  }
 	  })
 
 	  $("#sendMemo").click(function(){//쪽지 보내기(글 작성)
-		  
+		  check();
+	  
 	  });
+	  
+	  
+	 
+		function check() {
+			if (!memoboard.writer.value) {
+				alert("보내는 사람을 입력하세요");
+				memoboard.writer.focus();
+				return false;
+			}
+			if(!memoboard.content.value){            
+			     alert("글 내용을 입력하세요");
+			     memoboard.content.focus();
+			     return false;
+			 }
+			document.memoboard.submit();
+
+		}
+	
   });
   </script>
 
