@@ -81,14 +81,14 @@
   	
 </head>
 <body>
-  	<!-- ======= Header ======= -->
-  	<header id="header" class="header fixed-top d-flex align-items-center">
-     	<jsp:include page="/common/top.jsp"></jsp:include>
-  	</header><!-- End Header -->
-  	
-  	<!-- ======= Sidebar ======= -->
-    <jsp:include page="/common/side2.jsp"></jsp:include>
-  	<!-- End Sidebar -->
+     <!-- ======= Header ======= -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
   
   
   
@@ -128,7 +128,7 @@
   				<c:forEach var="list" items="${list}" varStatus="status">
 	  				<figure id="imgtag">
 	            		<a href="img_board_read.do?idx=${img_list[status.index].idx}"><img src="image/imgTest/${img_list[status.index].img_name}"></a>
-	            		<figcaption>${list[status.index].b_idx}. ${list.title}</figcaption>
+	            		<figcaption>${img_list[status.index].b_idx}. ${list.title}</figcaption>
 	        		</figure>
   				</c:forEach>
   				

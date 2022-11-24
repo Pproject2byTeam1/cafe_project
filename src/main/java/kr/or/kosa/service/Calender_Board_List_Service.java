@@ -19,11 +19,14 @@ public class Calender_Board_List_Service implements Action {
 		
 		try {
 			
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			
 			//사이드 바
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
 			request.setAttribute("infolist", infolist);
+			request.setAttribute("b_code", b_code);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
