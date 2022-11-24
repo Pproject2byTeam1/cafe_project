@@ -211,10 +211,10 @@
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        <input name="newpassword" type="password" class="form-control" id="newPassword" min="10">
                       </div>
                     </div>
-					<p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 권장(한글 2자, 영문 4자 이상)</p>
+					<p>사용자의 비밀번호는 문자종류 상관없이 10자 이상</p>
 
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
@@ -274,12 +274,23 @@
   <script src="assets/js/main.js"></script>
   <script type="text/javascript">
   	$(function(){
+  		
+  		
   		$('#nickname').keyup(function(){
   			//서버처리결과받기
-  			$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
+  			$.ajax({
+  				url:"",
+  				dataType:"text",
+  				success: function(responseText){
+  					if(responseText == false){
+  						$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
+  					}else{
+  						$("#qqqq").html("<p class='text-success'>사용 가능합니다.</p>");
+  					}
+  				}
+  			});
   		});
   		$("#renewPassword").keyup(function () {
-  			console.log("fff");
             if ($("#newPassword").val() != $("#renewPassword").val()) {
               //div p태그: innerText, innerHtml
               $("#aaaa").html("<p class='text-danger' >일치하지 않습니다.</p>");
