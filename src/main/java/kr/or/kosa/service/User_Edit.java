@@ -5,8 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.User_Dao;
-import kr.or.kosa.dto.User;
+import kr.or.kosa.dao.UserDao;
 
 public class User_Edit implements Action {
 
@@ -21,7 +20,7 @@ public class User_Edit implements Action {
 			String nick = request.getParameter("nick");
 			int point = Integer.parseInt(request.getParameter("point"));
 			
-			User_Dao dao = new User_Dao();
+			UserDao dao = new UserDao();
 			dao.editSettingUser(id, password, nick, point);
 			
 			
