@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.dao.Calender_Dao;
-import kr.or.kosa.dao.Comments_Dao;
+import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dto.Comments;
 import net.sf.json.JSONArray;
 
@@ -33,7 +33,7 @@ public class LoadCalenderComments extends HttpServlet {
     	try {  		
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			
-			Comments_Dao dao = new Comments_Dao();
+			CommentsDao dao = new CommentsDao();
 			List<Comments> colist = dao.getCommentListByIdx(idx);
 			
 			JSONArray jsonlist = JSONArray.fromObject(colist);

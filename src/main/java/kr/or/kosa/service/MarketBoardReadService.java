@@ -1,41 +1,43 @@
 package kr.or.kosa.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.UserDao;
+import kr.or.kosa.dao.MarketBoardDao;
+import kr.or.kosa.dto.MarketBoard;
 
-public class User_Edit implements Action {
+public class MarketBoardReadService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		
 		ActionForward forward = new ActionForward();
 		
 		try {
 			
-			String id = request.getParameter("id");
-			String password = request.getParameter("password");
-			String nick = request.getParameter("nick");
-			int point = Integer.parseInt(request.getParameter("point"));
+			int idx = Integer.parseInt(request.getParameter("idx"));
 			
-			UserDao dao = new UserDao();
-			dao.editSettingUser(id, password, nick, point);
+			MarketBoardDao dao = new MarketBoardDao();
 			
+			List<MarketBoard> marketboard = dao.readMarket(idx);
 			
-			request.setAttribute("id", id);
+			request.setAttribute("marketboard", marketboard);
 			
+				
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("user_details.do");
+		  	forward.setPath("/WEB-INF/view/MarketBoard_read.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
+		
 		return forward;
-	} 
+	}
 
 }
-

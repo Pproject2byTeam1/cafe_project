@@ -10,6 +10,7 @@ public class User {
 	private String isAdmin;
 	private int rank;
 	
+	public User() {}
 	
 	public int getRank() {
 		return rank;
@@ -59,6 +60,9 @@ public class User {
 	public void setIsAdmin(String isAdmin) {
 		this.isAdmin = isAdmin;
 	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "User [email_id=" + email_id + ", password=" + password + ", name=" + name + ", nick=" + nick

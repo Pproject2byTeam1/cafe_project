@@ -1,8 +1,9 @@
 package kr.or.kosa.dto;
 
-public class Data_Board extends Board {
+public class DataBoard extends Board {
 	private int b_idx;
 	private int idx;
+	
 	private String ori_name;
 	private String save_name;
 	private int volume;

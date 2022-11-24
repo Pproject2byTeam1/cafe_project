@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 
@@ -112,6 +114,45 @@
 		selector : '#mytextarea'
 	});
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+	function check(){
+		if(!bbs.title.value){
+			alert("제목을 입력하세요");
+			bbs.title.focus();
+			return false;
+		}
+		
+		if(!bbs.select.value){
+			
+			alert("게시판을 선택해주세요");
+			bbs.select.focus();
+			return false;
+			
+		}
+		if(!bbs.ori_name.value){
+			alert("제목을 입력하세요");
+			bbs.file.focus();
+			return false;
+		}
+		
+		document.bbs.submit();
+
+		
+	}
+
+
+
+
+
+
+
+
+
+
+</script>
 </head>
 
 <body>
@@ -144,7 +185,8 @@
 
 
 
-
+	<form name="bbs"action="board_datacontentright.do" method="POST" enctype="multipart/form-data">
+				<table width="95%" border="2" align="center" id="ta_in">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-1"></div>
@@ -155,27 +197,28 @@
 
 							<div class="col-md-4">
 								<div >
-									<input type="text" class="form-control" value="제목을 작성하세요">
+									<input type="text" class="form-control" value="제목을 작성하세요" name="title">
 								</div>
 
 							</div>
 							<div class="col-md-4">
-								<select class="form-select">
+								<select class="form-select" name="select">
 									<option>게시판을 선택해 주세요</option>
 									<option>공지사항</option>
-									<option value="1">사진게시판</option>
-									<option value="2">출석부</option>
-									<option value="3">거래게시판</option>
-									<option value="3">일정게시판</option>
-									<option value="3">자료게시판</option>
+									<option value="1">자료게시판</option>
+									<option value="2">출석게시판</option>
+									<option value="3">전체일정</option>
+									<option value="4">사진공유</option>
+									<option value="5">유로거래</option>
+									<option value="6">자료공유</option>
 								</select>
 							</div>
 							<div class="col-md-2">
-								<button type="button" class="btn btn-outline-info">등록</button>
+								<input type="button" class="btn btn-outline-info" onclick="check();">등록</input>
 							</div>
 							<br><br>
 							<div class="col-sm-10 ml-5">
-								<input class="form-control" type="file" id="formFile">
+								<input class="form-control" type="file" id="formFile" name="ori_name">
 							</div>
 
 						</div>
@@ -191,7 +234,7 @@
 			<div class="row">
 				<div class="col-md-1"></div>
 				<div class="col-md-10">
-					<textarea>
+					<textarea name="content"> 
          글을 작성해주세요.
         </textarea>
 
@@ -202,7 +245,7 @@
 				<div class="col-md-1"></div>
 			</div>
 		</div>
-
+</form>
 
 
 	</main>
@@ -254,7 +297,23 @@
 					}, ]
 				});
 	</script>
-
+	<script>
+		var file=document.querySelector('#formFile');
+		file.onchange = function(){
+			var fileList = file.files;
+			var reader = new FileReader();
+			reader.readAsDataURL(fileList[0]);
+			reader.onload = function() {
+				
+				$('#pageContainer').css("display", "flex");
+				$('#pageContainer').css("justify-content", "center");
+				$('#pageContainer').append("<img id='preview' src='' width='800px' style='padding-top: 25px;'>")
+				document.querySelector('#preview').src = reader.result;
+			};
+		}
+	
+	
+	</script>
 </body>
 
 </html>

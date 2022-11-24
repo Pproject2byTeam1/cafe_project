@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
-import kr.or.kosa.dao.Market_Board_Dao;
+import kr.or.kosa.dao.Img_Board_Dao;
+import kr.or.kosa.dao.MarketBoardDao;
 import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Market_Board;
+import kr.or.kosa.dto.Img_Board;
+import kr.or.kosa.dto.MarketBoard;
 
-public class Market_Board_List_Service implements Action {
+public class MarketBoardListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -21,17 +23,23 @@ public class Market_Board_List_Service implements Action {
 		
 		try {
 			
-			Board_Dao dao = new Board_Dao(); 
+			MarketBoardDao market_dao = new MarketBoardDao(); 
 			
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
 			//게시물 총 건수
-			int totalboardcount = dao.totalBoardCountByB_code(b_code);
+			int totalboardcount = market_dao.countMarket(b_code);
+			
+			//찜 개수
+			
+			
+			//판매중 개수
+			int soldcount = market_dao.countSoldF();
 			
 			//상세보기 >> 다시  LIST 넘어올때  >> 현재 페이지 설정
 			String ps = request.getParameter("ps");
 			String cp = request.getParameter("cp");
-			
+
 			if(ps == null || ps.trim().equals("")) {
 				ps = "8"; //List 페이지 처음 호출 경우 -> 8개씩 
 			}
@@ -44,24 +52,21 @@ public class Market_Board_List_Service implements Action {
 			int cpage = Integer.parseInt(cp);
 			int pagecount = 0;
 			
-			//23건  % 5
 			if(totalboardcount % pagesize == 0) {
 				pagecount = totalboardcount / pagesize;
 			}else {
 				pagecount = (totalboardcount / pagesize) + 1; 
 			}
 			
-			List<Board> list = dao.getMarket_boardList(b_code, cpage, pagesize);
-			
-			Market_Board_Dao board_dao = new Market_Board_Dao();
-			List<Market_Board> img_list = board_dao.getMarket_BoadList(cpage, pagesize);
+			List<MarketBoard> list = market_dao.listMarket(b_code, cpage, pagesize);
 			
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalboardcount", totalboardcount);
 			request.setAttribute("list", list);
-			request.setAttribute("img_list", img_list);
+			request.setAttribute("soldcount", soldcount);
+			//request.setAttribute("pager", pager);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
