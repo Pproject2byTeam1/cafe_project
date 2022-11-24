@@ -167,10 +167,16 @@ public class FrontController extends HttpServlet {
 			action = new UserUpdateService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/regular_post.do")){ // 유저정보 수정
+		}else if(urlcommand.equals("/regular_post.do")){ // 자유게시판 글내용
 			
 			action = new Regular_Board_Post_Service();
 			forward = action.execute(request, response);
+	
+		}else if(urlcommand.equals("/regular_write.do")){ // 자유게시판 글쓰기
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("/WEB-INF/view/regular_write.jsp");
 	
 		}
 		

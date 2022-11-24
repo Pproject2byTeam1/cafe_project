@@ -129,27 +129,21 @@
 		</div>
 		<!-- End Page Title -->
 		<!--글쓰기 버튼  -->
-		<div align="right">
-			<a></a>
-			<p>
-				<a href="data_content.do?b_code=1">글쓰기 게시판</a>
-			</p>
-			<button type="button" class="btn btn-success"
-				onclick="location.href = '/data_content.do'">글쓰기</button>
-			&nbsp; <select class="selectpicker" data-width="75px" name="ps"
-				onchange="submit()">
-				<c:forEach var="i" begin="5" end="20" step="5">
-					<c:choose>
-						<c:when test="${pagesize == i}">
-							<option value="${i}" selected>${i}건</option>
-						</c:when>
-						<c:otherwise>
-							<option value="${i}">${i}건</option>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-
-			</select>
+		<div class="col-md-2 text-right">
+			<form name="list" action="user_details.do">
+				<select class="form-select" name="ps" onchange="submit()">
+				   <c:forEach var="i" begin="5" end="20" step="5">
+				   		<c:choose>
+				   			<c:when test="${pagesize == i}">
+				   				<option value="${i}" selected>${i}건</option>
+				   			</c:when>
+			   				<c:otherwise>
+			   					<option value="${i}">${i}건 </option>
+			   				</c:otherwise>
+				   		</c:choose>
+				   </c:forEach>
+				</select>
+			</form>
 		</div>
 
 		<!--  <div><br></div>-->
@@ -231,11 +225,25 @@
 
 		</div>
 		<!--하단 버튼  -->
-		<div align="right">
-			<button type="button" class="btn btn-secondary">글쓰기</button>
-			&nbsp;
-			<button type="button" class="btn btn-danger">삭제</button>
-
+		<div class="col-md-12">
+			<div class="row">
+				<div>
+					<form action="regular_write.do?b_code=${b_code}" method="GET">
+					<input type="text" value="${b_code}" name="b_code" style="display: none;">
+					<input type="submit" class="btn btn-secondary float-right" value="글쓰기">
+					</form>
+				</div>
+				&nbsp; 
+				<div>
+					<form action="user_details.do" method="post">
+					<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
+					<input type="submit" class="btn btn-danger float-right" value="삭제">
+					</form>
+				</div>
+				
+				
+			</div>
+			
 		</div>
 
 		<nav aria-label="Page navigation example">
