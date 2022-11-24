@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.jsp" class="logo d-flex align-items-center">
@@ -16,17 +17,27 @@
 
         <li class="nav-item d-block d-lg-none">
         </li><!-- End Search Icon-->
-		
+	</ul>
+	</nav>	
 
-	<!-- <c:if test="${userid.id.equals('admin')}"> -->
-       <ul class="header-nav ms-auto">
-           <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>메인</a>
-               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                   <li><a class="dropdown-item" href="#!">메인페이지 관리</a></li>
-               </ul>
-           </li>
-       </ul>
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+      
+      <c:if test="${member != null}">
+
+        <li class="nav-item d-block d-lg-none"></li><!-- End Search Icon-->
+        
+		<c:if test="${member.isAdmin eq 'M'}">
+       		<ul class="header-nav ms-auto">
+        	   <li class="nav-item dropdown">
+            	   <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>메인</a>
+            	   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            	       <li><a class="dropdown-item" href="#!">메인페이지 관리</a></li>
+            	   </ul>
+           		</li>
+       		</ul>
+       </c:if>
+       <c:if test="${member.isAdmin eq 'S' || member.isAdmin eq 'M'}">
        <ul class="header-nav ms-auto">
            <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>회원</a>
@@ -36,20 +47,19 @@
                </ul>
            </li>
        </ul>
-       <ul class="header-nav ms-auto">
-           <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>통계</a>
-               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                   <li><a class="dropdown-item" href="#!">활동 분석</a></li>
-                   <li><a class="dropdown-item" href="#!">회원 분석</a></li>
-               </ul>
-           </li>
-       </ul>
-    <!-- </c:if> -->
+       </c:if>
+       <c:if test="${member.isAdmin eq 'M'}">
+       		<ul class="header-nav ms-auto">
+           		<li class="nav-item dropdown">
+               		<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>통계</a>
+               		<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                   		<li><a class="dropdown-item" href="#!">활동 분석</a></li>
+                   		<li><a class="dropdown-item" href="#!">회원 분석</a></li>
+               		</ul>
+           		</li>
+       		</ul>
+       </c:if>
 
-         
-
-         
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -124,7 +134,9 @@
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
-
+        </c:if>
+        
+		<c:if test="${member != null}">
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -190,7 +202,10 @@
           </ul><!-- End Messages Dropdown Items -->
 
         </li><!-- End Messages Nav -->
+		</c:if>
 
+
+		<c:if test="${member != null}">
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -238,7 +253,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="logout.do">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>로그아웃</span>
               </a>
@@ -246,6 +261,16 @@
 
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
+        </c:if>
+        
+        <c:if test="${member == null}">
+        
+        	<div class="row m-4 pt-3">
+        		<p class="col-6"><a href="register.do">JOIN</a></p>
+    			<p class="col-6"><a href="login_view.do">LOGIN</a></p>
+        	</div>
+        
+        </c:if>
 
       </ul>
     </nav><!-- End Icons Navigation -->

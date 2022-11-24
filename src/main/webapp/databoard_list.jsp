@@ -99,7 +99,7 @@ text-align: center;
 	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
    <!-- ======= Header ======= -->
    <header id="header" class="header fixed-top d-flex align-items-center">
-
+<jsp:include page="/common/side2.jsp"></jsp:include>
       <jsp:include page="/common/top.jsp"></jsp:include>
 
    </header>
@@ -127,7 +127,7 @@ text-align: center;
       <div align="right">
       <a></a>
    <p><a href="data_content.do">글쓰기 게시판</a></p>
-         <button type="button" class="btn btn-success" onclick = "location.href ='/data_content.do'" >글쓰기</button>&nbsp;
+         <button type="button" class="btn btn-success" location.href ='data_content.do' >글쓰기</button>&nbsp;
             <select class="selectpicker" data-width="75px" name="ps" onchange="submit()">
                <c:forEach var="i" begin="5" end="20" step="5">
 							   		<c:choose>

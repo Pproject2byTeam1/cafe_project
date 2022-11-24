@@ -106,7 +106,7 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">생년월일</div>
-                    <div class="col-lg-9 col-md-8"></div>
+                    <div class="col-lg-9 col-md-8">${birthday}</div><input type="text" hidden value="${user.birth}" name="oribirth"/>
                   </div>
 
                   <div class="row">
@@ -116,17 +116,32 @@
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">관리등급</div>
-                    <div class="col-lg-9 col-md-8">${user.isAdmin}</div>
+                    <div class="col-lg-9 col-md-8">
+                    <c:choose>
+	                    <c:when test="${user.isAdmin == 'F' || user.isAdmin == 'f'}">
+	                    일반
+	                    </c:when>
+	                    <c:when test="${user.isAdmin == 'S' || user.isAdmin == 's'}">
+	                    스텝
+	                    </c:when>
+	                    <c:when test="${user.isAdmin == 'M' || user.isAdmin == 'm'}">
+	                    운영자
+	                    </c:when>
+	                    <c:otherwise>
+	                    없음
+	                    </c:otherwise>
+                    </c:choose>
+                    </div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">가입일</div>
-                    <div class="col-lg-9 col-md-8">${details.join_date}</div>
+                    <div class="col-lg-9 col-md-8">${joindate}</div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">전화번호</div>
-                    <div class="col-lg-9 col-md-8">${phone}</div>
+                    <div class="col-lg-9 col-md-8">${phone}</div><input type="text" hidden value="${details.phone}" name="oriphone"/>
                   </div>
                   
                   <div class="text-center">
@@ -157,13 +172,13 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form action="userupdate.do" method="post">
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">닉네임</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="nickname" type="text" class="form-control" id="nickname" value="${user.nick}">
-                        <p class="text-danger">사용이 불가합니다.</p>
+                        <div id="qqqq"></div>
                       </div>
                       <p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
                     </div>
@@ -171,7 +186,7 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="nickname" type="tel" class="form-control" id="tel" value="${details.phone}" placeholder="'-' 없이 작성해 주세요">
+                        <input name="tel" type="tel" class="form-control" id="tel" value="${details.phone}" placeholder="'-' 없이 작성해 주세요">
                       </div>
                     </div>
                     
@@ -196,16 +211,16 @@
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        <input name="newpassword" type="password" class="form-control" id="newPassword" min="10">
                       </div>
                     </div>
-					<p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 권장(한글 2자, 영문 4자 이상)</p>
+					<p>사용자의 비밀번호는 문자종류 상관없이 10자 이상</p>
 
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                        <p class="text-danger">일치하지 않습니다.</p>
+                        <div id = "aaaa"></div>
                       </div>
                     </div>
  					
@@ -257,6 +272,34 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="text/javascript">
+  	$(function(){
+  		
+  		
+  		$('#nickname').keyup(function(){
+  			//서버처리결과받기
+  			$.ajax({
+  				url:"",
+  				dataType:"text",
+  				success: function(responseText){
+  					if(responseText == false){
+  						$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
+  					}else{
+  						$("#qqqq").html("<p class='text-success'>사용 가능합니다.</p>");
+  					}
+  				}
+  			});
+  		});
+  		$("#renewPassword").keyup(function () {
+            if ($("#newPassword").val() != $("#renewPassword").val()) {
+              //div p태그: innerText, innerHtml
+              $("#aaaa").html("<p class='text-danger' >일치하지 않습니다.</p>");
+            } else {
+              $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
+            }
+          });
+  	});
+  </script>
 
 </body>
 

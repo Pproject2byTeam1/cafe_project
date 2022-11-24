@@ -40,21 +40,23 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
+
+  	<script type="text/javascript">
+ 
+  	
+  	</script>
+
 </head>
 <body>
-	<!-- ======= Header ======= -->
-	<header id="header" class="header fixed-top d-flex align-items-center">
-
-		<jsp:include page="/common/top.jsp"></jsp:include>
-
-	</header>
-	<!-- End Header -->
-
-	<!-- ======= Sidebar ======= -->
-
-	<jsp:include page="/common/side.jsp"></jsp:include>
-
-	<!-- ======= End Sidebar ======= -->
+     <!-- ======= Header ======= -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
+     
 	<main id="main" class="main">
 
 		<!-- Page Title -->
@@ -81,39 +83,37 @@
 							<div class="row">
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 								<div class="col-md-8">
-									<span id="marketB_Title">맥북 팝니다!</span>
+									<span id="marketB_Title">${list.title}</span>
 									<p>
 									<hr>
 									<div class="row">
 										<div class="col-lg-9">
-											<img class="product-img"
-												src="image/marketboard_img/1detail.jpg">
+											<img class="marketB_img" src="image/board/5/${list.img_name}">
 										</div>
 										<div align="center" class="col-lg-3">
 											<div class="info-body price">
-												<span id="marketB_Price">1,300,000</span>
+												<span id="marketB_Price">${list.price}</span>
 											</div>
 											<div class="info-body">
-												<span id="marketB_Text.ns">직거래|판매중|전자제품</span>
+												<span id="marketB_Text.ns">${list.m_mode}|${list.sold}|${list.cate}</span>
 											</div>
 											<div class="info-body">
-												<span id="marketB_Text.ns">조회수:120 댓글:3 찜:3</span>
+												<span id="marketB_Text.ns">조회수:${list.hits} 댓글:3 찜:3</span>
 											</div>
 											<div class="info-body">
 												<img src="image/rank_icon/1.gif" alt="Profile"
 													style="width:15px" class="rounded-circle">
-												<span id="marketB_Text.ns">USER_NICK</span>
+												<span id="marketB_Text.ns">${list.nick}</span>
 											</div>
 											<div class="info-body">
-												<span id="marketB_Text.ns">22.11.18 12:10</span>
+												<span id="marketB_Text.ns">${list.w_date}</span>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12">
 											<hr>
-											상품명 : 맥북 2022 램 16<br> 가격 : 1,300,000<br> 거래방법 :
-											직거래<br> 전화번호 : 010-1234-1234<br> 상품설명 : 블라블라 직거래 혜화<br>
+											${list.content}
 											<p>
 										</div>
 										<hr>

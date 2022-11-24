@@ -18,6 +18,7 @@ import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
 import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
+import kr.or.kosa.service.Logout_Service;
 import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MessageDeleteService;
@@ -30,6 +31,7 @@ import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
+import kr.or.kosa.service.UserUpdateService;
 
 
 @WebServlet("*.do")
@@ -63,21 +65,25 @@ public class FrontController extends HttpServlet {
 			action = new Login_Service();
 			forward = action.execute(request, response);
 			
+		} else if(urlcommand.equals("/logout.do")) { //로그아웃
+			
+			action = new Logout_Service();
+			forward = action.execute(request, response);
+			
 		} else if(urlcommand.equals("/img_board_list.do")) { //이미지 게시판 목록
 			
 			action = new Img_Board_List_Service();
 			forward = action.execute(request, response);
 			
-		} else if(urlcommand.equals("/img_board_read.do")) { //일정 게시판 읽기
+		} else if(urlcommand.equals("/img_board_read.do")) { //이미지 게시판 읽기
 			
 			action = new Img_Board_Read_Service();
 			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/calendar_list.do")) {
 			
-			forward = new ActionForward();
-	        forward.setRedirect(false);
-	        forward.setPath("/WEB-INF/view/calendar_list.jsp");
+			action = new Calender_Board_List_Service();
+			forward = action.execute(request, response);
 	        
 		} else if(urlcommand.equals("/memo_list.do")) {//메모 리스트 보기
 			
@@ -141,14 +147,23 @@ public class FrontController extends HttpServlet {
 			action = new MarketBoardListService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 리스트
+		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 읽기
 			
 			action = new MarketBoardReadService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/userinfo.do")){ // 데이터 게시판 리스트
+		}else if(urlcommand.equals("/marketboard_delete.do")){ // 데이터 게시판 삭제
 			
+			action = new MarketBoardReadService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userinfo.do")){ 
 			action = new UserInfoService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userupdate.do")){ // 유저정보 수정
+			
+			action = new UserUpdateService();
 			forward = action.execute(request, response);
 			
 		}

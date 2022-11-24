@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dto.Board_Info;
 
-public class Calender_Board_List_Service implements Action {
+public class Logout_Service implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -19,18 +20,18 @@ public class Calender_Board_List_Service implements Action {
 		
 		try {
 			
-			int b_code = Integer.parseInt(request.getParameter("b_code"));
-			
 			//사이드 바
-			Board_Info_Dao infodao = new Board_Info_Dao();
-			List<Board_Info> infolist = infodao.getSideBoardList();
+	        Board_Info_Dao infodao = new Board_Info_Dao();
+	        List<Board_Info> infolist = infodao.getSideBoardList();
+	         
+	        request.setAttribute("infolist", infolist);
 			
-			request.setAttribute("infolist", infolist);
-			request.setAttribute("b_code", b_code);
+			HttpSession session = request.getSession();
+			session.invalidate();
 			
 			forward = new ActionForward();
-		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/calendar_list.jsp");
+			forward.setRedirect(false);
+			forward.setPath("/WEB-INF/view/login.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

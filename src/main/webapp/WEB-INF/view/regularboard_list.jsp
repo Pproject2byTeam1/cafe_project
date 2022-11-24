@@ -177,7 +177,7 @@
 							</tr>
 						</c:if>
 						<!--목록출력하기  -->
-						<c:forEach var="board" items="${list}">
+						<c:forEach var="board" items="${list}" varStatus="status">
 							<tr>
 								<th scope="row"><input type="checkbox"></th>
 								<td><span class="mt-4 parent"><h3>${board.title}</h3></span><br>
@@ -186,17 +186,14 @@
 								</span></td>
 								<td></td>
 
-								<td class="p-5 jdc"><span class="_3Espq6"> <span
-										class="_1R-fi-">${board.hits}</span><br> <span>조회</span>
+								<td class="p-5 jdc"><span class="_3Espq6"> <span class="_1R-fi-">${board.hits}</span><br> <span>조회</span>
 								</span></td>
 
-								<td class="p-5 jdc"><span class="_3Espq6" var="comment"
-									items="11111"> <span class="_1R-fi-">11111</span><br>
+								<td class="p-5 jdc"><span class="_3Espq6"> <span class="_1R-fi-">${comment[status.index]}</span><br>
 										<span>댓글</span>
 								</span></td>
 
-								<td class="p-5 jdc"><span class="_3Espq6" var="yes"
-									items="33333"> <span class="_1R-fi-">33333</span><br>
+								<td class="p-5 jdc"><span class="_3Espq6"> <span class="_1R-fi-">${yes[status.index]}</span><br>
 										<span>추천</span></td>
 							</tr>
 

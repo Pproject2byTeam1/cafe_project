@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.oreilly.servlet.MultipartRequest;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Comments;
@@ -79,23 +82,31 @@ public class DataBoardDao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "insert into data_board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?)";
+			String sql = "insert into data_board(ori_name, save_name, volume, refer, depth, step) values( ?, ?, 0,0,0,0)";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, data_board.getIdx());
+	//		pstmt.setInt(1, data_board.getIdx());
+			pstmt.setString(1, data_board.getOri_name());
 			pstmt.setString(2, data_board.getOri_name());
-			pstmt.setString(3, data_board.getSave_name());
-			pstmt.setInt(4, data_board.getVolume());
-			pstmt.setInt(5, data_board.getRefer());
-			pstmt.setInt(6, data_board.getDepth());
-			pstmt.setInt(7, data_board.getStep());
-
+			//pstmt.setInt(4, data_board.getVolume());
+			pstmt.setInt(3, data_board.getRefer());
+			pstmt.setInt(4, data_board.getDepth());
+			pstmt.setInt(5, data_board.getStep());
+			
+			
+			/*
+			 * int refermax = getMaxRefer(); int refer = refermax+1; pstmt.setInt(8,refer);
+			 */
+			System.out.println("1."+row);
+			
 			row = pstmt.executeUpdate();
+			System.out.println("2."+row);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -103,7 +114,42 @@ public class DataBoardDao {
 
 		return row;
 	}
-
+	//board 에 자료게시판 글 삽입
+	public int insertBoard(Board board,int bcode) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "insert into Board(b_code,title, nick, content, email_id, b_code,to_char(w_date, 'yyyy-MM-dd')) values(?,?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board.getB_code());
+			pstmt.setString(2, board.getTitle());
+			pstmt.setString(3, board.getNick());
+			pstmt.setString(4, board.getContent());
+			pstmt.setString(5, board.getEmail_id());
+			pstmt.setInt(6, board.getB_code());
+			
+			row = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
+	
+	
+	
 	// 자료 게시판 특정 글 수정
 	public int updateData_Board(DataBoard data_board) {
 
@@ -135,7 +181,65 @@ public class DataBoardDao {
 
 		return row;
 	}
-
+	public int boardEdit(MultipartRequest boarddata) {
+		
+		String idx= boarddata.getParameter("idx");
+		String ori_name=boarddata.getParameter("ori_name");
+		String save_name = boarddata.getParameter("save_name");
+		String volume =boarddata.getParameter("volume");
+		
+		
+		Enumeration filenames = boarddata.getFileNames();
+		
+		String file1 = (String) filenames.nextElement();
+		String filename1 = boarddata.getFilesystemName(file1);
+		
+		if(filename1 == null) {
+			filename1 = boarddata.getParameter("orifile");
+		}
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int row = 0;
+		
+		try {
+			conn = ds.getConnection();
+			String sql_idx = "select idx  from data_board where idx=? ";
+			String sql_udpate = "update databoard set ori_name=?, save_name=? volume=? where idx=?";
+			pstmt = conn.prepareStatement(sql_idx);
+			pstmt.setString(1, idx);
+	
+			
+			rs = pstmt.executeQuery();
+			//판단 (데이터 있다며 : 수정가능 , 없다면 : 수정불가
+			if(rs.next()) {
+				//경고
+				pstmt.close();
+				//업데이트
+				pstmt = conn.prepareStatement(sql_udpate);
+				pstmt.setString(1,filename1);
+				pstmt.setString(2,filename1);
+				pstmt.setString(3, volume);
+			
+				pstmt.setString(4, idx);
+				row = pstmt.executeUpdate();
+				//System.out.println("row : " + row);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환
+			} catch (Exception e2) {
+				
+			}
+		}
+	
+		return row;
+	}
 	// 자료 게시판 특정 글 삭제
 	public int deleteData_Board(int idx) {
 		Connection conn = null;
