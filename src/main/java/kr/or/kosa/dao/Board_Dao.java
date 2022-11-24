@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Calender;
+import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.Regular_Board;
 
 //게시판 글

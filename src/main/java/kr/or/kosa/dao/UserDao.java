@@ -11,78 +11,26 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.User;
-import kr.or.kosa.dto.User_Details;
+import kr.or.kosa.dto.UserDetails;
+import kr.or.kosa.utils.ConnectionHelper;
 
 //등급
-public class User_Dao {
+public class UserDao {
 
 	DataSource ds = null;
 
-	public User_Dao() throws NamingException {
+	public UserDao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
-
-	// 유저 전체 조회
-//	public List<User_Details> getUserListAll() {
-//
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		List<User_Details> userlist = new ArrayList<User_Details>();
-//
-//		try {
-//
-//			conn = ds.getConnection();
-//			String sql = "select m.rank, m.email_id, m.nick, m.name, u.phone, to_char(u.year_birth, 'yyMMdd') as year_birth, u.gender "
-//					+ "from member m join user_details u "
-//					+ "on m.email_id = u.email_id";
-//			pstmt = conn.prepareStatement(sql);
-//
-//			rs = pstmt.executeQuery();
-//
-//			if (rs.next()) {
-//				do {
-//					User_Details user = new User_Details();
-//					
-//					user.setRank(rs.getInt("rank"));
-//					user.setEmail_id(rs.getString("email_id"));
-//					user.setNick(rs.getString("nick"));
-//					user.setName(rs.getString("name"));
-//					user.setPhone(rs.getString("phone"));
-//					user.setYear_birth(rs.getString("year_birth"));
-//					user.setIsAdmin(rs.getString("isadmin"));
-//					
-//					userlist.add(user);
-//					
-//				} while (rs.next());
-//			} else {
-//				System.out.println("조회 데이터 없음");
-//			}
-//
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		} finally {
-//			try {
-//				rs.close();
-//				pstmt.close();
-//			} catch (Exception e2) {
-//				System.out.println(e2.getMessage());
-//			}
-//		}
-//
-//		return userlist;
-//	}
-	
 	
 	//admin 제외한 유저 조회
-	public List<User_Details> list(int cpage , int pagesize) {
+	public List<UserDetails> list(int cpage , int pagesize) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<User_Details> userlist = null;
+		List<UserDetails> userlist = null;
 		try {
 			conn = ds.getConnection();
 			
@@ -103,10 +51,10 @@ public class User_Dao {
 			
 			rs = pstmt.executeQuery();
 			
-			userlist = new ArrayList<User_Details>();
+			userlist = new ArrayList<UserDetails>();
 			
 			while(rs.next()) {
-				User_Details user = new User_Details();
+				UserDetails user = new UserDetails();
 				
 				user.setRank(rs.getInt("rank"));
 				user.setEmail_id(rs.getString("email_id"));
@@ -137,6 +85,86 @@ public class User_Dao {
 		return userlist;
 	}
 	
+	//특정 유저 단순정보 조회
+	public User selectUserById(String userid) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User user = null;
+		
+		try {
+			conn = ds.getConnection(); //dbcp 연결객체 얻기
+			String sql="select email_id, password, name, nick, to_char(birth, 'yyyyMMdd') as birth, point, isadmin, rank from member where email_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				user = new User();
+
+				user.setEmail_id(rs.getString("email_id"));
+				user.setPassword(rs.getString("password"));
+				user.setName(rs.getString("name"));
+				user.setNick(rs.getString("nick"));
+				user.setBirth(rs.getString("birth"));
+				user.setPoint(rs.getInt("point"));
+				user.setIsAdmin(rs.getString("isadmin"));
+				user.setRank(rs.getInt("rank"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환  connection pool 에 반환하기
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return user;
+	}
+	//특정 유저 상세정보 조회
+		public UserDetails selectUserDetailById(String userid) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			UserDetails user = null;
+			
+			try {
+				conn = ds.getConnection(); //dbcp 연결객체 얻기
+				String sql="select email_id, to_char(join_date, 'yyyyMMdd') as join_date, to_char(last_visit_date, 'yyyyMMdd') as last_visit_date,visit_count,w_count,re_count,to_char(year_birth, 'yyyyMMdd') as year_birth, phone from user_details where email_id =?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, userid);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					do {
+						user = new UserDetails();
+						
+						user.setEmail_id(rs.getString("email_id"));
+						user.setJoin_date(rs.getString("join_date"));
+						user.setLast_visit_date(rs.getString("last_visit_date"));
+						user.setVisit_count(rs.getInt("visit_count"));
+						user.setW_count(rs.getInt("w_count"));
+						user.setRe_count(rs.getInt("re_count"));
+						user.setYear_birth(rs.getString("year_birth"));
+						user.setPhone(rs.getString("phone"));
+					}while(rs.next());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					pstmt.close();
+					rs.close();
+					conn.close();//반환  connection pool 에 반환하기
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return user;
+		}
 	
 	//admin을 제외한 총 유저 인원 구하기
 	public int totalUserCount() {
@@ -255,14 +283,51 @@ public class User_Dao {
 					rs.close();
 					conn.close();//반환
 				} catch (Exception e2) {
-		
+					System.out.println(e2.getMessage());
 				}
 			}
 			return userlist;
 		}
 	
 	
-	
+	public String isCheckById(String email_id) {
+		
+		Connection conn = null;
+		String ismemoid = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select email_id from member where email_id=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, email_id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				ismemoid = "true";
+			}else {
+				ismemoid = "false";
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			ConnectionHelper.close(rs);
+			ConnectionHelper.close(pstmt);
+			try {
+				ConnectionHelper.close(conn); // 반환하기
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return ismemoid;
+		
+	}
 	
 
 }

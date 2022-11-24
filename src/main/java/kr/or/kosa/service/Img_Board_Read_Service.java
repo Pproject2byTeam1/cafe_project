@@ -26,10 +26,6 @@ public class Img_Board_Read_Service implements Action {
 			
 			request.setAttribute("imgboard", imgboard);
 			
-			System.out.println(imgboard.getImg_name());
-			System.out.println(imgboard.getTitle());
-			System.out.println(imgboard.getContent());
-			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
 		  	forward.setPath("/WEB-INF/view/imgboard_read.jsp");

@@ -13,10 +13,10 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Message;
 
-public class Message_Dao {
+public class MessageDao {
 	DataSource ds = null;
 	
-	public Message_Dao() throws NamingException{
+	public MessageDao() throws NamingException{
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
@@ -31,7 +31,7 @@ public class Message_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "SELECT M_IDX, SEND_ID, send_nick, RECEIVE_ID, receive_nick, m_content, to_char(m_date, 'yyyy-MM-dd') as m_date from message order BY m_idx desc";
+			String sql = "SELECT M_IDX ,rank, SEND_ID, send_nick, RECEIVE_ID, receive_nick, m_content, to_char(m_date, 'yyyy-MM-dd') as m_date from message join MEMBER on receive_id = email_id order BY m_idx desc";
 			pstmt = conn.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
@@ -41,6 +41,7 @@ public class Message_Dao {
 			if(rs.next()) {
 				Message message = new Message(); 
 				message.setM_idx(rs.getInt("M_IDX"));
+				message.setSend_rank(rs.getInt("rank"));
 				message.setSend_id(rs.getString("SEND_ID"));
 				message.setSend_nick(rs.getString("SEND_NICK"));
 				message.setReceive_id(rs.getString("RECEIVE_ID"));
@@ -77,7 +78,7 @@ public class Message_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "SELECT M_IDX, SEND_ID, send_nick, RECEIVE_ID, receive_nick, m_content, to_char(m_date, 'yyyy-MM-dd') as m_date from message WHERE receive_id =? order BY m_idx desc";
+			String sql = "SELECT m.M_IDX ,u.rank, m.SEND_ID, m.send_nick, m.RECEIVE_ID, m.receive_nick, m.m_content, to_char(m.m_date, 'yyyy-MM-dd') as m_date from message m join MEMBER u on receive_id = email_id WHERE receive_id =? order BY m_idx desc";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, receive_id);
@@ -91,6 +92,7 @@ public class Message_Dao {
 					
 					Message message = new Message(); 
 					message.setM_idx(rs.getInt("m_idx"));
+					message.setSend_rank(rs.getInt("rank"));
 					message.setSend_id(rs.getString("send_id"));
 					message.setSend_nick(rs.getString("send_nick"));
 					message.setReceive_id(rs.getString("receive_id"));
@@ -128,8 +130,7 @@ public class Message_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "insert into message(M_IDX, SEND_ID, send_nick, RECEIVE_ID, receive_nick, m_content) "+
-			"values(M_IDX_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
+			String sql = "insert into message(M_IDX, SEND_ID, send_nick, RECEIVE_ID, receive_nick, m_content) values(M_IDX_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, message.getSend_id());

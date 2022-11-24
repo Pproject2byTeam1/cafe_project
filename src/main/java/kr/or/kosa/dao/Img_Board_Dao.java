@@ -107,8 +107,6 @@ public class Img_Board_Dao {
 				img_board.setB_code(rs.getInt("b_code"));
 				img_board.setIdx(rs.getInt("idx"));
 				img_board.setImg_name(rs.getString("img_name"));
-
-				System.out.println(img_board.getImg_name());
 				
 			}else {
 				System.out.println("조회 데이터 없음");

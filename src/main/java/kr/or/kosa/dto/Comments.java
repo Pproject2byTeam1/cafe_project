@@ -74,13 +74,13 @@ public class Comments {
 	public void setStep(int step) {
 		this.step = step;
 	}
-	
 	@Override
 	public String toString() {
-		return "Connents [co_idx=" + co_idx + ", idx=" + idx + ", content=" + content + ", email_id=" + email_id
+		return "Comments [co_idx=" + co_idx + ", idx=" + idx + ", content=" + content + ", email_id=" + email_id
 				+ ", nick=" + nick + ", w_date=" + w_date + ", report_count=" + report_count + ", refer=" + refer
 				+ ", depth=" + depth + ", step=" + step + "]";
 	}
+	
 	
 	
 	

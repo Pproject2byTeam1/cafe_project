@@ -341,11 +341,11 @@
 <body>
   	<!-- ======= Header ======= -->
   	<header id="header" class="header fixed-top d-flex align-items-center">
-     	<jsp:include page="/common/top.jsp"></jsp:include>
+     	<c:import url="/WEB-INF/view/common/top.jsp" />
   	</header><!-- End Header -->
   	
   	<!-- ======= Sidebar ======= -->
-    <jsp:include page="/common/side.jsp"></jsp:include>
+  	<c:import url="/WEB-INF/view/common/side.jsp" />
   	<!-- End Sidebar -->
   
   

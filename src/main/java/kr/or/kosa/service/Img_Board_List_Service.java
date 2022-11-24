@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
+import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.Img_Board_Dao;
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.Img_Board;
 
 public class Img_Board_List_Service implements Action {
@@ -20,6 +22,10 @@ public class Img_Board_List_Service implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
+			
+			//사이드 바
+			Board_Info_Dao infodao = new Board_Info_Dao();
+			List<Board_Info> infolist = infodao.getSideBoardList();
 			
 			Board_Dao dao = new Board_Dao(); 
 			
@@ -60,6 +66,9 @@ public class Img_Board_List_Service implements Action {
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalboardcount", totalboardcount);
+			
+			request.setAttribute("infolist", infolist);
+			
 			request.setAttribute("list", list);
 			request.setAttribute("img_list", img_list);
 			

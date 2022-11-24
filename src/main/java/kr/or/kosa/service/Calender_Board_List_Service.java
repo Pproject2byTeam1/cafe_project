@@ -4,37 +4,35 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Message_Dao;
-import kr.or.kosa.dto.Message;
+import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dto.Board_Info;
 
-public class Message_Write_Service implements Action {
+public class Calender_Board_List_Service implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		
 		ActionForward forward = new ActionForward();
 		
 		try {
 			
-			HttpSession session = request.getSession();
-			Message_Dao dao = new Message_Dao();
-			String userId = (String) session.getAttribute("userid");//내 아이디
-			String responde_Id = (String) request.getAttribute("responde_Id");//받는사람 아이디
+			//사이드 바
+			Board_Info_Dao infodao = new Board_Info_Dao();
+			List<Board_Info> infolist = infodao.getSideBoardList();
 			
-			request.setAttribute("userId", userId);
-			request.setAttribute("responde_Id", responde_Id);
+			request.setAttribute("infolist", infolist);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/memo_write.jsp");
+		  	forward.setPath("/WEB-INF/view/calendar_list.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
+		
 		return forward;
 	}
 

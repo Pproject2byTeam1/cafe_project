@@ -1,17 +1,11 @@
 package kr.or.kosa.service;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Board_Dao;
-import kr.or.kosa.dao.Market_Board_Dao;
-import kr.or.kosa.dao.User_Dao;
-import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Market_Board;
+import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dto.User;
 
 public class User_details implements Action {
@@ -24,7 +18,7 @@ public class User_details implements Action {
 			
 			String id = request.getParameter("id");
 			
-			User_Dao dao = new User_Dao();
+			UserDao dao = new UserDao();
 			
 			User userlist = dao.idSearchUser(id);
 			request.setAttribute("userlist", userlist);
