@@ -108,12 +108,12 @@ public class MarketBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<MarketBoard> boardlist = null;
+		List<MarketBoard> list = null;
 
 		try {
 
 			conn = ds.getConnection();
-			String sql = "select * from (select rownum rn, b_idx, m.sold, m.m_mode, m.cate, "
+			String sql = "select * from (select rownum rn, b.idx, m.idx, m.b_idx , m.sold, m.m_mode, m.cate, "
 					 	+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
 					 	+ "b.report_count, b.email_id, b.b_code "
 						+ "from board b join market_board m on b.idx = m.idx "
@@ -122,13 +122,14 @@ public class MarketBoardDao {
 
 			int start = cpage * pagesize - (pagesize - 1);
 			int end = cpage * pagesize;
+		
 			pstmt.setInt(1, b_code);
 			pstmt.setInt(2, end);
 			pstmt.setInt(3, start);
-
+			
 			rs = pstmt.executeQuery();
 
-			boardlist = new ArrayList<MarketBoard>();
+			list = new ArrayList<MarketBoard>();
 
 			while (rs.next()) {
 				MarketBoard board = new MarketBoard();
@@ -146,11 +147,11 @@ public class MarketBoardDao {
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
 
-				boardlist.add(board);
+				list.add(board);
 			}
 
 		} catch (Exception e) {
-			System.out.println("오류 :" + e.getMessage());
+			System.out.println("오류asd :" + e.getMessage());
 		} finally {
 			try {
 				pstmt.close();
@@ -161,7 +162,7 @@ public class MarketBoardDao {
 			}
 		}
 
-		return boardlist;
+		return list;
 	}
 
 	// 게시판 코드 넣어 특정 게시판의 총 게시물 건수 구하기
@@ -191,6 +192,7 @@ public class MarketBoardDao {
 
 			}
 		}
+		System.out.println(countmarket);
 		return countmarket;
 	}
 
@@ -223,7 +225,7 @@ public class MarketBoardDao {
 	}
 
 	// 거래 게시판 글 읽기
-	public List<MarketBoard> readMarket(int b_idx) {
+	public List<MarketBoard> readMarket(int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -232,10 +234,10 @@ public class MarketBoardDao {
 		try {
 			conn = ds.getConnection();
 			String sql = "select * "
-					+ "from (select b.b_idx, m.sold, m.m_mode, m.cate, b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, b.report_count, b.email_id, b.b_code"
-					+ " from board b join market_board m" + " on b.idx = m.idx" + " order by b_idx desc) where b_idx=?";
+					+ "from (select m.idx, m.b_idx b_idx ,m.sold, m.m_mode, m.cate, b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, b.report_count, b.email_id, b.b_code"
+					+ " from board b join market_board m" + " on b.idx = m.idx" + " order by b_idx desc) where m.idx=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, b_idx);
+			pstmt.setInt(1, idx);
 
 			rs = pstmt.executeQuery();
 

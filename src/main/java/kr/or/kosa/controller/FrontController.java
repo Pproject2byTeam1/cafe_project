@@ -14,6 +14,8 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.Data_Board_List_Service;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
+import kr.or.kosa.service.MarketBoardListService;
+import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.Message_Delete_Service;
 import kr.or.kosa.service.Message_List_Service;
 import kr.or.kosa.service.User_List_Service;
@@ -72,6 +74,16 @@ public class FrontController extends HttpServlet {
 		} else if(urlcommand.equals("/databoard_list.do")){ // 데이터 게시판 리스트
 			
 			action = new Data_Board_List_Service();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/marketboard_list.do")){ // 데이터 게시판 리스트
+			
+			action = new MarketBoardListService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 리스트
+			
+			action = new MarketBoardReadService();
 			forward = action.execute(request, response);
 			
 		}
