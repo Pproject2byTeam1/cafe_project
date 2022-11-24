@@ -3,6 +3,8 @@ package kr.or.kosa.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -19,6 +21,53 @@ public class Board_Info_Dao {
 	public Board_Info_Dao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
+	}
+	
+	//side bar 게시판 종류 전체 출력
+	public List<Board_Info> getSideBoardList(){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Board_Info> list = new ArrayList<Board_Info>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select b_code, b_name, side_idx, main_idx, b_type "
+						+ "from board_info order by side_idx";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					
+					Board_Info info = new Board_Info();
+					
+					info.setB_code(rs.getInt("b_code"));
+					info.setB_name(rs.getString("b_name"));
+					info.setSide_idx(rs.getInt("side_idx"));
+					info.setMain_idx(rs.getInt("main_idx"));
+					info.setB_type(rs.getString("b_type"));
+					
+					list.add(info);
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return list;
 	}
 	
 	//게시판 종류 탐색
