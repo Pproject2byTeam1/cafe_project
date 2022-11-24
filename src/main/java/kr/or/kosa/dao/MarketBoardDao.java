@@ -61,15 +61,7 @@ public class MarketBoardDao {
 			pstmt2.setString(1, "m_mode");
 			pstmt2.setString(2, "cate");
 			pstmt2.setString(3, "price");
-			String sold = "";
-			if (market.getSold().equals("판매중")) {
-				sold = "F";
-			} else if (market.getSold().equals("판매완료")) {
-				sold = "T";
-			} else if (market.getSold().equals("예약중")) {
-				sold = "N";
-			}
-			pstmt2.setString(4, sold);
+			pstmt2.setString(4, "sold");
 			pstmt2.setString(5, "img_name");
 
 			row = pstmt2.executeUpdate();

@@ -88,8 +88,7 @@
 									<hr>
 									<div class="row">
 										<div class="col-lg-9">
-											<img class="product-img"
-												src="image/board/5/1detail.jpg">
+											<img class="marketB_img" src="image/board/5/${list.img_name}">
 										</div>
 										<div align="center" class="col-lg-3">
 											<div class="info-body price">
