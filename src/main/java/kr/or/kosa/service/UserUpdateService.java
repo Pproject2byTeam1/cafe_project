@@ -14,11 +14,14 @@ import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.UserDetails;
 
-public class UserInfoService implements Action {
+public class UserUpdateService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
+		int row = 0;
+		int row2 = 0;
+		
 		try {
 			//사이드바 정보
 	        Board_Info_Dao infodao = new Board_Info_Dao();
@@ -26,34 +29,34 @@ public class UserInfoService implements Action {
 	        
 	        request.setAttribute("infolist", infolist);
 			
-	        //유저정보 가져가기
+	        //유저정보 가져오기
 			HttpSession session = request.getSession();
-			User user = new User();
-			UserDetails details = new UserDetails();
+			User user = (User) request.getAttribute("user");
+			UserDetails details = (UserDetails) request.getAttribute("details");
 			String userId = "T1@naver.com";//(String) session.getAttribute("userid");
 			
 			UserDao dao = new UserDao();
-			user = dao.selectUserById(userId);
-			details = dao.selectUserDetailById(userId);
+			String nickname = (String) request.getParameter("nickname");
+			String tel = (String) request.getParameter("tel");
+			System.out.println((String) request.getParameter("tel"));
 			
-			String phone = details.getPhone();
-			String number = phone.substring(0, 3) + " - " + phone.substring(3, 7) + " - " + phone.substring(7, 11);
+			//update 실행
+			if(!details.getPhone().equals(tel)) {
+				row = dao.updateUserTelnum(tel, userId);
+			}
+			if(!user.getNick().equals(nickname)) {
+				row2 = dao.updateUserNick(userId,nickname);
+			}
 			
-			String birth = user.getBirth();
-			String day = birth.substring(0,4) + "년 " + birth.substring(4,6) + "월 " + birth.substring(6,8) + "일";
-			System.out.println("eee"+user.getIsAdmin());
-			String join = details.getJoin_date();
-			String date = join.substring(0,4) + "년 " + join.substring(4,6) + "월 " + join.substring(6,8) + "일";
-			
-			request.setAttribute("user", user);
-			request.setAttribute("details", details);
-			request.setAttribute("phone", number);
-			request.setAttribute("birthday", day);
-			request.setAttribute("joindate", date);
+			if(row<0 || row2<0) {
+				System.out.println("실패");
+			}else {
+				System.out.println("성공");
+			}
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/user_info_change_board.jsp");
+		  	forward.setPath("userinfo.do");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

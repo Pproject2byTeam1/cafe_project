@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -30,6 +29,7 @@ import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
+import kr.or.kosa.service.UserUpdateService;
 
 
 @WebServlet("*.do")
@@ -146,9 +146,14 @@ public class FrontController extends HttpServlet {
 			action = new MarketBoardReadService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/userinfo.do")){ // 데이터 게시판 리스트
+		}else if(urlcommand.equals("/userinfo.do")){ // 유저정보보기 화면 이동
 			
 			action = new UserInfoService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userinfo.do")){ // 유저정보 수정
+			
+			action = new UserUpdateService();
 			forward = action.execute(request, response);
 			
 		}
