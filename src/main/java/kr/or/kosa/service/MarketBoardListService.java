@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Board_Dao;
-import kr.or.kosa.dao.Img_Board_Dao;
+import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.MarketBoardDao;
-import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Img_Board;
+import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.MarketBoard;
 
 public class MarketBoardListService implements Action {
@@ -22,6 +20,12 @@ public class MarketBoardListService implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
+			
+			//사이드 바
+			Board_Info_Dao infodao = new Board_Info_Dao();
+		    List<Board_Info> infolist = infodao.getSideBoardList();
+
+	        request.setAttribute("infolist", infolist);
 			
 			MarketBoardDao market_dao = new MarketBoardDao(); 
 			

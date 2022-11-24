@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.MarketBoardDao;
+import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.MarketBoard;
 
 public class MarketBoardReadService implements Action {
@@ -19,23 +21,26 @@ public class MarketBoardReadService implements Action {
 		
 		try {
 			
+			//사이드 바
+			Board_Info_Dao infodao = new Board_Info_Dao();
+		    List<Board_Info> infolist = infodao.getSideBoardList();
+	        request.setAttribute("infolist", infolist);
+			
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			
 			MarketBoardDao dao = new MarketBoardDao();
 			
-			List<MarketBoard> marketboard = dao.readMarket(idx);
+			MarketBoard list = dao.readMarket(idx);
 			
-			request.setAttribute("marketboard", marketboard);
+			request.setAttribute("list", list);
 			
-				
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/MarketBoard_read.jsp");
+		  	forward.setPath("/WEB-INF/view/marketboard_read.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
 		
 		return forward;
 	}

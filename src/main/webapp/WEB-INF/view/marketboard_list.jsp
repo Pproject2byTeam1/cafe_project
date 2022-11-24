@@ -41,19 +41,14 @@
 </script>  	
 </head>
 <body>
-	<!-- ======= Header ======= -->
-	<header id="header" class="header fixed-top d-flex align-items-center">
-
-		<jsp:include page="/common/top.jsp"></jsp:include>
-
-	</header>
-	<!-- End Header -->
-
-	<!-- ======= Sidebar ======= -->
-
-	<jsp:include page="/common/side2.jsp"></jsp:include>
-
-	<!-- ======= End Sidebar ======= -->
+     <!-- ======= Header ======= -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
 	<main id="main" class="main">
 
 		<!-- Page Title -->
@@ -111,7 +106,7 @@
 					<!-- 보드	리스트 출력 시작 -->
 					<div class="container container__content--flow">
 						<c:forEach var="list" items="${list}" varStatus="status">
-						<div class="mcard" onclick="location.href='marketboardread.do?idx=${list.idx}'">
+						<div class="mcard" onclick="location.href='marketboard_read.do?idx=${list.idx}'">
 							<div class="mimg">
 							<img src="image/board/${list.b_code}/${list.img_name}" id="mimg"/>
 							</div>
