@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	
+   
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.jsp" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
@@ -16,9 +16,9 @@
 
         <li class="nav-item d-block d-lg-none">
         </li><!-- End Search Icon-->
-		
+      
 
-	<!-- <c:if test="${userid.id.equals('admin')}"> -->
+   <!-- <c:if test="${userid.id.equals('admin')}"> -->
        <ul class="header-nav ms-auto">
            <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>메인</a>
@@ -194,13 +194,13 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="image/rank_icon/1.gif" alt="Profile">
+            <img src="image/rank_icon/1.gif" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">USER_NICK</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><img src="image/rank_icon/1.gif" alt="Profile"> USER_NICK</h6>
+              <h6><img src="image/rank_icon/1.gif" alt="Profile" class="rounded-circle"> USER_NICK</h6>
               <span>RANK_NAME (POINT)</span>
             </li>
             <li>

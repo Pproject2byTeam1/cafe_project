@@ -37,7 +37,6 @@ public class Yes_Dao {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, email_id);
-			ResultSet rs = null;
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
@@ -129,7 +128,7 @@ public class Yes_Dao {
 		return totalcount;
 	}
 	
-	
+	//yes 탈퇴
 	public int checkRemoveCal(String email_id, int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

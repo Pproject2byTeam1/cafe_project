@@ -44,6 +44,8 @@
   	
   	<script type="text/javascript">
   	
+  	console.log(${member})
+  	
   	document.addEventListener('DOMContentLoaded', function() {
 
   		let today = new Date();
