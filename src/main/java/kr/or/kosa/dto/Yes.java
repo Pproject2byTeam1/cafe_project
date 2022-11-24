@@ -26,7 +26,5 @@ public class Yes {
 	public String toString() {
 		return "Yes [yes_idx=" + yes_idx + ", email_id=" + email_id + ", idx=" + idx + "]";
 	}
-	
-	
-	
+
 }

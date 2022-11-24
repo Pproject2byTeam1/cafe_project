@@ -9,11 +9,29 @@ public class Comments {
 	private String content;
 	private String email_id;
 	private String nick;
-	private Date w_date;
+	private String w_date;
 	private int report_count;
 	private int refer;
 	private int depth;
 	private int step;
+	
+	public Comments() {}
+	
+	public Comments(int co_idx, int idx, String content, String email_id, String nick, String w_date, int report_count,
+			int refer, int depth, int step) {
+		super();
+		this.co_idx = co_idx;
+		this.idx = idx;
+		this.content = content;
+		this.email_id = email_id;
+		this.nick = nick;
+		this.w_date = w_date;
+		this.report_count = report_count;
+		this.refer = refer;
+		this.depth = depth;
+		this.step = step;
+	}
+	
 	public int getCo_idx() {
 		return co_idx;
 	}
@@ -44,10 +62,10 @@ public class Comments {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-	public Date getW_date() {
+	public String getW_date() {
 		return w_date;
 	}
-	public void setW_date(Date w_date) {
+	public void setW_date(String w_date) {
 		this.w_date = w_date;
 	}
 	public int getReport_count() {
@@ -74,7 +92,7 @@ public class Comments {
 	public void setStep(int step) {
 		this.step = step;
 	}
-	
+		
 	@Override
 	public String toString() {
 		return "Connents [co_idx=" + co_idx + ", idx=" + idx + ", content=" + content + ", email_id=" + email_id

@@ -15,7 +15,6 @@ import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Calender;
 import kr.or.kosa.dto.Yes;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 
 @WebServlet("/CalendarList")

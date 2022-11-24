@@ -13,7 +13,8 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Calender;
-import kr.or.kosa.dto.Img_Board;
+import kr.or.kosa.dto.MarketBoard;
+import kr.or.kosa.dto.Regular_Board;
 
 //게시판 글
 //건들지 마세요 추수 수정 예정
@@ -33,6 +34,9 @@ public class Board_Dao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Board> boardlist = new ArrayList<Board>();
+		
+
+		
 		
 		try {
 			
@@ -86,22 +90,20 @@ public class Board_Dao {
 	}
 	
 	//자유 게시판 전체 조회
-	public List<Board> getRegular_boardList(int b_code, int cpage, int pagesize){
+	public List<Regular_Board> getRegular_boardList(int b_code, int cpage, int pagesize){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Board> boardlist = null;
+		List<Regular_Board> boardlist = null;
 		
 		try {
-			
 			conn = ds.getConnection();
-			String sql = "select *"
-						+ "from ( select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, r.b_idx, r.refer, r.depth, r.step"
-							+ "from board b join regular_board r"
-							+ "on b.idx = r.idx"
-							+ "where b.b_code = ?"
-							+ "order by refer desc, step asc )"
-						+ "where rn between ? and ?";
+			String sql = "select * "
+						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
+							+ "from board b join regular_board d "
+							+ "on b.idx = d.idx "
+							+ "where b_code=? "
+							+ "order by refer desc, step desc) where rn <= ? and rn >= ? ";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
@@ -113,10 +115,10 @@ public class Board_Dao {
 			
 			rs = pstmt.executeQuery();
 			
-			boardlist = new ArrayList<Board>();
+			boardlist = new ArrayList<Regular_Board>();
 			
 			while(rs.next()) {
-				Board board = new Board();
+				Regular_Board board = new Regular_Board();
 				board.setIdx(rs.getInt("idx"));
 				board.setTitle(rs.getString("title"));
 				board.setNick(rs.getString("nick"));
@@ -126,6 +128,7 @@ public class Board_Dao {
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
+				
 				
 				boardlist.add(board);
 			}

@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+.ccard {
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 3em;  
+}
+
+.comment-write {
+  background-color: white;
+  padding: 10px 25px 10px 25px;
+  border-radius: 3em;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
+.Recomment-box {
+  background-color: #D8D8D8;
+  padding: 0 25px 10px 25px;
+  border-radius: 3em;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  width : 95%;
+  margin: 0 0 10px auto;
+}
+
+.Recomment-text {
+  text-indent: 1.5em;
+}
+
+.comment-box {
+  background-color: #FAFAFA;
+  padding: 0 25px 10px 25px;
+  border-radius: 3em;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  margin-bottom: 10px;
+}
+
+.comment-date {
+  padding: 20px 25px 10px 25px;
+  font-size: 14px;
+  color: #01A9DB;
+  font-family: "Poppins", sans-serif, bold;
+  text-align: right;
+}

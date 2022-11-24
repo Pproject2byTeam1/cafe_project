@@ -11,21 +11,20 @@
           	      <input class="form-check-input" type="checkbox" value="${list.m_idx}">
            <table>
            <tr>
-            <td><img src="image/rank_icon/${list.m_idx}.gif"></td>
+            <td><img src="image/rank_icon/${list.send_rank}.gif"></td>
             <td>
             <a data-bs-toggle="dropdown"><h5 class="card-title">${list.send_nick}</h5></a>
             	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                   <li><a class="dropdown-item" href="#">게시글 쓰기</a></li>
-                   <li><a class="dropdown-item" href="#">쪽지보내기</a></li>
-                 </ul>
+                  	<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${list.send_id}" >답장 보내기</a></li>
+                  </ul>
             </td>
             <td>${list.m_date}</td>
            </tr>
            <tr>
-           	<td colspan="2"><p>${list.m_content}</p></td>
-             </tr>
-             </table>
-            </div>
+           	<td colspan="3"><p>${list.m_content}</p></td>
+           </tr>
+        </table>
           </div>
-          <hr>
+        </div>
+        <hr>
 </c:forEach>
