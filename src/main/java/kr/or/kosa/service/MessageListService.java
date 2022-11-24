@@ -25,9 +25,10 @@ public class MessageListService implements Action {
 			
 			HttpSession session = request.getSession();
 			MessageDao dao = new MessageDao();
-			String userId = (String) session.getAttribute("userid");
+			User user2 = (User) session.getAttribute("member");
+			String userId = user2.getEmail_id();
 			
-			List<Message> messagelist = dao.getMessageByReceiveId("T2@naver.com"/* userId */);//테스트용
+			List<Message> messagelist = dao.getMessageByReceiveId(userId );//테스트용
 			
 			request.setAttribute("messagelist", messagelist);
 			

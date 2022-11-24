@@ -106,7 +106,7 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">생년월일</div>
-                    <div class="col-lg-9 col-md-8">${birthday}</div><input type="text" hidden value="${user.birth}" name="oribirth"/>
+                    <div class="col-lg-9 col-md-8">${birthday}</div>
                   </div>
 
                   <div class="row">
@@ -141,7 +141,7 @@
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">전화번호</div>
-                    <div class="col-lg-9 col-md-8">${phone}</div><input type="text" hidden value="${details.phone}" name="oriphone"/>
+                    <div class="col-lg-9 col-md-8">${phone}</div>
                   </div>
                   
                   <div class="text-center">
@@ -177,7 +177,7 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">닉네임</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="nickname" type="text" class="form-control" id="nickname" value="${user.nick}">
+                        <input name="nickname" type="text" class="form-control" id="nickname" value="${user.nick}"><input type="text" hidden value="${user.nick}" name="orinick"/>
                         <div id="qqqq"></div>
                       </div>
                       <p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
@@ -186,12 +186,12 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="tel" type="tel" class="form-control" id="tel" value="${details.phone}" placeholder="'-' 없이 작성해 주세요">
+                        <input name="tel" type="tel" class="form-control" id="tel" value="${details.phone}" placeholder="'-' 없이 작성해 주세요"><input type="text" hidden value="${details.phone}" name="oriphone"/>
                       </div>
                     </div>
                     
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary" id="chageInfo">변경사항 저장</button>
+                      <button type="submit" class="btn btn-primary" id="chageInfo" disabled>변경사항 저장</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -199,7 +199,7 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
+                  <form action="userUpdatePwd.do" method="post">
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
@@ -226,7 +226,7 @@
  					
  
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary" id="changepwd">비밀번호 변경하기</button>
+                      <button type="submit" class="btn btn-primary" id="changepwd" disabled>비밀번호 변경하기</button>
                     </div>
                    
                   </form><!-- End Change Password Form -->
@@ -279,25 +279,54 @@
   		$('#nickname').keyup(function(){
   			//서버처리결과받기
   			$.ajax({
-  				url:"",
-  				dataType:"text",
+  				url:"nickVerification.do",
+  				data:{nickname: $('#nickname').val()},
+  				type: "POST",
+  				dataType:"json",
   				success: function(responseText){
-  					if(responseText == false){
+  					var text = responseText;
+  					if(text.toString().replace(/\s/gi, "") == "true"){
   						$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
+  						$("#chageInfo").attr("disabled",true);
   					}else{
   						$("#qqqq").html("<p class='text-success'>사용 가능합니다.</p>");
+  						$("#chageInfo").removeAttr("disabled");
   					}
   				}
   			});
   		});
   		$("#renewPassword").keyup(function () {
-            if ($("#newPassword").val() != $("#renewPassword").val()) {
-              //div p태그: innerText, innerHtml
-              $("#aaaa").html("<p class='text-danger' >일치하지 않습니다.</p>");
-            } else {
-              $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
-            }
+  			console.log("pwd: "+$('#currentPassword').val());
+  			$.ajax({
+  				url:"userVerification.do",
+  				data:{password: $('#currentPassword').val()},
+  				type: "POST",
+  				dataType:"json",
+  				success: function(responseText){
+  					var text = responseText;
+  					if(text.toString().replace(/\s/gi, "") == "true"){
+	  					if ($("#newPassword").val() != $("#renewPassword").val()) {
+			              $("#aaaa").html("<p class='text-danger' >일치하지 않습니다.</p>");
+			           	  $("#changepwd").attr("disabled",true);
+			            } else {
+			              $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
+			              $("#changepwd").removeAttr("disabled");
+			            }
+	  				}else{
+	  					$("#aaaa").html("<p class='text-danger' >비밀번호가 정확하지 않습니다.</p>");
+	  				}
+  				}
+  			})
           });
+  		$('#tel').keyup(function(){
+  			console.log("tel: "+$('#tel').val());
+  			console.log("length: "+$('#tel').val().length);
+  			if($('#tel').val().length != 11 || $('#tel').val() == null){
+  				$("#chageInfo").attr("disabled",true);
+  			}else{
+  				$("#chageInfo").removeAttr("disabled");
+  			}
+  		})
   	});
   </script>
 

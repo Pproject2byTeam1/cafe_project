@@ -389,4 +389,136 @@ public class UserDao {
 			}
 			return row;
 		}
+		
+		//특정 유저 pwd 바꾸기
+		public int updateUserPwd(String email_id, String password) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "UPDATE member SET PASSWORD=? "
+						+ "WHERE email_id=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, password);
+				pstmt.setString(2, email_id);
+				row = pstmt.executeUpdate();
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
+		}
+		
+		//특정 유저 관련 검증1
+		public int verificationUser1(String email_id, String col1) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "select count(*) cnt from Member where NICK = ? and email_id = ? ";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, col1);
+				pstmt.setString(2, email_id);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					row = rs.getInt(1);
+				}
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					rs.close();
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
+		}
+		//특정 유저 관련 검증2
+		public int verificationUser2(String email_id, String col1) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "select count(*) cnt from Member where PASSWORD = ? and email_id = ? ";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, col1);
+				pstmt.setString(2, email_id);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					row = rs.getInt(1);
+				}
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					rs.close();
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
+		}
+		
+		//관리자 update
+		public int updateAdmin(String email_id, String password, String name, String nick, String date) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "UPDATE member SET PASSWORD=?,  name = ?, nick=?, BIRTH=?"
+						+ "WHERE email_id=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, password);
+				pstmt.setString(2, name);
+				pstmt.setString(3, nick);
+				pstmt.setString(4, date);
+				pstmt.setString(5, email_id);
+				row = pstmt.executeUpdate();
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
+		}
 }

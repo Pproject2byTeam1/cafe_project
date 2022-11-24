@@ -27,11 +27,16 @@ import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
+import kr.or.kosa.service.UpdatePwdService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
+import kr.or.kosa.service.UserUpdateService;
 import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
-import kr.or.kosa.service.UserUpdateService;
+import kr.or.kosa.service.adminInfoService;
+import kr.or.kosa.service.adminUpdateService;
+import kr.or.kosa.service.nickVerification;
+import kr.or.kosa.service.userVerification;
 
 
 @WebServlet("*.do")
@@ -157,13 +162,38 @@ public class FrontController extends HttpServlet {
 			action = new MarketBoardReadService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/userinfo.do")){ 
+		}else if(urlcommand.equals("/userinfo.do")){  // 유저정보 페이지 이동
 			action = new UserInfoService();
 			forward = action.execute(request, response);
 			
 		}else if(urlcommand.equals("/userupdate.do")){ // 유저정보 수정
 			
 			action = new UserUpdateService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userUpdatePwd.do")){ // 유저비번 수정
+			
+			action = new UpdatePwdService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/userVerification.do")){ // 유저정보 검증
+			
+			action = new userVerification();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/nickVerification.do")){ // 유저닉네임 검증
+			
+			action = new nickVerification();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/adminInfo.do")){ // 관리자 정보 페이지
+			
+			action = new adminInfoService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/adminUpdate.do")){ // 관리자 정보 변경
+			
+			action = new adminUpdateService();
 			forward = action.execute(request, response);
 			
 		}
