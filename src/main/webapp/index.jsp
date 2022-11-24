@@ -65,7 +65,7 @@
     <p><a href="user_list.do">회원목록</a></p>
     <button onclick="new_window()"> 쪽지 리스트</button>
     <p><a href="databoard_list.do?b_code=6">자료 게시판</a></p>
-    <p><a href="data_content.do">자료글쓰기</a></p>
+
     
  <p><a href="rapport_list.do">신고현황</a></p>
     <p id = "writememo">쪽지 작성하기</p>

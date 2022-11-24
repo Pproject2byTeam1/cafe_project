@@ -210,7 +210,7 @@
 							<c:forEach var="reportlist" items="${reportlist}">
 							<tr>
 								<th scope="col">아직</th>
-								<th scope="col">아직</th> 
+								<th scope="col"></th> 
 								<th scope="col">${reportlist.title}</th>
 								<th scope="col">${reportlist.nick}</th>
 								<th scope="col">${reportlist.email_id}</th>
