@@ -77,16 +77,26 @@
 		
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-5"></div>
+				<div class="col-md-1">
+					<form name="list" >
+							<select class="form-select" name="ps" onchange="submit()">
+							   <c:forEach var="i" begin="5" end="20" step="5">
+							   		<c:choose>
+							   			<c:when test="${pagesize == i}">
+							   				<option value="${i}" selected>${i}건</option>
+							   			</c:when>
+						   				<c:otherwise>
+						   					<option value="${i}">${i}건 </option>
+						   				</c:otherwise>
+							   		</c:choose>
+							   </c:forEach>
+		   					</select>
+						</form>
+				</div>
+				<div class="col-md-4"></div>
 				<div class="col-md-4">
 					<div class="row">
-						<div class="col-md-5">
-							<select class=" form-select">
-								<option>전체등급</option>
-								<option>준회원</option>
-								<option>일반회원</option>
-							</select>
-						</div>
+						<div class="col-md-5"></div>
 						<div class="col-md-1"></div>
 						<div class="col-md-5">
 							<select class="form-select">
@@ -131,13 +141,13 @@
 	
 						</tr>
 						
-						<script type="text/javascript">
-						console.log("${alluser}");
-						</script>
+						
 						<c:if test="${alluser == null}">
 							<tr><td colspan='5'>데이터가 없습니다</td></tr>
 						</c:if>
+						
 						<c:forEach var="alluser" items="${alluser}">
+						
 							<tr>
 								<td scope="col"><img id="profile" class="col-3" src="image/rank_icon/${alluser.rank}.gif" alt="Profile" height="16" width="16" ></td>
 								<td scope="col">${alluser.email_id}</td>
@@ -145,12 +155,24 @@
 								<td scope="col">${alluser.name}</td>
 								<td scope="col">${alluser.phone}</td>
 								<td scope="col">${alluser.year_birth}</td>
-								<td scope="col"></td>
+								<td scope="col">${alluser.isAdmin}</td>
 								<td scope="col">
 								<div class="btn-group" role="group" aria-label="Basic example">
-									<button type="button" class="btn btn-primary btn-sm" id="EditPoint">등급설정</button>
-									<button type="button" class="btn btn-primary btn-sm" id="UserHistory">활동내역</button>
-									<button type="button" class="btn btn-danger btn-sm" id="Kick">강퇴</button>
+									<form action="user_details.do" method="post" target="payviewer" onsubmit="window.open('user_details.do', 'payviewer', 'width=768, height=753,resizeable, scrollbars');">
+										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
+										<input type="text" value="1" name="todo" style="display: none;">
+										<input type="submit" class="btn btn-primary btn-sm EditPoint" value="등급설정">
+									</form>
+									<form action="user_details.do" method="post">
+										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
+										<input type="text" value="2" name="todo" style="display: none;">
+										<input type="submit" class="btn btn-primary btn-sm UserHistory" value="활동내역">
+									</form>
+									<form action="user_details.do" method="post">
+										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
+										<input type="text" value="3" name="todo" style="display: none;">
+										<input type="submit" class="btn btn-danger btn-sm Kick" value="강퇴">
+									</form>
 								</div>
 								</td>
 							</tr>
@@ -231,32 +253,8 @@
    <!-- Template Main JS File -->
    
    <script src="assets/js/main.js"> </script>
-   
-   <script type="text/javascript">
-		document.getElementById("EditPoint").addEventListener("click", ()=>{
-			var checkbtn = $(this);
-			console.log(checkbtn);
-			var tr = checkbtn.parent().parent();
-			console.log(tr);
-			var td = tr.children();
-			console.log(td);
-			
-			//console.log($("EditPoint").parent().parent());
-		});
-		
-		
-		function new_window() {
-			window.open(
-			"memo_list.do",
-			"쪽지함",
-			"width=763, height=753, top=100, left=300"
-			);
-		}
-   </script>
-   	
-   		
-   
   
+   		
 
 </body>
 

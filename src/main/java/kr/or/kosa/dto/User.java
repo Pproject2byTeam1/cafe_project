@@ -1,7 +1,5 @@
 package kr.or.kosa.dto;
 
-import java.util.Date;
-
 public class User {
 	private String email_id;
 	private String password;
@@ -12,6 +10,7 @@ public class User {
 	private String isAdmin;
 	private int rank;
 	
+	public User() {}
 	
 	public int getRank() {
 		return rank;

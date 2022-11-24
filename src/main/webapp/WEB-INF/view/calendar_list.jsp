@@ -91,6 +91,17 @@
 
   		//일정 추가 버튼 클릭
   		$("#add_btn").click(function() {
+  			
+  			let requestdata3 = {
+  					"title": $("#caltitle").val(),
+  					"start_date": $("#calstart_date").val(),
+  					"end_date": $("#calend_date").val(),
+  					"content": $("#calcontent").val(),
+  					"finish": $("#addSelect option:selected").val(),
+  					"email_id": "T1@naver.com",
+  					"nick": "치츠스콘",
+  					"b_code": 3
+  			};
 
   			$.ajax({
   				type: "POST",
