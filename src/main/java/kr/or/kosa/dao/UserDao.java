@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.UserDetails;
+import kr.or.kosa.utils.ConnectionHelper;
 
 //등급
 public class UserDao {
@@ -98,18 +99,16 @@ public class UserDao {
 			pstmt.setString(1, userid);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				do {
-					user = new User();
-					
-					user.setEmail_id(rs.getString("email_id"));
-					user.setPassword(rs.getString("password"));
-					user.setName(rs.getString("name"));
-					user.setNick(rs.getString("nick"));
-					user.setBirth(rs.getString("birth"));
-					user.setPoint(rs.getInt("point"));
-					user.setIsAdmin(rs.getString("isadmin"));
-					user.setRank(rs.getInt("rank"));
-				}while(rs.next());
+				user = new User();
+
+				user.setEmail_id(rs.getString("email_id"));
+				user.setPassword(rs.getString("password"));
+				user.setName(rs.getString("name"));
+				user.setNick(rs.getString("nick"));
+				user.setBirth(rs.getString("birth"));
+				user.setPoint(rs.getInt("point"));
+				user.setIsAdmin(rs.getString("isadmin"));
+				user.setRank(rs.getInt("rank"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -284,14 +283,51 @@ public class UserDao {
 					rs.close();
 					conn.close();//반환
 				} catch (Exception e2) {
-		
+					System.out.println(e2.getMessage());
 				}
 			}
 			return userlist;
 		}
 	
 	
-	
+	public String isCheckById(String email_id) {
+		
+		Connection conn = null;
+		String ismemoid = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select email_id from member where email_id=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, email_id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				ismemoid = "true";
+			}else {
+				ismemoid = "false";
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			ConnectionHelper.close(rs);
+			ConnectionHelper.close(pstmt);
+			try {
+				ConnectionHelper.close(conn); // 반환하기
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return ismemoid;
+		
+	}
 	
 
 }

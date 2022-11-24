@@ -37,7 +37,7 @@
   		/* 게시물 좋아요 비동기 처리 */
   		$.ajax({
   			type: "POST",
-        	url: "Kanban",
+        	url: "Yes",
 			data: requestdata,
         	dataType: "JSON",
         	success: function(data){
