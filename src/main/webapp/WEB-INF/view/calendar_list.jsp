@@ -44,9 +44,10 @@
   	
   	<script type="text/javascript">
   	
-  	console.log(${member})
-  	
   	document.addEventListener('DOMContentLoaded', function() {
+  		
+  		let member = "<c:out value='${member}'/>";
+  		let b_code = "<c:out value='${b_code}'/>";
 
   		let today = new Date();
 
@@ -100,9 +101,9 @@
   					"end_date": $("#calend_date").val(),
   					"content": $("#calcontent").val(),
   					"finish": $("#addSelect option:selected").val(),
-  					"email_id": "T1@naver.com",
-  					"nick": "치츠스콘",
-  					"b_code": 3
+  					"email_id": member.email_id,
+  					"nick": member.nick,
+  					"b_code": b_code
   			};
 
   			$.ajax({
@@ -171,11 +172,8 @@
 
   			ReadView();
 
-  			//나중에 member 페이지 만들면 email_id 수정해야함
-  			const requestdata1 = { "email_id": "T1@naver.com", "idx": idx };
-
   			//참석 여부
-  			yes(requestdata1);
+  			yes();
 
   		}
 
@@ -215,7 +213,9 @@
   		}
 
   		//참석 여부
-  		function yes(requestdata1) {
+  		function yes() {
+  			const requestdata1 = { "email_id": member.email_id, "idx": idx };
+  			
   			$('#gridCheck2').click(function() {
   				if ($('#gridCheck2').is(':checked')) {
   					yesadd(requestdata1);
@@ -261,7 +261,7 @@
   		}
 
   		//나중에 member 페이지 만들면 email_id 수정해야함
-  		const requestdata = { "b_code": 3, "year": year, "month": month, "email_id": "T1@naver.com" };
+  		const requestdata = { "b_code": b_code, "year": year, "month": month, "email_id": member.email_id};
 
   		function loadlist() { //달력 생성
   			$.ajax({
@@ -286,7 +286,12 @@
   							parkCustomButton: {
   								text: '추가',
   								click: function() {	//일정 추가
-  									AddView();
+  									if(member != null && member != ""){
+  										AddView();
+  									}else{
+  										swal('로그인이 필요한 기능입니다.');
+  									}
+  									
   								}
   							}
   						},
@@ -341,195 +346,211 @@
   	
 </head>
 <body>
-  	<!-- ======= Header ======= -->
-  	<header id="header" class="header fixed-top d-flex align-items-center">
-     	<c:import url="/WEB-INF/view/common/top.jsp" />
-  	</header><!-- End Header -->
-  	
-  	<!-- ======= Sidebar ======= -->
-  	<c:import url="/WEB-INF/view/common/side.jsp" />
-  	<!-- End Sidebar -->
-  
+     <!-- ======= Header ======= -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
   
   
 	<main id="main" class="main">
   	<!-- 여기서부터 작성 와랄ㄹ라  -->
-  
-  		<div class="pagetitle">
-  			<h1>Calendar</h1> <!-- 게시판 이름 끌고오기 b_name -->
-  			<nav>
-  				<ol class="breadcrumb">
-  					<li class="breadcrumb-item">
-  						<a href="index.html">Home</a>
-  					</li>
-  					<li class="breadcrumb-item active">Calendar</li>
-  				</ol>
-  			</nav>
-  		</div>
-  		
-  		
-	  	<div class="container">
-			<div class="row">
-				<div id="calendar" class="col mb-5"></div>
-				
-				<div class="wrap-loading d-none">
-					<div><img src="assets/img/loading1.gif" /></div>
+  		<div class="park-card">
+  			<div class="park-card-body">
+  			
+				<div class="pagetitle">
+					<h1>Calendar</h1>
+					<!-- 게시판 이름 끌고오기 b_name -->
+					<nav>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+							<li class="breadcrumb-item active">Calendar</li>
+						</ol>
+					</nav>
 				</div>
-				
-				<!-- 일정 추가 -->
-				<div id="add" class="mt-10 col-md-6 park-card p-4 d-none">
-					<div class="park-card-body row">
-						<div class="card">
-							<div class="card-body">
-							
-								<div class="row mt-2">
-									<h4 class="col card-title"><strong>일정 추가</strong></h4>
-									<div class="col mt-3">
-										<select class="form-select" id="addSelect">
-											<option selected>Not Started</option>
-											<option value="1">In progress</option>
-											<option value="2">Done</option>
-										</select>
-									</div>
-								</div>
 
-								<!-- Floating Labels Form -->
-								<form class="row g-3 mt-2">
-									<div class="col-md-12">
-										<div class="form-floating">
-											<input type="text" class="form-control" id="caltitle"
-												placeholder="Title"> <label for="floatingName">일정</label>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-floating">
-											<div class="row mb-3">
-												<label for="inputDate" class="col-sm-4 col-form-label">시작일</label>
-												<div class="col-sm-8">
-													<input type="date" id="calstart_date" class="form-control">
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-floating">
-											<div class="row mb-3">
-												<label for="inputDate" class="col-sm-4 col-form-label">종료일</label>
-												<div class="col-sm-8">
-													<input type="date" id="calend_date" class="form-control">
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="form-floating">
-											<textarea class="form-control" placeholder="Content"
-												id="calcontent" style="height: 100px;"></textarea>
-											<label for="floatingTextarea">상세 일정</label>
-										</div>
-									</div>
-									<div class="text-center">
-										<button type="button" id="add_btn" class="btn btn-primary">확인</button>
-										<button type="reset" id="add_reset" class="btn btn-secondary">취소</button>
-									</div>
-								</form>
-								<!-- End floating Labels Form -->
+				<div class="container">
+					<div class="row">
+						<div id="calendar" class="col mb-5"></div>
 
+						<div class="wrap-loading d-none">
+							<div>
+								<img src="assets/img/loading1.gif" />
 							</div>
 						</div>
-					</div>
-				</div>
-				
-				<!-- 일정 내용 보기 -->
-				<div id="read" class="mt-10 col-md-6 park-card p-4 d-none">
-					<div class="park-card-body row">
-						<div class="card">
-							<div class="card-body">
-							
-								<div class="row mt-2">
-									<h4 class="col card-title"><strong>일정</strong></h4>
-									<div class="col mt-3">
-										<select class="form-select" id="readSelect">
-											<option value="1">Not Started</option>
-											<option value="2">In progress</option>
-											<option value="3">Done</option>
-										</select>
+
+						<!-- 일정 추가 -->
+						<div id="add" class="mt-10 col-md-6 park-card p-4 d-none">
+							<div class="park-card-body row">
+								<div class="card">
+									<div class="card-body">
+
+										<div class="row mt-2">
+											<h4 class="col card-title">
+												<strong>일정 추가</strong>
+											</h4>
+											<div class="col mt-3">
+												<select class="form-select" id="addSelect">
+													<option selected>Not Started</option>
+													<option value="1">In progress</option>
+													<option value="2">Done</option>
+												</select>
+											</div>
+										</div>
+
+										<!-- Floating Labels Form -->
+										<form class="row g-3 mt-2">
+											<div class="col-md-12">
+												<div class="form-floating">
+													<input type="text" class="form-control" id="caltitle"
+														placeholder="Title"> <label for="floatingName">일정</label>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-floating">
+													<div class="row mb-3">
+														<label for="inputDate" class="col-sm-4 col-form-label">시작일</label>
+														<div class="col-sm-8">
+															<input type="date" id="calstart_date"
+																class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-floating">
+													<div class="row mb-3">
+														<label for="inputDate" class="col-sm-4 col-form-label">종료일</label>
+														<div class="col-sm-8">
+															<input type="date" id="calend_date" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-floating">
+													<textarea class="form-control" placeholder="Content"
+														id="calcontent" style="height: 100px;"></textarea>
+													<label for="floatingTextarea">상세 일정</label>
+												</div>
+											</div>
+											<div class="text-center">
+												<c:if test="${member != null}">
+													<button type="button" id="add_btn" class="btn btn-primary">확인</button>
+												</c:if>
+												<button type="reset" id="add_reset"
+													class="btn btn-secondary">취소</button>
+											</div>
+										</form>
+										<!-- End floating Labels Form -->
+
 									</div>
 								</div>
+							</div>
+						</div>
 
-								<!-- Floating Labels Form -->
-								<form class="row g-3 mt-2">
-									<div class="col-md-12">
-										<div class="form-floating">
-											<h4 id="readcaltitle"></h4>
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-floating">
-											<div class="row mb-3">
-												<label for="inputDate" class="col-sm-4 col-form-label">시작일</label>
-												<div class="col-sm-8">
-													<input type="date" id="read-startdate" class="form-control" readonly>
-												</div>
+						<!-- 일정 내용 보기 -->
+						<div id="read" class="mt-10 col-md-6 park-card p-4 d-none">
+							<div class="park-card-body row">
+								<div class="card">
+									<div class="card-body">
+
+										<div class="row mt-2">
+											<h4 class="col card-title">
+												<strong>일정</strong>
+											</h4>
+											<div class="col mt-3">
+												<select class="form-select" id="readSelect">
+													<option value="1">Not Started</option>
+													<option value="2">In progress</option>
+													<option value="3">Done</option>
+												</select>
 											</div>
 										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-floating">
-											<div class="row mb-3">
-												<label for="inputDate" class="col-sm-4 col-form-label">종료일</label>
-												<div class="col-sm-8">
-													<input type="date" id="read-enddate" class="form-control" readonly>
+
+										<!-- Floating Labels Form -->
+										<form class="row g-3 mt-2">
+											<div class="col-md-12">
+												<div class="form-floating">
+													<h4 id="readcaltitle"></h4>
 												</div>
 											</div>
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="form-floating">
-											<p id="readcalcontent"></p>
-										</div>
-									</div>
-									<div class="col-md-4">
-									</div>
-									<div class="col-md-4">
-										
-									</div>
-									<div class="col-md-4">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox"
-												id="gridCheck2"> <label
-												class="form-check-label" for="gridCheck2">참석 여부</label>
-										</div>
-									</div>
-									<!-- <div class="text-center">
+											<div class="col-md-12">
+												<div class="form-floating">
+													<div class="row mb-3">
+														<label for="inputDate" class="col-sm-4 col-form-label">시작일</label>
+														<div class="col-sm-8">
+															<input type="date" id="read-startdate"
+																class="form-control" readonly>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-floating">
+													<div class="row mb-3">
+														<label for="inputDate" class="col-sm-4 col-form-label">종료일</label>
+														<div class="col-sm-8">
+															<input type="date" id="read-enddate" class="form-control"
+																readonly>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-floating">
+													<p id="readcalcontent"></p>
+												</div>
+											</div>
+											<div class="col-md-4"></div>
+											<div class="col-md-4"></div>
+											<div class="col-md-4">
+											<c:if test="${member != null}">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														id="gridCheck2"> <label class="form-check-label"
+														for="gridCheck2">참석 여부</label>
+												</div>
+											</c:if>
+											</div>
+											<!-- <div class="text-center">
 										<button type="button" class="btn btn-primary">확인</button>
 										<button type="reset" id="read_reset" class="btn btn-secondary">취소</button>
 									</div> -->
-									<div class="text-center">
-										<button type="reset" id="read_reset" class="btn btn-secondary">닫기</button>
-									</div>
-								</form>
-								<!-- End floating Labels Form -->
+											<div class="text-center">
+												<button type="reset" id="read_reset"
+													class="btn btn-secondary">닫기</button>
+											</div>
+										</form>
+										<!-- End floating Labels Form -->
 
-							</div>
-						</div>
-						
-						<!-- 댓글 -->
-						<div class="card">
-							<div class="card-body row ms-2 mt-2">
-								<h5 class="card-title">댓글</h5>
-								<div id="comment">
-									
+									</div>
 								</div>
 
+								<!-- 댓글 -->
+								<div class="card">
+									<div class="card-body row ms-2 mt-2">
+										<h5 class="card-title">댓글</h5>
+										<div id="comment"></div>
+
+									</div>
+								</div>
+								<!-- 댓글 끝 -->
+
 							</div>
 						</div>
-						<!-- 댓글 끝 -->
-						
 					</div>
 				</div>
+
 			</div>
-		</div>
+  		</div>
+  		
+  		
+  		
+	  
   
   	<!-- 여기까지만 작성  -->
   	</main>

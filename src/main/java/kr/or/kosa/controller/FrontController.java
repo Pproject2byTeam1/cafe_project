@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -73,16 +74,15 @@ public class FrontController extends HttpServlet {
 			action = new Img_Board_List_Service();
 			forward = action.execute(request, response);
 			
-		} else if(urlcommand.equals("/img_board_read.do")) { //일정 게시판 읽기
+		} else if(urlcommand.equals("/img_board_read.do")) { //이미지 게시판 읽기
 			
 			action = new Img_Board_Read_Service();
 			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/calendar_list.do")) {
 			
-			forward = new ActionForward();
-	        forward.setRedirect(false);
-	        forward.setPath("/WEB-INF/view/calendar_list.jsp");
+			action = new Calender_Board_List_Service();
+			forward = action.execute(request, response);
 	        
 		} else if(urlcommand.equals("/memo_list.do")) {//메모 리스트 보기
 			
