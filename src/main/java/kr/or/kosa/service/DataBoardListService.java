@@ -56,7 +56,7 @@ public class DataBoardListService implements Action {
 			}
 			List<Board> datalist = dao.getAllDatalist(code, cpage, pagesize);
 			//댓글
-		List<Comments> comlist =dao.getComment(code, pagecount, cpage, pagesize);
+			List<Comments> comlist =dao.getComment(code, pagecount, cpage, pagesize);
 			
 			
 			

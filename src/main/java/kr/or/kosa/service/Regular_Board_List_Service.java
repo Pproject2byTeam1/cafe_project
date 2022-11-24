@@ -1,5 +1,6 @@
 package kr.or.kosa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,9 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.ajax.Yes;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dto.Board;
+import kr.or.kosa.dao.CommentsDao;
+import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.Regular_Board;
 
@@ -26,6 +29,8 @@ public class Regular_Board_List_Service implements Action {
 
 	        
 			Board_Dao dao = new Board_Dao(); 
+			Yes_Dao ydao = new Yes_Dao();
+			CommentsDao cdao = new CommentsDao();
 			
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
@@ -57,6 +62,19 @@ public class Regular_Board_List_Service implements Action {
 			
 			List<Regular_Board> list = dao.getRegular_boardList(b_code, cpage, pagesize);
 			
+			//yes, 댓글 수
+			List yescountlist = new ArrayList();
+			List commentcountlist = new ArrayList();
+			
+			for(Regular_Board re : list) {	
+				int idx = re.getIdx();
+				int yescount = ydao.getYesCountBy_idx(idx);
+				int commentcount = cdao.getCommentCountBy_idx(idx);
+						
+				yescountlist.add(yescount);
+				commentcountlist.add(commentcount);
+			}
+			
 		
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("pagesize", pagesize);
@@ -64,8 +82,9 @@ public class Regular_Board_List_Service implements Action {
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalboardcount", totalboardcount);
 			request.setAttribute("list", list);
+			request.setAttribute("yes", yescountlist);
+			request.setAttribute("comment", commentcountlist);
 			
-			System.out.println(list);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
