@@ -1,6 +1,6 @@
 package kr.or.kosa.dto;
 
-public class User_Details extends User {
+public class UserDetails extends User {
 	private String email_id;
 	private String join_date;
 	private String last_visit_date;

@@ -8,10 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.User_Dao;
-import kr.or.kosa.dto.User_Details;
+import kr.or.kosa.dao.UserDao;
+import kr.or.kosa.dto.UserDetails;
 
-public class User_List_Service implements Action {
+public class UserListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -23,7 +23,7 @@ public class User_List_Service implements Action {
 			HttpSession session = request.getSession();
 			String userId = (String) session.getAttribute("userid");
 			
-			User_Dao dao = new User_Dao();
+			UserDao dao = new UserDao();
 			
 			int totalusercount = dao.totalUserCount();
 			
@@ -51,7 +51,7 @@ public class User_List_Service implements Action {
 				pagecount = (totalusercount / pagesize) + 1; 
 			}
 			
-			List<User_Details> alluser = dao.list(cpage, pagesize);
+			List<UserDetails> alluser = dao.list(cpage, pagesize);
 			
 			
 			request.setAttribute("pagesize", pagesize);

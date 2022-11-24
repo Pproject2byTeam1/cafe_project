@@ -1,17 +1,13 @@
 package kr.or.kosa.service;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Message_Dao;
-import kr.or.kosa.dto.Message;
 
-public class Message_Write_Service implements Action {
+public class MessageWriteService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -20,11 +16,12 @@ public class Message_Write_Service implements Action {
 		try {
 			
 			HttpSession session = request.getSession();
-			Message_Dao dao = new Message_Dao();
 			String userId = (String) session.getAttribute("userid");//내 아이디
-			String responde_Id = (String) request.getAttribute("responde_Id");//받는사람 아이디
+			String responde_Id = (String) request.getParameter("sender_id");//받는사람 아이디
 			
-			request.setAttribute("userId", userId);
+			System.out.println("dd: " + responde_Id);
+			
+			request.setAttribute("userId", "T2@naver.com"/*userId*/);
 			request.setAttribute("responde_Id", responde_Id);
 			
 			forward = new ActionForward();

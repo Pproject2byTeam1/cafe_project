@@ -14,13 +14,11 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.Data_Board_List_Service;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
-import kr.or.kosa.service.Message_Delete_Service;
-import kr.or.kosa.service.Message_List_Service;
-import kr.or.kosa.service.Message_Write_Service;
-import kr.or.kosa.service.Regular_Board_List_Service;
-import kr.or.kosa.service.User_Edit;
-import kr.or.kosa.service.User_List_Service;
-import kr.or.kosa.service.User_details;
+import kr.or.kosa.service.Message_Add_Service;
+import kr.or.kosa.service.MessageDeleteService;
+import kr.or.kosa.service.MessageListService;
+import kr.or.kosa.service.MessageWriteService;
+import kr.or.kosa.service.UserListService;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -60,17 +58,17 @@ public class FrontController extends HttpServlet {
 	        
 		} else if(urlcommand.equals("/memo_list.do")) {//메모 리스트 보기
 			
-			action = new Message_List_Service();
+			action = new MessageListService();
 			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/delete_memo.do")) {//메모 삭제
 			
-			action = new Message_Delete_Service();
+			action = new MessageDeleteService();
 			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/user_list.do")) { //유저 정보들 보기
 			
-			action = new User_List_Service();
+			action = new UserListService();
 			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/databoard_list.do")){ // 데이터 게시판 리스트
@@ -80,12 +78,12 @@ public class FrontController extends HttpServlet {
 			
 		}else if(urlcommand.equals("/write_memo.do")) {//메모 작성화면 ㄱㄱ
 			
-			//action = new Message_Write_Service();
-			//Wforward = action.execute(request, response);
+			action = new MessageWriteService();
+			forward = action.execute(request, response);
 			
 		}else if(urlcommand.equals("/write_memo_ok.do")) {//메모 작성 실행
 			
-			//action = new ();
+			action = new Message_Add_Service();
 			forward = action.execute(request, response);
 			
 		}else if(urlcommand.equals("/user_details.do")) {
