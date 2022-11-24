@@ -49,8 +49,8 @@ public class Board {
 	public String getW_date() {
 		return w_date;
 	}
-	public void setW_date(String w_date) {
-		this.w_date = w_date;
+	public void setW_date(String date) {
+		this.w_date = date;
 	}
 	public int getReport_count() {
 		return report_count;

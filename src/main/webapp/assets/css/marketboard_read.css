@@ -1,17 +1,15 @@
 @charset "UTF-8";
-<<<<<<< Updated upstream
+
 #YES {
 	width: 50px;
 }
-=======
->>>>>>> Stashed changes
 
-#columns {
+#col {
    column-width: 350px;
-   column-gap: 20px;
+   column-gap: 10px;
 }
 
-#columns figure {
+#col figure {
    display: inline-block;
    margin: 0;
    margin-bottom: 15px;
@@ -29,13 +27,17 @@
 .marketcard {
   background-color : white;
   margin-bottom: 30px;
-  border-radius: 3%;
+  border-radius: 3em;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
   padding : 15px;
 }
 
 .marketcard-body {
   padding: 10px 10px 10px 10px;
+}
+
+.info-body {
+  padding: 8px 0 8px 0;
 }
 
 .marketcard-body img{
@@ -45,7 +47,6 @@
 
 .replyinput {
    border-radius: 30px;
-<<<<<<< Updated upstream
 }
 
 .product-title {
@@ -69,13 +70,13 @@
 }
 
 #marketB_Title {
-	font-size: 36px;
+	font-size: 24px;
 	color: #012970;
 	font-family: "Poppins", sans-serif;
 }
 
 #marketB_Text {
-	font-size: 24px;
+	font-size: 14px;
 	font-weight: 500;
 	color: #012970;
 	font-family: "Poppins", sans-serif;
@@ -92,7 +93,7 @@
 }
 
 #marketB_Price {
-	font-size: 36px;
+	font-size: 150%;
 	color: orange;
 	font-family: "Poppins", sans-serif, bold;
 }
@@ -168,6 +169,4 @@
 	.card:nth-child(odd) {
 		flex: 1 1;
 	}
-=======
->>>>>>> Stashed changes
 }

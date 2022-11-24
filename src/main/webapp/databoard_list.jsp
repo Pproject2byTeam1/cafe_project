@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+   
 <!DOCTYPE html>
 <html>
 
@@ -91,7 +94,9 @@ text-align: center;
 </head>
 
 <body>
-
+<c:set var="pagesize" value='<%=request.getAttribute("pagesize")%>' />
+	<c:set var="cpage" value='<%=request.getAttribute("cpage")%>' />
+	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
    <!-- ======= Header ======= -->
    <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -120,11 +125,21 @@ text-align: center;
       <!-- End Page Title -->
       <!--글쓰기 버튼  -->
       <div align="right">
-         <button type="button" class="btn btn-success">글쓰기</button>&nbsp;
-            <select class="selectpicker" data-width="75px">
-                 <option>10개씩</option>
-                  <option>15개씩</option>
-                  <option>20개씩</option>
+      <a></a>
+   <p><a href="data_content.do">글쓰기 게시판</a></p>
+         <button type="button" class="btn btn-success" onclick = "location.href ='/data_content.do'" >글쓰기</button>&nbsp;
+            <select class="selectpicker" data-width="75px" name="ps" onchange="submit()">
+               <c:forEach var="i" begin="5" end="20" step="5">
+							   		<c:choose>
+							   			<c:when test="${pagesize == i}">
+							   				<option value="${i}" selected>${i}건</option>
+							   			</c:when>
+						   				<c:otherwise>
+						   					<option value="${i}">${i}건 </option>
+						   				</c:otherwise>
+							   		</c:choose>
+							   </c:forEach>
+      
              </select>
       </div>
 
@@ -134,7 +149,7 @@ text-align: center;
          <div class="card-body">
 
             <!-- Table with hoverable rows -->
-            <table class="table table-hover">
+            <table class="table table-hover" >
                <thead>
                   <tr>
                    <th scope="col"></th>
@@ -146,86 +161,73 @@ text-align: center;
                   </tr>
                </thead>
                <tbody>
-               
+               		<!-- 데이터가 한건도 없는 경우  -->
+				<c:if test="${datalist == null}">
+					<tr><td colspan='5'>데이터가 없습니다</td></tr>
+				</c:if>
+				<!--목록출력하기  -->
+               <c:forEach var="board" items="${datalist}">
                   <tr>
                      <th scope="row"><input type="checkbox"></th>
                      <td>
-                     <span class="mt-4 parent"><h3>너구리수명ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</h3></span><br>
-                     <span class="son_name">마들렌</span>
-                     <span class="son_date"> 2022.11.15</span>
-                     <span class="son_time"> 오후 2시 57분</span>
+                     <span class="mt-4 parent"><h3>${board.title}</h3></span><br>
+                     <span class="son_name">${board.nick}</span>
+                     <span class="son_date">${board.w_date}</span>
+                     <span class="son_time"> </span>
                      </td>
                      <td></td>
-                     
+                    
                   <td class="p-5 jdc"><span class="_3Espq6" >
-                     <span class="_1R-fi-">9</span><br>
+                     <span class="_1R-fi-">${board.hits}</span><br>
                      <span>조회</span>
                      </span>
                   </td>
-                  <td class="p-5 jdc"><span class="_3Espq6">
-                     <span class="_1R-fi-">10</span><br>
+                  
+                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${countlist}">
+                     <span class="_1R-fi-">${countlist}</span><br>
                      <span>댓글</span>
                      </span>
                   </td>
-                  <td class="p-5 jdc"><span class="_3Espq6">
-                     <span class="_1R-fi-">600</span><br>
-                     <span>추천
+                  
+                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yeslist}">
+                     <span class="_1R-fi-">${yeslist}</span><br>
+                     <span>추천</span>
                   </td>
                   </tr>
                   
-                  <tr>
-                     <th scope="row"><input type="checkbox"></th>
+                
+                 <%--  </c:forEach> --%>
+                 
+                
+             <c:if test="${board.depth>0}">     
+   <tr>	
+         <th scope="row"><input type="checkbox"></th>
                      <td>
-                     <span class="mt-4 parent"><h3>너구리수명ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</h3></span><br>
-                     <span class="son_name">마들렌</span>
-                     <span class="son_date"> 2022.11.15</span>
-                     <span class="son_time"> 오후 2시 57분</span>
-                     </td>
-                     <td></td>
-                     
-                  <td class="p-5 jdc"><span class="_3Espq6" >
-                     <span class="_1R-fi-">9</span><br>
-                     <span>조회</span>
-                     </span>
-                  </td>
-                  <td class="p-5 jdc"><span class="_3Espq6">
-                     <span class="_1R-fi-">10</span><br>
-                     <span>댓글</span>
-                     </span>
-                  </td>
-                  <td class="p-5 jdc"><span class="_3Espq6">
-                     <span class="_1R-fi-">600</span><br>
-                     <span>추천
-                  </td>
-                  </tr>
-                  
-                  <tr>
-                     <th scope="row"><input type="checkbox"></th>
-                     <td>
-                                        &nbsp;&nbsp;&nbsp;
+                   &nbsp;&nbsp;&nbsp;
                      <h3 ><img src="./image/re.gif">
-                     [Re]1</h3>
+                     [Re]${board.title}</h3>
                      
                   
                      </td>
                      <td></td>
                      
                   <td class="p-5 jdc"><span class="_3Espq6" >
-                     <span class="_1R-fi-">9</span><br>
+                     <span class="_1R-fi-">${board.hits}</span><br>
                      <span>조회</span>
                      </span>
                   </td>
-                  <td class="p-5 jdc"><span class="_3Espq6">
-                     <span class="_1R-fi-">10</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yeslist}">
+                     <span class="_1R-fi-">${yeslist}</span><br>
                      <span>댓글</span>
                      </span>
                   </td>
-                  <td class="p-5 jdc"><span class="_3Espq6">
-                     <span class="_1R-fi-">600</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${countlist}">
+                     <span class="_1R-fi-">${countlist}</span><br>
                      <span>추천
                   </td>
-                  </tr>
-                  
+                  </tr> 
+                  </c:if>
+                  </c:forEach> 
                </tbody>
             </table>
             <!-- End Table with hoverable rows -->
@@ -241,20 +243,32 @@ text-align: center;
       </div>
       
           <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><<</a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                   <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">>></a>
-                  </li>
-                </ul>
-              </nav><!-- End Centered Pagination -->
+					<ul class="pagination justify-content-center">
+					
+		                <c:if test="${cpage > 1}">
+		                  <li class="page-item">
+		                    <a class="page-link" href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+		                  </li>
+	                    </c:if>
+	                    	
+	                    <c:forEach var="i" begin="1" end="${pagecount}" step="1">
+	                    	<c:choose>
+								<c:when test="${cpage==i}">
+										<li class="page-item"><a class="page-link active" >${i}</a></li>
+								</c:when>
+								<c:otherwise>
+		                  			<li class="page-item"><a class="page-link" href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+								</c:otherwise>
+							</c:choose>
+	                    </c:forEach>
+	                    
+	                    <c:if test="${cpage < pagecount}">
+	                    	<li class="page-item">
+							<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
+							</li>
+						</c:if>
+					</ul>
+				</nav><!-- End Centered Pagination -->
    </main>
    <!-- End #main -->
 
