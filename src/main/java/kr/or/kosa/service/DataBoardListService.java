@@ -35,9 +35,9 @@ public class DataBoardListService implements Action {
 		         
 		         request.setAttribute("infolist", infolist);
 			
-			
+			 
 			int totalboardcount = dao.totaldataBoard();
-			
+			 
 		
 			//상세보기 >> 다시 리스트로 넘어 올때
 			String ps = request.getParameter("ps");

@@ -27,6 +27,7 @@ import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
+import kr.or.kosa.service.Regular_Board_Post_Service;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.User_Edit;
@@ -166,6 +167,11 @@ public class FrontController extends HttpServlet {
 			action = new UserUpdateService();
 			forward = action.execute(request, response);
 			
+		}else if(urlcommand.equals("/regular_post.do")){ // 유저정보 수정
+			
+			action = new Regular_Board_Post_Service();
+			forward = action.execute(request, response);
+	
 		}
 		
 		if (forward != null) {
