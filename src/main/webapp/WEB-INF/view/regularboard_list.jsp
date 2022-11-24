@@ -178,9 +178,6 @@
 						</c:if>
 						<!--목록출력하기  -->
 						<c:forEach var="board" items="${list}">
-						<script type="text/javascript">
-console.log("${board}");
-</script>
 							<tr>
 								<th scope="row"><input type="checkbox"></th>
 								<td><span class="mt-4 parent"><h3>${board.title}</h3></span><br>
