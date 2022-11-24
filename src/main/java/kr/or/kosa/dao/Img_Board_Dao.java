@@ -83,7 +83,10 @@ public class Img_Board_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select b_idx, idx, img_name from Img_Board where idx=?";
+			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'YYYY.MM.dd') w_date, b.report_count, b.notic, b.email_id, b.b_code, i.b_idx, i.img_name "
+						+ "from board b join img_board i "
+						+ "on b.idx = i.idx "
+						+ "where b.idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, idx);
@@ -93,8 +96,19 @@ public class Img_Board_Dao {
 			if(rs.next()) {
 				
 				img_board.setB_idx(rs.getInt("b_idx"));
+				img_board.setTitle(rs.getString("title"));
+				img_board.setNick(rs.getString("nick"));
+				img_board.setContent(rs.getString("content"));
+				img_board.setHits(rs.getInt("hits"));
+				img_board.setW_date(rs.getString("w_date"));
+				img_board.setReport_count(rs.getInt("report_count"));
+				img_board.setNotic(rs.getString("notic"));
+				img_board.setEmail_id(rs.getString("email_id"));
+				img_board.setB_code(rs.getInt("b_code"));
 				img_board.setIdx(rs.getInt("idx"));
 				img_board.setImg_name(rs.getString("img_name"));
+
+				System.out.println(img_board.getImg_name());
 				
 			}else {
 				System.out.println("조회 데이터 없음");
