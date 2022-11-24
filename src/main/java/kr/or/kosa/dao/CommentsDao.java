@@ -110,4 +110,38 @@ public class CommentsDao {
 		
 		return row;
 	}
+	
+	// 댓글개수 int로 출력 (파라미터: idx값)
+		public int getCommentCountBy_idx(int idx) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int totalcount = 0;
+
+			try {
+
+				conn = ds.getConnection();
+				String sql = "select count(*) cnt from comments where idx = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, idx);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+		            totalcount = rs.getInt("cnt");
+		         }
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					pstmt.close();
+					rs.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+
+			return totalcount;
+		}
 }
