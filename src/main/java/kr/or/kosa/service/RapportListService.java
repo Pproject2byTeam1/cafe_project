@@ -11,12 +11,12 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Admin_Dao;
+import kr.or.kosa.dao.AdminDao;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 
-public class Rapport_List_Service implements Action {
+public class RapportListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -29,7 +29,7 @@ public class Rapport_List_Service implements Action {
 			HttpSession session = request.getSession();
 			String userId = (String) session.getAttribute("userid");
 			
-			Admin_Dao dao = new Admin_Dao();
+			AdminDao dao = new AdminDao();
 			int totalreportcount = dao.totalreportCount();
 			String ps = request.getParameter("ps");
 			String cp = request.getParameter("cp");
@@ -56,7 +56,7 @@ public class Rapport_List_Service implements Action {
 			
 			
 			List<Board> reportlist = dao.reportlist(cpage, pagesize);
-			System.out.println(reportlist +"여기는 service");
+		
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);

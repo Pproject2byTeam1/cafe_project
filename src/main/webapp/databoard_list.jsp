@@ -125,7 +125,9 @@ text-align: center;
       <!-- End Page Title -->
       <!--글쓰기 버튼  -->
       <div align="right">
-         <button type="button" class="btn btn-success">글쓰기</button>&nbsp;
+      <a></a>
+   <p><a href="data_content.do">글쓰기 게시판</a></p>
+         <button type="button" class="btn btn-success" onclick = "location.href ='/data_content.do'" >글쓰기</button>&nbsp;
             <select class="selectpicker" data-width="75px" name="ps" onchange="submit()">
                <c:forEach var="i" begin="5" end="20" step="5">
 							   		<c:choose>

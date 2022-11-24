@@ -10,11 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Data_Board_Dao;
+import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Comments;
 
-public class Data_Board_List_Service implements Action {
+public class DataBoardListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -24,7 +24,7 @@ public class Data_Board_List_Service implements Action {
 		
 		HttpSession session = request.getSession();
 		try {
-			Data_Board_Dao dao = new Data_Board_Dao();
+			DataBoardDao dao = new DataBoardDao();
 			
 			
 			int totalboardcount = dao.totaldataBoard();

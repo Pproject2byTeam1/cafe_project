@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.service.Data_Board_List_Service;
+import kr.or.kosa.service.DataBoardListService;
+import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
 import kr.or.kosa.service.Message_Delete_Service;
 import kr.or.kosa.service.Message_List_Service;
+import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.User_List_Service;
+
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -71,11 +74,22 @@ public class FrontController extends HttpServlet {
 			
 		} else if(urlcommand.equals("/databoard_list.do")){ // 데이터 게시판 리스트
 			
-			action = new Data_Board_List_Service();
+			action = new DataBoardListService();
 			forward = action.execute(request, response);
 			
-		}
+		}else if(urlcommand.equals("/rapport_list.do")){ // 신고리스트
 		
+			action = new RapportListService();
+			forward = action.execute(request, response);
+		}else if(urlcommand.equals("/data_content.do")) {
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("/data_content.jsp");
+		}else if(urlcommand.equals("/board_datacontentright.do")) {
+			action = new DataWriteService();
+			forward = action.execute(request, response);
+		}
 		
 		if (forward != null) {
 			if (forward.isRedirect()) { // true 페이지 재 요청 (location.href="페이지"

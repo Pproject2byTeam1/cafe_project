@@ -19,11 +19,11 @@ import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.User_Details;
 
-public class Admin_Dao {
+public class AdminDao {
 
 	DataSource ds = null;
 
-	public Admin_Dao() throws NamingException {
+	public AdminDao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 
@@ -47,10 +47,10 @@ public class Admin_Dao {
 
 			pstmt.setInt(1, end);
 			pstmt.setInt(2, start);
-			System.out.println(reportlist);
+		
 			rs = pstmt.executeQuery();
 			reportlist = new ArrayList<Board>();
-			System.out.println(reportlist);
+			
 			while (rs.next()) {
 				Board report = new Board();
 			
@@ -134,7 +134,7 @@ public class Admin_Dao {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 
-				userdto.setRank(rs.getInt("rank"));
+				//userdto.setRank(rs.getInt("rank"));;
 
 			}
 

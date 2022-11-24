@@ -13,22 +13,22 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Comments;
-import kr.or.kosa.dto.Data_Board;
+import kr.or.kosa.dto.DataBoard;
 
-public class Data_Board_Dao {
+public class DataBoardDao {
 	DataSource ds = null;
 
-	public Data_Board_Dao() throws NamingException {
+	public DataBoardDao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
 
 	// 자료 게시판 특정 글 조회
-	public Data_Board getData_BoardByIdx(int idx) {
+	public DataBoard getData_BoardByIdx(int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Data_Board data_board = new Data_Board();
+		DataBoard data_board = new DataBoard();
 
 		try {
 
@@ -70,7 +70,7 @@ public class Data_Board_Dao {
 	}
 
 	// 자료 게시판 특정 글 삽입
-	public int insertData_Board(Data_Board data_board) {
+	public int insertData_Board(DataBoard data_board) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -79,7 +79,7 @@ public class Data_Board_Dao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "insert into Regualr_Board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?)";
+			String sql = "insert into data_board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, data_board.getIdx());
@@ -105,7 +105,7 @@ public class Data_Board_Dao {
 	}
 
 	// 자료 게시판 특정 글 수정
-	public int updateData_Board(Data_Board data_board) {
+	public int updateData_Board(DataBoard data_board) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -191,7 +191,7 @@ public class Data_Board_Dao {
 			datalist = new ArrayList<Board>();
 
 			while (rs.next()) {
-				Data_Board data = new Data_Board();
+				DataBoard data = new DataBoard();
 
 				data.setIdx(rs.getInt("idx"));
 				data.setTitle(rs.getString("title"));
