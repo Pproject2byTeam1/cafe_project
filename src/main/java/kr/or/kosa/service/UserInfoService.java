@@ -41,7 +41,7 @@ public class UserInfoService implements Action {
 			
 			String birth = user.getBirth();
 			String day = birth.substring(0,4) + "년 " + birth.substring(4,6) + "월 " + birth.substring(6,8) + "일";
-			System.out.println("eee"+user.getIsAdmin());
+			//System.out.println("eee"+user.getIsAdmin());
 			String join = details.getJoin_date();
 			String date = join.substring(0,4) + "년 " + join.substring(4,6) + "월 " + join.substring(6,8) + "일";
 			

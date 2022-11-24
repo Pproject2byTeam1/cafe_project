@@ -31,25 +31,22 @@ public class UserUpdateService implements Action {
 			
 	        //유저정보 가져오기
 			HttpSession session = request.getSession();
-			User user = (User) request.getAttribute("user");
-			UserDetails details = (UserDetails) request.getAttribute("details");
 			String userId = "T1@naver.com";//(String) session.getAttribute("userid");
 			
 			UserDao dao = new UserDao();
 			String nickname = (String) request.getParameter("nickname");
 			String tel = (String) request.getParameter("tel");
-			System.out.println((String) request.getParameter("tel"));
+			System.out.println(tel);
 			
 			//update 실행
-			if(!details.getPhone().equals(tel)) {
-				row = dao.updateUserTelnum(tel, userId);
-			}
-			if(!user.getNick().equals(nickname)) {
-				row2 = dao.updateUserNick(userId,nickname);
-			}
+			row = dao.updateUserTelnum(tel, userId);
+			row2 = dao.updateUserNick(userId,nickname);
 			
-			if(row<0 || row2<0) {
-				System.out.println("실패");
+			
+			if(row<0) {
+				System.out.println("row 변경안됨");
+			}else if(row2<0) {
+				System.out.println("row2 변경안됨");
 			}else {
 				System.out.println("성공");
 			}

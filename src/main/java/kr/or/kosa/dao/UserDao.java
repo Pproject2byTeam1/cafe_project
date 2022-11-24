@@ -337,7 +337,7 @@ public class UserDao {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = "UPDATE member SET phone=? "
+			String sql = "UPDATE user_details SET phone=? "
 					+ "WHERE email_id=?";
 			
 			pstmt = conn.prepareStatement(sql);
