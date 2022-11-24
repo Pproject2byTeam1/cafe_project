@@ -72,10 +72,11 @@ public class FrontController extends HttpServlet {
 			action = new Img_Board_Read_Service();
 			forward = action.execute(request, response);
 			
-		} else if(urlcommand.equals("/calendar_list.do")) { //일정 관리 리스트 목록
+		} else if(urlcommand.equals("/calendar_list.do")) {
 			
-			action = new Calender_Board_List_Service();
-			forward = action.execute(request, response);
+			forward = new ActionForward();
+	        forward.setRedirect(false);
+	        forward.setPath("/WEB-INF/view/calendar_list.jsp");
 	        
 		} else if(urlcommand.equals("/memo_list.do")) {//메모 리스트 보기
 			
@@ -130,8 +131,10 @@ public class FrontController extends HttpServlet {
 			forward.setPath("/data_content.jsp");
 			
 		}else if(urlcommand.equals("/board_datacontentright.do")) {
+			
 			action = new DataWriteService();
 			forward = action.execute(request, response);
+			
 		}else if(urlcommand.equals("/marketboard_list.do")){ // 데이터 게시판 리스트
 			
 			action = new MarketBoardListService();

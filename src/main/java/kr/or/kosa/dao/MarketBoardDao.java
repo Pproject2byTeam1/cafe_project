@@ -113,7 +113,7 @@ public class MarketBoardDao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "select * from (select rownum rn, b.idx, m.idx, m.b_idx , m.sold, m.m_mode, m.cate, "
+			String sql = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
 					 	+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
 					 	+ "b.report_count, b.email_id, b.b_code "
 						+ "from board b join market_board m on b.idx = m.idx "
@@ -128,14 +128,16 @@ public class MarketBoardDao {
 			pstmt.setInt(3, start);
 			
 			rs = pstmt.executeQuery();
-
+			
 			list = new ArrayList<MarketBoard>();
 
 			while (rs.next()) {
 				MarketBoard board = new MarketBoard();
+				board.setIdx(rs.getInt("idx"));
+				board.setB_code(b_code);
 				board.setSold(rs.getString("sold"));
 				board.setM_mode(rs.getString("m_mode"));
-				board.setCate(rs.getString("m.cate"));
+				board.setCate(rs.getString("cate"));
 				board.setTitle(rs.getString("title"));
 				board.setContent(rs.getString("content"));
 				board.setImg_name(rs.getString("img_name"));
@@ -145,7 +147,7 @@ public class MarketBoardDao {
 				board.setW_date(rs.getString("w_date"));
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
-				board.setB_code(rs.getInt("b_code"));
+				
 
 				list.add(board);
 			}
@@ -248,7 +250,7 @@ public class MarketBoardDao {
 
 				read.setSold(rs.getString("sold"));
 				read.setM_mode(rs.getString("m_mode"));
-				read.setCate(rs.getString("m.cate"));
+				read.setCate(rs.getString("cate"));
 				read.setTitle(rs.getString("title"));
 				read.setContent(rs.getString("content"));
 				read.setImg_name(rs.getString("img_name"));
