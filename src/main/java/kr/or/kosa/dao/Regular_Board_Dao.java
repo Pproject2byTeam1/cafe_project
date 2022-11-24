@@ -125,4 +125,5 @@ public class Regular_Board_Dao {
 		return row;
 	}
 	
+	
 }
