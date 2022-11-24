@@ -106,7 +106,7 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">생년월일</div>
-                    <div class="col-lg-9 col-md-8">${birthday}</div>
+                    <div class="col-lg-9 col-md-8">${birthday}</div><input type="text" hidden value="${user.birth}" name="oribirth"/>
                   </div>
 
                   <div class="row">
@@ -141,7 +141,7 @@
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">전화번호</div>
-                    <div class="col-lg-9 col-md-8">${phone}</div>
+                    <div class="col-lg-9 col-md-8">${phone}</div><input type="text" hidden value="${details.phone}" name="oriphone"/>
                   </div>
                   
                   <div class="text-center">
@@ -172,7 +172,7 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form action="userinfo.do" method="post">
+                  <form action="userupdate.do" method="post">
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">닉네임</label>
@@ -186,7 +186,7 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="nickname" type="tel" class="form-control" id="tel" value="${details.phone}" placeholder="'-' 없이 작성해 주세요">
+                        <input name="tel" type="tel" class="form-control" id="tel" value="${details.phone}" placeholder="'-' 없이 작성해 주세요">
                       </div>
                     </div>
                     

@@ -161,7 +161,7 @@ public class FrontController extends HttpServlet {
 			action = new UserInfoService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/userinfo.do")){ // 유저정보 수정
+		}else if(urlcommand.equals("/userupdate.do")){ // 유저정보 수정
 			
 			action = new UserUpdateService();
 			forward = action.execute(request, response);
