@@ -11,22 +11,24 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import kr.or.kosa.dto.Data_Board;
+import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Comments;
+import kr.or.kosa.dto.DataBoard;
 
-public class Data_Board_Dao {
+public class DataBoardDao {
 	DataSource ds = null;
 
-	public Data_Board_Dao() throws NamingException {
+	public DataBoardDao() throws NamingException {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
 
 	// 자료 게시판 특정 글 조회
-	public Data_Board getData_BoardByIdx(int idx) {
+	public DataBoard getData_BoardByIdx(int idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Data_Board data_board = new Data_Board();
+		DataBoard data_board = new DataBoard();
 
 		try {
 
@@ -68,7 +70,7 @@ public class Data_Board_Dao {
 	}
 
 	// 자료 게시판 특정 글 삽입
-	public int insertData_Board(Data_Board data_board) {
+	public int insertData_Board(DataBoard data_board) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -77,7 +79,7 @@ public class Data_Board_Dao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "insert into Regualr_Board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?)";
+			String sql = "insert into data_board(idx, ori_name, save_name, volume, refer, depth, step) values(?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, data_board.getIdx());
@@ -103,7 +105,7 @@ public class Data_Board_Dao {
 	}
 
 	// 자료 게시판 특정 글 수정
-	public int updateData_Board(Data_Board data_board) {
+	public int updateData_Board(DataBoard data_board) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -163,34 +165,40 @@ public class Data_Board_Dao {
 	}
 
 	// 전체 자료게시판 조회
-	public List<Data_Board> getAllDatalist(int cpage, int pagesize) {
+	public List<Board> getAllDatalist(int b_code, int cpage, int pagesize) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Data_Board> datalist = null;
+		List<Board> datalist = null;
 
 		try {
 
 			conn = ds.getConnection();
-			String sql = "select * from (select rownum rn,idx,refer,depth,step from (select * from data_board order by refer desc, step asc))where rownum <=?";
+			String sql = "select *" + "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, b.w_date,d.depth,d.step,d.refer "
+					+ "        from board b join data_board d" + "        on b.idx = d.idx" + "        where b_code=? "
+					+ "        order by refer desc, step desc) where rn <= ? and rn >= ?";
 			pstmt = conn.prepareStatement(sql);
-
-			datalist = new ArrayList<Data_Board>();
+			
+			datalist = new ArrayList<Board>();
 			int start = cpage * pagesize - (pagesize - 1);
 			int end = cpage * pagesize;
-			pstmt.setInt(1, end);
-			pstmt.setInt(2, start);
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
 
 			rs = pstmt.executeQuery();
-			datalist = new ArrayList<Data_Board>();
+			
+			datalist = new ArrayList<Board>();
 
 			while (rs.next()) {
-				Data_Board data = new Data_Board();
-				data.setB_idx(rs.getInt("B_IDX"));
-				data.setB_idx(rs.getInt("IDX"));
-				data.setRefer(rs.getInt("refer"));
-				data.setDepth(rs.getInt("dapt"));
-				data.setStep(rs.getInt("step"));
+				DataBoard data = new DataBoard();
+
+				data.setIdx(rs.getInt("idx"));
+				data.setTitle(rs.getString("title"));
+				data.setNick(rs.getString("nick"));
+				data.setContent(rs.getString("content"));
+				data.setHits(rs.getInt("hits"));
+				data.setW_date(rs.getString("w_date"));
 
 				// 계층형
 
@@ -198,6 +206,8 @@ public class Data_Board_Dao {
 				data.setStep(rs.getInt("step"));
 				data.setDepth(rs.getInt("depth"));
 
+				System.out.println(data.getTitle());
+				
 				datalist.add(data);
 
 			}
@@ -214,6 +224,78 @@ public class Data_Board_Dao {
 		}
 
 		return datalist;
+	}
+// 좋아요 개수 
+
+	public int getYes(int idx) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int yes_max = 0;
+
+		try {
+			conn = ds.getConnection();
+			String sql = "select  count(*) as cnt from yes where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1,idx);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				yes_max = rs.getInt("cnt");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			} catch (Exception e) {
+
+			}
+		}
+
+		return yes_max;
+
+	}
+
+	// 댓글개수
+
+	 public int getComments(int idx1) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int co_max = 0;
+
+		try {
+			conn = ds.getConnection();
+			String sql = "select count(*) as cnt from comments where idx=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, idx1);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				co_max = rs.getInt("cnt");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();
+			} catch (Exception e) {
+
+			}
+		}
+
+		return co_max;
+
 	}
 
 	// 글쓰기 refer 값 생성하기
@@ -245,34 +327,100 @@ public class Data_Board_Dao {
 		return refer_max;
 
 	}
-	//게시뭉 총 건수 구학;
+
+	// 게시물 총 건수 구하기;
 	public int totaldataBoard() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int totalcount = 0;
 		try {
-			conn = ds.getConnection(); 
-			String sql="select count(*) cnt from data_board";
+			conn = ds.getConnection();
+			String sql = "select count(*) cnt from data_board";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				totalcount = rs.getInt("cnt");
 			}
-		}catch (Exception e) {
-			
-		}finally {
+		} catch (Exception e) {
+
+		} finally {
 			try {
 				pstmt.close();
 				rs.close();
 				conn.close();
-			}catch (Exception e) {
-				
+			} catch (Exception e) {
+
 			}
 		}
-		
-		
-		
+
 		return totalcount;
 	}
+	
+//계층형 답글	
+	public List<Comments> getComment(int b_code,int idx, int cpage, int pagesize) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Comments> comlist = null;
+
+		try {
+
+			conn = ds.getConnection();
+			String sql = "select * from"
+					+ "(select rownum rn, b.idx,c.co_idx,c.content, c.refer, c.depth, c.step"
+					+ "from board b join comments c"
+					+ "on c.idx = b.idx"
+					+ "where b.b_code=?  and b.idx=?"
+					+ "order by refer desc , step desc ) where rn <=? and rn >=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			comlist = new ArrayList<Comments>();
+			int start = cpage * pagesize - (pagesize - 1);
+			int end = cpage * pagesize;
+			
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, idx);
+			pstmt.setInt(3, end);
+			pstmt.setInt(4, start);
+			
+			rs = pstmt.executeQuery();
+			
+			comlist = new ArrayList<Comments>();
+
+			while (rs.next()) {
+				Comments com = new Comments();
+
+				com.setIdx(rs.getInt("idx"));
+				com.setContent(rs.getString("content"));
+				
+			
+				// 계층형
+
+				com.setRefer(rs.getInt("refer"));
+				com.setStep(rs.getInt("step"));
+				com.setDepth(rs.getInt("depth"));
+
+				
+				
+				comlist.add(com);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+
+		return comlist;
+	}
+	
+	
+	
 }

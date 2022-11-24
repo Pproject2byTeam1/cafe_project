@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +24,16 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>  
   
+  <!-- sweetalert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
 </head>
 <body>
+
+<script type="text/javascript">
+	console.log();
+
+</script>
   
   
    <main id="main" class="main" style="background-color: #f6f9ff; border-radius: 25px;">
@@ -44,21 +56,21 @@
 			         </nav>
      			 </div>
 				<!-- 서블릿 아래 action에다가 적어주세용 -->
-      <form action="">
+      <form action="user_edit.do" method="post">
          <div class="container">
             <div class="row col-md-12">  
                <div>
                   <div class="mb-3 row">
                      <label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
                      <div class="col-sm-10">
-                       <input type="text" class="form-control-plaintext" id="staticEmail" value="#####@naver.com 이메일 값 가져옴" readonly>
+                       <input type="text" class="form-control-plaintext" name="id" id="staticEmail" value="${userlist.email_id}" readonly>
                      </div>
                   </div>
                   <hr>
                   <div class="mb-3 row">
                      <label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
                      <div class="col-sm-8">
-                       <input type="password" class="form-control" id="inputPassword" value="비번 값 가져옴">
+                       <input type="password" class="form-control" name="password" id="inputPassword" value="${userlist.password}">
                      </div>
                      <div class="col-sm-2">
                         <input type="button" class="form-control" value="show" onclick="HidenShow()">
@@ -68,7 +80,7 @@
                   <div class="mb-3 row">
                      <label for="inputNickname" class="col-sm-2 col-form-label">별명</label>
                      <div class="col-sm-8">
-                       <input type="text" class="form-control" id="inputNickname" value="별명 값 가져옴">
+                       <input type="text" class="form-control" name="nick" id="inputNickname" value="${userlist.name}">
                      </div>
                   </div>
                   <hr>
@@ -106,12 +118,12 @@
                            </div>
                            <div class="col-sm-5">
                               <!-- 여기 id="userpoint" 의 value값을 바꾸면 id="inputUserPoint"도 같이 바뀌도록 설정해놓음 -->
-                              <input type="text" class="form-control-plaintext text-left" id="userpoint" value="350" readonly>
+                              <input type="text" class="form-control-plaintext text-left" id="userpoint" value="${userlist.point}" readonly>
                            </div>
                         </div>
                         <div class="row">
                            <div class="col-sm-5">
-                              <input type="text" class="form-control" id="inputUserPoint">
+                              <input type="text" class="form-control" name="point" id="inputUserPoint">
                            </div>
    
                            <div class="col-sm-5">
@@ -142,7 +154,7 @@
                   </div>
                   <hr>
                   <div class="d-grid gap-2">
-                     <button class="btn btn-primary" type="submit">바꾸기</button>
+                     <button class="btn btn-primary" type="submit" id="change">바꾸기</button>
                   </div>
                </div> 
             </div>
@@ -186,7 +198,7 @@
    
    
    /* 회원의 포인트값 지정 */
-   document.getElementById("minus100").onclick = () =>{
+   	document.getElementById("minus100").onclick = () =>{
        document.getElementById("inputUserPoint").value -= 100;
     }
     document.getElementById("minus50").onclick = () =>{
@@ -214,6 +226,12 @@
     });
     
     
+    
+     document.getElementById("change").onclick = () =>{
+        alert("정보가 변경되었습니다.");
+        //window.close();
+        
+     } 
     
 
  </script>

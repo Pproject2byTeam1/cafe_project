@@ -41,124 +41,143 @@
   
   
   <main id="main" class="main">
-  <!-- 여기서부터 작성 와랄ㄹ라  -->
-  <div class="pagetitle" >
-         <h1>등급관리</h1>
-         <nav>
-            <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">카페관리</a></li>
-               <li class="breadcrumb-item active">등급관리</li>
-            </ol>
-         </nav>
-      </div>
-  	<div class="container-fluid">
-         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                
-                 <button type="button" class="btn float-right btn-success" style="float:right"> 
-                  저장하기
-             	  </button>
-             	  <br><br><br><br>
-              
-
-               <table class="table text-center">
-                  <thead class="thead-light">
-                     <tr>
-                        <th>
-                           등급레벨
-                        </th>
-                        <th>
-                           등급 이름 변경
-                        </th>
-                        <th>
-                           등급 기준 설정
-                        </th>
-                        <th>
-                           삭제
-                        </th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td>
-                           1
-                        </td>
-                        <td>
-                           <input type="text" class="form-control" id="기입하세용" placeholder="준회원">
-                        </td>
-                        <td>
-                           <input type="text" class="form-control" id="기입하세용" placeholder="0점 이상" readonly>
-                        </td>
-                        <td>
-                           
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           2
-                        </td>
-                        <td>
-                           <input type="text" class="form-control" id="기입하세용" placeholder="정회원">
-                        </td>
-                        <td>
-                           <input type="text" class="form-control" id="기입하세용" placeholder="100점 이상">
-                        </td>
-                        <td>
-                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           3
-                        </td>
-                        <td>
-                           <input type="text" class="form-control" id="기입하세용" placeholder="특별회원">
-                        </td>
-                        <td>
-                           <input type="text" class="form-control" id="기입하세용" placeholder="200점 이상">
-                        </td>
-                        <td>
-                           <input type="button" class="btn btn-danger " onclick="alert('삭제되었습니다!')" value="삭제">
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           4
-                        </td>
-                        <td>
-                           <input type="text" class="form-control" id="기입하세용" placeholder="우수회원">
-                        </td>
-                        <td>
-                           <input type="text" class="form-control" id="기입하세용" placeholder="300점 이상">
-                        </td>
-                        <td>
-                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>
-                           
-                        </td>
-                        <td>
-                           
-                        </td>
-                        <td>
-                           <button type="button" class="btn btn btn-secondary">
-                              추가하기
-                           </button>
-                        </td>
-                        <td>
-                        </td>
-                     </tr>
-                     
-                  </tbody>
-               </table>
-            </div>
-            
-         </div>
-      </div>
-  <!-- 여기까지만 작성  -->
+  
+			<!-- 여기서부터 작성 와랄ㄹ라  -->
+		<div class="pagetitle" >
+			<h1>등급관리</h1>
+			<nav>
+			   <ol class="breadcrumb">
+			      <li class="breadcrumb-item"><a href="index.html">카페관리</a></li>
+			      <li class="breadcrumb-item active">등급관리</li>
+			   </ol>
+			</nav>
+		</div>
+		
+		
+	<div class="container">
+		<div class="card">
+			<div class="card-body">
+			
+				
+				<div class="container-fluid">
+			         <div class="row">
+			            <div class="col-md-2"></div>
+			            <div class="col-md-8">
+			            	
+			            	<div class="row">
+			            		<br><br>
+			            	</div>
+			            	<button type="button" class="btn float-right btn-success" style="float:right"> 
+									저장하기
+							</button>
+			                
+			                
+			             	  <br><br>
+			              
+			
+			               <table class="table text-center">
+			                  <thead class="thead-light">
+			                     <tr>
+			                        <th>
+			                           등급레벨
+			                        </th>
+			                        <th>
+			                           등급 이름 변경
+			                        </th>
+			                        <th>
+			                           등급 기준 설정
+			                        </th>
+			                        <th>
+			                           삭제
+			                        </th>
+			                     </tr>
+			                  </thead>
+			                  <tbody>
+			                     <tr>
+			                        <td>
+			                           1
+			                        </td>
+			                        <td>
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="준회원">
+			                        </td>
+			                        <td>
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="0점 이상" readonly>
+			                        </td>
+			                        <td>
+			                           
+			                        </td>
+			                     </tr>
+			                     <tr>
+			                        <td>
+			                           2
+			                        </td>
+			                        <td>
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="정회원">
+			                        </td>
+			                        <td>
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="100점 이상">
+			                        </td>
+			                        <td>
+			                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
+			                        </td>
+			                     </tr>
+			                     <tr>
+			                        <td>
+			                           3
+			                        </td>
+			                        <td>
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="특별회원">
+			                        </td>
+			                        <td>
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="200점 이상">
+			                        </td>
+			                        <td>
+			                           <input type="button" class="btn btn-danger " onclick="alert('삭제되었습니다!')" value="삭제">
+			                        </td>
+			                     </tr>
+			                     <tr>
+			                        <td>
+			                           4
+			                        </td>
+			                        <td>
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="우수회원">
+			                        </td>
+			                        <td>
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="300점 이상">
+			                        </td>
+			                        <td>
+			                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
+			                        </td>
+			                     </tr>
+			                     <tr>
+			                        <td>
+			                           
+			                        </td>
+			                        <td>
+			                           
+			                        </td>
+			                        <td>
+			                           <button type="button" class="btn btn btn-secondary">
+			                              추가하기
+			                           </button>
+			                        </td>
+			                        <td>
+			                        </td>
+			                     </tr>
+			                     
+			                  </tbody>
+			               </table>
+			            </div>
+			            
+			         </div>
+			      </div>
+			  <!-- 여기까지만 작성  -->
+			
+			</div>
+		</div>
+	</div>
+  
+  
   </main>
 
 

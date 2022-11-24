@@ -65,7 +65,7 @@
   						
   						$(data).each(function(){
   							html = '<figure>';
-  								html += '<img src="image/imgTest/' + this.img_name + '">';
+  								html += '<a href="img_board_read.do?idx=' + this.idx + '"><img src="image/imgTest/' + this.img_name + '"></a>';
   								html += '<figcaption>' + this.b_idx + '.' + this.title + '</figcaption>'
   							html += "</figure>";
   							console.log(html);
@@ -127,7 +127,7 @@
   				
   				<c:forEach var="list" items="${list}" varStatus="status">
 	  				<figure id="imgtag">
-	            		<img src="image/imgTest/${img_list[status.index].img_name}">
+	            		<a href="img_board_read.do?idx=${img_list[status.index].idx}"><img src="image/imgTest/${img_list[status.index].img_name}"></a>
 	            		<figcaption>${img_list[status.index].b_idx}. ${list.title}</figcaption>
 	        		</figure>
   				</c:forEach>

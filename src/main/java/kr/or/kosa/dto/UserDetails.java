@@ -1,6 +1,6 @@
 package kr.or.kosa.dto;
 
-public class User_Details extends User {
+public class UserDetails extends User {
 	private String email_id;
 	private String join_date;
 	private String last_visit_date;
@@ -8,9 +8,8 @@ public class User_Details extends User {
 	private int w_count;
 	private int re_count;
 	private String year_birth;
-	private String gender;
 	private String phone;
-	
+
 	public String getEmail_id() {
 		return email_id;
 	}
@@ -59,18 +58,14 @@ public class User_Details extends User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
 	@Override
 	public String toString() {
 		return "User_Details [email_id=" + email_id + ", join_date=" + join_date + ", last_visit_date="
 				+ last_visit_date + ", visit_count=" + visit_count + ", w_count=" + w_count + ", re_count=" + re_count
-				+ ", year_birth=" + year_birth + ", gender=" + gender + ", phone=" + phone + "]";
+				+ ", year_birth=" + year_birth + ", phone=" + phone + "]";
 	}
+	
+	
 	
 	
 	
