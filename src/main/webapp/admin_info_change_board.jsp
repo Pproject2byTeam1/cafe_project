@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -10,6 +12,9 @@
   <title>카페人중독</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -44,7 +49,7 @@
 
   <!-- ======= Sidebar ======= -->
   
-   <jsp:include page="/common/side.jsp"></jsp:include>
+   <jsp:include page="/common/side2.jsp"></jsp:include>
   
   <!-- End Sidebar -->
 

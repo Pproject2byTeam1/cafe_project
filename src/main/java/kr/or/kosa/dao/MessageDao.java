@@ -78,7 +78,7 @@ public class MessageDao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "SELECT m.M_IDX ,u.rank, m.SEND_ID, m.send_nick, m.RECEIVE_ID, m.receive_nick, m.m_content, to_char(m.m_date, 'yyyy-MM-dd') as m_date from message m join MEMBER u on receive_id = email_id WHERE receive_id =? order BY m_idx desc";
+			String sql = "SELECT m.M_IDX ,u.rank, m.SEND_ID, m.send_nick, m.RECEIVE_ID, m.receive_nick, m.m_content, to_char(m.m_date, 'yyyy-MM-dd') as m_date from message m join MEMBER u on receive_id = email_id WHERE receive_id =? order BY m.m_idx desc";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, receive_id);

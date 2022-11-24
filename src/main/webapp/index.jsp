@@ -46,7 +46,7 @@
 
   <!-- ======= Sidebar ======= -->
   
-   <jsp:include page="/common/side.jsp"></jsp:include>
+   <jsp:include page="/common/side2.jsp"></jsp:include>
   
   <!-- End Sidebar -->
 
@@ -71,7 +71,7 @@
     
  <p><a href="rapport_list.do">신고현황</a></p>
     <p id = "writememo">쪽지 작성하기</p>
-    <p><a href="user_info_change_board.jsp">마이페이지(일반유저)</a></p>
+    <p><a href="userinfo.do">마이페이지(일반유저)</a></p>
     <p><a href="regular_list.do?b_code=1">자유 게시판</a></p>
     <p><a href="marketboard_list.do?b_code=5">거래 게시판</a></p>
 
