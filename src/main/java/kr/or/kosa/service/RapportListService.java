@@ -1,33 +1,36 @@
 package kr.or.kosa.service;
 
+import java.lang.reflect.Member;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.User_Dao;
-import kr.or.kosa.dto.User_Details;
+import kr.or.kosa.dao.AdminDao;
+import kr.or.kosa.dao.Board_Dao;
+import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Board_Info;
 
-public class User_List_Service implements Action {
+public class RapportListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
+		
 		ActionForward forward = new ActionForward();
 		
+		
 		try {
-			
 			HttpSession session = request.getSession();
 			String userId = (String) session.getAttribute("userid");
 			
-			User_Dao dao = new User_Dao();
-			
-			int totalusercount = dao.totalUserCount();
-			
-			//상세보기 >> 다시  LIST 넘어올때  >> 현재 페이지 설정
+			AdminDao dao = new AdminDao();
+			int totalreportcount = dao.totalreportCount();
 			String ps = request.getParameter("ps");
 			String cp = request.getParameter("cp");
 			
@@ -45,28 +48,47 @@ public class User_List_Service implements Action {
 			int cpage = Integer.parseInt(cp);
 			int pagecount=0;
 			
-			if(totalusercount % pagesize == 0) {
-				pagecount = totalusercount / pagesize;
+			if(totalreportcount % pagesize == 0) {
+				pagecount = totalreportcount / pagesize;
 			}else {
-				pagecount = (totalusercount / pagesize) + 1; 
+				pagecount = (totalreportcount / pagesize) + 1; 
 			}
 			
-			List<User_Details> alluser = dao.list(cpage, pagesize);
 			
+			List<Board> reportlist = dao.reportlist(cpage, pagesize);
+		
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
-			request.setAttribute("totalusercount", totalusercount);
-			request.setAttribute("alluser", alluser);
+			request.setAttribute("totalreportcount",totalreportcount);
+			request.setAttribute("reportlist", reportlist);
+			
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/user_list.jsp");
+		  	forward.setPath("/WEB-INF/view/rapport_list.jsp");
 			
-		} catch (Exception e) {
+			
+			/*
+			 * List<String> countlist = new ArrayList<String>();
+			 * 
+			 * for(Board baord :reportlist) { int b_code = baord.getB_code(); Board_Info
+			 * count=dao.getBoardInfo(b_code);
+			 * 
+			 * countlist.addAll(count);
+			 * 
+			 * 
+			 * 
+			 * 
+			 * }
+			 * 
+			 */
+			
+		} catch (NamingException e) {
 			System.out.println(e.getMessage());
 		}
 		
+
 		return forward;
 	}
 

@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -65,6 +67,12 @@
     <p><a href="user_list.do">회원목록</a></p>
     <button onclick="new_window()"> 쪽지 리스트</button>
     <p><a href="databoard_list.do?b_code=6">자료 게시판</a></p>
+    <p><a href="data_content.do">자료글쓰기</a></p>
+    
+ <p><a href="rapport_list.do">신고현황</a></p>
+    <p id = "writememo">쪽지 작성하기</p>
+    <p><a href="user_info_change_board.jsp">마이페이지(일반유저)</a></p>
+    <p><a href="regular_list.do?b_code=1">자유 게시판</a></p>
     <p><a href="marketboard_list.do?b_code=5">거래 게시판</a></p>
 
     <section class="section dashboard">
@@ -739,6 +747,15 @@
 	      "width=500, height=600, top=100, left=300"
 	    );
 	  }
+	  $(function(){
+		  $('#writememo').click(function(){
+			  window.open(
+			      "write_memo.do",
+			      "쪽지함",
+			      "width=500, height=600, top=100, left=300"
+			    );
+		  });
+	  });
   </script>
 
 </body>
