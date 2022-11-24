@@ -420,32 +420,6 @@ public class Board_Dao {
 		return row;
 	}
 	
-	//답글 작성(미완)
-	public int reWrite(Board board) {
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int row = 0;
-		
-		try {
-			
-			
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return row;
-	}
-	
 	//조회수 증가
 	public int updateHits(int idx) {
 		Connection conn = null;

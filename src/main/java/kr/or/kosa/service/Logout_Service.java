@@ -1,11 +1,15 @@
 package kr.or.kosa.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dto.Board_Info;
 
 public class Logout_Service implements Action {
 
@@ -15,6 +19,12 @@ public class Logout_Service implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
+			
+			//사이드 바
+	        Board_Info_Dao infodao = new Board_Info_Dao();
+	        List<Board_Info> infolist = infodao.getSideBoardList();
+	         
+	        request.setAttribute("infolist", infolist);
 			
 			HttpSession session = request.getSession();
 			session.invalidate();
