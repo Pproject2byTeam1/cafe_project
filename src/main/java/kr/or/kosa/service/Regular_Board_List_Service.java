@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
+import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.Regular_Board;
 
 public class Regular_Board_List_Service implements Action {
@@ -19,7 +21,10 @@ public class Regular_Board_List_Service implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
-			
+			Board_Info_Dao infodao = new Board_Info_Dao();
+	        List<Board_Info> infolist = infodao.getSideBoardList();
+
+	        
 			Board_Dao dao = new Board_Dao(); 
 			
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
@@ -53,7 +58,7 @@ public class Regular_Board_List_Service implements Action {
 			List<Regular_Board> list = dao.getRegular_boardList(b_code, cpage, pagesize);
 			
 		
-			
+			request.setAttribute("infolist", infolist);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);

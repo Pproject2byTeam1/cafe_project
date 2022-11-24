@@ -19,7 +19,7 @@ public class MarketBoardDeleteOk implements Action {
 		
 		String msg="";
 		String url="";
-		
+		 
 		MarketBoardDao dao;
 		try {
 			dao = new MarketBoardDao();

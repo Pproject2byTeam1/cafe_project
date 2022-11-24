@@ -194,13 +194,13 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="image/rank_icon/1.gif" alt="Profile" class="rounded-circle">
+            <img src="image/rank_icon/1.gif" alt="Profile">
             <span class="d-none d-md-block dropdown-toggle ps-2">USER_NICK</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><img src="image/rank_icon/1.gif" alt="Profile" class="rounded-circle"> USER_NICK</h6>
+              <h6><img src="image/rank_icon/1.gif" alt="Profile"> USER_NICK</h6>
               <span>RANK_NAME (POINT)</span>
             </li>
             <li>
