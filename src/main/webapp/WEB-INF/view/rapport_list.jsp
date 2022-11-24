@@ -188,8 +188,8 @@
 					<table class="table table-hover">
 
 						<tr>
-						<!-- 	<th scope="col">글/댓글</th>
-							<th scope="col">게시판 종류</th> -->
+						<th scope="col">글/댓글</th>
+							<th scope="col">게시판 종류</th>
 							<th scope="col">글제목</th>
 							<th scope="col">닉네임</th>
 							<th scope="col">이메일</th>
@@ -207,10 +207,37 @@
 								<td >데이터가 없습니다</td>
 							</tr>
 						</c:if>
-							<c:forEach var="reportlist" items="${reportlist}">
+							<c:forEach var="reportlist" items="${reportlist}" varStatus="status">
 							<tr>
-								<th scope="col">아직</th>
-								<th scope="col"></th> 
+							<c:choose>
+								<c:when test="${request.b_code eq'null'} ">
+								<th scope="col">댓글</th>
+								</c:when>
+								<c:otherwise>
+								<th scope="col">글</th>
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+							<c:when test="${request.b_code eq'1'}">
+								<th scope="col">자유게시판</th>
+								</c:when>
+								<c:when test="${request.b_code eq'2'}">
+								<th scope="col">출석게시판</th>
+								</c:when>
+								<c:when test="${request.b_code eq'3'}">
+								<th scope="col">전체일정</th>
+								</c:when>
+									<c:when test="${request.b_code eq'4'}">
+								<th scope="col">사진공유</th>
+								</c:when>
+									<c:when test="${request.b_code eq'5'}">
+								<th scope="col">유로거래</th>
+								</c:when>
+								<c:otherwise>
+								<th scope="col">자료공유</th>
+								</c:otherwise>
+							</c:choose>
+
 								<th scope="col">${reportlist.title}</th>
 								<th scope="col">${reportlist.nick}</th>
 								<th scope="col">${reportlist.email_id}</th>

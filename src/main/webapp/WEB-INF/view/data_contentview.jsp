@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 
@@ -42,14 +44,14 @@
 </head>
 
 <body>
-
-	<!-- ======= Header ======= -->
-	<header id="header" class="header fixed-top d-flex align-items-center">
-
-		<jsp:include page="/common/top.jsp"></jsp:include>
-
-	</header>
-	<!-- End Header -->
+   <!-- ======= Header ======= -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
 
 	<!-- ======= Sidebar ======= -->
 
@@ -69,38 +71,41 @@
 					<div class="col-md-12">
 						<div class="marketcard">
 							<div class="marketcard-body">
-
+								<c:set var="board" items="${databoard}"/>
 								<div class="row">
 									<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 									<div class="col-md-12">
-										<span id="marketB_Title">제목입력</span>
+										<span id="marketB_Title">${databoard.title}</span>
 										<p>
 										<hr>
-										
+
 										<table>
 											<tr>
 												<td><img src="./image/rank_icon/0.gif"></img></td>
-												
-												<td><h5 class="card-title">닉네임1</h5></td>
+
+												<td><h5 class="card-title">${databoard.nick}</h5></td>
 												<td></td>
-													<td><h5 class="card-title">작성일자</h5></td>
-											</tr>
+									<td><h5 class="card-title">${databoard.w_date}</h5></td>
+														</tr>
 										</table>
-										<hr>
-										<div align="center">
-									 <button type="button" class="btn btn-secondary rounded-pill">미리보기</button>
-									<button type="button" class="btn btn-warning rounded-pill">다운로드</button>
-										</div>
+										<hr>							<div align="center">
+															<button type="button"
+																class="btn btn-secondary rounded-pill"
+																href="upload">미리보기</button>
+															<button type="button"
+																class="btn btn-warning rounded-pill">다운로드</button>
+														</div>
 										<hr>
 										<div class="row">
 											<div class="col-lg-12">
 
-												<textarea class="form-control" style="height: 500px"> 글내용</textarea>
+												<textarea class="form-control" style="height: 500px"> ${databoard.content}</textarea>
 
 											</div>
 
 										</div>
 										<br>
+										
 										<hr>
 										<div class="row">
 
@@ -126,13 +131,6 @@
 						</div>
 
 					</div>
-
-
-
-
-
-
-
 
 					<section class="section dashboard">
 						<div class="row">

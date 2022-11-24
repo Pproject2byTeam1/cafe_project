@@ -161,15 +161,19 @@ text-align: center;
                   </tr>
                </thead>
                <tbody>
-               		<!-- 데이터가 한건도 없는 경우  -->
-				<c:if test="${datalist == null}">
-					<tr><td colspan='5'>데이터가 없습니다</td></tr>
-				</c:if>
+               	
+				<!-- 데이터가 한건도 없는 경우  -->
+						<c:if test="${list == null}">
+							<tr>
+								<td colspan='5'>데이터가 없습니다</td>
+							</tr>
+						</c:if>
 				<!--목록출력하기  -->
-               <c:forEach var="board" items="${datalist}">
+             <c:forEach var="board" items="${list}" varStatus="status">
                   <tr>
                      <th scope="row"><input type="checkbox"></th>
                      <td>
+                     	<a href="data_contentview.do"?idx=${idx}">
                      <span class="mt-4 parent"><h3>${board.title}</h3></span><br>
                      <span class="son_name">${board.nick}</span>
                      <span class="son_date">${board.w_date}</span>
@@ -183,14 +187,14 @@ text-align: center;
                      </span>
                   </td>
                   
-                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${countlist}">
-                     <span class="_1R-fi-">${countlist}</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${comment[status.index]}">
+                     <span class="_1R-fi-">${comment[status.index]}</span><br>
                      <span>댓글</span>
                      </span>
                   </td>
                   
-                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yeslist}">
-                     <span class="_1R-fi-">${yeslist}</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yes[status.index]}">
+                     <span class="_1R-fi-">${yes[status.index]}</span><br>
                      <span>추천</span>
                   </td>
                   </tr>
@@ -216,13 +220,13 @@ text-align: center;
                      <span>조회</span>
                      </span>
                   </td>
-                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yeslist}">
-                     <span class="_1R-fi-">${yeslist}</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${countlist}">
+                     <span class="_1R-fi-">${comment[status.index]}</span><br>
                      <span>댓글</span>
                      </span>
                   </td>
-                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${countlist}">
-                     <span class="_1R-fi-">${countlist}</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${yeslist}">
+                     <span class="_1R-fi-">${yes[status.index]}</span><br>
                      <span>추천
                   </td>
                   </tr> 

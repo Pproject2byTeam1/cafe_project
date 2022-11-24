@@ -13,6 +13,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
+import kr.or.kosa.service.DataContentviewService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
@@ -164,6 +165,10 @@ public class FrontController extends HttpServlet {
 		}else if(urlcommand.equals("/userupdate.do")){ // 유저정보 수정
 			
 			action = new UserUpdateService();
+			forward = action.execute(request, response);
+			
+		}else if (urlcommand.equals("/data_contentview.do")) { // 데이터 글내용 보기
+			action = new DataContentviewService();
 			forward = action.execute(request, response);
 			
 		}
