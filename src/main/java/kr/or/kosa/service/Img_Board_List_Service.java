@@ -68,7 +68,7 @@ public class Img_Board_List_Service implements Action {
 			request.setAttribute("totalboardcount", totalboardcount);
 			
 			request.setAttribute("infolist", infolist);
-			
+			request.setAttribute("b_code", b_code);
 			request.setAttribute("list", list);
 			request.setAttribute("img_list", img_list);
 			

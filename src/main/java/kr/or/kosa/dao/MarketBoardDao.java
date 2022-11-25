@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Comments;
+import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.MarketBoard;
 
 public class MarketBoardDao {
@@ -104,21 +105,20 @@ public class MarketBoardDao {
 
 			conn = ds.getConnection();
 			String sql = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
-					 	+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
-					 	+ "b.report_count, b.email_id, b.b_code "
-						+ "from board b join market_board m on b.idx = m.idx "
-					    + "where b_code=? order by b_idx desc) where rn <= ? and rn >= ?";
+					+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
+					+ "b.report_count, b.email_id, b.b_code " + "from board b join market_board m on b.idx = m.idx "
+					+ "where b_code=? order by b_idx desc) where rn <= ? and rn >= ?";
 			pstmt = conn.prepareStatement(sql);
 
 			int start = cpage * pagesize - (pagesize - 1);
 			int end = cpage * pagesize;
-		
+
 			pstmt.setInt(1, b_code);
 			pstmt.setInt(2, end);
 			pstmt.setInt(3, start);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			list = new ArrayList<MarketBoard>();
 
 			while (rs.next()) {
@@ -137,13 +137,11 @@ public class MarketBoardDao {
 				board.setW_date(rs.getString("w_date"));
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
-				
-
 				list.add(board);
 			}
 
 		} catch (Exception e) {
-			System.out.println("오류asd :" + e.getMessage());
+			System.out.println("오류 :" + e.getMessage());
 		} finally {
 			try {
 				pstmt.close();
@@ -153,12 +151,90 @@ public class MarketBoardDao {
 				System.out.println(e2.getMessage());
 			}
 		}
+		return list;
+	}
 
+	// 거래게시판 특정조건 조회
+	public List<MarketBoard> searchMarket(int b_code, int cpage, int pagesize, String search) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MarketBoard> list = null;
+		System.out.println(search);
+		
+		if (search.equals("all")) {
+			return listMarket(b_code, cpage, pagesize);
+			
+		} else {
+			
+			try {
+				conn = ds.getConnection();
+
+				String sql1 = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
+						+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
+						+ "b.report_count, b.email_id, b.b_code " + "from board b join market_board m on b.idx = m.idx "
+						+ "where b_code=? order by b_idx desc) where rn <= ? and rn >= ? and sold =?";
+				
+				String sql2 = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
+						+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
+						+ "b.report_count, b.email_id, b.b_code " + "from board b join market_board m on b.idx = m.idx "
+						+ "where b_code=? order by b_idx desc) where rn <= ? and rn >= ? and title=?";
+
+				if (search.equals("판매중")) {
+					pstmt = conn.prepareStatement(sql1);
+				} else {
+					pstmt = conn.prepareStatement(sql2);
+				}
+				int start = cpage * pagesize - (pagesize - 1);
+				int end = cpage * pagesize;
+
+				pstmt.setInt(1, b_code);
+				pstmt.setInt(2, end);
+				pstmt.setInt(3, start);
+				pstmt.setString(4, search);
+				rs = pstmt.executeQuery();
+
+				list = new ArrayList<MarketBoard>();
+
+				while (rs.next()) {
+					MarketBoard board = new MarketBoard();
+					board.setIdx(rs.getInt("idx"));
+					board.setB_code(rs.getInt("b_code"));
+					board.setSold(rs.getString("sold"));
+					board.setM_mode(rs.getString("m_mode"));
+					board.setCate(rs.getString("cate"));
+					board.setTitle(rs.getString("title"));
+					board.setContent(rs.getString("content"));
+					board.setImg_name(rs.getString("img_name"));
+					board.setPrice(rs.getInt("price"));
+					board.setHits(rs.getInt("hits"));
+					board.setNick(rs.getString("nick"));
+					board.setW_date(rs.getString("w_date"));
+					board.setReport_count(rs.getInt("report_count"));
+					board.setEmail_id(rs.getString("email_id"));
+
+					list.add(board); 
+				}
+
+			} catch (Exception e) {
+				System.out.println("오류 :" + e.getMessage());
+			} finally {
+				try {
+					pstmt.close();
+					rs.close();
+					conn.close();// 반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+
+		}
 		return list;
 	}
 
 	// 게시판 코드 넣어 특정 게시판의 총 게시물 건수 구하기
-	public int countMarket(int code) {
+	public int countMarket(int b_code) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -166,9 +242,9 @@ public class MarketBoardDao {
 		try {
 			conn = ds.getConnection(); // dbcp 연결객체 얻기
 			String sql = "select count(*) b_idx from board where b_code=?";
-			
+
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, code);
+			pstmt.setInt(1, b_code);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				countmarket = rs.getInt("b_idx");
@@ -189,19 +265,22 @@ public class MarketBoardDao {
 	}
 
 	// 판매 중인 거래글 카운트
-	public int countSoldF() {
+	public int countSoldF(int b_code) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int countf = 0;
 		try {
 			conn = ds.getConnection(); // dbcp 연결객체 얻기
-			String sql = "select count(*) from market_board where sold like 'F'";
+			String sql = "select count(*) idx from board b join market_board m on b.idx = m.idx where m.sold = '판매중' and b_code=?";
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, b_code);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				countf = rs.getInt("sold");
+				countf = rs.getInt("idx");
 			}
+
 		} catch (Exception e) {
 
 		} finally {
@@ -222,21 +301,21 @@ public class MarketBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		MarketBoard read = null;
-
+		
 		try {
 			conn = ds.getConnection();
 			String sql = "select * "
-					+ "from (select m.idx, m.sold, m.m_mode, m.cate, b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, b.report_count, b.email_id"
+					+ "from (select m.idx, m.sold, m.m_mode, m.cate, b.b_code, b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, b.report_count, b.email_id"
 					+ " from board b join market_board m on b.idx = m.idx) where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 
-			rs = pstmt.executeQuery();		
-			
+			rs = pstmt.executeQuery();
+
 			read = new MarketBoard();
 
 			if (rs.next()) {
-
+				read.setB_code(rs.getInt("b_code"));
 				read.setSold(rs.getString("sold"));
 				read.setM_mode(rs.getString("m_mode"));
 				read.setCate(rs.getString("cate"));
@@ -284,7 +363,7 @@ public class MarketBoardDao {
 
 			// 아이디검증
 			String checkemail = "select email_id from board where idx=?";
-			
+
 			// 게시글 삭제 쿼리
 			String delcomments = "delete from comments where idx_fk=?";
 			String delmarket = "delete from market_board where idx=?";
@@ -294,7 +373,7 @@ public class MarketBoardDao {
 			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 			conn.setAutoCommit(false);
-			
+
 			if (rs.next()) { // 삭제글은 존재
 				// session의 email_id와 삭제시 cmd로 받아온 게시판 idx가 해당 글의 email_id와 동일한지
 				if (checkemail.equals(rs.getString("email_id"))) {
@@ -307,7 +386,7 @@ public class MarketBoardDao {
 					pstmt2 = conn.prepareStatement(delmarket);
 					pstmt2.setInt(1, idx);
 					pstmt2.executeUpdate();
-					
+
 					// 게시글 삭제 (게시판)
 					pstmt3 = conn.prepareStatement(delboard);
 					pstmt3.setInt(1, idx);
@@ -347,7 +426,7 @@ public class MarketBoardDao {
 		}
 		return row;
 	}
-	
+
 	// 관리자,스태프 거래게시글 삭제하기
 	public int adminDelMarket(int idx, String email_id) {
 		Connection conn = null;
@@ -365,7 +444,7 @@ public class MarketBoardDao {
 
 			// 관리자 검증
 			String checkadmin = "select isadmin from member where email_id=?";
-			
+
 			// 게시글 삭제 쿼리
 			String delcomments = "delete from comments where idx_fk=?";
 			String delmarket = "delete from market_board where idx=?";
@@ -375,10 +454,10 @@ public class MarketBoardDao {
 			pstmt.setString(1, email_id);
 			rs = pstmt.executeQuery();
 			conn.setAutoCommit(false);
-			
+
 			if (rs.next()) { // 삭제글은 존재
 				// session의 email_id와 삭제시 cmd로 받아온 게시판 idx가 해당 글의 email_id와 동일한지
-				if (checkadmin == "M" || checkadmin =="S") {
+				if (checkadmin == "M" || checkadmin == "S") {
 					// 댓글삭제
 					pstmt1 = conn.prepareStatement(delcomments);
 					pstmt1.setInt(1, idx);
@@ -388,7 +467,7 @@ public class MarketBoardDao {
 					pstmt2 = conn.prepareStatement(delmarket);
 					pstmt2.setInt(1, idx);
 					pstmt2.executeUpdate();
-					
+
 					// 게시글 삭제 (게시판)
 					pstmt3 = conn.prepareStatement(delboard);
 					pstmt3.setInt(1, idx);
@@ -445,7 +524,7 @@ public class MarketBoardDao {
 			pstmt.setString(3, comments.getEmail_id());
 			pstmt.setString(4, comments.getNick());
 			pstmt.setInt(5, comments.getReport_count());
-			//계층형
+			// 계층형
 			int refermax = getMaxCoRefer();
 			int refer = refermax + 1;
 			pstmt.setInt(6, refer);
@@ -466,38 +545,37 @@ public class MarketBoardDao {
 
 		return row;
 	}
-	
-	//댓글 (refer) 값 생성하기(원댓글)
+
+	// 댓글 (refer) 값 생성하기(원댓글)
 	private int getMaxCoRefer() {
 		Connection conn = null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int refer_max=0;
+		int refer_max = 0;
 		try {
-			conn = ds.getConnection(); //빌려주세여^^  이따 반납할게요 
-			String sql="select nvl(max(refer),0) from comments";
+			conn = ds.getConnection(); // 빌려주세여^^ 이따 반납할게요
+			String sql = "select nvl(max(refer),0) from comments";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				refer_max = rs.getInt(1);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}finally {
+		} finally {
 			try {
 				pstmt.close();
 				rs.close();
 				conn.close(); // 반납이요 ^^
-			}catch (Exception e) {
-				
+			} catch (Exception e) {
+
 			}
 		}
-		
+
 		return refer_max;
-		
+
 	}
-	
-	
+
 	// 댓글 목록보기
 	public List<Comments> commentsList(int idx_fk) {
 		Connection conn = null;
@@ -508,7 +586,7 @@ public class MarketBoardDao {
 		try {
 			conn = ds.getConnection();
 			String listCo_sql = "select co_idx, idx, content, email_id, nick, w_date, report_count, refer, depth, step from comments where idx=? ORDER BY refer DESC , step ASC";
-						
+
 			pstmt = conn.prepareStatement(listCo_sql);
 			pstmt.setInt(1, idx_fk);
 
@@ -522,8 +600,8 @@ public class MarketBoardDao {
 				comments.setNick(rs.getString("nick"));
 				comments.setW_date(rs.getString("w_date"));
 				comments.setReport_count(rs.getInt("report_count"));
-				
-				//계층형
+
+				// 계층형
 				comments.setRefer(rs.getInt("refer"));
 				comments.setDepth(rs.getInt("depth"));
 				comments.setStep(rs.getInt("step"));
@@ -551,39 +629,39 @@ public class MarketBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int row = 0;
-		
+
 		try {
 
 			String checkemail = "select email_id from comments where co_idx=?";
 			String delUserComment = "update comments set content = '작성자가 삭제한 댓글입니다.' where co_idx=?";
-			
+
 			conn = ds.getConnection();
-		
+
 			pstmt = conn.prepareStatement(checkemail);
 			pstmt.setInt(1, co_idx);
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				String email = rs.getString("email_id");
-				if(email_id.equals(email)) {
+				if (email_id.equals(email)) {
 					pstmt.close();
 					pstmt = conn.prepareStatement(delUserComment);
 					pstmt.setInt(1, co_idx);
 					row = pstmt.executeUpdate();
 				} else {
-					row = 0;					
+					row = 0;
 				}
-				} else { // 삭제하는 글이 존재하지 않는 경우
-					row = -1;
-				}
+			} else { // 삭제하는 글이 존재하지 않는 경우
+				row = -1;
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			try {
 				conn.rollback();
-			}catch (SQLException e1) {
+			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}finally {
+		} finally {
 			try {
 				pstmt.close();
 				rs.close();
@@ -594,52 +672,52 @@ public class MarketBoardDao {
 		}
 		return row;
 	}
-	
+
 	// 관리자,스태프 댓글 삭제하기
 	public int adminDelComment(int co_idx, String email_id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int row = 0;
-		
+
 		try {
 
 			String checkadmin = "select isadmin from member where email_id=?";
 			String delAdminComment = "update comments set content = '관리자가 삭제한 댓글입니다.' where co_idx=?";
 			String delStaffComment = "update comments set content = '스탭이 삭제한 댓글입니다.' where co_idx=?";
-			
+
 			conn = ds.getConnection();
-		
+
 			pstmt = conn.prepareStatement(checkadmin);
 			pstmt.setInt(1, co_idx);
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
 				String isadmin = rs.getString("isadmin");
-				if(isadmin=="M") {
+				if (isadmin == "M") {
 					pstmt.close();
 					pstmt = conn.prepareStatement(delAdminComment);
 					pstmt.setInt(1, co_idx);
 					row = pstmt.executeUpdate();
-				} else if(isadmin=="S"){
+				} else if (isadmin == "S") {
 					pstmt.close();
 					pstmt = conn.prepareStatement(delStaffComment);
 					pstmt.setInt(1, co_idx);
 					row = pstmt.executeUpdate();
-				}else {
-					row = 0;					
+				} else {
+					row = 0;
 				}
-				} else { // 삭제하는 글이 존재하지 않는 경우
-					row = -1;
-				}
+			} else { // 삭제하는 글이 존재하지 않는 경우
+				row = -1;
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			try {
 				conn.rollback();
-			}catch (SQLException e1) {
+			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}finally {
+		} finally {
 			try {
 				pstmt.close();
 				rs.close();
@@ -653,6 +731,4 @@ public class MarketBoardDao {
 
 	// 게시글 수정하기 처리
 
-	
-	
 }

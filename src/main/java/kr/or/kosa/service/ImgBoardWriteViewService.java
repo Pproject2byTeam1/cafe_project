@@ -4,39 +4,38 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.MessageDao;
-import kr.or.kosa.dto.Message;
+import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dto.Board_Info;
 
-public class MessageListService implements Action {
+public class ImgBoardWriteViewService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-
+		
 		ActionForward forward = new ActionForward();
 		
 		try {
 			
-			HttpSession session = request.getSession();
-			MessageDao dao = new MessageDao();
-			User user2 = (User) session.getAttribute("member");
-			String userId = user2.getEmail_id();
+			//사이드 바
+			Board_Info_Dao infodao = new Board_Info_Dao();
+			List<Board_Info> infolist = infodao.getSideBoardList();
 			
-			List<Message> messagelist = dao.getMessageByReceiveId(userId );//테스트용
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
-			request.setAttribute("messagelist", messagelist);
+			request.setAttribute("infolist", infolist);
+			request.setAttribute("b_code", b_code);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/memo_list.jsp");
+		  	forward.setPath("/WEB-INF/view/imgboard_write.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
+		
 		return forward;
 	}
 

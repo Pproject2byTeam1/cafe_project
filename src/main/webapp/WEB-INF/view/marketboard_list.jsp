@@ -35,10 +35,62 @@
 <!-- 거래게시판 CSS 시작 -->
 <link href="assets/css/marketboard_list.css" rel="stylesheet">
 <!-- 거래게시판 CSS 끝 -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		let b_code = "<c:out value='${b_code}'/>";
+		
+			$('.search').click(function(){
+			    var search = $(this).val();
+
+			    var requestdata = {"b_code": b_code, "search": search};	
+
+				/* 검색 비동기 */					
+					$.ajax({
+						type: "POST",
+						url: "MarketSearch",
+						data: requestdata,
+						dataType: "JSON",
+						success: function(data){
+														
+							$("#ajax").empty();
+							
+							$(data).each(function(){
+								console.log(this);
+								html = '<div class="mcard" onclick="location.href=marketboard_read.do?b_code=' + this.b_code + 'idx=' + this.idx + '">';
+								html += '<div class="mimg">'
+								html += '<img src="image/board/' + this.b_code + '/' + this.img_name + '" id="mimg"/>';
+								html += '</div>'
+								html += '<span id="marketB_Text.ns">' + this.m_mode + '|' + this.sold + '|' + this.cate + '</span>';
+								html += '<p>';
+								html += '<span id="marketB_Title">' + this.title + '</span>';
+								html += '<br>';
+								html += '<span id="marketB_Text">' + this.content + '</span>';
+								html += '<br>';
+								html += '<span id="marketB_Price">' + this.price + '</span>';
+								html += '<br>'
+								html += '<span id="marketB_info">조회수 : ' + this.hits + '| 댓글 : 3 | 찜 : 3</span>';
+								html += '<br>';
+									html += '<span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"'
+										html += 'class="rounded-circle">' + this.nick + '|' + this.w_date + '</span>';
+								html += '</div>';
+								console.log(html);
+								$('#search').append(html);
+								
+								
+							});
+						}
+					});
+				});
+				
+			});
+
+	
+</script>
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 <script type="text/javascript">
-</script>  	
+
+</script>
 </head>
 <body>
      <!-- ======= Header ======= -->
@@ -56,9 +108,9 @@
 			<h1>거래 게시판</h1>
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="index.html">전체글 : 000</a></li>
-					<li class="breadcrumb-item active">판매중 : 000</li>
-					<li class="breadcrumb-item">판매완료 : 000</li>
+					<li class="breadcrumb-item"><a href="index.html">전체글 : ${totalboardcount}</a></li>
+					<li class="breadcrumb-item active">판매중 : ${soldcount}</li>
+					<li class="breadcrumb-item">판매완료 : ${totalboardcount-soldcount}</li>
 				</ol>
 			</nav>
 		</div>
@@ -69,27 +121,36 @@
 			<div class="col-md-12">
 			<div class="marketcard">
 				<div class="card-body">
-					<h5 class="card-title">거래 게시판에서 발생하는 모든 문제는 본인에게 있습니다.</h5>
+				<span class="card-title">거래 게시판에서 발생하는 모든 문제는 본인에게 있습니다.</span>
+				<div align="right" class="col-md-12">
+					<div>
+						<button type="button" id="Write" 
+							class="btn btn-outline-secondary btn-sm rounded-pill">글쓰기</button>
+						</div>
+					</div>
+					
 					<!-- Bordered Tabs -->
-					<ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab"
+	
+					<ul class="nav nav-tabs nav-tabs-bordered" id="searchTab"
 						role="tablist">
 						<li class="nav-item" role="presentation">
-							<button class="nav-link active" id="home-tab"
+							<button class="search nav-link active" value="all" id="all"
 								data-bs-toggle="tab" data-bs-target="#bordered-home"
 								type="button" role="tab" aria-controls="home"
 								aria-selected="true">전체보기</button>
 						</li>
 						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+							<button class="search nav-link" value="판매중" id="sold" data-bs-toggle="tab"
 								data-bs-target="#bordered-profile" type="button" role="tab"
 								aria-controls="profile" aria-selected="false">판매중</button>
 						</li>
 						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+							<button class="search nav-link" value="찜" id="yes" data-bs-toggle="tab"
 								data-bs-target="#bordered-contact" type="button" role="tab"
 								aria-controls="contact" aria-selected="false">나의 찜</button>
 						</li>
 					</ul>
+				
 					<div class="tab-content pt-2" id="borderedTabContent">
 						<div class="tab-pane fade show active" id="bordered-home"
 							role="tabpanel" aria-labelledby="home-tab"></div>
@@ -100,13 +161,14 @@
 						<div></div>
 					</div>
 					<!-- End Bordered Tabs -->
+				
 				<c:if test="${list == null}">
   					<p>데이터가 없습니다</p>
   				</c:if>
 					<!-- 보드	리스트 출력 시작 -->
-					<div class="container container__content--flow">
+					<div class="search container container__content--flow">
 						<c:forEach var="list" items="${list}" varStatus="status">
-						<div class="mcard" onclick="location.href='marketboard_read.do?idx=${list.idx}'">
+						<div class="mcard" onclick="location.href='marketboard_read.do?b_code=${list.b_code}&idx=${list.idx}'">
 							<div class="mimg">
 							<img src="image/board/${list.b_code}/${list.img_name}" id="mimg"/>
 							</div>
@@ -123,10 +185,8 @@
 								<span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"
 									class="rounded-circle"> ${list.nick} | ${list.w_date}</span>
 						</div>
-						</c:forEach>
-
-					</div>
-
+						</c:forEach>					
+				</div>
 					<!-- 보드 페이지 시작 -->
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">

@@ -12,37 +12,40 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.DataBoardDao;
-import kr.or.kosa.dto.Board;
+import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.Comments;
+import kr.or.kosa.dto.DataBoard;
 
 public class DataBoardListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
-		
-		
-		
+	
 		HttpSession session = request.getSession();
 		try {
-			DataBoardDao dao = new DataBoardDao();
-			
+			DataBoardDao dao1= new DataBoardDao();
+		     
+					Board_Dao dao = new Board_Dao(); 
+					Yes_Dao ydao = new Yes_Dao();
+					CommentsDao cdao = new CommentsDao();
+					int b_code = Integer.parseInt(request.getParameter("b_code"));
 			//사이드바	
 			   Board_Info_Dao infodao = new Board_Info_Dao();
 		         List<Board_Info> infolist = infodao.getSideBoardList();
 		         
 		         request.setAttribute("infolist", infolist);
+					
 			
-			
-			int totalboardcount = dao.totaldataBoard();
+			int totalboardcount = dao1.totaldataBoard();
 			
 		
 			//상세보기 >> 다시 리스트로 넘어 올때
 			String ps = request.getParameter("ps");
 			String cp = request.getParameter("cp");
-			String b_code = request.getParameter("b_code");
+		
 		
 			if (ps == null || ps.trim().equals("")) {
 				// default 값 설정
@@ -56,44 +59,46 @@ public class DataBoardListService implements Action {
 		
 			int pagesize = Integer.parseInt(ps);
 			int cpage = Integer.parseInt(cp);
-			int code = Integer.parseInt(b_code);
+
 			int pagecount = 0;
 			if(totalboardcount % pagesize == 0) {
 				pagecount = totalboardcount / pagesize;
 			}else {
 				pagecount = (totalboardcount / pagesize) + 1; 
 			}
-			List<Board> datalist = dao.getAllDatalist(code, cpage, pagesize);
+		
 			//댓글
-			List<Comments> comlist =dao.getComment(code, pagecount, cpage, pagesize);
+		
 			
-			
+		List<DataBoard> list = dao.getdata_boardList(b_code, cpage, pagesize);
 			
 			List<Integer> countlist = new ArrayList<Integer>();
+			List yescountlist = new ArrayList();
+			List commentcountlist = new ArrayList();
 			
-			for(Board board : datalist) {
-				int idx = board.getIdx();
-				int count = dao.getYes(idx);
-				
-				countlist.add(count);
+			for(DataBoard re : list) {	
+				int idx = re.getIdx();
+				int yescount = ydao.getYesCountBy_idx(idx);
+				int commentcount = cdao.getCommentCountBy_idx(idx);
+						
+				yescountlist.add(yescount);
+				commentcountlist.add(commentcount);
 			}
 			
-			List<Integer> yeslist = new ArrayList<Integer>();
-			for(Board board : datalist) {
-				int idx1 = board.getIdx();
-				int count1 = dao.getComments(idx1);
-				
-				yeslist.add(count1);
-			}
+		
 		//List<Comments> comlist1 =dao.getComment(code, pagecount, cpage, pagesize);
 			
-			int cnt =countlist.size();
-			int yes = yeslist.size();
-			request.setAttribute("datalist",datalist);
-			request.setAttribute("yeslist", yes);
-			request.setAttribute("countlist", cnt);
+		
 			
 			
+			request.setAttribute("infolist", infolist);
+			request.setAttribute("pagesize", pagesize);
+			request.setAttribute("cpage", cpage);
+			request.setAttribute("pagecount", pagecount);
+			request.setAttribute("totalboardcount", totalboardcount);
+			request.setAttribute("list", list);
+			request.setAttribute("yes", yescountlist);
+			request.setAttribute("comment", commentcountlist);
 			
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
@@ -103,7 +108,7 @@ public class DataBoardListService implements Action {
 		
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/databoard_list.jsp");
+		  	forward.setPath("/WEB-INF/view/databoard_list.jsp");
 			
 			
 		} catch (NamingException e) {

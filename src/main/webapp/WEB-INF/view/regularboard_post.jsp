@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 
@@ -41,6 +44,12 @@
 <link href="assets/css/marketboard_read.css" rel="stylesheet">
 </head>
 
+<!-- 값 나오는거 확인해보세요!!!! -->
+<script type="text/javascript">
+console.log("${board}");
+console.log("${user}");
+</script>
+
 <body>
 
 	<!-- ======= Header ======= -->
@@ -53,11 +62,21 @@
 
 	<!-- ======= Sidebar ======= -->
 
-	<jsp:include page="/common/side.jsp"></jsp:include>
+	<jsp:include page="/common/side2.jsp"></jsp:include>
 
 	<!-- End Sidebar -->
 
 	<main id="main" class="main">
+		<div class="pagetitle">
+               <h1>자유 게시판</h1>
+               <!-- 게시판 이름 끌고오기 b_name -->
+               <nav>
+                  <ol class="breadcrumb">
+                     <li class="breadcrumb-item"><a href="regular_list.do?b_code=1">자유게시판</a></li>
+                     <li class="breadcrumb-item active">${board.title}</li>
+                  </ol>
+               </nav>
+            </div>
 
 
 		<div class="container-fluid">
@@ -73,29 +92,34 @@
 								<div class="row">
 									<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 									<div class="col-md-12">
-										<span id="marketB_Title">제목입력</span>
-										<p>
-										<hr>
-										
-										<table>
-											<tr>
-												<td><img src="./image/rank_icon/0.gif"></img></td>
-												
-												<td><h5 class="card-title">닉네임1</h5></td>
-												<td></td>
-													<td><h5 class="card-title">작성일자</h5></td>
-											</tr>
-										</table>
-										<hr>
-										<div align="center">
-									 <button type="button" class="btn btn-secondary rounded-pill">미리보기</button>
-									<button type="button" class="btn btn-warning rounded-pill">다운로드</button>
+										<div class="col-md-12">
+											<h1 id="marketB_Title">${board.title}</h1><br>
 										</div>
-										<hr>
+										
+										<div class="col-md-12">
+											<div class="row">
+												<div class="col-md-5">
+													<p class="card-text"><img src="./image/rank_icon/${user.rank}.gif">${board.nick}</p>
+												</div>
+												<div class="col-md-2">
+													<p class="text-right card-text">조회수:10</p>
+												</div>
+												<div class="col-md-2">
+													<p class="text-right card-text">추천:${board.hits}</p>
+												</div>
+												<div class="col-md-3">
+													<p class="text-right card-text">작성일자: ${board.w_date}</p>
+												</div>
+											</div>
+										</div>
+									
+
+
+									<hr>
 										<div class="row">
 											<div class="col-lg-12">
 
-												<textarea class="form-control" style="height: 500px"> 글내용</textarea>
+												<text class="form-control" style="height: 500px" readonly> ${board.content}</textarea>
 
 											</div>
 
@@ -107,11 +131,11 @@
 											<div align="right" class="col-md-12">
 												<div>
 													<button type="button" id="Write"
-														class="btn btn-outline-secondary btn-sm rounded-pill">글쓰기</button>
+														class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
 													<button type="button" id="List"
-														class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
+														class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
 													<button type="button" id="Top"
-														class="btn btn-outline-secondary btn-sm rounded-pill">TOP</button>
+														class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
 												</div>
 											</div>
 

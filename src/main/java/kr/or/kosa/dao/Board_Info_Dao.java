@@ -170,5 +170,7 @@ public class Board_Info_Dao {
 		
 		return row;
 	}
+
+	
 	
 }

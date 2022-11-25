@@ -65,86 +65,151 @@
       </nav>
     </div><!-- End Page Title -->
 
-    <section class="section dashboard">
-      <div class="row align-items-top container h-100 d-flex justify-content-center">
+    <section class="section profile">
+      <div class="row d-flex flex-column align-items-center">
 		<!-- columns -->
         <div class="col-lg-10">
-          <div class="row">
-          	  <!-- 정보변경 -->
-	          <div class="card">
-	            <div class="card-body">
-	              <h3 class="card-title">Admin 정보변경</h3>
-	            
-                <div class="row mb-3">
-                  <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control">
+          <div class="card">
+            <div class="card-body pt-3">
+              <h5 class="card-title">Admin 정보변경</h5>
+
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#bordered-home" >정보 보기</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#bordered-profile">수정하기</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link"data-bs-toggle="tab" data-bs-target="#bordered-contact">?</button>
+                </li>
+              </ul>
+              
+              <div class="tab-content pt-2" id="borderedTabContent">
+                 <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
+                 	<div class="tab-pane fade show active profile-overview" id="profile-overview">
+                
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Email</div>
+                    <div class="col-lg-9 col-md-8">${user.email_id}</div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
-                  <div class="col-sm-9">
-                    <input type="password" class="form-control">
-                    <p>최소 8자, 최소 하나의 문자, 하나의 숫자 및 하나의 특수문자로 되어야 합니다.</p>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Name</div>
+                    <div class="col-lg-9 col-md-8">${user.name}</div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-3 col-form-label">Password 재확인</label>
-                  <div class="col-sm-6">
-                    <input type="password" class="form-control">
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">닉네임</div>
+                    <div class="col-lg-9 col-md-8">${user.nick}</div>
                   </div>
-                  <div class="col-sm-3">
-                  	<p class="text-success">일치합니다.</p>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">생년월일</div>
+                    <div class="col-lg-9 col-md-8">${birthday}</div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputText" class="col-sm-3 col-form-label">닉네임</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control">
-                    <p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">포인트</div>
+                    <div class="col-lg-9 col-md-8">${user.point}</div>
                   </div>
-                  <div class="col-sm-3">
-                  	<p class="text-danger">사용이 불가합니다.</p>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">가입일</div>
+                    <div class="col-lg-9 col-md-8">${joindate}</div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputDate" class="col-sm-3 col-form-label">생년월일</label>
-                  <div class="col-sm-9">
-                    <input type="date" class="form-control">
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">생년월일</div>
+                    <div class="col-lg-9 col-md-8">${birthday}</div>
                   </div>
-                </div>
-					<fieldset class="row mb-3">
-	                  <legend class="col-form-label col-sm-3 pt-0">성별</legend>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">전화번호</div>
+                    <div class="col-lg-9 col-md-8">${phone}</div>
+                  </div>
+                  
+                 </div>
+              </div>
+              
+              <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
+	            <form action="adminUpdate.do" method="post">
+	                <div class="row mb-3">
+	                  <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
 	                  <div class="col-sm-9">
-	                    <div class="form-check">
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-	                      <label class="form-check-label" for="gridRadios1">
-	                        남성
-	                      </label>
-	                    </div>
-	                    <div class="form-check">
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-	                      <label class="form-check-label" for="gridRadios2">
-	                       여성
-	                      </label>
-	                    </div>
-	                    <div class="form-check">
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios" value="option3">
-	                      <label class="form-check-label" for="gridRadios3">
-	                        제공하지 않음
-	                      </label>
-	                    </div>
+	                    <input type="email" class="form-control" id="email" readonly value="${user.email_id}">
 	                  </div>
-	                </fieldset>
-	              <div  class="text-lg-end">
-	              	<button type="button" class="btn btn btn-primary">등록</button>
-	              	<button type="button" class="btn btn btn-danger">취소</button>
-	              </div>
-	            </div>
-	          </div><!-- End 정보변경 -->
+	                </div>
+	                
+	                <div class="row mb-3">
+	                  <label for="inputEmail" class="col-sm-3 col-form-label">Name</label>
+	                  <div class="col-sm-9">
+	                    <input type="text" class="form-control" id="name" name="name">
+	                  </div>
+	                </div>
+	                
+	                <div class="row mb-3">
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="password" type="password" class="form-control" id="currentPassword">
+                      </div>
+                    </div>
+	                
+	                <div class="row mb-3">
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="newpassword" type="password" class="form-control" id="newPassword" min="10">
+                      </div>
+                    </div>
+					<p>사용자의 비밀번호는 문자종류 상관없이 10자 이상</p>
+
+                    <div class="row mb-3">
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                        <div id = "aaaa"></div>
+                      </div>
+                    </div>
+	                
+	                <div class="row mb-3">
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">닉네임</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="nickname" type="text" class="form-control" id="nickname" value="${user.nick}"><input type="text" hidden value="${user.nick}" name="orinick"/>
+                        <div id="qqqq"></div>
+                      </div>
+                      <p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
+                    </div>
+                    
+	                <div class="row mb-3">
+	                  <label for="inputDate" class="col-sm-3 col-form-label">생년월일</label>
+	                  <div class="col-sm-9">
+	                    <input type="date" class="form-control" value="${inputDate}" id="date" name="date">
+	                  </div>
+	                </div>
+	                
+	                <div class="row mb-3">
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="tel" type="tel" class="form-control" id="tel" value="${details.phone}" placeholder="'-' 없이 작성해 주세요"><input type="text" hidden value="${details.phone}" name="oriphone"/>
+                      </div>
+                    </div>
+                    
+		              <div  class="text-lg-end">
+		              	<button type="submit" class="btn btn btn-primary" id="updateinfo" disabled>등록</button>
+		              	<button type="reset" class="btn btn btn-danger">취소</button>
+		              </div>
+	              </form><!-- End Profile Edit Form -->
+                </div>
+                
+                <div class="tab-pane fade" id="bordered-contact" role="tabpanel" aria-labelledby="contact-tab">
+                  내용 아무거나
+                </div>
+            </div>
           </div>
-         </div>
+          </div>
          <!-- columns -->
+      </div>
       </div>
     </section>
 
@@ -178,6 +243,60 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="text/javascript">
+  $(function(){
+		$('#nickname').keyup(function(){
+			//서버처리결과받기
+			$.ajax({
+				url:"nickVerification.do",
+				data:{nickname: $('#nickname').val()},
+				type: "POST",
+				dataType:"json",
+				success: function(responseText){
+					var text = responseText;
+					if(text.toString().replace(/\s/gi, "") == "true"){
+						$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
+						$("#updateinfo").attr("disabled",true);
+					}else{
+						$("#qqqq").html("<p class='text-success'>사용 가능합니다.</p>");
+						$("#updateinfo").removeAttr("disabled");
+					}
+				}
+			});
+		});
+		$("#renewPassword").keyup(function () {
+			console.log("pwd: "+$('#currentPassword').val());
+			$.ajax({
+				url:"userVerification.do",
+				data:{password: $('#currentPassword').val()},
+				type: "POST",
+				dataType:"json",
+				success: function(responseText){
+					var text = responseText;
+					if(text.toString().replace(/\s/gi, "") == "true"){
+	  					if ($("#newPassword").val() != $("#renewPassword").val()) {
+			              $("#aaaa").html("<p class='text-danger' >일치하지 않습니다.</p>");
+			           	  $("#updateinfo").attr("disabled",true);
+			            } else {
+			              $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
+			              $("#updateinfo").removeAttr("disabled");
+			            }
+	  				}else{
+	  					$("#aaaa").html("<p class='text-danger' >비밀번호가 정확하지 않습니다.</p>");
+	  				}
+				}
+			})
+        });
+		$('#tel').keyup(function(){
+			if($('#tel').val().length != 11 || $('#tel').val() == null){
+				$("#updateinfo").attr("disabled",true);
+			}else{
+				$("#updateinfo").removeAttr("disabled");
+			}
+		})
+		
+	});
+  </script>
 
 </body>
 

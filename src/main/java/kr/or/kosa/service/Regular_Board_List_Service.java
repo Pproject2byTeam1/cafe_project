@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.ajax.Yes;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.CommentsDao;
@@ -84,6 +83,7 @@ public class Regular_Board_List_Service implements Action {
 			request.setAttribute("list", list);
 			request.setAttribute("yes", yescountlist);
 			request.setAttribute("comment", commentcountlist);
+			request.setAttribute("b_code", b_code);
 			
 			
 			forward = new ActionForward();

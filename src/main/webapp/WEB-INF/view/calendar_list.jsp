@@ -46,41 +46,12 @@
   	
   	document.addEventListener('DOMContentLoaded', function() {
   		
-  		let member = "<c:out value='${member}'/>";
-  		let b_code = "<c:out value='${b_code}'/>";
-
   		let today = new Date();
 
   		let year = today.getFullYear();
   		let month = today.getMonth() + 1;
 
   		let idx = "";
-  		
-  		function ReadView(){
-  			if (document.getElementById("add").classList.item(4) == null) {
-  				document.getElementById("add").className += " d-none";
-  			}
-
-  			if (document.getElementById("read").classList.item(4) == null) {
-  				document.getElementById("read").className += " d-none";
-  			} else {
-  				document.getElementById("read").classList.remove("d-none");
-  			}
-  			
-  			$("#comment").empty();
-  		}
-
-  		function AddView() {
-  			if (document.getElementById("read").classList.item(4) == null) {
-  				document.getElementById("read").className += " d-none";
-  			}
-
-  			if (document.getElementById("add").classList.item(4) == null) { //사라지게 하기
-  				document.getElementById("add").className += " d-none";
-  			} else {
-  				document.getElementById("add").classList.remove("d-none"); //나타내기
-  			}
-  		}
   		
   		//일정 읽기 사리게 하기
   		$("#read_reset").click(function() {
@@ -91,9 +62,16 @@
   		$("#add_reset").click(function() {
   			AddView();
   		});
+  		
+  		$("#modify_reset").click(function(){
+  			ModifyView();
+  		});
 
   		//일정 추가 버튼 클릭
   		$("#add_btn").click(function() {
+  			
+  			let b_code = "<c:out value='${b_code}'/>";
+  	  		let member = "<c:out value='${member}'/>";
   			
   			let requestdata3 = {
   					"title": $("#caltitle").val(),
@@ -133,20 +111,166 @@
   			});
 
   		});
+  		
+  		//일정 삭제
+  		$("#deletebtn").click(function(){
+  			const html = this.closest("div").closest("form").closest("div");
+  			let modifyidx = $(html).find($("#read-idx")).val();
+  			
+  			requestdata5 = {"idx": modifyidx};
+  			
+  			$.ajax({
+  				type: "POST",
+  				url: "DeleteCalender",
+  				data: requestdata5,
+  				dataType: "HTML",
+  				success: function(data) {
+  					swal(data);
+  					ReadView();
+  					loadlist();
+  				}
+  			});
+  		});
+  		
+  		//일정 수정
+  		$("#modifybtn").click(function(){
+  			
+  			ModifyView();
+  			
+  			const html = this.closest("div").closest("form").closest("div");
+  			
+  			let sel = $(html).find($("#readSelect option:selected")).val();
+  			
+  			if(sel == 3){
+  				$("#modifySelect").val("3").prop("selected", true);
+  			}else if(sel == 2){
+  				$("#modifySelect").val("2").prop("selected", true);
+  			}else{
+  				$("#modifySelect").val("1").prop("selected", true);
+  			}
+  			
+  			$("#modifytitle").val($(html).find($("#readcaltitle")).html());
+  			$("#modifystart_date").val($(html).find($("#read-startdate")).val());
+  			$("#modifyend_date").val($(html).find($("#read-enddate")).val());
+  			$("#modifycontent").val($(html).find($("#readcalcontent")).html());
+  			
+  			$('#modify_btn').click(function(){
+  				let modifyidx = $(html).find($("#read-idx")).val()
+  				
+  				modifyCal(modifyidx);
+  				
+  				setTimeout(function() {
+  					loadlist();
+  				}, 700);
+  				
+  			});
+  			
+  		});
+  		
+  		function loadlist() { //달력 생성
+  			let b_code = "<c:out value='${b_code}'/>";
+  	  		let member = "<c:out value='${member}'/>";
+  			
+  			const requestdata = { "b_code": b_code, "year": year, "month": month, "email_id": member.email_id};
+  			
+			$.ajax({
+				type: "POST",
+				url: "CalendarList",
+				data: requestdata,
+				dataType: "JSON",
+				success: function(data) {
 
+					let datelist = new Array();
+
+					$(data[0]).each(function() {
+						const date = { title: this.title, start: this.start_date, end: this.end_date };
+
+						datelist.push(date);
+					});
+
+					let calendarEl = document.getElementById('calendar');
+
+					let calendar = new FullCalendar.Calendar(calendarEl, {
+						customButtons: {
+							parkCustomButton: {
+								text: '추가',
+								click: function() {	//일정 추가
+									if(member != null && member != ""){
+										AddView();
+									}else{
+										swal('로그인이 필요한 기능입니다.');
+									}
+									
+								}
+							}
+						},
+						themeSystem: 'bootstrap5',
+						initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+						headerToolbar: { // 헤더에 표시할 툴 바
+							start: 'parkCustomButton today',
+							center: 'title',
+							end: 'prev,next dayGridMonth,dayGridWeek,dayGridDay'
+						},
+						titleFormat: function(date) {
+							return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
+						},
+						dateClick: function(info) {
+
+							AddView();
+							$("#calstart_date").val(info.dateStr);
+							$("#calend_date").val(info.dateStr);
+
+						},
+						selectable: true, // 달력 일자 드래그 설정가능
+						unselectAuto: true, //드래그 후 다른 곳 클릭 시 드래그 지우기
+						droppable: true,
+						editable: true,
+						nowIndicator: true, // 현재 시간 마크
+						locale: 'ko', // 한국어 설정
+						dayMaxEventRows: true,
+						events: datelist,
+						eventClick: function(info) {//이벤트 클릭시 
+							calEventClick(info, data[0], data[1]);
+						},
+					});
+
+					calendar.render();
+
+				},
+				error: function() {
+					alert("error");
+				}, 
+				beforeSend: function(){
+					$('.wrap-load').removeClass('display-none');
+				},
+				complete: function(){
+					$('.wrap-loading').addClass('display-none');
+				}
+			});
+		}
+  		
+  		loadlist();
+  	});
+  	
+  		
   		//일정 읽기
   		function calEventClick(info, mydateList, yesList) {
+  			
+  			let b_code = "<c:out value='${b_code}'/>";
+  	  		let member = "<c:out value='${member.email_id}'/>";
 
   			$('#readcaltitle').text(info.event.title);
 
   			$(mydateList).each(function() {
   				if (this.title == info.event.title) {
-
+  					
   					$('#readcalcontent').text(this.content);
   					$('#read-startdate').val(this.start_date);
   					$('#read-enddate').val(this.end_date);
   					
   					idx = this.idx;
+  					
+  					$('#read-idx').val(idx);
 
   					if (this.finish == "F") {
   						$("#readSelect").val("2").prop("disabled", true);
@@ -156,6 +280,10 @@
   						$("#readSelect").val("1").prop("disabled", true);
   					}
 
+  					if(member == this.email_id){
+  						$("#modifybtn").removeClass('visually-hidden');
+  						$("#deletebtn").removeClass("visually-hidden");
+  					}
 
   					$(yesList).each(function() {
   						if (this.idx == idx) {
@@ -176,7 +304,7 @@
   			yes();
 
   		}
-
+  		
   		//그 일정에 대한 댓글 불러오기
   		function calcomment(requestdata2) {
   			$.ajax({
@@ -211,9 +339,12 @@
   				}
   			});
   		}
-
+  		
   		//참석 여부
   		function yes() {
+  			let b_code = "<c:out value='${b_code}'/>";
+  	  		let member = "<c:out value='${member}'/>";
+  			
   			const requestdata1 = { "email_id": member.email_id, "idx": idx };
   			
   			$('#gridCheck2').click(function() {
@@ -224,7 +355,25 @@
   				}
   			});
   		}
-
+  		//참석 지우기
+  		function yesremove(requestdata1) {
+			$.ajax({
+				type: "POST",
+				url: "YesRemove",
+				data: requestdata1,
+				dataType: "JSON",
+				success: function(data) {
+					swal(data);
+				}, 
+				beforeSend: function(){
+					$('.wrap-load').removeClass('display-none');
+				},
+				complete: function(){
+					$('.wrap-loading').addClass('display-none');
+				}
+			});
+		}
+  		//참석 하기
   		function yesadd(requestdata1) {
   			$.ajax({
   				type: "POST",
@@ -242,105 +391,91 @@
   				}
   			});
   		}
-  		function yesremove(requestdata1) {
-  			$.ajax({
-  				type: "POST",
-  				url: "YesRemove",
-  				data: requestdata1,
-  				dataType: "JSON",
-  				success: function(data) {
-  					swal(data);
-  				}, 
-  				beforeSend: function(){
+  		
+  		//일정 수정
+  		function modifyCal(modifyidx){
+  			
+  			let b_code = "<c:out value='${b_code}'/>";
+  	  		let member = "<c:out value='${member}'/>";
+  			
+  			let requestdata4 = {
+  						"idx" : modifyidx,
+	  					"title": $("#modifytitle").val(),
+	  					"start_date": $("#modifystart_date").val(),
+	  					"end_date": $("#modifyend_date").val(),
+	  					"content": $("#modifycontent").val(),
+	  					"finish": $("#modifycontent option:selected").text(),
+	  					"b_code": b_code
+	  		};
+  			  
+			$.ajax({
+				type: "POST",
+				url: "ModifyCalender",
+				data: requestdata4,
+				dataType: "HTML",
+				success: function(data){
+					swal(data);
+					ModifyView();
+				},
+				beforeSend: function(){
   					$('.wrap-load').removeClass('display-none');
   				},
   				complete: function(){
   					$('.wrap-loading').addClass('display-none');
   				}
-  			});
+			});
+		}
+  	
+  		//일정 추가 보이게 하기
+  		function AddView() {
+  			if (document.getElementById("read").classList.item(4) == null) {
+  				document.getElementById("read").className += " d-none";
+  			}
+  			if (document.getElementById("modify").classList.item(4) == null) {
+  				document.getElementById("modify").className += " d-none";
+  			}
+
+  			if (document.getElementById("add").classList.item(4) == null) { //사라지게 하기
+  				document.getElementById("add").className += " d-none";
+  			} else {
+  				document.getElementById("add").classList.remove("d-none"); //나타내기
+  			}
   		}
+  		
+  		//일정 읽기 보이게 하기
+  		function ReadView(){
+  			if (document.getElementById("add").classList.item(4) == null) {
+  				document.getElementById("add").className += " d-none";
+  			}
+  			if (document.getElementById("modify").classList.item(4) == null) {
+  				document.getElementById("modify").className += " d-none";
+  			}
 
-  		//나중에 member 페이지 만들면 email_id 수정해야함
-  		const requestdata = { "b_code": b_code, "year": year, "month": month, "email_id": member.email_id};
-
-  		function loadlist() { //달력 생성
-  			$.ajax({
-  				type: "POST",
-  				url: "CalendarList",
-  				data: requestdata,
-  				dataType: "JSON",
-  				success: function(data) {
-
-  					let datelist = new Array();
-
-  					$(data[0]).each(function() {
-  						const date = { title: this.title, start: this.start_date, end: this.end_date };
-
-  						datelist.push(date);
-  					});
-
-  					let calendarEl = document.getElementById('calendar');
-
-  					let calendar = new FullCalendar.Calendar(calendarEl, {
-  						customButtons: {
-  							parkCustomButton: {
-  								text: '추가',
-  								click: function() {	//일정 추가
-  									if(member != null && member != ""){
-  										AddView();
-  									}else{
-  										swal('로그인이 필요한 기능입니다.');
-  									}
-  									
-  								}
-  							}
-  						},
-  						themeSystem: 'bootstrap5',
-  						initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-  						headerToolbar: { // 헤더에 표시할 툴 바
-  							start: 'parkCustomButton today',
-  							center: 'title',
-  							end: 'prev,next dayGridMonth,dayGridWeek,dayGridDay'
-  						},
-  						titleFormat: function(date) {
-  							return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
-  						},
-  						dateClick: function(info) {
-
-  							AddView();
-  							$("#calstart_date").val(info.dateStr);
-  							$("#calend_date").val(info.dateStr);
-
-  						},
-  						selectable: true, // 달력 일자 드래그 설정가능
-  						unselectAuto: true, //드래그 후 다른 곳 클릭 시 드래그 지우기
-  						droppable: true,
-  						editable: true,
-  						nowIndicator: true, // 현재 시간 마크
-  						locale: 'ko', // 한국어 설정
-  						dayMaxEventRows: true,
-  						events: datelist,
-  						eventClick: function(info) {//이벤트 클릭시 
-  							calEventClick(info, data[0], data[1]);
-  						},
-  					});
-
-  					calendar.render();
-
-  				},
-  				error: function() {
-  					alert("error");
-  				}, 
-  				beforeSend: function(){
-  					$('.wrap-load').removeClass('display-none');
-  				},
-  				complete: function(){
-  					$('.wrap-loading').addClass('display-none');
-  				}
-  			});
+  			if (document.getElementById("read").classList.item(4) == null) {
+  				document.getElementById("read").className += " d-none";
+  			} else {
+  				document.getElementById("read").classList.remove("d-none");
+  			}
+  			
+  			$("#comment").empty();
   		}
-  		loadlist();
-  	});
+  		//수정 보이게 하기
+  		function ModifyView(){
+  			if (document.getElementById("add").classList.item(4) == null) {
+  				document.getElementById("add").className += " d-none";
+  			}
+  			if (document.getElementById("read").classList.item(4) == null) {
+  				document.getElementById("read").className += " d-none";
+  			}
+
+  			if (document.getElementById("modify").classList.item(4) == null) {
+  				document.getElementById("modify").className += " d-none";
+  			} else {
+  				document.getElementById("modify").classList.remove("d-none");
+  			}
+  			
+  			
+  		}
   	
   	</script>
   	
@@ -366,8 +501,10 @@
 					<!-- 게시판 이름 끌고오기 b_name -->
 					<nav>
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-							<li class="breadcrumb-item active">Calendar</li>
+							<li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+							<c:forEach var="boardinfo" items="infolist">
+								<li class="breadcrumb-item active">Calendar</li>
+							</c:forEach>
 						</ol>
 					</nav>
 				</div>
@@ -451,6 +588,74 @@
 								</div>
 							</div>
 						</div>
+						
+						<!-- 일정 수정 -->
+						<div id="modify" class="mt-10 col-md-6 park-card p-4 d-none">
+							<div class="park-card-body row">
+								<div class="card">
+									<div class="card-body">
+
+										<div class="row mt-2">
+											<h4 class="col card-title">
+												<strong>일정 수정</strong>
+											</h4>
+											<div class="col mt-3">
+												<select class="form-select" id="modifySelect">
+													<option value="1" selected>Not Started</option>
+													<option value="2">In progress</option>
+													<option value="3">Done</option>
+												</select>
+											</div>
+										</div>
+
+										<!-- Floating Labels Form -->
+										<form class="row g-3 mt-2">
+											<div class="col-md-12">
+												<div class="form-floating">
+													<input type="text" class="form-control" id="modifytitle"
+														placeholder="Title"> <label for="floatingName">일정</label>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-floating">
+													<div class="row mb-3">
+														<label for="inputDate" class="col-sm-4 col-form-label">시작일</label>
+														<div class="col-sm-8">
+															<input type="date" id="modifystart_date"
+																class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-floating">
+													<div class="row mb-3">
+														<label for="inputDate" class="col-sm-4 col-form-label">종료일</label>
+														<div class="col-sm-8">
+															<input type="date" id="modifyend_date" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-floating">
+													<textarea class="form-control" placeholder="Content"
+														id="modifycontent" style="height: 100px;"></textarea>
+													<label for="floatingTextarea">상세 일정</label>
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="button" id="modify_btn" class="btn btn-primary">확인</button>
+												<button type="reset" id="modify_reset"
+													class="btn btn-secondary">취소</button>
+											</div>
+										</form>
+										<!-- End floating Labels Form -->
+
+									</div>
+								</div>
+							</div>
+						</div>
 
 						<!-- 일정 내용 보기 -->
 						<div id="read" class="mt-10 col-md-6 park-card p-4 d-none">
@@ -474,7 +679,7 @@
 										<!-- Floating Labels Form -->
 										<form class="row g-3 mt-2">
 											<div class="col-md-12">
-												<div class="form-floating">
+												<div id="titlediv" class="form-floating">
 													<h4 id="readcaltitle"></h4>
 												</div>
 											</div>
@@ -496,6 +701,7 @@
 														<div class="col-sm-8">
 															<input type="date" id="read-enddate" class="form-control"
 																readonly>
+															<input id="read-idx" type="hidden" />
 														</div>
 													</div>
 												</div>
@@ -516,11 +722,11 @@
 												</div>
 											</c:if>
 											</div>
-											<!-- <div class="text-center">
-										<button type="button" class="btn btn-primary">확인</button>
-										<button type="reset" id="read_reset" class="btn btn-secondary">취소</button>
-									</div> -->
 											<div class="text-center">
+												<c:if test="${member != null}">
+													<button type="button" id="modifybtn" class="btn btn-primary visually-hidden">수정</button>
+													<button type="button" id="deletebtn" class="btn btn-warning visually-hidden">삭제</button>
+												</c:if>
 												<button type="reset" id="read_reset"
 													class="btn btn-secondary">닫기</button>
 											</div>

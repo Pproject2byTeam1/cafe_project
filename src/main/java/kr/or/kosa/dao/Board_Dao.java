@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Calender;
-import kr.or.kosa.dto.MarketBoard;
+import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.Regular_Board;
 
 //게시판 글
@@ -119,6 +119,65 @@ public class Board_Dao {
 			
 			while(rs.next()) {
 				Regular_Board board = new Regular_Board();
+				board.setIdx(rs.getInt("idx"));
+				board.setTitle(rs.getString("title"));
+				board.setNick(rs.getString("nick"));
+				board.setContent(rs.getString("content"));
+				board.setHits(rs.getInt("hits"));
+				board.setW_date(rs.getString("w_date"));
+				board.setReport_count(rs.getInt("report_count"));
+				board.setEmail_id(rs.getString("email_id"));
+				board.setB_code(rs.getInt("b_code"));
+				
+				
+				boardlist.add(board);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환
+			} catch (Exception e2) {
+				
+			}
+		}
+		
+		
+		return boardlist;
+	}
+	//자료게시판
+	public List<DataBoard> getdata_boardList(int b_code, int cpage, int pagesize){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<DataBoard> boardlist = null;
+		
+		try {
+			conn = ds.getConnection();
+			String sql = "select * "
+						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
+							+ "from board b join data_board d "
+							+ "on b.idx = d.idx "
+							+ "where b_code=? "
+							+ "order by refer desc, step desc) where rn <= ? and rn >= ? ";
+			pstmt = conn.prepareStatement(sql);
+			
+			int start = cpage * pagesize - (pagesize -1);
+			int end = cpage * pagesize;
+			
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
+			
+			rs = pstmt.executeQuery();
+			
+			boardlist = new ArrayList<DataBoard>();
+			
+			while(rs.next()) {
+				DataBoard board = new DataBoard ();
 				board.setIdx(rs.getInt("idx"));
 				board.setTitle(rs.getString("title"));
 				board.setNick(rs.getString("nick"));
@@ -464,35 +523,6 @@ public class Board_Dao {
 			
 			pstmt.setInt(1, idx);
 			pstmt.setInt(2, idx);
-			
-			row = pstmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return row;
-	}
-	
-	//게시글 삭제
-	public int deleteBoard(int idx) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int row = 0;
-		
-		try {
-			
-			conn = ds.getConnection();
-			String sql = "delete from board where idx=?";
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, idx);
 			
 			row = pstmt.executeUpdate();
 		} catch (Exception e) {

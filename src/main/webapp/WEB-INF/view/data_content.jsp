@@ -138,15 +138,6 @@
 
 		
 	}
- 
-
-
-
-
-
-
-
-
 
 </script>
 </head>
@@ -232,8 +223,8 @@
 				<div class="col-md-1"></div>
 				<div class="col-md-10">
 					<textarea name="content"> 
-         글을 작성해주세요.
-        </textarea>
+        			 글을 작성해주세요.
+        			</textarea>
 
 
 				</div>

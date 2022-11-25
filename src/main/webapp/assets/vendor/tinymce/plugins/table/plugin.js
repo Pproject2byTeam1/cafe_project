@@ -890,19 +890,19 @@
     };
 
     const fireTableModified = (editor, table, data) => {
-      editor.dispatch('TableModified', {
-        ...data,
-        table
-      });
+      editor.dispatch('TableModified', {  
+        ...data, 
+        table   
+      });  
     };
 
     const toNumber = (px, fallback) => toFloat(px).getOr(fallback);
     const getProp = (element, name, fallback) => toNumber(get$1(element, name), fallback);
     const calcContentBoxSize = (element, size, upper, lower) => {
-      const paddingUpper = getProp(element, `padding-${ upper }`, 0);
-      const paddingLower = getProp(element, `padding-${ lower }`, 0);
-      const borderUpper = getProp(element, `border-${ upper }-width`, 0);
-      const borderLower = getProp(element, `border-${ lower }-width`, 0);
+      const paddingUpper = getProp(element, 'padding-${ upper }', 0);
+      const paddingLower = getProp(element, 'padding-${ lower }', 0);  
+      const borderUpper = getProp(element, 'border-${ upper }-width', 0); 
+      const borderLower = getProp(element, 'border-${ lower }-width', 0);
       return size - paddingUpper - paddingLower - borderUpper - borderLower;
     };
     const getCalculatedWidth = (element, boxSizing) => {
@@ -918,7 +918,7 @@
 
     const defaultTableToolbar = 'tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol';
     const defaultCellBorderWidths = range(5, i => {
-      const size = `${ i + 1 }px`;
+      const size = '${ i + 1 }px';
       return {
         title: size,
         value: size

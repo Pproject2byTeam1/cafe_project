@@ -14,7 +14,7 @@ import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.UserDetails;
 
-public class UserInfoService implements Action {
+public class adminInfoService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -32,7 +32,7 @@ public class UserInfoService implements Action {
 			UserDetails details = new UserDetails();
 			User user2 = (User) session.getAttribute("member");
 			String userId = user2.getEmail_id();
-			
+			System.out.println(userId);
 			UserDao dao = new UserDao();
 			user = dao.selectUserById(userId);
 			details = dao.selectUserDetailById(userId);
@@ -45,16 +45,18 @@ public class UserInfoService implements Action {
 			//System.out.println("eee"+user.getIsAdmin());
 			String join = details.getJoin_date();
 			String date = join.substring(0,4) + "년 " + join.substring(4,6) + "월 " + join.substring(6,8) + "일";
+			String inputDate = join.substring(0,4) + "-" + join.substring(4,6) + "-" + join.substring(6,8);
 			
 			request.setAttribute("user", user);
 			request.setAttribute("details", details);
 			request.setAttribute("phone", number);
 			request.setAttribute("birthday", day);
 			request.setAttribute("joindate", date);
+			request.setAttribute("inputDate", inputDate);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/user_info_change_board.jsp");
+		  	forward.setPath("/admin_info_change_board.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

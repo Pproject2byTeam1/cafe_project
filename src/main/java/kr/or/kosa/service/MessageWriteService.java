@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dto.User;
 
 public class MessageWriteService implements Action {
 
@@ -16,12 +17,13 @@ public class MessageWriteService implements Action {
 		try {
 			
 			HttpSession session = request.getSession();
-			String userId = (String) session.getAttribute("userid");//내 아이디
+			User user2 = (User) session.getAttribute("member");
+			String userId = user2.getEmail_id();
 			String responde_Id = (String) request.getParameter("sender_id");//받는사람 아이디
 			
 			System.out.println("dd: " + responde_Id);
 			
-			request.setAttribute("userId", "T2@naver.com"/*userId*/);
+			request.setAttribute("userId", userId);
 			request.setAttribute("responde_Id", responde_Id);
 			
 			forward = new ActionForward();

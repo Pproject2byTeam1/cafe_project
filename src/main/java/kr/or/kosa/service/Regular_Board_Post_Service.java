@@ -7,12 +7,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dao.MarketBoardDao;
+import kr.or.kosa.dao.Regular_Board_Dao;
+import kr.or.kosa.dao.UserDao;
+import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.MarketBoard;
+import kr.or.kosa.dto.User;
 
-public class MarketBoardReadService implements Action {
+public class Regular_Board_Post_Service implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -23,23 +26,28 @@ public class MarketBoardReadService implements Action {
 			
 			//사이드 바
 			Board_Info_Dao infodao = new Board_Info_Dao();
-		    List<Board_Info> infolist = infodao.getSideBoardList();
-	        request.setAttribute("infolist", infolist);
+			List<Board_Info> infolist = infodao.getSideBoardList();
 			
 			int idx = Integer.parseInt(request.getParameter("idx"));
-			int b_code = Integer.parseInt(request.getParameter("b_code"));
+
+			UserDao udao = new UserDao();
+			Regular_Board_Dao dao = new Regular_Board_Dao();
+			Board_Dao bdao = new Board_Dao();
 			
 			
-			MarketBoardDao dao = new MarketBoardDao();
 			
-			MarketBoard list = dao.readMarket(idx);
+			bdao.updateHits(idx);
+			Board board = dao.getRegular_BoardByIdx(idx);
+			User user = udao.selectUserById(board.getEmail_id());
+		
+			request.setAttribute("infolist", infolist);
+			request.setAttribute("board", board);
+			request.setAttribute("user", user);
 			
-			request.setAttribute("list", list);
-			request.setAttribute("b_code", b_code);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/marketboard_read.jsp");
+		  	forward.setPath("/WEB-INF/view/regularboard_post.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
