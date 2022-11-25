@@ -118,6 +118,7 @@ public class Img_Board_Dao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -181,6 +182,7 @@ public class Img_Board_Dao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -198,13 +200,26 @@ public class Img_Board_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "insert into Regualr_Board(idx, img_name) values(?, ?)";
+			String sql = "INSERT ALL "
+						+ "INTO board (idx, title, nick, content, email_id, b_code) "
+						+ "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) "
+						+ "INTO img_board (b_idx, idx, img_name) "
+						+ "VALUES (IMG_B_IDX_SEQ.nextval, IDX_SEQ.currval, ?) "
+						+ "select * from dual";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, img_board.getIdx());
-			pstmt.setString(2, img_board.getImg_name());
+			pstmt.setString(1, img_board.getTitle());
+			pstmt.setString(2, img_board.getNick());
+			pstmt.setString(3, img_board.getContent());
+			pstmt.setString(4, img_board.getEmail_id());
+			pstmt.setInt(5, img_board.getB_code());
+			
+			pstmt.setString(6, img_board.getImg_name());
+			
+			System.out.println("ahah");
 			
 			row = pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -266,6 +281,7 @@ public class Img_Board_Dao {
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}

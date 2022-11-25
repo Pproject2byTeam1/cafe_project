@@ -87,9 +87,10 @@
 									<label for="staticEmail" class="col-2 col-form-label">Title : </label>
 									<div class="col-8">
 										<input type="text" class="form-control" id="title" name="title">
+										<input id="b_code" name="b_code" value="${b_code}" type="hidden" />
 									</div>
 									<div class="col-2">
-										<button type="button" id="btn" class="btn btn-primary">확인</button>
+										<button type="submit" id="btn" class="btn btn-primary">확인</button>
 									</div>
 								</div>
 								<div class="col-md-6">
