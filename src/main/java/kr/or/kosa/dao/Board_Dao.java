@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Calender;
 import kr.or.kosa.dto.DataBoard;
+import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.Regular_Board;
 
 //게시판 글
@@ -209,17 +210,22 @@ public class Board_Dao {
 	}
 	
 	//이미지 게시판 전체 조회
-	public List<Board> getImg_boardList(int b_code, int cpage, int pagesize){
+	public List<Img_Board> getImg_boardList(int b_code, int cpage, int pagesize){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Board> boardlist = null;
+		List<Img_Board> boardlist = null;
 		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select * from (select rownum rn, idx, title, nick, content, hits, to_char(w_date, 'yyyy-MM-dd') as w_date, report_count, email_id, b_code from Board where b_code=?) where rn <= ? and rn >= ?";
+			String sql = "select * from  "
+						+ "(select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.email_id, b.b_code, i.b_idx, i.img_name "
+						+ "from Board b join img_board i "
+						+ "on b.idx = i.idx "
+						+ "where b_code=?) "
+						+ "where rn <= ? and rn >= ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
@@ -231,10 +237,10 @@ public class Board_Dao {
 			
 			rs = pstmt.executeQuery();
 			
-			boardlist = new ArrayList<Board>();
+			boardlist = new ArrayList<Img_Board>();
 			
 			while(rs.next()) {
-				Board board = new Board();
+				Img_Board board = new Img_Board();
 				board.setIdx(rs.getInt("idx"));
 				board.setTitle(rs.getString("title"));
 				board.setNick(rs.getString("nick"));
@@ -244,6 +250,8 @@ public class Board_Dao {
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
+				board.setB_idx(rs.getInt("b_idx"));
+				board.setImg_name(rs.getString("img_name"));
 				
 				boardlist.add(board);
 			}

@@ -57,10 +57,7 @@ public class Img_Board_List_Service implements Action {
 				pagecount = (totalboardcount / pagesize) + 1; 
 			}
 			
-			List<Board> list = dao.getImg_boardList(b_code, cpage, pagesize);
-			
-			Img_Board_Dao board_dao = new Img_Board_Dao();
-			List<Img_Board> img_list = board_dao.getImg_BoadList(cpage, pagesize);
+			List<Img_Board> list = dao.getImg_boardList(b_code, cpage, pagesize);
 			
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
@@ -70,7 +67,6 @@ public class Img_Board_List_Service implements Action {
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("b_code", b_code);
 			request.setAttribute("list", list);
-			request.setAttribute("img_list", img_list);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

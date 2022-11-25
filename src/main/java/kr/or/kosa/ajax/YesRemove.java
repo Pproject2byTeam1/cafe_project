@@ -36,9 +36,9 @@ public class YesRemove extends HttpServlet {
 			String msg = "";
 			
 			if(row > 0) {
-				msg = "참석이 취소되었습니다.";
+				msg = "취소";
 			}else {
-				msg = "다시 시도해 주세요";
+				msg = "실패";
 			}
 			
 			out.print(msg);
