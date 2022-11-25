@@ -83,6 +83,7 @@ public class Regular_Board_List_Service implements Action {
 			request.setAttribute("list", list);
 			request.setAttribute("yes", yescountlist);
 			request.setAttribute("comment", commentcountlist);
+			request.setAttribute("b_code", b_code);
 			
 			
 			forward = new ActionForward();

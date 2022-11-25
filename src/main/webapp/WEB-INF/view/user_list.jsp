@@ -77,21 +77,21 @@
 		
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-1">
-					<form name="list" >
-							<select class="form-select" name="ps" onchange="submit()">
-							   <c:forEach var="i" begin="5" end="20" step="5">
-							   		<c:choose>
-							   			<c:when test="${pagesize == i}">
-							   				<option value="${i}" selected>${i}건</option>
-							   			</c:when>
-						   				<c:otherwise>
-						   					<option value="${i}">${i}건 </option>
-						   				</c:otherwise>
-							   		</c:choose>
-							   </c:forEach>
-		   					</select>
-						</form>
+				<div class="col-md-1" >
+					<form name="list">
+						<select class="form-select" name="ps" onchange="submit()">
+						   <c:forEach var="i" begin="5" end="20" step="5">
+						   		<c:choose>
+						   			<c:when test="${pagesize == i}">
+						   				<option value="${i}" selected>${i}건</option>
+						   			</c:when>
+					   				<c:otherwise>
+					   					<option value="${i}">${i}건 </option>
+					   				</c:otherwise>
+						   		</c:choose>
+						   </c:forEach>
+	   					</select>
+					</form>
 				</div>
 				<div class="col-md-4"></div>
 				<div class="col-md-4">

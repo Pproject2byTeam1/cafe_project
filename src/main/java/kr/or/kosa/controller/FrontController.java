@@ -184,7 +184,7 @@ public class FrontController extends HttpServlet {
 			action = new UserUpdateService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/userUpdatePwd.do")){ // 유저비번 수정
+		}else if(urlcommand.equals("/regular_post.do")){ // 유저정보 수정
 			
 			action = new UpdatePwdService();
 			forward = action.execute(request, response);
@@ -213,6 +213,13 @@ public class FrontController extends HttpServlet {
 			action = new DataContentviewService();
 			forward = action.execute(request, response);
 			
+	
+		}else if(urlcommand.equals("/regular_write.do")){ // 자유게시판 글쓰기
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("/WEB-INF/view/regular_write.jsp");
+	
 		}
 		
 		if (forward != null) {
