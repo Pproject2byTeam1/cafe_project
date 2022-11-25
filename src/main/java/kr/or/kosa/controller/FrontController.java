@@ -150,6 +150,7 @@ public class FrontController extends HttpServlet {
 		
 			action = new RapportListService();
 			forward = action.execute(request, response);
+			
 		}else if(urlcommand.equals("/data_content.do")) {
 			
 			forward = new ActionForward();
