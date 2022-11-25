@@ -10,6 +10,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.MessageDao;
 import kr.or.kosa.dto.Message;
+import kr.or.kosa.dto.User;
 
 public class MessageListService implements Action {
 
@@ -31,7 +32,7 @@ public class MessageListService implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/memo_list.jsp");
+		  	forward.setPath("/WEB-INF/view/memo_list.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

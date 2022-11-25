@@ -39,7 +39,7 @@ public class userVerification implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("verification.jsp");
+		  	forward.setPath("/WEB-INF/view/verification.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

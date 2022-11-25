@@ -54,7 +54,7 @@ public class UserInfoService implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/user_info_change_board.jsp");
+		  	forward.setPath("/WEB-INF/view/user_info_change_board.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

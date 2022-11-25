@@ -43,7 +43,7 @@ public class MessageDeleteService implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/memoListAppand.jsp");
+		  	forward.setPath("/WEB-INF/view/memoListAppand.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

@@ -28,10 +28,11 @@ public class adminInfoService implements Action {
 			
 	        //유저정보 가져가기
 			HttpSession session = request.getSession();
-			User user = new User();
-			UserDetails details = new UserDetails();
 			User user2 = (User) session.getAttribute("member");
 			String userId = user2.getEmail_id();
+			
+			User user = new User();
+			UserDetails details = new UserDetails();
 			System.out.println(userId);
 			UserDao dao = new UserDao();
 			user = dao.selectUserById(userId);
@@ -56,7 +57,7 @@ public class adminInfoService implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/admin_info_change_board.jsp");
+		  	forward.setPath("/WEB-INF/view/admin_info_change_board.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
