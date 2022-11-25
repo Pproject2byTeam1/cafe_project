@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataContentviewService;
@@ -35,6 +36,7 @@ import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
 import kr.or.kosa.service.Regular_Board_Write_Service;
 import kr.or.kosa.service.UpdatePwdService;
+import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.UserUpdateService;
@@ -229,7 +231,18 @@ public class FrontController extends HttpServlet {
 			action = new Data_Board_Post_Service();
 			forward = action.execute(request, response);
 			
+		}else if(urlcommand.equals("/user_activity.do")){ // 자신활동내역 페이지 이동
+			
+			action = new UserActivityService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/boardContent.do")){ // 글 내용 보기 중간 터널
+			
+			action = new BoardContentService();
+			forward = action.execute(request, response);
+			
 		}
+		
 		
 		if (forward != null) {
 			if (forward.isRedirect()) { // true 페이지 재 요청 (location.href="페이지"

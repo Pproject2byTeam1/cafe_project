@@ -11,7 +11,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.or.kosa.dto.BoardListGet;
 import kr.or.kosa.dto.Comments;
+import kr.or.kosa.dto.CommentList;
 
 //댓글
 public class CommentsDao {
@@ -145,5 +147,59 @@ public class CommentsDao {
 			}
 
 			return totalcount;
+		}
+		
+		//자신이 쓴 댓글 조회
+		public List<CommentList> getCommentListByMe(String email_id){
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<CommentList> clist = null;
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "select c.co_idx ,b.idx, b.title,nvl(c2.\"cnt\",0) as \"c_count\", c.content, to_char(c.w_date,'yyyy-MM-dd') as w_date \r\n"
+						+ "from comments c join board b \r\n"
+						+ "on c.idx = b.idx \r\n"
+						+ "left join (select count(co_idx)as \"cnt\", idx from comments group by idx) c2\r\n"
+						+ "on c2.idx = b.idx\r\n"
+						+ "where c.EMAIL_ID = ?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, email_id);
+				rs = pstmt.executeQuery();
+				clist = new ArrayList<CommentList>();
+				
+				while(rs.next()) {
+					CommentList comment = new CommentList();
+					comment.setCo_idx(rs.getInt("co_idx"));
+					comment.setIdx(rs.getInt("idx"));
+					comment.setTitle(rs.getString("title"));
+					comment.setC_count(rs.getInt("c_count"));
+					String str = rs.getString("content");
+					if(str.length() < 15) {
+					comment.setContent(rs.getString("content"));
+					}else {
+						comment.setContent(str.substring(0,14) + " ...");
+					}
+					comment.setW_date(rs.getString("w_date"));
+					
+					clist.add(comment);
+				}
+				
+			} catch (Exception e) {
+				System.out.println("오류 :" + e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					rs.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					
+				}
+			}
+			
+			return clist;
 		}
 }
