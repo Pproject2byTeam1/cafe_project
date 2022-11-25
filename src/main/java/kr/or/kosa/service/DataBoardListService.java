@@ -14,6 +14,7 @@ import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.DataBoardDao;
+import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.DataBoard;
@@ -35,7 +36,7 @@ public class DataBoardListService implements Action {
 					Board_Dao dao = new Board_Dao(); 
 					Yes_Dao ydao = new Yes_Dao();
 					CommentsDao cdao = new CommentsDao();
-					
+					UserDao udao = new UserDao();
 					int b_code = Integer.parseInt(request.getParameter("b_code"));
 					//관리자만 삭제가능하게
 					User user = (User) session.getAttribute("member");
@@ -83,14 +84,18 @@ public class DataBoardListService implements Action {
 			List<Integer> countlist = new ArrayList<Integer>();//덧글 카운트
 			List<Integer> yescountlist = new ArrayList();
 			List<Integer> commentcountlist = new ArrayList();
-			
+			List ranklist = new ArrayList();
 			for(DataBoard re : list) {	
 				int idx = re.getIdx();
+				String email_id = re.getEmail_id();
 				int yescount = ydao.getYesCountBy_idx(idx);
 				int commentcount = cdao.getCommentCountBy_idx(idx);
-						
+				User user1 = udao.selectUserById(email_id);
+				int rank = user1.getRank();
+				
 				yescountlist.add(yescount);
 				commentcountlist.add(commentcount);
+				ranklist.add(rank);
 			}
 			
 		
@@ -107,7 +112,7 @@ public class DataBoardListService implements Action {
 			request.setAttribute("list", list);
 			request.setAttribute("yes", yescountlist);
 			request.setAttribute("comment", commentcountlist);
-			
+			request.setAttribute("rank", ranklist);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);

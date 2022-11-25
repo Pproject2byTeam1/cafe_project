@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dao.MarketBoardDao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
@@ -52,10 +53,11 @@ public class MarketBoardDeleteService implements Action {
 			//삭제 로직
 			MarketBoardDao dao = new MarketBoardDao();
 			int result = dao.delMarket(idx, email_id);
+			DataBoardDao databoard = new DataBoardDao();
 			
 			System.out.println(result);
 			
-			if(result > 0) {
+			if(result > 0 ) {
 				msg ="삭제 되었습니다.";
 				url = "marketboard_list.do?b_code=" + b_code;
 				

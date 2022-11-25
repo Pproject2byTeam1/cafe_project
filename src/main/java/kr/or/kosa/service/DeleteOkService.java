@@ -8,45 +8,41 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.DataBoardDao;
-import kr.or.kosa.dao.UserDao;
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.User;
 
-public class Data_Board_Post_Service implements Action {
+public class DeleteOkService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-	ActionForward forward = new ActionForward();
-		
+			ActionForward forward = new ActionForward();
+			
 		try {
 			HttpSession session = request.getSession();
-	          User user = (User) session.getAttribute("member");
+			//로그인 한사람정보
+		
+			
+	      
 			Board_Info_Dao infodao = new Board_Info_Dao();
 	        List<Board_Info> infolist = infodao.getSideBoardList();
 	        int idx = Integer.parseInt(request.getParameter("idx"));
-	        
-	        UserDao udao = new UserDao();
-			DataBoardDao dao = new DataBoardDao();
-			Board_Dao bdao = new Board_Dao();
-
-			bdao.updateHits(idx);
-			Board board = dao.getData_BoardByIdx(idx);
-			User rank = udao.selectUserById(board.getEmail_id());
-		
-			request.setAttribute("infolist", infolist);
-			request.setAttribute("board", board);
-			request.setAttribute("rank", rank);
-			
-			
+	        String email_id = request.getParameter("email_id");
+	       DataBoardDao databoard = new DataBoardDao();
+	    
 	
+			int row =databoard.deleteDataBoard(idx);
 			
+			String msg = "";
+			
+			if(row < 0) {
+				msg = "실패";
+			}else {
+				msg = "확인";
+			}
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/data_contentview.jsp");
+		  	forward.setPath("/WEB-INF/view/index.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -54,6 +50,5 @@ public class Data_Board_Post_Service implements Action {
 		
 		return forward;
 	}
-	}
 
-
+}
