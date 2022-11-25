@@ -22,6 +22,7 @@ import kr.or.kosa.service.Img_Board_Read_Service;
 import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
 import kr.or.kosa.service.Logout_Service;
+import kr.or.kosa.service.MarketBoardDeleteService;
 import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MessageDeleteService;
@@ -172,7 +173,7 @@ public class FrontController extends HttpServlet {
 			
 		}else if(urlcommand.equals("/marketboard_delete.do")){ // 데이터 게시판 삭제
 			
-			action = new MarketBoardReadService();
+			action = new MarketBoardDeleteService();
 			forward = action.execute(request, response);
 			
 		}else if(urlcommand.equals("/userinfo.do")){  // 유저정보 페이지 이동
