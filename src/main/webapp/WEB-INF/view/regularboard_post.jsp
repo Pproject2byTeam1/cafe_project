@@ -14,6 +14,9 @@
 <meta content="" name="description">
 <meta content="" name="keywords">
 
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -42,27 +45,104 @@
 <!-- coments CSS Files -->
 <link href="assets/css/comments.css" rel="stylesheet">
 <link href="assets/css/marketboard_read.css" rel="stylesheet">
-</head>
 
-<!-- 값 나오는거 확인해보세요!!!! -->
+<!-- sweetalert -->
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script type="text/javascript">
-console.log("${board}");
-console.log("${user}");
-</script>
+     
+        $(function(){
+           
+           let email_id = '<c:out value="${member.email_id}" />';
+           let yespark = '<c:out value="${yespark}" />';
+           let idx = '<c:out value="${board.idx}" />';
+           
+           /* 게시물 좋아요 비동기 처리 */
+           $("#yesbtn").click(function(){
+        	   
+        	   
+              
+              console.log("hahaha");
+              console.log(email_id);
+              console.log("sdfs" + yespark);
+              
+              if(yespark == "no"){
+                 
+                 requestdata = {"idx": idx, "email_id": email_id};
+                 
+                 console.log(requestdata);
+                 
+                 $.ajax({
+                    type: "POST",
+                    url: "Yes",
+                  data: requestdata,
+                    dataType: "HTML",
+                    success: function(data){
+                       
+                    	yespark = email_id;
+                       
+                       $("#yesbtn").empty();
+                       $("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
+                       swal(data);
+                    },
+                    beforeSend: function(){
+                     $('.wrap-load').removeClass('display-none');
+                  },
+                  complete: function(){
+                     $('.wrap-loading').addClass('display-none');
+                  }
+                 });
+                 
+              }else{
+                 
+                 requestdata = {"idx": idx, "email_id": email_id};
+                 
+                 $.ajax({
+                    type: "POST",
+                    url: "YesRemove",
+                  data: requestdata,
+                    dataType: "HTML",
+                    success: function(data){
+                    	yespark = "no";
+                       
+                       $("#yesbtn").empty();
+                       $("#yesbtn").append('<i class="bi bi-heart"></i>');
+                       swal(data);
+                    },
+                    beforeSend: function(){
+                     $('.wrap-load').removeClass('display-none');
+                  },
+                  complete: function(){
+                     $('.wrap-loading').addClass('display-none');
+                  }
+                 });
+                 
+              }
+              
+              
+           });
+           
+        });
+        
+        
+     
+     </script>
 
+
+</head>
 <body>
 
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 
-		<jsp:include page="/common/top.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/view/common/top.jsp"></jsp:include>
 
 	</header>
 	<!-- End Header -->
 
 	<!-- ======= Sidebar ======= -->
 
-	<jsp:include page="/common/side2.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
 
 	<!-- End Sidebar -->
 
@@ -131,7 +211,14 @@ console.log("${user}");
 											<div align="right" class="col-md-12">
 												<div>
 													<button type="button" id="Write" class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
-													
+													<c:if test="${member != null}">
+														<c:if test="${yespark == 'no'}">
+	                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
+	                                    				</c:if>
+	                                    				<c:if test="${yespark != 'no'}">
+	                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
+	                                    				</c:if>
+													</c:if>
 													<form action="regular_write.do" method="post">
 														<input type="text" value="${board.email_id}" name="id" style="display: none;">
 														<input type="text" value="${idx}" name="idx" style="display: none;">

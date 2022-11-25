@@ -36,6 +36,8 @@ public class Regular_Board_Write_Service implements Action {
 			Board_Info_Dao infodao = new Board_Info_Dao();
  			List<Board_Info> infolist = infodao.getSideBoardList();
 			
+ 			
+ 			// 로그인 안할경우 로그인 페이지로
 			if (user == null) {
 
 	            String board_msg = "권한이 없습니다.";
@@ -48,14 +50,17 @@ public class Regular_Board_Write_Service implements Action {
 	           
 	         }
 			
-			// 수정하기 (회원 id와 글 id가 같고 todo가 수정일경우)
-			if (user.getEmail_id().equals(email_idx) && todo.equals("modify")){
+			// 수정하기화면 가기 (회원 id와 글 id가 같고 todo가 modify일경우)
+			if (user.getEmail_id().equals(email_idx)){
 				
 				Regular_Board_Dao dao = new Regular_Board_Dao();
 				Board board = dao.getRegular_BoardByIdx(idx);
 				request.setAttribute("board", board);
+				request.setAttribute("idx", idx);
+				request.setAttribute("email_idx", email_idx);
+				request.setAttribute("b_code", b_code);
 	        	
-				url="/WEB-INF/view/regularboard_write.jsp";
+				url="/WEB-INF/view/regularboard_edit.jsp";
 	        	 
 	         } else {
 	        	 
@@ -67,6 +72,11 @@ public class Regular_Board_Write_Service implements Action {
 	              
 	            url="/WEB-INF/view/redirect.jsp";
 	         }
+			
+			// 수정확인버튼
+			if (todo.equals("modify")) {
+				
+			}
 			
 			// 글쓰기 (todo가 'write'일경우)
 			if (todo.equals("write")) {
