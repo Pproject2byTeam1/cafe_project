@@ -81,7 +81,7 @@
               <ul class="nav nav-tabs nav-tabs-bordered">
 
                 <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#write_board">글쓴 목록</button>
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#write_board">작성 글 목록</button>
                 </li>
 
                 <li class="nav-item">
@@ -89,7 +89,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#liked_boards">좋아요 & 찜 한 글</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#liked_boards">좋아요 & 참여한 일정</button>
                 </li>
 
               </ul>
@@ -102,37 +102,23 @@
 		                  <tr>
 		                    <th scope="col">글 번호</th>
 		                    <th scope="col">종류</th>
-		                    <th scope="col">Title(댓글 수)</th>
+		                    <th scope="col">Title</th>
 		                    <th scope="col">Write Date</th>
 		                    <th scope="col">Hits</th>
 		                    <th scope="col">Like</th>
 		                  </tr>
 		                </thead>
 		                <tbody>
+		                <c:forEach var="list" items="${writeboardlist}">
 		                  <tr class="listrow">
-		                    <th scope="row" class="idx">1</th>
-		                    <td>자유게시판</td>
-		                    <td>제목 1 ㅇㅇㅇㅇㅇ<span class="badge bg-primary rounded-pill">14</span></td>
-		                    <td>2016-05-25</td>
-		                    <td>28</td>
-		                    <td>3</td>
+		                    <th scope="row" class="idx">${list.idx}</th>
+		                    <td>${list.b_name}</td>
+		                    <td>${list.title}<span class="badge bg-primary rounded-pill">${list.c_count}</span></td>
+		                    <td>${list.w_date}</td>
+		                    <td>${list.hits}</td>
+		                    <td>${list.like}</td>
 		                  </tr>
-		                  <tr class="listrow">
-		                    <th scope="row" class="idx">8</th>
-		                    <td>정보게시판</td>
-		                    <td>제목 3 ㅇㅇㅇㅇㅇ<span class="badge bg-primary rounded-pill">24</span></td>
-		                    <td>2016-05-25</td>
-		                    <td>28</td>
-		                    <td>3</td>
-		                  </tr>
-		                  <tr class="listrow">
-		                    <th scope="row" class="idx">46</th>
-		                    <td>사진게시판</td>
-		                    <td>제목 24 ㅇㅇㅇㅇㅇ<span class="badge bg-primary rounded-pill">44</span></td>
-		                    <td>2016-05-25</td>
-		                    <td>28</td>
-		                    <td>3</td>
-		                  </tr>
+		                </c:forEach>
 		                </tbody>
 		              </table>
 		              <!-- End Table with hoverable rows -->
@@ -144,30 +130,20 @@
 		                <thead>
 		                  <tr>
 		                    <th scope="col">글 번호</th>
-		                    <th scope="col">원글 Title(댓글 수)</th>
+		                    <th scope="col">원글 Title</th>
 		                    <th scope="col">Comment Text</th>
 		                    <th scope="col">Write Date</th>
 		                  </tr>
 		                </thead>
 		                <tbody>
+		                <c:forEach var="list" items="${commnetlist}">
 		                  <tr class="listrow">
-		                    <th scope="row" class="idx">3</th>
-		                    <td scope="row">제목 1 ㅇㅇㅇㅇㅇ<span class="badge bg-primary rounded-pill">17</span></td>
-		                    <td>나는야 내요ㅛㅛㅛㅛㅛㅛㅛㅛㅛ용</td>
-		                    <td>2016-05-25</td>
+		                    <th scope="row" class="idx">${list.idx}</th>
+		                    <td scope="row">${list.title}<span class="badge bg-primary rounded-pill">${list.c_count}</span></td>
+		                    <td>${list.content}</td>
+		                    <td>${list.w_date}</td>
 		                  </tr>
-		                  <tr class="listrow">
-		                    <th scope="row" class="idx">5</th>
-		                    <td scope="row">제목 7 ㅇㅇㅇㅇㅇ<span class="badge bg-primary rounded-pill">7</span></td>
-		                    <td>나는야 내요ㅛㅛㅛㅛㅛㅛㅛㅛㅛ용</td>
-		                    <td>2016-05-25</td>
-		                  </tr>
-		                  <tr class="listrow">
-		                    <th scope="row" class="idx">25</th>
-		                    <td scope="row">제목 81 ㅇㅇㅇㅇㅇ<span class="badge bg-primary rounded-pill">4</span></td>
-		                    <td>나는야 내요ㅛㅛㅛㅛㅛㅛㅛㅛㅛ용</td>
-		                    <td>2016-05-25</td>
-		                  </tr>
+		                </c:forEach>
 		                </tbody>
 		              </table>
 		              <!-- End Table with hoverable rows -->
@@ -180,19 +156,21 @@
 		                  <tr>
 		                    <th scope="col">글 번호</th>
 		                    <th scope="col">종류</th>
-		                    <th scope="col">Title(댓글 수)</th>
+		                    <th scope="col">Title</th>
 		                    <th scope="col">Writer</th>
 		                    <th scope="col">Write Date</th>
 		                  </tr>
 		                </thead>
 		                <tbody>
+		                <c:forEach var="list" items="${likeboardlist}">
 		                  <tr class="listrow">
-		                    <th scope="row" class="idx">100</th>
-		                    <td>자유게시판</td>
-		                    <td scope="row">제목 100 ㅇㅇㅇㅇㅇ<span class="badge bg-primary rounded-pill">1003</span></td>
-		                    <td scope="row">영자</td>
-		                    <td>2018-07-20</td>
+		                    <th scope="row" class="idx">${list.idx}</th>
+		                    <td>${list.b_name}</td>
+		                    <td scope="row">${list.title}<span class="badge bg-primary rounded-pill">${list.c_count}</span></td>
+		                    <td scope="row">${list.nick}</td>
+		                    <td>${list.w_date}</td>
 		                  </tr>
+		                </c:forEach>
 		                </tbody>
 		              </table>
 		              <!-- End Table with hoverable rows -->
@@ -242,9 +220,6 @@
   <!-- Page level plugins -->
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
   
   <script type="text/javascript">
   	$(function(){
@@ -255,6 +230,7 @@
   		$('.listrow').click(function(){
   			alert("누른 글 번호: "+ $(this).children('.idx').text());
   			console.log($(this).children('.idx').text());
+  			console.log($(this).children('.b_code').val());
   		});
   		
   		$('#nickname').keyup(function(){

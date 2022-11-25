@@ -61,7 +61,7 @@
          <!-- 게시판 이름 끌고오기 b_name -->
          <nav>
             <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+               <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
                <li class="breadcrumb-item"><a
                   href="reguler_list.do?b_code=${b_code}">자유게시판</a></li>
                <li class="breadcrumb-item active">글쓰기</li>
@@ -79,12 +79,12 @@
                   <div class="park-card p-4">
                      <div class="park-card-body row">
                         <div class="md-3 row">
-                           <label for="staticEmail" class="col-sm-2 col-form-label">Title : </label>
+                           <label for="staticEmail" class="col-sm-2 col-form-label">Title :</label>
                            <div class="col-sm-8">
-                              <input type="text" class="form-control" id="title" name="title">
+                              <input type="text" class="form-control" id="title" name="title" value="${board.title}">
                            </div>
                            <div class="col-sm-2">
-                              <button type="button" id="modifybtn" class="btn btn-primary">확인</button>
+                              <button type="submit" id="btn" class="btn btn-primary">확인</button>
                            </div>
                         </div>
                         <div class="col-md-6">
@@ -95,7 +95,7 @@
                   <div class="park-card p-4">
                      <div class="park-card-body row">
                         <textarea name="content"> 
-                              글을 작성해주세요.
+                              ${board.content}
                           </textarea>
                      </div>
                   </div>

@@ -32,16 +32,19 @@ public class Img_Board_Read_Service implements Action {
 			Img_Board imgboard = dao.getImg_BoardByIdx(idx);
 			
 			HttpSession session = request.getSession();
-	        User user = (User) session.getAttribute("member");
+			User user = (User) session.getAttribute("member");
 			
 	        if(user != null) {
 	        	Yes_Dao yesdao = new Yes_Dao();
-				Yes yes = yesdao.getYesByIdxEmail(idx , user.getEmail_id());
+				String yes = yesdao.getYesEmailByIdxEmail(idx , user.getEmail_id());
 				
-				System.out.println(yes.getEmail_id());
-				
-				request.setAttribute("yes", yes);
+				if(yes != null) {
+					request.setAttribute("yes", yes);
+				}else {
+					request.setAttribute("yes", "no");
+				}
 	        }
+	        
 			request.setAttribute("imgboard", imgboard);
 			request.setAttribute("b_code", b_code);
 			

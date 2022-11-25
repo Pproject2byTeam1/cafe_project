@@ -24,10 +24,10 @@ public class Yes_Dao {
    
    //yes 여부 판단
    public Yes getYesByIdxEmail(int idx, String email_id) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Yes yes = new Yes();
+      Connection conn = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+      Yes yes = new Yes();
 
 		try {
 			
@@ -45,19 +45,19 @@ public class Yes_Dao {
 	             System.out.println("조회 데이터 없음");
 	         }
 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return yes;
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+      } finally {
+         try {
+            rs.close();
+            pstmt.close();
+            conn.close();
+         } catch (Exception e2) {
+            System.out.println(e2.getMessage());
+         }
+      }
+      
+      return yes;
    }
    
    public List<Yes> getYesBy_idx(String email_id) {

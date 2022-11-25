@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataContentviewService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
+import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -26,6 +28,8 @@ import kr.or.kosa.service.Logout_Service;
 import kr.or.kosa.service.MarketBoardDeleteService;
 import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
+import kr.or.kosa.service.MarketBoardWriteService;
+import kr.or.kosa.service.MarketBoardWriteViewService;
 import kr.or.kosa.service.MessageDeleteService;
 import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
@@ -35,6 +39,7 @@ import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
 import kr.or.kosa.service.Regular_Board_Write_Service;
 import kr.or.kosa.service.UpdatePwdService;
+import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.UserUpdateService;
@@ -170,14 +175,24 @@ public class FrontController extends HttpServlet {
 			action = new MarketBoardListService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 읽기
+		}else if(urlcommand.equals("/marketboard_read.do")){ // 거래 게시판 읽기
 			
 			action = new MarketBoardReadService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/marketboard_delete.do")){ // 데이터 게시판 삭제
+		}else if(urlcommand.equals("/marketboard_delete.do")){ // 거래 게시판 삭제
 			
 			action = new MarketBoardDeleteService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/marketboard_writeok.do")){ // 데이터 게시판 쓰기
+			
+			action = new MarketBoardWriteService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/marketboard_write.do")){ // 데이터 게시판 쓰기 페이지 가기
+			
+			action = new MarketBoardWriteViewService();
 			forward = action.execute(request, response);
 			
 		}else if(urlcommand.equals("/userinfo.do")){  // 유저정보 페이지 이동
@@ -214,22 +229,34 @@ public class FrontController extends HttpServlet {
 			action = new adminUpdateService();
 			forward = action.execute(request, response);
 			
-		}else if (urlcommand.equals("/data_contentview.do")) { // 데이터 글내용 보기
-			action = new DataContentviewService();
-			forward = action.execute(request, response);
-			
-	
 		}else if(urlcommand.equals("/regular_write.do")){ // 자유게시판 글쓰기
 			
 			action = new Regular_Board_Write_Service();
 			forward = action.execute(request, response);
 	
-		}else if(urlcommand.equals("/data_post.do")){ // 
+		}else if(urlcommand.equals("/data_post.do")){ // 찐 자료 게시판 글 내용 보기
 			
 			action = new Data_Board_Post_Service();
 			forward = action.execute(request, response);
 			
+		}else if(urlcommand.equals("/user_activity.do")){ // 자신활동내역 페이지 이동
+			
+			action = new UserActivityService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/boardContent.do")){ // 글 내용 보기 중간 터널
+			
+			action = new BoardContentService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/board_delete.do")) {//게시판 삭제(거래)
+			
+			action = new DeleteOkService();
+	        forward = action.execute(request, response);
+			
 		}
+	
+		
 		
 		if (forward != null) {
 			if (forward.isRedirect()) { // true 페이지 재 요청 (location.href="페이지"
