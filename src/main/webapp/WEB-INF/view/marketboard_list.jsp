@@ -39,6 +39,7 @@
 	$(document).ready(function(){
 		let b_code = "<c:out value='${b_code}'/>";
 		
+		
 			$('.search').click(function(){
 			    var search = $(this).val();
 
@@ -52,11 +53,12 @@
 						dataType: "JSON",
 						success: function(data){
 														
-							$("#ajax").empty();
+							$(".searchlist").empty();
 							
 							$(data).each(function(){
+								
 								console.log(this);
-								html = '<div class="mcard" onclick="location.href=marketboard_read.do?b_code=' + this.b_code + 'idx=' + this.idx + '">';
+								html = '<div class="mcard" onclick="location.href=' + "'marketboard_read.do?b_code=" + this.b_code + '&idx=' + this.idx + "'" + ';">';
 								html += '<div class="mimg">'
 								html += '<img src="image/board/' + this.b_code + '/' + this.img_name + '" id="mimg"/>';
 								html += '</div>'
@@ -73,11 +75,13 @@
 									html += '<span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"'
 										html += 'class="rounded-circle">' + this.nick + '|' + this.w_date + '</span>';
 								html += '</div>';
-								console.log(html);
-								$('#search').append(html);
 								
+								$('.searchlist').append(html);
 								
-							});
+							}); 
+							
+							$('.searchlist .mcard').last().remove();
+							
 						}
 					});
 				});
@@ -102,7 +106,7 @@
      <c:import url="/WEB-INF/view/common/side.jsp" />
      <!-- End Sidebar -->
 	<main id="main" class="main">
-
+		
 		<!-- Page Title -->
 		<div class="pagetitle">
 			<h1>거래 게시판</h1>
@@ -166,9 +170,9 @@
   					<p>데이터가 없습니다</p>
   				</c:if>
 					<!-- 보드	리스트 출력 시작 -->
-					<div class="search container container__content--flow">
+					<div class="searchlist container container__content--flow">
 						<c:forEach var="list" items="${list}" varStatus="status">
-						<div class="mcard" onclick="location.href='marketboard_read.do?b_code=${list.b_code}&idx=${list.idx}'">
+						<div class="mcard" onclick="location.href='marketboard_read.do?b_code=${list.b_code}&idx=${list.idx}';">
 							<div class="mimg">
 							<img src="image/board/${list.b_code}/${list.img_name}" id="mimg"/>
 							</div>
@@ -186,7 +190,7 @@
 									class="rounded-circle"> ${list.nick} | ${list.w_date}</span>
 						</div>
 						</c:forEach>					
-				</div>
+					</div>
 					<!-- 보드 페이지 시작 -->
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">

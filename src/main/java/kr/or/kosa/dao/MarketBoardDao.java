@@ -315,6 +315,7 @@ public class MarketBoardDao {
 			read = new MarketBoard();
 
 			if (rs.next()) {
+				read.setIdx(idx);
 				read.setB_code(rs.getInt("b_code"));
 				read.setSold(rs.getString("sold"));
 				read.setM_mode(rs.getString("m_mode"));
@@ -365,9 +366,9 @@ public class MarketBoardDao {
 			String checkemail = "select email_id from board where idx=?";
 
 			// 게시글 삭제 쿼리
-			String delcomments = "delete from comments where idx_fk=?";
+			String delcomments = "delete from comments where idx=?";
 			String delmarket = "delete from market_board where idx=?";
-			String delboard = "delete from mboard where idx=?";
+			String delboard = "delete from board where idx=?";
 
 			pstmt = conn.prepareStatement(checkemail);
 			pstmt.setInt(1, idx);
@@ -376,33 +377,34 @@ public class MarketBoardDao {
 
 			if (rs.next()) { // 삭제글은 존재
 				// session의 email_id와 삭제시 cmd로 받아온 게시판 idx가 해당 글의 email_id와 동일한지
-				if (checkemail.equals(rs.getString("email_id"))) {
+				if (checkemail.equals(email_id)) {
+					System.out.println("이메일 검증 통과" + checkemail + email_id);
 					// 댓글삭제
 					pstmt1 = conn.prepareStatement(delcomments);
 					pstmt1.setInt(1, idx);
 					pstmt1.executeUpdate();
-
+					System.out.println("댓글삭제");
 					// 게시글 삭제 (거래게시판)
 					pstmt2 = conn.prepareStatement(delmarket);
 					pstmt2.setInt(1, idx);
-					pstmt2.executeUpdate();
-
+					row = pstmt2.executeUpdate();
+					System.out.println("거래삭제");
 					// 게시글 삭제 (게시판)
 					pstmt3 = conn.prepareStatement(delboard);
 					pstmt3.setInt(1, idx);
-					pstmt3.executeUpdate();
-
+					row = pstmt3.executeUpdate();
+					System.out.println("보드삭제");
 					if (row > 0) {
 						conn.commit(); // 두개의 delete 실반영
 					}
 
-				} else { // 비밀번호가 일치 하지 않는 경우
+				}else { //이메일 검증 실패
 					row = -1;
 				}
-			} else { // 삭제하는 글이 존재하지 않는 경우
+			}else {
 				row = 0;
 			}
-
+			
 		} catch (Exception e) {
 			// rollback
 			// 예외가 발생하면
