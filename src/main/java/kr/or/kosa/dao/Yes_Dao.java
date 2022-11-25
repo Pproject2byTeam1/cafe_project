@@ -24,41 +24,82 @@ public class Yes_Dao {
    
    //yes 여부 판단
    public Yes getYesByIdxEmail(int idx, String email_id) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Yes yes = new Yes();
+      Connection conn = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+      Yes yes = new Yes();
 
-		try {
-			
-			 conn = ds.getConnection();
-	         String sql = "select yes_idx, email_id, idx from yes where email_id=? and idx=?";
-	         pstmt.setString(1, email_id);
-	         pstmt.setInt(2, idx);
-	         rs = pstmt.executeQuery();
-	         
-	         if(rs.next()) {
-	        	 yes.setEmail_id(email_id);
-	        	 yes.setIdx(idx);
-	        	 yes.setYes_idx(rs.getInt("yes_idx"));
-	         } else {
-	             System.out.println("조회 데이터 없음");
-	         }
+      try {
+         
+          conn = ds.getConnection();
+            String sql = "select yes_idx, email_id, idx from yes where email_id=? and idx=?";
+            pstmt = conn.prepareStatement(sql);
+            
+            pstmt.setString(1, email_id);
+            pstmt.setInt(2, idx);
+            rs = pstmt.executeQuery();
+            
+            if(rs.next()) {
+               yes.setEmail_id(email_id);
+               yes.setIdx(idx);
+               yes.setYes_idx(rs.getInt("yes_idx"));
+            } else {
+                System.out.println("조회 데이터 없음");
+            }
 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return yes;
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+      } finally {
+         try {
+            rs.close();
+            pstmt.close();
+            conn.close();
+         } catch (Exception e2) {
+            System.out.println(e2.getMessage());
+         }
+      }
+      
+      return yes;
    }
+   
+   public String getYesEmailByIdxEmail(int idx, String email_id) {
+      Connection conn = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+      Yes yes = new Yes();
+
+      try {
+         
+          conn = ds.getConnection();
+            String sql = "select yes_idx, email_id, idx from yes where email_id=? and idx=?";
+            pstmt = conn.prepareStatement(sql);
+            
+            pstmt.setString(1, email_id);
+            pstmt.setInt(2, idx);
+            rs = pstmt.executeQuery();
+            
+            if(rs.next()) {
+               yes.setEmail_id(email_id);
+               yes.setIdx(idx);
+               yes.setYes_idx(rs.getInt("yes_idx"));
+            } else {
+                System.out.println("조회 데이터 없음");
+            }
+
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+      } finally {
+         try {
+            rs.close();
+            pstmt.close();
+            conn.close();
+         } catch (Exception e2) {
+            System.out.println(e2.getMessage());
+         }
+      }
+      
+      return yes.getEmail_id();
+  }
    
    public List<Yes> getYesBy_idx(String email_id) {
 

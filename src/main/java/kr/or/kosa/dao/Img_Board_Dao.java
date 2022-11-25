@@ -216,9 +216,9 @@ public class Img_Board_Dao {
 			
 			pstmt.setString(6, img_board.getImg_name());
 			
-			System.out.println("ahah");
-			
 			row = pstmt.executeUpdate();
+			
+			System.out.println("ahah");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

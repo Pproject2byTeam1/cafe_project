@@ -38,24 +38,21 @@
   	<script type="text/javascript">
   	
   		$(function(){
-  			console.log(${yes.email_id});
   			
-  			let yesemail_id = "<c:out value='${yes.email_id}'/>";
-  			
-  			if(yesemail_id == null || yesemail_id == ""){
-  				$("#yesbtn").append('<i class="bi bi-heart"></i>');
-  			}else{
-  				$("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
-  			}
+  			let email_id = '<c:out value="${member.email_id}" />';
+  			let yes = '<c:out value="${yes}" />';
+  			let idx = '<c:out value="${imgboard.idx}" />';
   			
 	  		/* 게시물 좋아요 비동기 처리 */
 	  		$("#yesbtn").click(function(){
 	  			
-	  			if(yesemail_id == null || yesemail_id == ""){
+	  			console.log("hahaha");
+	  			console.log(email_id);
+	  			console.log("sdfs" + yes);
+	  			
+	  			if(yes == "no"){
 	  				
-	  				let yesemail_id = "<c:out value='${member.email_id}'/>";
-	  				
-	  				requestdata = {"idx": ${imgboard.idx}, "email_id": yesemail_id};
+	  				requestdata = {"idx": idx, "email_id": email_id};
 	  				
 	  				console.log(requestdata);
 	  				
@@ -66,7 +63,10 @@
 			        	dataType: "HTML",
 			        	success: function(data){
 			        		
-			        		alert(data);
+			        		yes = email_id;
+			        		
+			        		$("#yesbtn").empty();
+			        		$("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
 			        		swal(data);
 			        	},
 			        	beforeSend: function(){
@@ -79,9 +79,7 @@
 	  				
 	  			}else{
 	  				
-	  				let yesemail_id = "<c:out value='${member.email_id}'/>";
-	  				
-	  				requestdata = {"idx": ${imgboard.idx}, "email_id": yesemail_id};
+	  				requestdata = {"idx": idx, "email_id": email_id};
 	  				
 	  				$.ajax({
 	  					type: "POST",
@@ -89,7 +87,10 @@
 						data: requestdata,
 			        	dataType: "HTML",
 			        	success: function(data){
-			        		alert(data);
+			        		yes = "no";
+			        		
+			        		$("#yesbtn").empty();
+			        		$("#yesbtn").append('<i class="bi bi-heart"></i>');
 			        		swal(data);
 			        	},
 			        	beforeSend: function(){
@@ -146,7 +147,7 @@
 				
 				<div class="col-10">
 					<div class="park-card p-4">
-						<div class="park-card-body ms-5 row">
+						<div class="park-card-body ms-3 row">
 							<div class="col-md-6 col mb-3">
 								<img src="upload/${imgboard.img_name}">
 							</div>
@@ -163,11 +164,15 @@
 									<div class="col mt-2">
 										<c:if test="${member != null}">
 											<div class="row">
-													<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"></button>
+												<c:if test="${yes == 'no'}">
+												<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
+												</c:if>
+												<c:if test="${yes != 'no'}">
+												<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
+												</c:if>
 												<c:if test="${member.email_id == imgboard.email_id}">
 													<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button">수정</button> &nbsp;
 													<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button">삭제</button> &nbsp;
-												
 												</c:if>
 											</div>
 										</c:if>
