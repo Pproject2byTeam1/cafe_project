@@ -27,12 +27,15 @@ public class MarketBoardReadService implements Action {
 	        request.setAttribute("infolist", infolist);
 			
 			int idx = Integer.parseInt(request.getParameter("idx"));
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			
 			
 			MarketBoardDao dao = new MarketBoardDao();
 			
 			MarketBoard list = dao.readMarket(idx);
 			
 			request.setAttribute("list", list);
+			request.setAttribute("b_code", b_code);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
