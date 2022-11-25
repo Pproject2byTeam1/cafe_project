@@ -38,7 +38,7 @@ public class UserDao {
 					+ "(select rownum rn, m.rank, m.email_id, m.nick, m.name, u.phone, to_char(u.year_birth, 'yyMMdd') as year_birth, m.isadmin "
 					+ "from member m join user_details u "
 					+ "on m.email_id = u.email_id "
-					+ "where not nick ='admin' "
+					+ "where not m.email_id ='admin@admin' "
 					+ "order by name) where rn <= ? and rn >= ?";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -204,7 +204,7 @@ public class UserDao {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = "select email_id, password, name, point "
+			String sql = "select email_id, password, name, point, isadmin "
 					+"from member "
 					+"where email_id=?";
 			
@@ -221,7 +221,8 @@ public class UserDao {
 				userlist.setEmail_id(rs.getString("email_id"));
 				userlist.setPassword(rs.getString("password"));
 				userlist.setName(rs.getString("name"));
-				userlist.setPoint(rs.getInt("point"));				
+				userlist.setPoint(rs.getInt("point"));	
+				userlist.setIsAdmin(rs.getString("isadmin"));
 				
 			}
 			
@@ -509,6 +510,37 @@ public class UserDao {
 				pstmt.setString(4, date);
 				pstmt.setString(5, email_id);
 				row = pstmt.executeUpdate();
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
+		}
+		
+		
+		//특정 관리등급 바꾸기
+		public int modifyAdmin(String id) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "UPDATE member SET isadmin='X' WHERE email_id=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				
+				row = pstmt.executeUpdate();
+				
 				
 			}catch (Exception e) {
 				System.out.println(e.getMessage());
