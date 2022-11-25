@@ -66,7 +66,7 @@ public class MarketBoardDeleteService implements Action {
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
-				forward.setPath("/WEB-INF/view/list.jsp");
+				forward.setPath("/WEB-INF/view/redirect.jsp");
 				
 			}else {
 				msg ="삭제 할 수 없습니다.";

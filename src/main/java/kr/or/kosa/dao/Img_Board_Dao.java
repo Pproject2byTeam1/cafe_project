@@ -216,7 +216,7 @@ public class Img_Board_Dao {
 			
 			pstmt.setString(6, img_board.getImg_name());
 			
-			System.out.println("ahah");
+			
 			
 			row = pstmt.executeUpdate();
 			

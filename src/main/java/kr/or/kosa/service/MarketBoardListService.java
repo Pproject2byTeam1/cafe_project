@@ -9,6 +9,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.MarketBoardDao;
+import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.MarketBoard;
 
@@ -28,6 +29,7 @@ public class MarketBoardListService implements Action {
 	        request.setAttribute("infolist", infolist);
 			
 			MarketBoardDao market_dao = new MarketBoardDao(); 
+			Yes_Dao yes_dao = new Yes_Dao();
 			
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
