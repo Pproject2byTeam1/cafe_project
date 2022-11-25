@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.kosa.dao.Calender_Dao;
 import kr.or.kosa.dao.Yes_Dao;
 
 
@@ -29,7 +28,7 @@ public class Yes extends HttpServlet {
        
        try {        
           String email_id = request.getParameter("email_id");
-         int idx = Integer.parseInt(request.getParameter("idx"));
+          int idx = Integer.parseInt(request.getParameter("idx"));
          
          Yes_Dao dao = new Yes_Dao();
          int row = dao.checkCal(email_id, idx);
