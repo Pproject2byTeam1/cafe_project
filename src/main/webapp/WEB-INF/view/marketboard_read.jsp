@@ -34,6 +34,10 @@
 <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
 <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
 <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+<!-- sweetalert -->
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 <!-- 거래게시판 CSS 시작 -->
 <link href="assets/css/marketboard_read.css" rel="stylesheet">
 <!-- 거래게시판 CSS 끝 -->
@@ -53,6 +57,74 @@
  			location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
 			
 		});
+		
+		let email_id = '<c:out value="${member.email_id}" />';
+        let yes = '<c:out value="${yes}" />';
+        let idx = '<c:out value="${list.idx}" />'
+        
+        /* 게시물 좋아요 비동기 처리 */
+        $("#yesbtn").click(function(){
+           
+           console.log("hahaha");
+           console.log(email_id);
+           console.log("sdfs" + yes);
+           
+           if(yes == "no"){
+              
+              requestdata = {"idx": idx, "email_id": email_id};
+              
+              console.log(requestdata);
+              
+              $.ajax({
+                 type: "POST",
+                 url: "Yes",
+               data: requestdata,
+                 dataType: "HTML",
+                 success: function(data){
+                    
+                    yes = email_id;
+                    
+                    $("#yesbtn").empty();
+                    $("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
+                    swal(data);
+                 },
+                 beforeSend: function(){
+                  $('.wrap-load').removeClass('display-none');
+               },
+               complete: function(){
+                  $('.wrap-loading').addClass('display-none');
+               }
+              });
+              
+           }else{
+              
+              requestdata = {"idx": idx, "email_id": email_id};
+              
+              $.ajax({
+                 type: "POST",
+                 url: "YesRemove",
+               data: requestdata,
+                 dataType: "HTML",
+                 success: function(data){
+                    yes = "no";
+                    
+                    $("#yesbtn").empty();
+                    $("#yesbtn").append('<i class="bi bi-heart"></i>');
+                    swal(data);
+                 },
+                 beforeSend: function(){
+                  $('.wrap-load').removeClass('display-none');
+               },
+               complete: function(){
+                  $('.wrap-loading').addClass('display-none');
+               }
+              });
+              
+           }
+           
+           
+        });
+
 		
   	});
   	
@@ -142,8 +214,14 @@
 												<!-- 본인확인 -->
 												<button type="button" id="List" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
-												<button type="button" id="Top" 
-													class="btn btn-outline-secondary btn-sm rounded-pill">TOP</button>
+												<c:if test="${member != null}">
+													<c:if test="${yes == 'no'}">
+	                                    				<button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
+	                                    			</c:if>
+	                                    			<c:if test="${yes != 'no'}">
+	                                    				<button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
+	                                    			</c:if>	
+												</c:if>
 											</div>
 										</div>
 

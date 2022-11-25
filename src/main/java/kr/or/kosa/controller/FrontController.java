@@ -27,6 +27,8 @@ import kr.or.kosa.service.Logout_Service;
 import kr.or.kosa.service.MarketBoardDeleteService;
 import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
+import kr.or.kosa.service.MarketBoardWriteService;
+import kr.or.kosa.service.MarketBoardWriteViewService;
 import kr.or.kosa.service.MessageDeleteService;
 import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
@@ -35,7 +37,6 @@ import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
 import kr.or.kosa.service.Regular_Board_Write_Service;
-import kr.or.kosa.service.UpdatePwdService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.UserUpdateService;
@@ -179,6 +180,16 @@ public class FrontController extends HttpServlet {
 		}else if(urlcommand.equals("/marketboard_delete.do")){ // 거래 게시판 삭제
 			
 			action = new MarketBoardDeleteService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/marketboard_writeok.do")){ // 데이터 게시판 쓰기
+			
+			action = new MarketBoardWriteService();
+			forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/marketboard_write.do")){ // 데이터 게시판 쓰기 페이지 가기
+			
+			action = new MarketBoardWriteViewService();
 			forward = action.execute(request, response);
 			
 		}else if(urlcommand.equals("/userinfo.do")){  // 유저정보 페이지 이동

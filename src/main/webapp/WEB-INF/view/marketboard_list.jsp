@@ -38,6 +38,13 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		let b_code = "<c:out value='${b_code}'/>";
+			
+			//글쓰기
+			$("#Write").click(function(){
+				console.log("write 클릭");
+				location.href="marketboard_write.do?b_code=" + b_code;
+				
+			});
 		
 		
 			$('.search').click(function(){

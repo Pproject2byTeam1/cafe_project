@@ -29,18 +29,16 @@ public class MarketBoardDao {
 	public int writeMarket(MarketBoard market) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
 		int row = 0;
 
 		try {
 
 			conn = ds.getConnection();
 
-			conn.setAutoCommit(false);
-
 			// Board 삽입
-			String sql = "insert into board (idx,title,nick,content,email_id,b_code) "
-					+ "values(idx_seq.nextval, ?, ?, ?, ?, ?)";
+			String sql = "INSERT ALL INTO board (idx, title, nick, content, email_id, b_code) "
+		            + "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) INTO market_board (b_idx, idx, m_mode, cate, price, sold, img_name) " 
+		            + "VALUES (IMG_B_IDX_SEQ.nextval, IDX_SEQ.currval, ?, ?, ?, ?, ?) select * from dual";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, market.getTitle());
@@ -48,24 +46,18 @@ public class MarketBoardDao {
 			pstmt.setString(3, market.getContent());
 			pstmt.setString(4, market.getEmail_id());
 			pstmt.setInt(5, market.getB_code());
-
+			pstmt.setString(6, market.getM_mode());
+			pstmt.setString(7, market.getCate());
+			pstmt.setInt(8, market.getPrice());
+			pstmt.setString(9, market.getSold());
+			pstmt.setString(10, market.getImg_name());
+			
 			row = pstmt.executeUpdate();
+			
 			if (row < 0) {
 				throw new Exception("Board 삽입 실패");
 			}
 
-			// 거래게시판 삽입
-			String sql2 = "insert into market_board(b_idx,idx,m_mode,cate,price,sold,img_name) "
-					+ "values(market_idx_seq.nextval, idx_seq.currval, ?, ?, ?, ?, ?)";
-			pstmt2 = conn.prepareStatement(sql2);
-
-			pstmt2.setString(1, "m_mode");
-			pstmt2.setString(2, "cate");
-			pstmt2.setString(3, "price");
-			pstmt2.setString(4, "sold");
-			pstmt2.setString(5, "img_name");
-
-			row = pstmt2.executeUpdate();
 			if (row < 0) {
 				throw new Exception("거래게시판 작성 실패");
 			} else {
@@ -83,7 +75,6 @@ public class MarketBoardDao {
 		} finally {
 			try {
 				conn.setAutoCommit(true);
-				pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
@@ -351,9 +342,6 @@ public class MarketBoardDao {
 	public int delMarket(int idx, String email_id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt1 = null;
-		PreparedStatement pstmt2 = null;
-		PreparedStatement pstmt3 = null;
 		ResultSet rs = null;
 		int row = 0;
 		try {
@@ -374,29 +362,29 @@ public class MarketBoardDao {
 			pstmt.setInt(1, idx);
 			pstmt.setString(2,email_id );
 			rs = pstmt.executeQuery();
-			conn.setAutoCommit(false);
 
 			if (rs.next()) { // 삭제글은 존재
 				// session의 email_id와 삭제시 cmd로 받아온 게시판 idx가 해당 글의 email_id와 동일한지
-				if (checkemail.equals(email_id)) {
-					System.out.println("이메일 검증 통과" + checkemail + email_id);
+				if (email_id.equals(rs.getString("email_id"))) {
+					
+					System.out.println("이메일 검증 통과 : " + rs.getString("email_id") + email_id);
 					// 댓글삭제
-					pstmt1 = conn.prepareStatement(delcomments);
-					pstmt1.setInt(1, idx);
-					pstmt1.executeUpdate();
+					pstmt = conn.prepareStatement(delcomments);
+					pstmt.setInt(1, idx);
+					pstmt.executeUpdate();
 					System.out.println("댓글삭제");
 					// 게시글 삭제 (거래게시판)
-					pstmt2 = conn.prepareStatement(delmarket);
-					pstmt2.setInt(1, idx);
-					row = pstmt2.executeUpdate();
-					System.out.println("거래삭제");
+					pstmt = conn.prepareStatement(delmarket);
+					pstmt.setInt(1, idx);
+					pstmt.executeUpdate();
+					System.out.println("거래삭제 row = " + row);
 					// 게시글 삭제 (게시판)
-					pstmt3 = conn.prepareStatement(delboard);
-					pstmt3.setInt(1, idx);
-					row = pstmt3.executeUpdate();
-					System.out.println("보드삭제");
+					pstmt = conn.prepareStatement(delboard);
+					pstmt.setInt(1, idx);
+					row = pstmt.executeUpdate();
+					System.out.println("보드삭제 row = " + row);
 					if (row > 0) {
-						conn.commit(); // 두개의 delete 실반영
+						conn.commit(); // 3개의 delete 실반영
 					}
 
 				}else { //이메일 검증 실패
@@ -418,9 +406,6 @@ public class MarketBoardDao {
 		} finally {
 			try {
 				pstmt.close();
-				pstmt1.close();
-				pstmt2.close();
-				pstmt3.close();
 				rs.close();
 				conn.close();// 반환
 			} catch (Exception e2) {

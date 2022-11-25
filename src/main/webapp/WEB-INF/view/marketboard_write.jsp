@@ -9,10 +9,8 @@
 <title>marketboard_write</title>
 
 <!-- jQuery -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-</script>
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -58,15 +56,19 @@
      <!-- End Sidebar -->
      
 	<main id="main" class="main">
-
+		
+		<c:if test="${member == null }">
+			<jsp:forward page="/WEB-INF/view/login.jsp"/>
+		</c:if>
+		
 		<!-- Page Title -->
 		<div class="pagetitle">
-			<h1>거래 게시판</h1>
+			<h1>거래 게시판 글쓰기</h1>
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="index.html">전체글 : 000</a></li>
-					<li class="breadcrumb-item active">판매중 : 000</li>
-					<li class="breadcrumb-item">판매완료 : 000</li>
+					<li class="breadcrumb-item"><a href="index.html">전체글 : ${totalboardcount}</a></li>
+					<li class="breadcrumb-item active">판매중 : ${soldcount}</li>
+					<li class="breadcrumb-item">판매완료 : ${totalboardcount-soldcount}</li>
 				</ol>
 			</nav>
 		</div>
@@ -82,189 +84,79 @@
 
 							<div class="row">
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
-								<div class="col-md-8">
-									<span id="marketB_Title">${list.title}</span>
+								<div class="col-md-12">
+									<!-- 글 제목 -->
+									<form name="bbs" action="marketboard_writeok.do" method="POST" enctype="multipart/form-data">
+									<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요." name="title" required>
+									<input id="b_code" name="b_code" value="${b_code}" type="hidden" />
 									<p>
 									<hr>
-									<div class="row">
-										<div class="col-lg-9">
-											<img class="marketB_img" src="image/board/5/${list.img_name}">
+									
+										<div>
+											<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" required>
 										</div>
-										<div align="center" class="col-lg-3">
+										<div>
 											<div class="info-body price">
-												<span id="marketB_Price">${list.price}</span>
+												가격 : <input type="text" class="form-control" id="price" placeholder="숫자만 입력하세요" name="price" required>
 											</div>
 											<div class="info-body">
-												<span id="marketB_Text.ns">${list.m_mode}|${list.sold}|${list.cate}</span>
+												<label class="col-sm-2 col-form-label">카테고리 : </label>
+												<select id="cate" name="cate" class="form-select" aria-label="Default select example">
+												<option value="가전">가전</option>
+												<option value="디지털">디지털</option>
+												<option value="생활">생활</option>
+												<option value="스포츠">스포츠</option>
+												<option value="의류">의류</option>
+												<option value="취미">취미</option>
+												<option value="문화">문화</option>
+												</select>
 											</div>
-											<div class="info-body">
-												<span id="marketB_Text.ns">조회수:${list.hits} 댓글:3 찜:3</span>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="m_mode" value="직거래" checked>
+												<label class="form-check-label" for="직거래">직거래</label>
 											</div>
-											<div class="info-body">
-												<img src="image/rank_icon/1.gif" alt="Profile"
-													style="width:15px" class="rounded-circle">
-												<span id="marketB_Text.ns">${list.nick}</span>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="m_mode" value="택배거래">
+												<label class="form-check-label" for="택배거래">택배거래</label>
 											</div>
-											<div class="info-body">
-												<span id="marketB_Text.ns">${list.w_date}</span>
-											</div>
+
 										</div>
-									</div>
-									<div class="row">
+									
+									
 										<div class="col-md-12">
 											<hr>
-											${list.content}
+											<!-- 글 내용 작성 -->
+											<div class="park-card p-4">
+												<div class="park-card-body row">
+													<textarea name="content" placeholder="내용을 입력해주세요."></textarea>
+												</div>
+											</div>
 											<p>
 										</div>
 										<hr>
 										<div align="right" class="col-md-12">
 											<div>
-												<button type="button" id="Write" 
-													class="btn btn-outline-secondary btn-sm rounded-pill">글쓰기</button>
-												<!-- 본인확인 -->
-												<c:if test="${list.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
-												<button type="button" id="Write" 
-													class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-												<button type="button" id="Write" 
-													class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-												</c:if>
-												<!-- 본인확인 -->
+												<button type="submit" id="submit" 
+													class="btn btn-outline-secondary btn-sm rounded-pill">등록</button>
 												<button type="button" id="List" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
-												<button type="button" id="Top" 
-													class="btn btn-outline-secondary btn-sm rounded-pill">TOP</button>
+									
 											</div>
 										</div>
-
+									</form>
 									</div>
 								</div>
-								<!-- 상단부 1/3으로 나눠 댓글시작 -->
-								<div class="col-md-4">
-									<br>
-									<!-- 댓글 카드 섹션 -->
-									<div>
-										<!-- 작성란 -->
-										<div class="quill-editor-default">
-											<p>댓글 내용을 입력하세요</p>
-										</div>
-										<nav aria-label="Page navigation example">
-											<ul class="pagination justify-content-end">
-
-												<div class="col-md-4 text-lg-end">
-													<br>
-													<button type="button" id="cWrite" 
-														class="btn btn-outline-secondary btn-sm rounded-pill">작성</button>
-												</div>
-												<div class="modal fade" id="basicModal" tabindex="-1">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-body">내용을 입력하세요.</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary"
-																	data-bs-dismiss="modal">Close</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</ul>
-										</nav>
-										<!-- End 작성란 -->
-									</div>
-
-									<div class="marketcard-body">
-										<div class="message">
-											<h5 class="card-title">
-												<img src="image/rank_icon/1.gif" alt="Profile"
-													class="rounded-circle" style="width: 15px"> USER_NICK
-											</h5>
-											<h6 class="card-text">댓글의 내용~~~</h6>
-											<h6></h6>
-										</div>
-										<div class="actions" align="right">
-											<button type="button" id="rereply" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-											<!-- 본인확인 -->	
-											<c:if test="${colist.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
-											<button type="button" id="cEdit" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-											<button type="button" id="cDel" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-											</c:if>
-										</div>
-									</div>
-									<!-- 댓글 목록 카드 섹션 -->
-									<div class="marketcard-body">
-										<div class="message">
-											<h5 class="card-title">
-												<img src="image/rank_icon/1.gif" alt="Profile"
-													class="rounded-circle" style="width: 15px"> USER_NICK
-											</h5>
-											<h6 class="card-text">댓글의 내용~~~</h6>
-											<h6></h6>
-										</div>
-										<div class="actions" align="right">
-											<button type="button" id="rereply" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-											<button type="button" id="cEdit" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-											<button type="button" id="cDel" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-										</div>
-									</div>
-									<!-- 댓글 목록 카드 섹션 -->
-									<div class="marketcard-body">
-										<div class="message">
-											<h5 class="card-title">
-												<img src="image/rank_icon/1.gif" alt="Profile"
-													class="rounded-circle" style="width: 15px"> USER_NICK
-											</h5>
-											<h6 class="card-text">댓글의 내용~~~</h6>
-											<h6></h6>
-										</div>
-										<div class="actions" align="right">
-											<button type="button" id="rereply" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-											<button type="button" id="cEdit" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-											<button type="button" id="cDel" 
-												class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-										</div>
-									</div>
-								</div>
-								<!-- 댓글 끝 -->
+								
+								
 							</div>
 						</div>
 					</div>
 
 				</div>
 			</div>
-		</div>
-
-
-		<!-- 보드 리스트 출력 시작 -->
+		
 
 		<!-- 보드 페이지 시작 -->
-
-		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-				</a></li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">4</a></li>
-				<li class="page-item"><a class="page-link" href="#">5</a></li>
-				<li class="page-item"><a class="page-link" href="#">6</a></li>
-				<li class="page-item"><a class="page-link" href="#">7</a></li>
-				<li class="page-item"><a class="page-link" href="#">8</a></li>
-				<li class="page-item"><a class="page-link" href="#">9</a></li>
-				<li class="page-item"><a class="page-link" href="#">10</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-				</a></li>
-			</ul>
-		</nav>
 
 		<!-- 보드 페이지 끝 -->
 	</main>
@@ -279,6 +171,24 @@
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
+
+<script>
+		tinymce
+				.init({
+					selector : 'textarea',
+					plugins : 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+					toolbar : 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+					tinycomments_mode : 'embedded',
+					tinycomments_author : 'Author name',
+					mergetags_list : [ {
+						value : 'First.Name',
+						title : 'First Name'
+					}, {
+						value : 'Email',
+						title : 'Email'
+					}, ]
+				});
+	</script>
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
