@@ -102,10 +102,10 @@ console.log("${user}");
 													<p class="card-text"><img src="./image/rank_icon/${user.rank}.gif">${board.nick}</p>
 												</div>
 												<div class="col-md-2">
-													<p class="text-right card-text">조회수:10</p>
+													<p class="text-right card-text">조회수:${board.hits}</p>
 												</div>
 												<div class="col-md-2">
-													<p class="text-right card-text">추천:${board.hits}</p>
+													<p class="text-right card-text">추천:${yes}</p>
 												</div>
 												<div class="col-md-3">
 													<p class="text-right card-text">작성일자: ${board.w_date}</p>

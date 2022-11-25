@@ -10,9 +10,9 @@
 
 <!-- jQuery -->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js">
 </script>
+
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -42,7 +42,19 @@
 <link href="assets/css/style.css" rel="stylesheet">
 
   	<script type="text/javascript">
- 
+  	
+  	$(document).ready(function(){
+		/* 글삭제 */
+		$("#delete").click(function(){
+			let idx = "<c:out value='${list.idx}'/>";
+			let b_code = "<c:out value='${b_code}'/>";
+			console.log(idx);
+			console.log(b_code);
+ 			location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
+			
+		});
+		
+  	});
   	
   	</script>
 
@@ -55,8 +67,7 @@
      
      <!-- ======= Sidebar ======= -->
      <c:import url="/WEB-INF/view/common/side.jsp" />
-     <!-- End Sidebar -->
-     
+	 <!-- End Sidebar -->
 	<main id="main" class="main">
 
 		<!-- Page Title -->
@@ -83,7 +94,7 @@
 							<div class="row">
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 								<div class="col-md-8">
-									<span id="marketB_Title">${list.title}</span>
+									<span id="marketB_Title">${list.idx}${list.title}</span>
 									<p>
 									<hr>
 									<div class="row">
@@ -123,9 +134,9 @@
 													class="btn btn-outline-secondary btn-sm rounded-pill">글쓰기</button>
 												<!-- 본인확인 -->
 												<c:if test="${list.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
-												<button type="button" id="Write" 
+												<button type="button" id="edit" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-												<button type="button" id="Write" 
+												<button type="button" id="delete" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
 												</c:if>
 												<!-- 본인확인 -->

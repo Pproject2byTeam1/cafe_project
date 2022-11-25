@@ -53,11 +53,11 @@
 					</a>
 				</c:if> 
 				<c:if test="${infolist.b_type eq 'b4'}">
-					<a class="nav-link " href="#"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
+					<a class="nav-link " href="databoard_list.do??b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
 				<c:if test="${infolist.b_type eq 'b5'}">
-					<a class="nav-link " href="#"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
+					<a class="nav-link " href="marketboard_list.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
 				<c:if test="${infolist.b_type eq 'b6'}">

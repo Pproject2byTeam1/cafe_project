@@ -15,6 +15,7 @@ import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataContentviewService;
 import kr.or.kosa.service.DataWriteService;
+import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -22,6 +23,7 @@ import kr.or.kosa.service.Img_Board_Read_Service;
 import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
 import kr.or.kosa.service.Logout_Service;
+import kr.or.kosa.service.MarketBoardDeleteService;
 import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MessageDeleteService;
@@ -30,6 +32,8 @@ import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
+import kr.or.kosa.service.Regular_Board_Post_Service;
+import kr.or.kosa.service.Regular_Board_Write_Service;
 import kr.or.kosa.service.UpdatePwdService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
@@ -149,6 +153,7 @@ public class FrontController extends HttpServlet {
 		
 			action = new RapportListService();
 			forward = action.execute(request, response);
+			
 		}else if(urlcommand.equals("/data_content.do")) {
 			
 			forward = new ActionForward();
@@ -172,7 +177,7 @@ public class FrontController extends HttpServlet {
 			
 		}else if(urlcommand.equals("/marketboard_delete.do")){ // 데이터 게시판 삭제
 			
-			action = new MarketBoardReadService();
+			action = new MarketBoardDeleteService();
 			forward = action.execute(request, response);
 			
 		}else if(urlcommand.equals("/userinfo.do")){  // 유저정보 페이지 이동
@@ -186,7 +191,7 @@ public class FrontController extends HttpServlet {
 			
 		}else if(urlcommand.equals("/regular_post.do")){ // 유저정보 수정
 			
-			action = new UpdatePwdService();
+			action = new Regular_Board_Post_Service();
 			forward = action.execute(request, response);
 			
 		}else if(urlcommand.equals("/userVerification.do")){ // 유저정보 검증
@@ -216,10 +221,14 @@ public class FrontController extends HttpServlet {
 	
 		}else if(urlcommand.equals("/regular_write.do")){ // 자유게시판 글쓰기
 			
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("/WEB-INF/view/regular_write.jsp");
+			action = new Regular_Board_Write_Service();
+			forward = action.execute(request, response);
 	
+		}else if(urlcommand.equals("/data_post.do")){ // 
+			
+			action = new Data_Board_Post_Service();
+			forward = action.execute(request, response);
+			
 		}
 		
 		if (forward != null) {

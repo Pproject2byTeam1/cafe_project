@@ -62,6 +62,7 @@ public class Board_Info_Dao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -103,6 +104,7 @@ public class Board_Info_Dao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -134,6 +136,7 @@ public class Board_Info_Dao {
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -163,6 +166,7 @@ public class Board_Info_Dao {
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}

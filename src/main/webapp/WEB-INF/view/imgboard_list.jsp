@@ -140,10 +140,10 @@
   				
   				<c:forEach var="list" items="${list}" varStatus="status">
 	  				<figure id="imgtag">
-	            		<a href="img_board_read.do?idx=${img_list[status.index].idx}&b_code=${list.b_code}">
-	            			<img src="image/imgTest/${img_list[status.index].img_name}">
+	            		<a href="img_board_read.do?idx=${list.idx}&b_code=${list.b_code}">
+	            			<img src="upload/${list.img_name}">
 	            		</a>
-	            		<figcaption>${img_list[status.index].b_idx}. ${list.title}</figcaption>
+	            		<figcaption>${list.b_idx}. ${list.title}</figcaption>
 	        		</figure>
   				</c:forEach>
   				

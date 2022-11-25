@@ -21,7 +21,7 @@ public class userVerification implements Action {
 			HttpSession session = request.getSession();
 			User user2 = (User) session.getAttribute("member");
 			String userId = user2.getEmail_id();
-			
+			 
 			UserDao dao = new UserDao();
 			String password = (String) request.getParameter("password");
 			System.out.println(password);
@@ -39,7 +39,7 @@ public class userVerification implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("verification.jsp");
+		  	forward.setPath("/WEB-INF/view/verification.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

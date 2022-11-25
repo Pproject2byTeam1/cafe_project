@@ -71,7 +71,8 @@
   		$("#add_btn").click(function() {
   			
   			let b_code = "<c:out value='${b_code}'/>";
-  	  		let member = "<c:out value='${member}'/>";
+  	  		let email_id = "<c:out value='${member.email_id}'/>";
+  	  		let nick = "<c:out value='${member.nick}'/>";
   			
   			let requestdata3 = {
   					"title": $("#caltitle").val(),
@@ -79,8 +80,8 @@
   					"end_date": $("#calend_date").val(),
   					"content": $("#calcontent").val(),
   					"finish": $("#addSelect option:selected").val(),
-  					"email_id": member.email_id,
-  					"nick": member.nick,
+  					"email_id": email_id,
+  					"nick": nick,
   					"b_code": b_code
   			};
 
