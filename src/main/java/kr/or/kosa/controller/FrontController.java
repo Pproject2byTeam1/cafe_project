@@ -15,6 +15,7 @@ import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataContentviewService;
 import kr.or.kosa.service.DataWriteService;
+import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -220,6 +221,11 @@ public class FrontController extends HttpServlet {
 			forward.setRedirect(false);
 			forward.setPath("/WEB-INF/view/regular_write.jsp");
 	
+		}else if(urlcommand.equals("/data_post.do")){ // 
+			
+			action = new Data_Board_Post_Service();
+			forward = action.execute(request, response);
+			
 		}
 		
 		if (forward != null) {

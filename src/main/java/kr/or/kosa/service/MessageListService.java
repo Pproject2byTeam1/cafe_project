@@ -10,6 +10,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.MessageDao;
 import kr.or.kosa.dto.Message;
+import kr.or.kosa.dto.User;
 
 public class MessageListService implements Action {
 
