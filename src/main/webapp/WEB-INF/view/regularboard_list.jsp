@@ -176,9 +176,10 @@
 								<div>
 										<th scope="row"><input type="checkbox"></th>
 										<td><span class="mt-4 parent"><h3>${board.title}</h3></span><br>
-										<span class="son_name">${board.nick}</span> <span
+										<span class="son_name"><img src="./image/rank_icon/${rank[status.index]}.gif">${board.nick}</span> <span
 										class="son_date">${board.w_date}</span> <span class="son_time">
 										</span></td>
+										
 										
 										<td></td>
 		
