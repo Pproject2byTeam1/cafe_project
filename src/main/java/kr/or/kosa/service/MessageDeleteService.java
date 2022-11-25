@@ -11,6 +11,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.MessageDao;
 import kr.or.kosa.dto.Message;
+import kr.or.kosa.dto.User;
 
 public class MessageDeleteService implements Action {
 
@@ -35,8 +36,9 @@ public class MessageDeleteService implements Action {
 			}
 			
 			//다시 리스트 뽑기
-			String userId = (String) session.getAttribute("userid");
-			List<Message> messagelist = dao.getMessageByReceiveId("T2@naver.com"/* userId */);//테스트용
+			User user2 = (User) session.getAttribute("member");
+			String userId = user2.getEmail_id();
+			List<Message> messagelist = dao.getMessageByReceiveId(userId );//테스트용
 			request.setAttribute("messagelist", messagelist);
 			
 			forward = new ActionForward();

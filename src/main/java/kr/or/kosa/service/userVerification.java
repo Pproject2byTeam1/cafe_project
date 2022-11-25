@@ -6,29 +6,40 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dto.User;
 
-public class MessageWriteService implements Action {
+public class userVerification implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
+		int row = 0;
 		
 		try {
-			
+	        //유저정보 가져오기
 			HttpSession session = request.getSession();
 			User user2 = (User) session.getAttribute("member");
 			String userId = user2.getEmail_id();
-			String responde_Id = (String) request.getParameter("sender_id");//받는사람 아이디
 			
-			System.out.println("dd: " + responde_Id);
+			UserDao dao = new UserDao();
+			String password = (String) request.getParameter("password");
+			System.out.println(password);
+			//검증 실행
+			row = dao.verificationUser2(userId, password);
 			
-			request.setAttribute("userId", userId);
-			request.setAttribute("responde_Id", responde_Id);
+			if(row>0) {
+				System.out.println("검증성공");
+				request.setAttribute("verification", true);
+			}else {
+				System.out.println("검증실패");
+				request.setAttribute("verification", false);
+			}
+			
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/memo_write.jsp");
+		  	forward.setPath("verification.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
