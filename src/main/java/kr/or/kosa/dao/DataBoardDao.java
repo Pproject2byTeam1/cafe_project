@@ -3,6 +3,7 @@ package kr.or.kosa.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -25,39 +26,145 @@ public class DataBoardDao {
 		Context context = new InitialContext();
 		ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
 	}
-
-	// 자료 게시판 특정 글 조회
-	public DataBoard getData_BoardByIdx(int idx) {
+	
+	//board 에서 특정한 글조회
+	public Board getBoard_data( int idx) {
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		DataBoard data_board = new DataBoard();
-
+		Board board = new Board();
+		
+		
 		try {
-
 			conn = ds.getConnection();
-			String sql = "select b_idx, idx, ori_name, save_name, volume, refer, depth, step from Data_Board where idx=?";
-			pstmt = conn.prepareStatement(sql);
+			
+			String sql ="select  title,nick,content ,to_char(w_date,'yyyy-MM-dd') as w_date from board where b_code =? and idx=?";
+			pstmt=conn.prepareStatement(sql);
+			
 
 			pstmt.setInt(1, idx);
-
 			rs = pstmt.executeQuery();
-
 			if (rs.next()) {
 
-				data_board.setB_idx(rs.getInt("b_idx"));
-				data_board.setIdx(rs.getInt(rs.getInt("idx")));
-				data_board.setOri_name(rs.getString("ori_name"));
-				data_board.setSave_name(rs.getString("save_name"));
-				data_board.setVolume(rs.getInt("volume"));
-				data_board.setRefer(rs.getInt("refer"));
-				data_board.setDepth(rs.getInt("depth"));
-				data_board.setStep(rs.getInt("step"));
-
+			board.setTitle(rs.getString("title"));
+			board.setNick(rs.getString("nick"));
+			board.setContent(rs.getString("content"));
+			board.setW_date(rs.getString("w_date"));
+		
+		
+		
+			
 			} else {
 				System.out.println("조회 데이터 없음");
 			}
+		} catch (SQLException e) {
+		
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				 conn .close();
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+	
+		return board;
+		
+	}
+ //자료게시판 글 세부내용
+	
+	
+public Board getBoard(int b_code, int idx) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Board board = new Board();
+		
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql ="select a.idx,a.title,a.nick,a.content,to_char(a.w_date, 'yyyy-MM-dd') as w_date ,b.ori_name"
+					+ "from board a join data_board b on a.idx =b.idx"
+					+ "where a.b_code = ? and b.idx=?";
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, idx);
+			System.out.println(board.getTitle());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+			board.setIdx(rs.getInt("idx"));
+			board.setTitle(rs.getString("title"));
+			board.setNick(rs.getString("nick"));
+			board.setContent(rs.getString("content"));
+			board.setW_date(rs.getString("w_date"));
+			
+			System.out.println(board.getTitle());
+			
+		
+			
+			} else {
+				System.out.println("조회 데이터 없음");
+			}
+		} catch (SQLException e) {
+		
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+	
+		return board;
+		
+	}
+	
+	
+	
+	
+	
+	// 자료 게시판 특정 글 조회
+	public Board getData_BoardByIdx(int idx) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Board board = new Board(); 
 
+	try {
+			
+			conn = ds.getConnection();
+			String sql = "select idx, title, nick, content, hits, to_char(w_date, 'YYYY-MM-dd') w_date, report_count, notic, email_id from board where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, idx);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				board.setIdx(rs.getInt("idx"));
+				board.setTitle(rs.getString("title"));
+				board.setNick(rs.getString("nick"));
+				board.setContent(rs.getString("content"));
+				board.setHits(rs.getInt("hits"));
+				board.setW_date(rs.getString("w_date"));
+				board.setEmail_id(rs.getString("email_id"));
+				board.setReport_count(rs.getInt("report_count"));
+				board.setNotic(rs.getString("notic"));
+				board.setEmail_id(rs.getString("email_id"));
+				
+			}else {
+				System.out.println("조회 데이터 없음");
+			}
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -68,8 +175,8 @@ public class DataBoardDao {
 				System.out.println(e2.getMessage());
 			}
 		}
-
-		return data_board;
+		
+		return board;
 	}
 
 	// 자료 게시판 특정 글 삽입
@@ -97,10 +204,10 @@ public class DataBoardDao {
 			/*
 			 * int refermax = getMaxRefer(); int refer = refermax+1; pstmt.setInt(8,refer);
 			 */
-			System.out.println("1."+row);
+			//System.out.println("1."+row);
 			
 			row = pstmt.executeUpdate();
-			System.out.println("2."+row);
+			//System.out.println("2."+row);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -402,6 +509,12 @@ public class DataBoardDao {
 
 	}
 
+	 //게시물 상세보기
+	 
+	 
+	 
+	 
+	 
 	// 글쓰기 refer 값 생성하기
 	private int getMaxRefer() {
 		Connection conn = null;

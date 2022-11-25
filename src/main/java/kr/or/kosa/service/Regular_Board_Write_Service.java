@@ -13,7 +13,7 @@ public class Regular_Board_Write_Service implements Action {
 		
 		ActionForward forward = new ActionForward();
 		
-		String msg = "";
+		String msg = ""; 
 		String url = "";
 		
 		int result = 0;

@@ -35,7 +35,7 @@ public class AdminDao {
 		try {
 			conn = ds.getConnection();
 
-			String sql = "select * from (select rownum rn,title, nick,email_id ,hits, report_count from board where report_count>0)where rn <= ? and rn >= ?";
+			String sql = "select * from (select rownum rn,b_code, idx ,title, nick,email_id ,hits, report_count from board where report_count>0)where rn <= ? and rn >= ?";
 		
 			pstmt = conn.prepareStatement(sql);
 			
@@ -50,7 +50,8 @@ public class AdminDao {
 			
 			while (rs.next()) {
 				Board report = new Board();
-			
+				report.setIdx(rs.getInt("b_code"));
+				report.setIdx(rs.getInt("idx"));
 				report.setTitle(rs.getString("title"));
 				report.setNick(rs.getString("nick"));
 				report.setEmail_id(rs.getString("email_id"));
@@ -75,9 +76,65 @@ public class AdminDao {
 
 		return reportlist;
 	}
+	
+	
+	public List<Board> reportlist2(int cpage, int pagesize) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Board> reportlist = null;
+		try {
+			conn = ds.getConnection();
+
+			String sql = "select * from (select a.b_code, b.b_name a.title,a.nick, a.email_id, a.report_count, a.hits  from board a join board_info b on a.b_code = b.b_code where a.report_count > 0 order by idx)where rn <= ? and rn >= ?";
+		
+			pstmt = conn.prepareStatement(sql);
+			
+			int start = cpage * pagesize - (pagesize - 1); // 1 * 5 - (5 - 1) >> 1
+			int end = cpage * pagesize; // 1 * 5 >> 5
+
+			pstmt.setInt(1, end);
+			pstmt.setInt(2, start);
+		
+			rs = pstmt.executeQuery();
+			reportlist = new ArrayList<Board>();
+			
+			while (rs.next()) {
+				
+				Board report = new Board();
+				Board_Info info = new Board_Info();
+				report.setIdx(rs.getInt("b_code"));
+				info.setB_name(rs.getString("b_name"));
+				report.setTitle(rs.getString("title"));
+				report.setNick(rs.getString("nick"));
+				report.setEmail_id(rs.getString("email_id"));
+				report.setHits(rs.getInt("hits"));
+				report.setReport_count(rs.getInt("report_count"));
+
+				reportlist.add(report);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();// 반환
+			} catch (Exception e2) {
+
+			}
+
+		}
+
+		return reportlist;
+	}
+	
+	
+	
 //게시판 형식
 
-	public Board_Info getBoardInfo(int b_code) {
+	public Board_Info getBoardInfo(int idx) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -87,19 +144,17 @@ public class AdminDao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "select b_code, b_name, side_idx, main_idx, b_type from Board_Info where b_code=?";
+			String sql = "select b.b_name b. from board a, board_info b where a.b_code = b.b_code and a.idx =?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, b_code);
+			pstmt.setInt(1, idx);
 
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				board_info.setB_code(rs.getInt("b_code"));
 				board_info.setB_name(rs.getString("b_name"));
-				board_info.setSide_idx(rs.getInt("side_idx"));
-				board_info.setMain_idx(rs.getInt("main_idx"));
-				board_info.setB_type(rs.getString("b_type"));
+			
 			}
 
 		} catch (Exception e) {
@@ -115,6 +170,10 @@ public class AdminDao {
 
 		return board_info;
 	}
+	//게시판 형식
+	
+	
+	
 	// 이름별 등급조회
 
 	public User getrank(String email_id) {

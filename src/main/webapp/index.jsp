@@ -74,6 +74,7 @@
     <p><a href="marketboard_list.do?b_code=5">거래 게시판</a></p>
     <p><a href="adminInfo.do">마이페이지(관리자)</a></p>
 
+
     <section class="section dashboard">
       <div class="row">
 
