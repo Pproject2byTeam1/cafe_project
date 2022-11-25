@@ -105,14 +105,14 @@
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 
-		<jsp:include page="/common/top.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/view/common/top.jsp"></jsp:include>
 
 	</header>
 	<!-- End Header -->
 
 	<!-- ======= Sidebar ======= -->
 
-	<jsp:include page="/common/side2.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
 
 	<!-- End Sidebar -->
 
@@ -130,7 +130,8 @@
 		<!-- End Page Title -->
 		<!--글쓰기 버튼  -->
 		<div class="col-md-2 text-right">
-			<form name="list" action="user_details.do">
+			<form name="list">
+				<input id="b_code" value="${b_code}" name="b_code" type="hidden" />
 				<select class="form-select" name="ps" onchange="submit()">
 				   <c:forEach var="i" begin="5" end="20" step="5">
 				   		<c:choose>

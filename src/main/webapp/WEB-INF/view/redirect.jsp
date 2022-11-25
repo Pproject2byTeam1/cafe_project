@@ -10,7 +10,6 @@
 		alert('<%= msg %>');		
 	    location.href='<%=url%>';
 	</script>
-	
 <%	  
   }
 %>

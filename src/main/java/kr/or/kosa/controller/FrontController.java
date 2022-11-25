@@ -31,6 +31,7 @@ import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
+import kr.or.kosa.service.Regular_Board_Write_Service;
 import kr.or.kosa.service.UpdatePwdService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
@@ -218,9 +219,8 @@ public class FrontController extends HttpServlet {
 	
 		}else if(urlcommand.equals("/regular_write.do")){ // 자유게시판 글쓰기
 			
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("/WEB-INF/view/regular_write.jsp");
+			action = new Regular_Board_Write_Service();
+			forward = action.execute(request, response);
 	
 		}
 		

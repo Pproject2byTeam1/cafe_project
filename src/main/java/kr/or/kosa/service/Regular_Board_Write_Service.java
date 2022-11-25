@@ -10,6 +10,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.User;
 
 public class Regular_Board_Write_Service implements Action {
 
@@ -18,27 +19,38 @@ public class Regular_Board_Write_Service implements Action {
 		
 		ActionForward forward = new ActionForward();
 		
-		String msg = ""; 
-		String url = "";
+		HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("member");
 		
-		int result = 0;
+		String url = "";
+		String b_code = request.getParameter("b_code");
 		
 		try {
 			
-			
-			//사이드 바
-			Board_Info_Dao infodao = new Board_Info_Dao();
-			List<Board_Info> infolist = infodao.getSideBoardList();
-		
-			//int idx = Integer.parseInt(request.getParameter("idx"));
+			if (user == null) {
 
-			request.setAttribute("infolist", infolist);
-			request.setAttribute(null, infolist);
-			
+	            String board_msg = "권한이 없습니다.";
+	            String board_url = "/WebCafe_Project/regular_list.do?b_code="+b_code;
+	              
+	            request.setAttribute("board_msg", board_msg);
+	            request.setAttribute("board_url", board_url);
+	              
+	            url="/WEB-INF/view/redirect.jsp";
+	           
+	         } else {
+	        	 
+	 			Board_Info_Dao infodao = new Board_Info_Dao();
+	 			List<Board_Info> infolist = infodao.getSideBoardList();
+	 		
+	 			request.setAttribute("infolist", infolist);
+	 			
+	 			url="/WEB-INF/view/regular_write.jsp";
+	 			
+	         }
 			
 			forward = new ActionForward();
-		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/regular_write.jsp");
+ 		  	forward.setRedirect(false);
+ 		  	forward.setPath(url);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
