@@ -184,7 +184,7 @@ public class FrontController extends HttpServlet {
 			action = new UserUpdateService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/regular_post.do")){ // 유저정보 수정
+		}else if(urlcommand.equals("/userUpdatePwd.do")){ // 유저비번 수정
 			
 			action = new UpdatePwdService();
 			forward = action.execute(request, response);
@@ -207,6 +207,10 @@ public class FrontController extends HttpServlet {
 		}else if(urlcommand.equals("/adminUpdate.do")){ // 관리자 정보 변경
 			
 			action = new adminUpdateService();
+=======
+		}else if (urlcommand.equals("/data_contentview.do")) { // 데이터 글내용 보기
+			action = new DataContentviewService();
+>>>>>>> cho
 			forward = action.execute(request, response);
 			
 		}else if (urlcommand.equals("/data_contentview.do")) { // 데이터 글내용 보기
