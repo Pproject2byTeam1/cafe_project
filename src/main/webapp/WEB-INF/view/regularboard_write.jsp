@@ -79,9 +79,9 @@
                   <div class="park-card p-4">
                      <div class="park-card-body row">
                         <div class="md-3 row">
-                           <label for="staticEmail" class="col-sm-2 col-form-label">Title : </label>
+                           <label for="staticEmail" class="col-sm-2 col-form-label">Title :</label>
                            <div class="col-sm-8">
-                              <input type="text" class="form-control" id="title" name="title">
+                              <input type="text" class="form-control" id="title" name="title" value="${board.title}">
                            </div>
                            <div class="col-sm-2">
                               <button type="button" id="modifybtn" class="btn btn-primary">확인</button>
@@ -95,7 +95,7 @@
                   <div class="park-card p-4">
                      <div class="park-card-body row">
                         <textarea name="content"> 
-                              글을 작성해주세요.
+                              ${board.content}
                           </textarea>
                      </div>
                   </div>

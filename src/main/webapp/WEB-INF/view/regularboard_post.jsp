@@ -130,12 +130,16 @@ console.log("${user}");
 
 											<div align="right" class="col-md-12">
 												<div>
-													<button type="button" id="Write"
-														class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
-													<button type="button" id="List"
-														class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-													<button type="button" id="Top"
-														class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
+													<button type="button" id="Write" class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
+													
+													<form action="regular_write.do" method="post">
+														<input type="text" value="${board.email_id}" name="id" style="display: none;">
+														<input type="text" value="${idx}" name="idx" style="display: none;">
+														<input type="text" value="modify" name="todo" style="display: none;">
+														<input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
+													</form>
+														
+													<button type="button" id="Top" class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
 												</div>
 											</div>
 

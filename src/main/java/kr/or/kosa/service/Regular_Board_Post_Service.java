@@ -31,7 +31,6 @@ public class Regular_Board_Post_Service implements Action {
 			
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			
-			System.out.println(idx + "아이디엑스");
 
 			Regular_Board_Dao dao = new Regular_Board_Dao();
 			UserDao udao = new UserDao();
@@ -46,8 +45,10 @@ public class Regular_Board_Post_Service implements Action {
 		
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);
+			request.setAttribute("idx", idx);
 			request.setAttribute("user", user);
 			request.setAttribute("yes", yes);
+			
 			
 			
 			forward = new ActionForward();
