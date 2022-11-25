@@ -64,7 +64,6 @@
    <!-- End Sidebar -->
 
 	<main id="main" class="main">
-
 		<div class="pagetitle">
 			<h1>회원조회</h1>
 			<nav>

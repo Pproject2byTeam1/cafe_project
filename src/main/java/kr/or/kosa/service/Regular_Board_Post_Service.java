@@ -11,6 +11,7 @@ import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.Regular_Board_Dao;
 import kr.or.kosa.dao.UserDao;
+import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
@@ -29,20 +30,24 @@ public class Regular_Board_Post_Service implements Action {
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
 			int idx = Integer.parseInt(request.getParameter("idx"));
+			
+			System.out.println(idx + "아이디엑스");
 
-			UserDao udao = new UserDao();
 			Regular_Board_Dao dao = new Regular_Board_Dao();
+			UserDao udao = new UserDao();
 			Board_Dao bdao = new Board_Dao();
+			Yes_Dao ydao = new Yes_Dao();
 			
 			
-			
-			bdao.updateHits(idx);
 			Board board = dao.getRegular_BoardByIdx(idx);
 			User user = udao.selectUserById(board.getEmail_id());
+			int yes = ydao.getYesCountBy_idx(idx);
+			bdao.updateHits(idx);
 		
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);
 			request.setAttribute("user", user);
+			request.setAttribute("yes", yes);
 			
 			
 			forward = new ActionForward();

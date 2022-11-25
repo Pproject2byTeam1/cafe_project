@@ -11,9 +11,11 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.CommentsDao;
+import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.Regular_Board;
+import kr.or.kosa.dto.User;
 
 public class Regular_Board_List_Service implements Action {
 
@@ -30,6 +32,7 @@ public class Regular_Board_List_Service implements Action {
 			Board_Dao dao = new Board_Dao(); 
 			Yes_Dao ydao = new Yes_Dao();
 			CommentsDao cdao = new CommentsDao();
+			UserDao udao = new UserDao();
 			
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
@@ -64,14 +67,20 @@ public class Regular_Board_List_Service implements Action {
 			//yes, 댓글 수
 			List yescountlist = new ArrayList();
 			List commentcountlist = new ArrayList();
+			List ranklist = new ArrayList();
 			
 			for(Regular_Board re : list) {	
 				int idx = re.getIdx();
+				String email_id = re.getEmail_id();
 				int yescount = ydao.getYesCountBy_idx(idx);
 				int commentcount = cdao.getCommentCountBy_idx(idx);
+				
+				User user = udao.selectUserById(email_id);
+				int rank = user.getRank();
 						
 				yescountlist.add(yescount);
 				commentcountlist.add(commentcount);
+				ranklist.add(rank);
 			}
 			
 		
@@ -83,6 +92,7 @@ public class Regular_Board_List_Service implements Action {
 			request.setAttribute("list", list);
 			request.setAttribute("yes", yescountlist);
 			request.setAttribute("comment", commentcountlist);
+			request.setAttribute("rank", ranklist);
 			request.setAttribute("b_code", b_code);
 			
 			
