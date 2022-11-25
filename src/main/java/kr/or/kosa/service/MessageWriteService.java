@@ -28,7 +28,7 @@ public class MessageWriteService implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/memo_write.jsp");
+		  	forward.setPath("/WEB-INF/view/memo_write.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

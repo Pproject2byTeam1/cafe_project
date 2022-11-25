@@ -32,7 +32,7 @@ public class MessageListService implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/memo_list.jsp");
+		  	forward.setPath("/WEB-INF/view/memo_list.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
