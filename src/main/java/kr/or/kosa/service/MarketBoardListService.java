@@ -38,7 +38,7 @@ public class MarketBoardListService implements Action {
 			
 			
 			//판매중 개수
-			int soldcount = market_dao.countSoldF();
+			int soldcount = market_dao.countSoldF(b_code);
 			
 			//상세보기 >> 다시  LIST 넘어올때  >> 현재 페이지 설정
 			String ps = request.getParameter("ps");
@@ -69,6 +69,7 @@ public class MarketBoardListService implements Action {
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalboardcount", totalboardcount);
 			request.setAttribute("list", list);
+			request.setAttribute("b_code", b_code);
 			request.setAttribute("soldcount", soldcount);
 			//request.setAttribute("pager", pager);
 			
