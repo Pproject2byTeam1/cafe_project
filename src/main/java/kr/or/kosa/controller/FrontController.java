@@ -14,6 +14,8 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataWriteService;
+import kr.or.kosa.service.ImgBoardWriteService;
+import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
 import kr.or.kosa.service.Login_Service;
@@ -83,6 +85,16 @@ public class FrontController extends HttpServlet {
 		} else if(urlcommand.equals("/img_board_read.do")) { //이미지 게시판 읽기
 			
 			action = new Img_Board_Read_Service();
+			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/imgboardWriteView.do")) { //이미지 게시판 글 쓰기 view
+			
+			action = new ImgBoardWriteViewService();
+			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/board_writeok.do")){
+			
+			action = new ImgBoardWriteService();
 			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/calendar_list.do")) {

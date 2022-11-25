@@ -48,10 +48,21 @@
   				padding: 20
   			});
   			
+  			/* 글쓰기 */
+  			$("#addbtn").click(function(){
+  				
+  				let b_code = "<c:out value='${b_code}'/>";
+  				
+  				location.href="imgboardWriteView.do?b_code=" + b_code;
+  				
+  			});
+  			
   			/* 검색 비동기 */
   			$("#pbtn").click(function(){
   				
-  				const requestdata = {"b_code": 4, "search": $("#searchInput").val()};
+  				let b_code = "<c:out value='${b_code}'/>";
+  				
+  				const requestdata = {"b_code": b_code, "search": $("#searchInput").val()};
   				
   				$.ajax({
   					type: "POST",
@@ -59,7 +70,6 @@
   					data: requestdata,
   					dataType: "JSON",
   					success: function(data){
-  						console.log(data);
   						
   						$("#columns").empty();
   						
@@ -99,8 +109,11 @@
 			<div class="flex-fill">
 				<div class="p-5 search-form d-flex align-items-center">
 					<input class="flex-fill" type="text" id="searchInput" placeholder="Search" title="Enter search keyword">
-					<button class="flex-fill" type="button" title="Search" id="pbtn">
+					<button class="flex-fill me-3" type="button" title="Search" id="pbtn">
 						<i class="bi bi-search"></i>
+					</button>
+					<button class="flex-fill ms-5 mt-2" type="button" title="Search" id="addbtn">
+						<h4><i class="bi bi-plus-circle"></i></h4>
 					</button>
 				</div>
 			</div>
@@ -127,7 +140,9 @@
   				
   				<c:forEach var="list" items="${list}" varStatus="status">
 	  				<figure id="imgtag">
-	            		<a href="img_board_read.do?idx=${img_list[status.index].idx}"><img src="image/imgTest/${img_list[status.index].img_name}"></a>
+	            		<a href="img_board_read.do?idx=${img_list[status.index].idx}&b_code=${list.b_code}">
+	            			<img src="image/imgTest/${img_list[status.index].img_name}">
+	            		</a>
 	            		<figcaption>${img_list[status.index].b_idx}. ${list.title}</figcaption>
 	        		</figure>
   				</c:forEach>
@@ -136,7 +151,7 @@
   		
   			<div class="next">
 	  			<c:if test="${cpage < pagecount}">
-					<a class="nextPage" href="img_board_list.do?b_code=4&cp=${cpage+1}&ps=${pagesize}"></a>
+					<a class="nextPage" href="img_board_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}"></a>
 				</c:if>
   			</div>
   			
@@ -156,6 +171,8 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  
+  
 
 <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

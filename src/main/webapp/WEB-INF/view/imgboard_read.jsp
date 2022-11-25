@@ -41,7 +41,7 @@
 			data: requestdata,
         	dataType: "JSON",
         	success: function(data){
-        		console.log(data);
+        		swal(data);
         	},
         	beforeSend: function(){
 				$('.wrap-load').removeClass('display-none');
@@ -75,7 +75,7 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-					<li class="breadcrumb-item"><a href="#">IMG BOARD</a></li>
+					<li class="breadcrumb-item"><a href="img_board_list.do?b_code=${b_code}">IMG BOARD</a></li>
 					<li class="breadcrumb-item active">IMG</li>
 				</ol>
 			</nav>
@@ -99,6 +99,8 @@
 										<div class="row mt-2 ms-2">
 											<h3 class="col-3 nav-item mt-1"><i class="bi bi-cloud-arrow-down"></i></h3>
 											<h3 class="col-3 nav-item"><i class="bi bi-exclamation-triangle"></i></h3>
+											<p>조회수: ${imgboard.hits} &ensp;</p>
+											<p>작성일자: ${imgboard.w_date} </p>
 										</div>
 									</div>
 									<div class="col navbar-nav">
