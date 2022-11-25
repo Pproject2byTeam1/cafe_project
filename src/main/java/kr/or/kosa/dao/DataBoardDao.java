@@ -63,7 +63,7 @@ public class DataBoardDao {
 			System.out.println(e.getMessage());
 		}finally {
 			try {
-				 conn .close();
+				conn .close();
 				rs.close();
 				pstmt.close();
 			} catch (Exception e2) {
@@ -118,6 +118,7 @@ public Board getBoard(int b_code, int idx) {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -171,6 +172,7 @@ public Board getBoard(int b_code, int idx) {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -281,6 +283,7 @@ public Board getBoard(int b_code, int idx) {
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -367,6 +370,7 @@ public Board getBoard(int b_code, int idx) {
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -429,6 +433,7 @@ public Board getBoard(int b_code, int idx) {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -630,6 +635,7 @@ public Board getBoard(int b_code, int idx) {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}

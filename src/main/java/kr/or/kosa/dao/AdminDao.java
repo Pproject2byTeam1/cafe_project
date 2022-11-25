@@ -163,6 +163,7 @@ public class AdminDao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -200,6 +201,7 @@ public class AdminDao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}

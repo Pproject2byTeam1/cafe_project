@@ -32,7 +32,7 @@ public class UserListService implements Action {
 	        System.out.println(user.getEmail_id());
 	        String url = "";
 	        
-	        if (user.getIsAdmin() == "S" || user.getIsAdmin() == "M" ) {
+	        if (user.getIsAdmin().equals("S") || user.getIsAdmin().equals("M") ) {
 
 	        	UserDao dao = new UserDao();
 				
