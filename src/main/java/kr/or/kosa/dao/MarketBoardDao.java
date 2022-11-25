@@ -372,6 +372,7 @@ public class MarketBoardDao {
 
 			pstmt = conn.prepareStatement(checkemail);
 			pstmt.setInt(1, idx);
+			pstmt.setString(2,email_id );
 			rs = pstmt.executeQuery();
 			conn.setAutoCommit(false);
 

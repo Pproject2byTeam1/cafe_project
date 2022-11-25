@@ -350,34 +350,24 @@ public Board getBoard(int b_code, int idx) {
 	
 		return row;
 	}
-	// 자료 게시판 특정 글 삭제
-	public int deleteData_Board(int idx) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int row = 0;
-
-		try {
-
-			conn = ds.getConnection();
-			String sql = "delete from Data_Board where idx=?";
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, idx);
-
-			row = pstmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-
-		return row;
-	}
+	/*
+	 * // 자료 게시판 특정 글 삭제 public int deleteDataBoard(int idx) { Connection conn =
+	 * null; PreparedStatement pstmt = null; int row = 0;
+	 * 
+	 * try {
+	 * 
+	 * conn = ds.getConnection(); String sql = "delete from Data_Board where idx=?";
+	 * pstmt = conn.prepareStatement(sql);
+	 * 
+	 * pstmt.setInt(1, idx);
+	 * 
+	 * row = pstmt.executeUpdate(); } catch (Exception e) {
+	 * System.out.println(e.getMessage()); } finally { try { pstmt.close();
+	 * conn.close(); } catch (Exception e2) { System.out.println(e2.getMessage()); }
+	 * }
+	 * 
+	 * return row; }
+	 */
 
 	// 전체 자료게시판 조회
 	public List<Board> getAllDatalist(int b_code, int cpage, int pagesize) {
@@ -644,6 +634,64 @@ public Board getBoard(int b_code, int idx) {
 		return comlist;
 	}
 	
+	
+	
+	public int deleteDataBoard(int idx ) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
+			String sql = "delete from board where idx=? ";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, idx);
+		
+			
+			row = pstmt.executeUpdate();
+			
+			if(row < 0) {
+				throw new Exception("Board 삭제 실패");
+			}
+			
+			String sql2 = "delete data_board where idx=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			pstmt2.setInt(1, idx);
+			
+			row = pstmt.executeUpdate();
+			
+			if(row < 0) {
+				throw new Exception("data_baord 수정 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
 	
 	
 }

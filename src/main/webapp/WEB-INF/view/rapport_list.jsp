@@ -78,9 +78,9 @@
 	}else{
 		var chk=confirm("정말로 취소 하시겠습니까?");
 		$.ajax({
-			url :rul,
+			url :url,
 			type: 'POST',
-			traditional : true,
+			dataType:"html",
 			data:{
 				valueArr : valueArr
 				
@@ -89,8 +89,7 @@
 				alter("취소 성공");
 				location.replace("requestlist");
 			}
-			
-	
+
 	}
 
 	});

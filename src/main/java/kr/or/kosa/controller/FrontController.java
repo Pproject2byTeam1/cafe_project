@@ -16,6 +16,7 @@ import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataContentviewService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
+import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -170,12 +171,12 @@ public class FrontController extends HttpServlet {
 			action = new MarketBoardListService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/marketboard_read.do")){ // 데이터 게시판 읽기
+		}else if(urlcommand.equals("/marketboard_read.do")){ // 거래 게시판 읽기
 			
 			action = new MarketBoardReadService();
 			forward = action.execute(request, response);
 			
-		}else if(urlcommand.equals("/marketboard_delete.do")){ // 데이터 게시판 삭제
+		}else if(urlcommand.equals("/marketboard_delete.do")){ // 거래 게시판 삭제
 			
 			action = new MarketBoardDeleteService();
 			forward = action.execute(request, response);
@@ -214,22 +215,23 @@ public class FrontController extends HttpServlet {
 			action = new adminUpdateService();
 			forward = action.execute(request, response);
 			
-		}else if (urlcommand.equals("/data_contentview.do")) { // 데이터 글내용 보기
-			action = new DataContentviewService();
-			forward = action.execute(request, response);
-			
-	
 		}else if(urlcommand.equals("/regular_write.do")){ // 자유게시판 글쓰기
 			
 			action = new Regular_Board_Write_Service();
 			forward = action.execute(request, response);
 	
-		}else if(urlcommand.equals("/data_post.do")){ // 
+		}else if(urlcommand.equals("/data_post.do")){ // 찐 자료 게시판 글 내용 보기
 			
 			action = new Data_Board_Post_Service();
 			forward = action.execute(request, response);
 			
+		}else if(urlcommand.equals("/board_delete.do")) {//게시판 삭제(거래)
+			
+			action = new DeleteOkService();
+	        forward = action.execute(request, response);
+			
 		}
+	
 		
 		if (forward != null) {
 			if (forward.isRedirect()) { // true 페이지 재 요청 (location.href="페이지"

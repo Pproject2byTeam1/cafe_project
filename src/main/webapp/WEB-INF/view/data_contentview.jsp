@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
@@ -13,6 +13,9 @@
 <title>카페人중독</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
+
+<!-- jQuery -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
@@ -42,13 +45,96 @@
 <!-- coments CSS Files -->
 <link href="assets/css/comments.css" rel="stylesheet">
 <link href="assets/css/marketboard_read.css" rel="stylesheet">
-</head>
 
-<!-- 값 나오는거 확인해보세요!!!! -->
-<script type="text/javascript">
-console.log("${board}");
-console.log("${user}");
+<!-- 경고창 이쁜거 -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" >
+
 </script>
+
+<script type="text/javascript">
+	$(function(){
+		
+		let email_id = '<c:out value="${member.email_id}" />';
+        let yes = '<c:out value="${yes}" />';
+        let idx = '<c:out value="${board.idx}" />';
+
+        /* 게시물 좋아요 비동기 처리 */
+        $("#yesbtn").click(function(){
+           
+           if(yes == "no"){
+              
+              requestdata = {"idx": idx, "email_id": email_id};
+              
+              console.log(requestdata);
+              
+              $.ajax({
+                 type: "POST",
+                 url: "Yes",
+               data: requestdata,
+                 dataType: "HTML",
+                 success: function(data){
+                    
+                    yes = email_id;
+                    
+                    $("#yesbtn").empty();
+                    $("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
+                    swal(data);
+                 },
+                 beforeSend: function(){
+                  $('.wrap-load').removeClass('display-none');
+               },
+               complete: function(){
+                  $('.wrap-loading').addClass('display-none');
+               }
+              });
+              
+           }else{
+              
+              requestdata = {"idx": idx, "email_id": email_id};
+              
+              $.ajax({
+                 type: "POST",
+                 url: "YesRemove",
+               data: requestdata,
+                 dataType: "HTML",
+                 success: function(data){
+                    yes = "no";
+                    
+                    $("#yesbtn").empty();
+                    $("#yesbtn").append('<i class="bi bi-heart"></i>');
+                    swal(data);
+                 },
+                 beforeSend: function(){
+                  $('.wrap-load').removeClass('display-none');
+               },
+               complete: function(){
+                  $('.wrap-loading').addClass('display-none');
+               }
+              });
+              
+           }
+           
+           
+        });
+
+        $("#delete").click(function(){
+			let idx = "<c:out value='${board.idx}'/>";
+			let b_code = "<c:out value='${board.b_code}'/>";
+			console.log(idx);
+			console.log(b_code);
+			
+ 			location.href="board_delete.do?idx=" + ${board.idx};
+ 			
+ 			if(idx == ${board.idx}){
+ 				alert("삭제됩니다!");
+ 				
+ 			}
+			
+		});
+	});
+</script>
+
+</head>
 
 <body>
 
@@ -130,10 +216,20 @@ console.log("${user}");
 
 											<div align="right" class="col-md-12">
 												<div>
+													<c:if test="${yes == 'no'}">
+                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
+                                    				</c:if>
+                                    				<c:if test="${yes != 'no'}">
+                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
+                                    				</c:if>
 													<button type="button" id="Write"
 														class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
+														<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
+													<button type="button" id="delete"
+														class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>	
 													<button type="button" id="List"
 														class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
+														</c:if>
 													<button type="button" id="Top"
 														class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
 												</div>
@@ -218,10 +314,14 @@ console.log("${user}");
 											<div align="right" class="actions">
 												<button type="button"
 													class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
+											
 												<button type="button"
 													class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-												<button type="button"
+												<form action ="board_delete.do?idx=${idx}" method="GET">
+												<button type="submit"
 													class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+												</form>
+											
 											</div>
 										</div>
 									</div>
@@ -269,8 +369,10 @@ console.log("${user}");
 													class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
 												<button type="button"
 													class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-												<button type="button"
-													class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+												<form action="regular_write.do?b_code=${b_code}" method="GET">
+					<input type="text" value="${b_code}" name="b_code" style="display: none;">
+					<input type="submit" class="btn btn-secondary float-right" value="글쓰기">
+					</form>
 											</div>
 										</div>
 
@@ -320,17 +422,16 @@ console.log("${user}");
 
 	<!-- Vendor JS Files -->
 	<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="assets/vendor/chart.js/chart.min.js"></script>
-	<script src="assets/vendor/echarts/echarts.min.js"></script>
-	<script src="assets/vendor/quill/quill.min.js"></script>
-	<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-	<script src="assets/vendor/tinymce/tinymce.min.js"></script>
-	<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/chart.js/chart.min.js"></script>
+<script src="assets/vendor/echarts/echarts.min.js"></script>
+<script src="assets/vendor/quill/quill.min.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
 
-	<!-- Template Main JS File -->
-	<script src="assets/js/main.js"></script>
-
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
 </body>
 
 </html>
