@@ -73,6 +73,8 @@
     <p><a href="userinfo.do">마이페이지(일반유저)</a></p>
     <p><a href="adminInfo.do">마이페이지(관리자)</a></p>
     <p><a href="user_activity_info_board.jsp">유저 활동 내역</a></p>
+    <p><a href="user-grade.html">유저등급표시</a></p>
+    <p><a href="rank-edit-board.jsp">랭크변환</a></p>
 
 
     <section class="section dashboard">

@@ -35,7 +35,6 @@ public class Regular_Board_Dao {
 			conn = ds.getConnection();
 			String sql = "select idx, title, nick, content, hits, to_char(w_date, 'YYYY-MM-dd') w_date, report_count, notic, email_id from board where idx = ?";
 			pstmt = conn.prepareStatement(sql);
-			
 			pstmt.setInt(1, idx);
 			
 			rs = pstmt.executeQuery();
@@ -63,6 +62,7 @@ public class Regular_Board_Dao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -95,6 +95,7 @@ public class Regular_Board_Dao {
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
@@ -123,6 +124,7 @@ public class Regular_Board_Dao {
 		} finally {
 			try {
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}

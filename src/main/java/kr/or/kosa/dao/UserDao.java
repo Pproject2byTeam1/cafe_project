@@ -314,10 +314,11 @@ public class UserDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			ConnectionHelper.close(rs);
-			ConnectionHelper.close(pstmt);
+			
 			try {
-				ConnectionHelper.close(conn); // 반환하기
+				rs.close();
+				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}

@@ -21,7 +21,7 @@ public class userVerification implements Action {
 			HttpSession session = request.getSession();
 			User user2 = (User) session.getAttribute("member");
 			String userId = user2.getEmail_id();
-			
+			 
 			UserDao dao = new UserDao();
 			String password = (String) request.getParameter("password");
 			System.out.println(password);

@@ -38,66 +38,75 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/free.css" rel="stylesheet">
-<script type="text/javascript">
-	$(function(){
-	
-		
-		var chkObj = document.getElementsByname("RowCheck");
-		var rowCnt = chkObj.length;
-		
-		$("input[name='allCheck']").click(function(){
-			var chk_listArr = $("input[name='RowCheck']");
-			for( var 1=0; i<chck_listArr.length; i++){
-				chk_listArr[i].checked = this.checked;
-				
-			}
-		});
-		
-		$("input[name='RowCheck']").click(function(){
-			if($("input[name='RowCheck']:checked").length == rowCnt){
-				$("input[name='allCheck']")[0].checked = true;
-			}else{
-				$("input[name ='allCheck']")[0].checked = false;
-			}
-		});
+<style>
+/* .btn-success btn-lg {
+   float: right;
+} */
+.selectpicker {
+	width: 75px;
+	height: 35px;
+	border-radius: 5px;
+}
 
-	});
-	
-	function deleteValue(){
-		
-		var url ="delete";
-		var valueArr = new Array();
-		var list=$("input[name='RowCheck']");
-		for(var i=0; i<kist.length; i++){
-			valueArr.push(list[i].value);
-		}
-		
-	}
-	if(valueArr.length ==0){
-		alert("선택된 글이 없습니다.");
-	}else{
-		var chk=confirm("정말로 취소 하시겠습니까?");
-		$.ajax({
-			url :rul,
-			type: 'POST',
-			traditional : true,
-			data:{
-				valueArr : valueArr
-				
-			},
-			success : function(jdata){
-				alter("취소 성공");
-				location.replace("requestlist");
-			}
-			
-	
-	}
+._3Espq6 {
+	width: 38px;
+	height: 22px;
+	font-size: 0.9rem;
+	text-align: center;
+}
 
-	});
+.parent {
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+}
 
+.name {
+	font-size: 0.9rem;
+	margin-top: auto;
+	vertical-align: bottom;
+}
 
-</script>
+._1R-fi- {
+	margin-bottom: 0.5rem;
+	color: #2b2d36;
+	line-height: 1.5;
+	font-weight: 700;
+	font-size: 1.5rem;
+	letter-spacing: -0.01875rem;
+	margin-bottom: 0;
+	color: var(- -gray-600);
+	text-align: center;
+}
 
+.jdc {
+	text-align: center;
+}
+
+.son_name {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.son_date {
+	font-size: 13px;
+}
+
+.son_time {
+	gk font-size: 13px;
+}
+/*  표 style */
+.card-body {
+	overflow-x: auto;
+}
+
+.table table-hover {
+	width: 100%;
+	min-width: 500px;
+	display: block;
+	overflow: auto;
+}
+</style>
 </head>
 
 <body>
@@ -179,7 +188,6 @@
 					<table class="table table-hover">
 
 						<tr>
-							<th scope="col"><input type="checkbox" name="allCheck"></th>
 						<th scope="col">글/댓글</th>
 							<th scope="col">게시판 종류</th>
 							<th scope="col">글제목</th>
@@ -201,7 +209,6 @@
 						</c:if>
 							<c:forEach var="reportlist" items="${reportlist}" varStatus="status">
 							<tr>
-							<th scope="col"><input type="checkbox" name="RowCheck" value="${reportlist.idx}"></th>
 							<c:choose>
 								<c:when test="${request.b_code eq'null'} ">
 								<th scope="col">댓글</th>
@@ -237,14 +244,14 @@
 								<th scope="col">${reportlist.hits}</th>
 								<th scope="col">${reportlist.report_count}</th>
 								<th scope="col"><button type="button"
-										class="btn btn-danger" onclick="window.open('data_post.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button></th>
+										class="btn btn-danger" onclick="location.href='data_post.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}'">신고페이지</button></th>
 							</tr>
 						</c:forEach>
-				
+						
+
+
+
 					</table>
-					<div align ="right">		 <button type="button"class="btn btn-danger" onlick="deleteValue();">신고취소</button>
-					</div>
-							
 					<!-- End Table with hoverable rows -->
 					<!-- 페이징  -->
 					<nav aria-label="Page navigation example">

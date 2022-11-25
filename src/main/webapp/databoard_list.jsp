@@ -38,7 +38,59 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
-<link href="assets/css/databaordlist.css" rel="stylesheet">
+<style>
+/* .btn-success btn-lg {
+   float: right;
+} */
+.selectpicker{
+width:75px;height:35px; border-radius: 5px;
+}
+._3Espq6{
+width :38px;
+height:22px;
+font-size:0.9rem;
+ text-align:center;
+}
+.parent{
+   width :500px;
+ display: flex;
+  flex-direction: column;
+}
+.name{
+font-size:0.9rem;
+  margin-top:auto;
+
+vertical-align :bottom;
+
+}
+._1R-fi-{
+margin-bottom: 0.5rem;
+    color: #2b2d36;
+    line-height: 1.5;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.01875rem;
+    margin-bottom: 0;
+    color: var(--gray-600);
+    text-align: center;
+}
+
+
+.jdc{
+text-align: center;
+}
+ 
+.son_name{
+   font-size: 13px; font-weight:bold;
+}
+.son_date{
+   font-size: 13px;
+}
+.son_time{
+   font-size: 13px; 
+}
+     
+</style>
 </head>
 
 <body>
@@ -109,64 +161,46 @@
                   </tr>
                </thead>
                <tbody>
-               	
-				<!-- 데이터가 한건도 없는 경우  -->
-						<c:if test="${list == null}">
-							<tr>
-								<td colspan='5'>데이터가 없습니다</td>
-							</tr>
-						</c:if>
+               		<!-- 데이터가 한건도 없는 경우  -->
+				<c:if test="${datalist == null}">
+					<tr><td colspan='5'>데이터가 없습니다</td></tr>
+				</c:if>
 				<!--목록출력하기  -->
-             <c:forEach var="board" items="${list}" varStatus="status">
-                <tr onclick="location.href='data_post.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
+               <c:forEach var="board" items="${datalist}">
+                  <tr>
                      <th scope="row"><input type="checkbox"></th>
                      <td>
-                     
                      <span class="mt-4 parent"><h3>${board.title}</h3></span><br>
-         
                      <span class="son_name">${board.nick}</span>
                      <span class="son_date">${board.w_date}</span>
                      <span class="son_time"> </span>
                      </td>
-                     <!--계층형  -->
-								<c:forEach var="i" begin="1" end="${board.depth}" step="1">
-								&nbsp;&nbsp;&nbsp;
-								</c:forEach>	
-								<td>						
-								<c:if test="${board.depth > 0}">
-								<tr onclick="location.href='data_post.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
-									<img src="image/re.gif">
-										${board.title}
-								</c:if>
-								</td>
-								<td></td>
-
-								<td class="p-5 jdc"><span class="_3Espq6" >
+                     <td></td>
+                    
+                  <td class="p-5 jdc"><span class="_3Espq6" >
                      <span class="_1R-fi-">${board.hits}</span><br>
                      <span>조회</span>
                      </span>
                   </td>
                   
-                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${comment[status.index]}">
-                     <span class="_1R-fi-">${comment[status.index]}</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${countlist}">
+                     <span class="_1R-fi-">${countlist}</span><br>
                      <span>댓글</span>
                      </span>
                   </td>
                   
-                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yes[status.index]}">
-                     <span class="_1R-fi-">${yes[status.index]}</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yeslist}">
+                     <span class="_1R-fi-">${yeslist}</span><br>
                      <span>추천</span>
                   </td>
                   </tr>
                   
-                     </c:forEach> 
-               </tbody>
-            </table>
+                
                  <%--  </c:forEach> --%>
                  
                 
-      
-   <%-- <tr>	
+             <c:if test="${board.depth>0}">     
+   <tr>	
          <th scope="row"><input type="checkbox"></th>
                      <td>
                    &nbsp;&nbsp;&nbsp;
@@ -182,18 +216,20 @@
                      <span>조회</span>
                      </span>
                   </td>
-                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${countlist}">
-                     <span class="_1R-fi-">${comment[status.index]}</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yeslist}">
+                     <span class="_1R-fi-">${yeslist}</span><br>
                      <span>댓글</span>
                      </span>
                   </td>
-                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${yeslist}">
-                     <span class="_1R-fi-">${yes[status.index]}</span><br>
+                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${countlist}">
+                     <span class="_1R-fi-">${countlist}</span><br>
                      <span>추천
                   </td>
                   </tr> 
-                --%>
-           
+                  </c:if>
+                  </c:forEach> 
+               </tbody>
+            </table>
             <!-- End Table with hoverable rows -->
 
          </div>
@@ -202,9 +238,7 @@
       <!--하단 버튼  -->
       <div align="right">
          <button type="button" class="btn btn-secondary">글쓰기</button>&nbsp;
-         <c:if test="${member.isAdmin == 'S' || member.isAdmin =='M' }">
          <button type="button" class="btn btn-secondary">삭제</button>
-         </c:if>
 
       </div>
       

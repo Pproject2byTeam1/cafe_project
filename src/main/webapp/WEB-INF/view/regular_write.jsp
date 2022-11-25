@@ -56,11 +56,6 @@
    <main id="main" class="main">
       <!-- 여기서부터 작성 와랄ㄹ라  -->
 
-      <c:if test="${member == null }">
-         <jsp:forward page="/WEB-INF/view/login.jsp"/>
-      </c:if>
-
-
       <div class="pagetitle">
          <h1>자유 게시판</h1>
          <!-- 게시판 이름 끌고오기 b_name -->
@@ -83,7 +78,7 @@
                <div class="col-10">
                   <div class="park-card p-4">
                      <div class="park-card-body row">
-                        <div class="mb-3 row">
+                        <div class="md-3 row">
                            <label for="staticEmail" class="col-sm-2 col-form-label">Title : </label>
                            <div class="col-sm-8">
                               <input type="text" class="form-control" id="title" name="title">
@@ -93,9 +88,6 @@
                            </div>
                         </div>
                         <div class="col-md-6">
-                        </div>
-                        <div class="col-md-12">
-                           <input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1">
                         </div>
                      </div>
                   </div>
