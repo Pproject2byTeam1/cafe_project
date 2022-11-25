@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
@@ -31,12 +32,25 @@ public class Regular_Board_Post_Service implements Action {
 			
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			
-			System.out.println(idx + "아이디엑스");
 
 			Regular_Board_Dao dao = new Regular_Board_Dao();
 			UserDao udao = new UserDao();
 			Board_Dao bdao = new Board_Dao();
 			Yes_Dao ydao = new Yes_Dao();
+			
+			HttpSession session = request.getSession();
+			User user1 = (User) session.getAttribute("member");
+
+			if (user1 != null) {
+				Yes_Dao yesdao = new Yes_Dao();
+				String yes = yesdao.getYesEmailByIdxEmail(idx, user1.getEmail_id());
+
+				if (yes != null) {
+					request.setAttribute("yespark", yes);
+				} else {
+					request.setAttribute("yespark", "no");
+				}
+			}
 			
 			
 			Board board = dao.getRegular_BoardByIdx(idx);
@@ -46,8 +60,10 @@ public class Regular_Board_Post_Service implements Action {
 		
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);
+			request.setAttribute("idx", idx);
 			request.setAttribute("user", user);
 			request.setAttribute("yes", yes);
+			
 			
 			
 			forward = new ActionForward();

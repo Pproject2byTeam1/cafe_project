@@ -18,22 +18,74 @@ public class User_details implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
 		
+		String todo = request.getParameter("todo");
+		String url = "";
+		System.out.println(todo + "투두잉");
+		
 		try {
 			Board_Info_Dao infodao = new Board_Info_Dao();
-	        List<Board_Info> infolist = infodao.getSideBoardList();
-	        
-			String id = request.getParameter("id");
+			List<Board_Info> infolist = infodao.getSideBoardList();
 			
-			UserDao dao = new UserDao();
+			if (todo.equals("1")) {
+				
+				System.out.println("투두 탓어용");
+				
+		        
+		        
+				String id = request.getParameter("id");
+				
+				UserDao dao = new UserDao();
+				User userlist = dao.idSearchUser(id);
+				
+				request.setAttribute("userlist", userlist);
+
+				
+				url="/WEB-INF/view/user_setting_edit.jsp";
+				System.out.println("투두 탓어용");
+				
+			}
 			
-			User userlist = dao.idSearchUser(id);
+			if (todo.equals("2")) {
+				
+			}
 			
-			request.setAttribute("userlist", userlist);
+			if (todo.equals("3")) {
+				
+		        UserDao udao = new UserDao();
+		     	String id = request.getParameter("id");
+	
+		        int row = udao.modifyAdmin(id);
+		        
+		        
+				
+				if (row > 0) {
+				
+					String board_msg = "수정되었습니다.";
+		        	String board_url = "/WebCafe_Project/user_list.do";
+					
+					request.setAttribute("board_msg", board_msg);
+					request.setAttribute("board_url", board_url);
+		        	
+					url="/WEB-INF/view/redirect.jsp";
+				
+				} else {
+				
+					String board_msg = "실패했습니다..";
+		        	String board_url = "/WebCafe_Project/user_list.do";
+					
+					request.setAttribute("board_msg", board_msg);
+					request.setAttribute("board_url", board_url);
+		        	
+					url="/WEB-INF/view/redirect.jsp";
+				}
+				
+			}
+			
 			request.setAttribute("infolist", infolist);
-			
+
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/user_setting_edit.jsp");
+		  	forward.setPath(url);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

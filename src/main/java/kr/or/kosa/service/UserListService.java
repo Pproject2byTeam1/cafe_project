@@ -27,9 +27,6 @@ public class UserListService implements Action {
 	        
 	        HttpSession session = request.getSession();
 	        User user = (User) session.getAttribute("member");
-	        System.out.println(user);
-	        System.out.println(user.getIsAdmin());
-	        System.out.println(user.getEmail_id());
 	        String url = "";
 	        
 	        if (user.getIsAdmin().equals("S") || user.getIsAdmin().equals("M") ) {
