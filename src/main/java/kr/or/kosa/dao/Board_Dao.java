@@ -149,7 +149,7 @@ public class Board_Dao {
 		
 		return boardlist;
 	}
-	//자료게시판
+	//자료게시판 글목록
 	public List<DataBoard> getdata_boardList(int b_code, int cpage, int pagesize){
 		Connection conn = null;
 		PreparedStatement pstmt = null;

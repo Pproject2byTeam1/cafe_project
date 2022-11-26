@@ -117,14 +117,15 @@
            
         });
 
+        //삭제
         $("#delete").click(function(){
 			let idx = "<c:out value='${board.idx}'/>";
 			let b_code = "<c:out value='${board.b_code}'/>";
 			console.log(idx);
 			console.log(b_code);
 			
- 			location.href="board_delete.do?idx=" + ${board.idx};
- 			
+ 			location.href="board_delete.do?idx=" + ${board.idx}+"&b_code="+${board.b_code};
+ 			//	location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
  			if(idx == ${board.idx}){
  				alert("삭제됩니다!");
  				
@@ -202,6 +203,7 @@
 
 
 									<hr>
+									
 										<div class="row">
 											<div class="col-lg-12">
 

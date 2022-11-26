@@ -254,6 +254,11 @@ public class FrontController extends HttpServlet {
 			action = new DeleteOkService();
 	        forward = action.execute(request, response);
 			
+		}else if(urlcommand.equals("/databoard_write.do")) {// 거래 게시판 작성
+			
+			action = new DeleteOkService();
+	        forward = action.execute(request, response);
+			
 		}
 	
 		
