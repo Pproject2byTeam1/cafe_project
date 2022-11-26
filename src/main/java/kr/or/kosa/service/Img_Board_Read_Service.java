@@ -1,5 +1,7 @@
 package kr.or.kosa.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -7,11 +9,14 @@ import javax.servlet.http.HttpSession;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
+import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.Img_Board_Dao;
 import kr.or.kosa.dao.Yes_Dao;
+import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.User;
-import kr.or.kosa.dto.Yes;
 
 public class Img_Board_Read_Service implements Action {
 
@@ -21,6 +26,10 @@ public class Img_Board_Read_Service implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
+			
+			//사이드 바
+			Board_Info_Dao infodao = new Board_Info_Dao();
+			List<Board_Info> infolist = infodao.getSideBoardList();
 			
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
@@ -45,8 +54,14 @@ public class Img_Board_Read_Service implements Action {
 				}
 	        }
 	        
+	        //댓글 조회
+	        CommentsDao codao = new CommentsDao();
+	        List<Comments> comments = codao.getCommentListByIdx(idx);
+	        
+	        request.setAttribute("comments", comments);
 			request.setAttribute("imgboard", imgboard);
 			request.setAttribute("b_code", b_code);
+			request.setAttribute("infolist", infolist);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

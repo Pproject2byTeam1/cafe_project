@@ -451,11 +451,14 @@ import kr.or.kosa.dto.MarketBoard;
        
        Connection conn = null;
        PreparedStatement pstmt = null;
+       PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
        int row = 0;
       
        try {
           
           conn = ds.getConnection();
+          conn.setAutoCommit(false);
           
           String sql = "INSERT ALL "
                    + "INTO board (idx, title, nick, content, email_id, b_code) "
@@ -478,17 +481,53 @@ import kr.or.kosa.dto.MarketBoard;
           pstmt.setInt(11, databoard.getStep()+1);
           
           row = pstmt.executeUpdate();
-         
-      } catch (Exception e) {
-         System.out.println(e.getMessage());
-      } finally {
-         try {
-            pstmt.close();
-            conn.close();
-         } catch (Exception e2) {
-            System.out.println(e2.getMessage());
-         }
-      }
+          
+			if (row <= 0) {
+				throw new Exception("board 삽입 실패");
+			}
+			
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			pstmt2.setString(1, databoard.getEmail_id());
+			
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("user_detals update 실패");
+			}
+			
+			String sql3 = "UPDATE data_board set step = nvl(step + 1, 0) where refer=?";
+			pstmt3 = conn.prepareStatement(sql3);
+			
+			pstmt3.setInt(1, databoard.getRefer());
+			
+			row = pstmt3.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("comments depth, step update 실패");
+			}else {
+				conn.commit();
+			}
+			
+      } catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
       
        
        return row;

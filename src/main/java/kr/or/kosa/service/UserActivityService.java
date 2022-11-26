@@ -11,13 +11,10 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.BoardListGetDao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.CommentsDao;
-import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dto.BoardListGet;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.CommentList;
 import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.User;
-import kr.or.kosa.dto.UserDetails;
 
 public class UserActivityService implements Action {
 
