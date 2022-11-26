@@ -173,6 +173,8 @@ public class CommentsDao {
 					Comments comment = new Comments();
 					comment.setCo_idx(rs.getInt("co_idx"));
 					comment.setIdx(rs.getInt("idx"));
+					comment.setEmail_id(rs.getString("title"));//임시방편으로 다른 String에다 넣음
+					comment.setDepth(rs.getInt("c_count"));//임시방편으로 다른 int에다 넣음
 					String str = rs.getString("content");
 					if(str.length() < 15) {
 					comment.setContent(rs.getString("content"));
