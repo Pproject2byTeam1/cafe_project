@@ -35,7 +35,7 @@ public class MarketBoardListService implements Action {
 			
 			//게시물 총 건수
 			int totalboardcount = market_dao.countMarket(b_code);
-			
+			System.out.println("토탈총건수 : " + totalboardcount);
 			//찜 개수
 			
 			
@@ -62,6 +62,7 @@ public class MarketBoardListService implements Action {
 				pagecount = totalboardcount / pagesize;
 			}else {
 				pagecount = (totalboardcount / pagesize) + 1; 
+				System.out.println(pagecount);
 			}
 			
 			List<MarketBoard> list = market_dao.listMarket(b_code, cpage, pagesize);

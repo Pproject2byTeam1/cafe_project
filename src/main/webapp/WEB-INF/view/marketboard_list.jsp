@@ -64,7 +64,9 @@
 							
 							$(data).each(function(){
 								
-								console.log(this);
+
+								console.log(this.content);
+								
 								html = '<div class="mcard" onclick="location.href=' + "'marketboard_read.do?b_code=" + this.b_code + '&idx=' + this.idx + "'" + ';">';
 								html += '<div class="mimg">'
 								html += '<img src="image/board/' + this.b_code + '/' + this.img_name + '" id="mimg"/>';
@@ -84,6 +86,7 @@
 								html += '</div>';
 								
 								$('.searchlist').append(html);
+								
 								
 							}); 
 							
@@ -185,9 +188,18 @@
 							</div>
 							<span id="marketB_Text.ns">${list.m_mode} | ${list.sold} | ${list.cate}</span>
 							<p>
-							<span id="marketB_Title">${list.title}</span>
+							<span id="marketB_Title">${list.idx}${list.title}</span>
 							<br>
-							<span id="marketB_Text">${list.content}</span>
+							<span id="marketB_Text">
+							<c:choose>
+									<c:when test="${list.content != null && fn:length(list.content) > 20}">
+										${fn:substring(list.content,0,20)}...
+									</c:when>
+									<c:otherwise>
+										${list.content}
+									</c:otherwise>
+							</c:choose>
+							</span>
 							<br>
 							<span id="marketB_Price">${list.price}</span>
 							<br>
@@ -199,45 +211,72 @@
 						</c:forEach>					
 					</div>
 					<!-- 보드 페이지 시작 -->
-					<nav aria-label="Page navigation example">
-						<ul class="pagination justify-content-center">
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-							<li class="page-item"><a class="page-link" href="#">6</a></li>
-							<li class="page-item"><a class="page-link" href="#">7</a></li>
-							<li class="page-item"><a class="page-link" href="#">8</a></li>
-							<li class="page-item"><a class="page-link" href="#">9</a></li>
-							<li class="page-item"><a class="page-link" href="#">10</a></li>
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-			</div>
-				<!-- 보드 페이지 끝 -->
-		</section>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+			
+	               <c:if test="${cpage > 1}">
+	                 <li class="page-item">
+	                   <a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+	                 </li>
+	                  </c:if>
+	                  	
+	                  <c:forEach var="i" begin="1" end="${pagecount}" step="1">
+	                  	<c:choose>
+						<c:when test="${cpage==i}">
+								<li class="page-item"><a class="page-link active" >${i}</a></li>
+						</c:when>
+						<c:otherwise>
+	                 			<li class="page-item"><a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${i}&ps=${pagesize}">${i}</a></li>
+						</c:otherwise>
+					</c:choose>
+	                  </c:forEach>
+	                  
+	                  <c:if test="${cpage < pagecount}">
+	                  	<li class="page-item">
+					<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
+					</li>
+				</c:if>
+			</ul>
+		</nav>
+		<!-- End Centered Pagination -->
 	</main>
-</body>
+	<!-- End #main -->
+
+	<!-- ======= Footer ======= -->
+	<footer id="footer" class="footer">
+		<div class="copyright">
+			&copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights
+			Reserved
+		</div>
+		<div class="credits">
+			<!-- All the links in the footer should remain intact. -->
+			<!-- You can delete the links only if you purchased the pro version. -->
+			<!-- Licensing information: https://bootstrapmade.com/license/ -->
+			<!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+			Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+		</div>
+	</footer>
+	<!-- End Footer -->
+
+	<a href="#"
+		class="back-to-top d-flex align-items-center justify-content-center"><i
+		class="bi bi-arrow-up-short"></i></a>
 
 	<!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.min.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-	
-	
-<!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+	<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/vendor/chart.js/chart.min.js"></script>
+	<script src="assets/vendor/echarts/echarts.min.js"></script>
+	<script src="assets/vendor/quill/quill.min.js"></script>
+	<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+	<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+	<script src="assets/vendor/php-email-form/validate.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="assets/js/main.js"></script>
+
+
+
+</body>
+
 </html>
