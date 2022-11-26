@@ -31,7 +31,7 @@ public class RegularBoardEditOkService implements Action {
  			
  			String url = "";
  			int b_code = Integer.parseInt(request.getParameter("b_code"));
- 			int idx = Integer.parseInt(request.getParameter("idx"));
+ 			int idx = Integer.parseInt(request.getParameter("idx")); 
  			String email_idx = request.getParameter("id");
  			
 
@@ -58,19 +58,13 @@ public class RegularBoardEditOkService implements Action {
 				String content = request.getParameter("content");
 				
 				Regular_Board_Dao dao = new Regular_Board_Dao();
-				Board board = dao.getRegular_BoardByIdx(idx);
+				Board_Dao bdao = new Board_Dao();
+				bdao.updateUseIdxBoard(title, content, idx);
 				
-				board.setTitle(title);
-				board.setContent(content);
+
 				
-				request.setAttribute("idx", idx);
-				request.setAttribute("email_idx", email_idx);
-				request.setAttribute("b_code", b_code);
-				
-				
-				
-				String board_msg = "완료되었습니다..";
-	            String board_url = "/WebCafe_Project/regular_post.do?b_code="+ b_code +"&idx= "+ idx;
+				String board_msg = "완료되었습니다.";
+	            String board_url = "/WebCafe_Project/regular_post.do?b_code="+ b_code +"&idx="+ idx;
 	              
 	            request.setAttribute("board_msg", board_msg);
 	            request.setAttribute("board_url", board_url);

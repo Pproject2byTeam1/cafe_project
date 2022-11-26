@@ -174,7 +174,7 @@ public class UserDao {
 		int totalcount = 0;
 		try {
 			conn = ds.getConnection(); //dbcp 연결객체 얻기
-			String sql="select count(*) cnt from member where NOT nick='admin'";
+			String sql="select count(*) cnt from member where NOT email_id ='admin@admin'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {

@@ -34,7 +34,15 @@ public class UserActivityService implements Action {
 	        //유저정보 가져가기
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("member");
+			String email_id = request.getParameter("email_id");
 			String userId = user.getEmail_id();
+			
+			
+			if (email_id != null) {
+				userId = email_id;
+			}
+			
+			System.out.println(userId);
 			
 			//쿼리문 실행준비
 			BoardListGetDao dao = new BoardListGetDao();

@@ -173,10 +173,13 @@
 						</c:if>
 						<!--목록출력하기  -->
 						<c:forEach var="board" items="${list}" varStatus="status">
-							<tr onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}'" style="cursor:pointer">
+							<tr>
 								<div>
 										<th scope="row"><input type="checkbox"></th>
-										<td><span class="mt-4 parent"><h3>${board.title}</h3></span><br>
+										
+										
+										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}'" style="cursor:pointer">
+										<span class="mt-4 parent"><h3>${board.title}</h3></span><br>
 										<span class="son_name"><img src="./image/rank_icon/${rank[status.index]}.gif">${board.nick}</span> <span
 										class="son_date">${board.w_date}</span> <span class="son_time">
 										</span></td>
@@ -229,14 +232,15 @@
 		<!--하단 버튼  -->
 		<div class="col-md-12">
 			<div class="row">
-				<div>
+				<div class="col-md-8"></div>
+				<div class="col-md-2 text-right" >
 					<form action="regular_write.do?b_code=${b_code}" method="GET">
 					<input type="text" value="${b_code}" name="b_code" style="display: none;">
 					<input type="submit" class="btn btn-secondary float-right" value="글쓰기">
 					</form>
 				</div>
-				&nbsp; 
-				<div>
+				
+				<div class="col-md-2">
 					<form action="user_details.do" method="post">
 					<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
 					<input type="submit" class="btn btn-danger float-right" value="삭제">
