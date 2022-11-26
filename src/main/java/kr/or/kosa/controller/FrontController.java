@@ -14,7 +14,6 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
-import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardWriteService;

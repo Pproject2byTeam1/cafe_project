@@ -173,10 +173,12 @@ naverLogin.init();
 window.addEventListener('load', function () {
 	naverLogin.getLoginStatus(function (status) {
 		if (status) {
-			var email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
-			const nickName=naverLogin.user.getNickName();
-	        const age=naverLogin.user.getAge();
+			const email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
+			const birthyear=naverLogin.user.getBirthyear();
+			const id=naverLogin.user.getId();
 	        const birthday=naverLogin.user.getBirthday();
+	        const name = naverLogin.user.getName();
+	        const mobile = naverLogin.user.getMobile();
 			console.log(naverLogin.user); 
     		
             if( email == undefined || email == null) {
