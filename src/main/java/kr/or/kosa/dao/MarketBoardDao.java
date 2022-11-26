@@ -38,7 +38,7 @@ public class MarketBoardDao {
 			// Board 삽입
 			String sql = "INSERT ALL INTO board (idx, title, nick, content, email_id, b_code) "
 		            + "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) INTO market_board (b_idx, idx, m_mode, cate, price, sold, img_name) " 
-		            + "VALUES (IMG_B_IDX_SEQ.nextval, IDX_SEQ.currval, ?, ?, ?, ?, ?) select * from dual";
+		            + "VALUES (MARKET_IDX_SEQ.nextval, IDX_SEQ.currval, ?, ?, ?, ?, ?) select * from dual";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, market.getTitle());
@@ -95,15 +95,24 @@ public class MarketBoardDao {
 		try {
 
 			conn = ds.getConnection();
-			String sql = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
-					+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
-					+ "b.report_count, b.email_id, b.b_code " + "from board b join market_board m on b.idx = m.idx "
-					+ "where b_code=? order by b_idx desc) where rn <= ? and rn >= ?";
+			String sql = "select * " +
+							"from (select * " +
+						    "from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
+						    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
+						    "b.report_count, b.email_id, b.b_code " +
+						    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
+						    "where b_code=? and rn <= ?) " +
+						    "where rn >=?";
 			pstmt = conn.prepareStatement(sql);
 
 			int start = cpage * pagesize - (pagesize - 1);
 			int end = cpage * pagesize;
-
+			System.out.println("-----------------");
+			System.out.println(cpage + "*" + pagesize + "- (" + pagesize + "- 1)");
+			System.out.println(cpage + "*" + pagesize);
+			System.out.println(start);
+			System.out.println(end);
+			System.out.println("-----------------");
 			pstmt.setInt(1, b_code);
 			pstmt.setInt(2, end);
 			pstmt.setInt(3, start);
@@ -165,12 +174,12 @@ public class MarketBoardDao {
 				String sql1 = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
 						+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
 						+ "b.report_count, b.email_id, b.b_code " + "from board b join market_board m on b.idx = m.idx "
-						+ "where b_code=? order by b_idx desc) where rn <= ? and rn >= ? and sold =?";
+						+ "where b_code=? order by rn desc) where rn <= ? and rn >= ? and sold =?";
 				
 				String sql2 = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
 						+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
 						+ "b.report_count, b.email_id, b.b_code " + "from board b join market_board m on b.idx = m.idx "
-						+ "where b_code=? order by b_idx desc) where rn <= ? and rn >= ? and title=?";
+						+ "where b_code=? order by rn desc) where rn <= ? and rn >= ? and title=?";
 
 				if (search.equals("판매중")) {
 					pstmt = conn.prepareStatement(sql1);

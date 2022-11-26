@@ -32,18 +32,16 @@ public class MarketSearch extends HttpServlet {
     	
     	try {
 			
+    		  		
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			String search = request.getParameter("search");
-
+			
 			MarketBoardDao market_dao = new MarketBoardDao(); 
-			//게시물 총 건수
-			int totalboardcount = market_dao.countMarket(b_code);
 			
 			//찜 개수
 			
 			
 			//판매중 개수
-			int soldcount = market_dao.countSoldF(b_code);
 			
 			//상세보기 >> 다시  LIST 넘어올때  >> 현재 페이지 설정
 			String ps = request.getParameter("ps");
@@ -60,6 +58,14 @@ public class MarketSearch extends HttpServlet {
 			int pagesize = Integer.parseInt(ps);
 			int cpage = Integer.parseInt(cp);
 			int pagecount = 0;
+			int soldcount = market_dao.countSoldF(b_code);
+			int totalboardcount = 0;
+			//게시물 총 건수
+			if(search.equals("판매중")) {
+				totalboardcount = market_dao.countSoldF(b_code);
+			}else {
+				totalboardcount = market_dao.countMarket(b_code);
+			}
 			
 			if(totalboardcount % pagesize == 0) {
 				pagecount = totalboardcount / pagesize;
