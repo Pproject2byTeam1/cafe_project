@@ -14,7 +14,6 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
-import kr.or.kosa.service.DataContentviewService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
@@ -38,7 +37,6 @@ import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
 import kr.or.kosa.service.Regular_Board_Write_Service;
-import kr.or.kosa.service.UpdatePwdService;
 import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
@@ -71,6 +69,9 @@ public class FrontController extends HttpServlet {
 		Action action = null;
 		ActionForward forward = null;
 		if(urlcommand.equals("/register.do")) { //회원가입
+			
+			action = null;//추후 생성 생각 중
+			forward = action.execute(request, response);
 			
 		} else if(urlcommand.equals("/login_view.do")) { //로그인 화면 뿌리기
 			
