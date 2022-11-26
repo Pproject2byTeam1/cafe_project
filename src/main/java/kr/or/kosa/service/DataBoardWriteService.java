@@ -92,7 +92,7 @@ public class DataBoardWriteService implements Action {
 				}
 				
 				//필요 요소 넣고 작성 메서드 콜
-				result = datadao.writeData(data);
+			//	result = datadao.writeData(data);
 				
 				if (result > 0) {
 					msg = "성공";
