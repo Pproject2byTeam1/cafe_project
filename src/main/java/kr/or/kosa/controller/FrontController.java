@@ -13,6 +13,8 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
+import kr.or.kosa.service.DataBoardEditOkService;
+import kr.or.kosa.service.DataBoardEditService;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
@@ -21,6 +23,7 @@ import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
+import kr.or.kosa.service.LoginCheckService;
 import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
 import kr.or.kosa.service.Logout_Service;
@@ -91,7 +94,12 @@ public class FrontController extends HttpServlet {
          action = new Login_Service();
          forward = action.execute(request, response);
          
-      } else if(urlcommand.equals("/logout.do")) { //로그아웃
+      } else if(urlcommand.equals("/snsLogin.do")) { //sns 로그인 (+회원가입)
+          
+          action = new LoginCheckService();
+          forward = action.execute(request, response);
+          
+       } else if(urlcommand.equals("/logout.do")) { //로그아웃
          
          action = new Logout_Service();
          forward = action.execute(request, response);
@@ -273,7 +281,7 @@ public class FrontController extends HttpServlet {
          
       }else if(urlcommand.equals("/data_write.do")) {// 자료 게시판 작성
          
-         action = new DeleteOkService();
+         action = new DataWriteService();
            forward = action.execute(request, response);
          
       } else if(urlcommand.equals("/data_rewriteview.do")) { //자료 게시판 답글 작성 페이지 이동
@@ -286,7 +294,17 @@ public class FrontController extends HttpServlet {
          action = new ReplyDataWriteService();
          forward = action.execute(request, response);
          
-      }
+      } else if(urlcommand.equals("/databoard_edit.do")) { //자료 게시판 수정
+			
+			action = new DataBoardEditService();
+			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/databoard_editok.do")) { //자료 게시판 수정
+			
+			forward = action.execute(request, response);
+			
+			action = new DataBoardEditOkService();
+		}
    
       
       

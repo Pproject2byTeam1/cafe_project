@@ -50,7 +50,7 @@ public class RegularBoardEditService implements Action {
 	           
 	         }
 			
-			// 수정하기화면 가기 (회원 id와 글 id가 같고 todo가 modify일경우)
+			// 수정하기화면 가기 (세션 id와 글 id가 같을경우)
 			if (user.getEmail_id().equals(email_idx)){
 				
 				Regular_Board_Dao dao = new Regular_Board_Dao();

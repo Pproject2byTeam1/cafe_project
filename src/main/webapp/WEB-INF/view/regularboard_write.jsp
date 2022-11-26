@@ -81,7 +81,7 @@
                         <div class="md-3 row">
                            <label for="staticEmail" class="col-sm-2 col-form-label">Title :</label>
                            <div class="col-sm-8">
-                              <input type="text" class="form-control" id="title" name="title" value="${board.title}">
+                              <input type="text" class="form-control" id="title" name="title" value="">
                            </div>
                            <div class="col-sm-2">
                               <button type="submit" id="btn" class="btn btn-primary">확인</button>
@@ -95,7 +95,9 @@
                   <div class="park-card p-4">
                      <div class="park-card-body row">
                         <textarea name="content"> 
-                              ${board.content}
+                              
+                              작성할곳
+                              
                           </textarea>
                      </div>
                   </div>
@@ -103,7 +105,7 @@
                
                 <input type="text" value="modify" name="todo" style="display: none;">
 				<input type="text" value="${member.email_id}" name="id" style="display: none;">
-				<input type="text" value="${member.}" name="nick" style="display: none;">
+				<input type="text" value="${member}" name="nick" style="display: none;">
                
             </form>
          </div>

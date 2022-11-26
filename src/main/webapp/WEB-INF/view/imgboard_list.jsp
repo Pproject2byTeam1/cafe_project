@@ -33,7 +33,7 @@
   	<link href="assets/css/imgboard.css" rel="stylesheet">
   	
   	<!-- 무한 스크롤 -->
-  	<script src="https://unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
+  	<script src="assets/js/jquery.jscroll.min.js" type="text/javascript"></script>
 	
   	<script type="text/javascript">
   	
@@ -44,8 +44,7 @@
   				autoTrigger: true,
   				loadingHtml: '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>',
   				nextSelector: 'a.nextPage:last',
-  				contentSelector: '#imglist',
-  				padding: 20
+  				contentSelector: '#autoScroll'
   			});
   			
   			/* 글쓰기 */
@@ -130,7 +129,7 @@
 			</nav>
 		</div>
 		
-		<div id="imglist" class="scroll" id="autoScroll">
+		<div class="scroll" id="autoScroll">
   		
   			<div id="columns">
   			
@@ -148,11 +147,9 @@
   				</c:forEach>
   				
   			</div>
-  		
+  			
   			<div class="next">
-	  			<c:if test="${cpage < pagecount}">
-					<a class="nextPage" href="img_board_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}"></a>
-				</c:if>
+				<a class="nextPage" href="img_board_list.do?b_code=${b_code}&cp=${cpage+1}"></a>
   			</div>
   			
   		</div>

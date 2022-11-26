@@ -29,6 +29,7 @@ public class MarketBoardDao {
 	public int writeMarket(MarketBoard market) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		int row = 0;
 
 		try {
@@ -39,6 +40,13 @@ public class MarketBoardDao {
 			String sql = "INSERT ALL INTO board (idx, title, nick, content, email_id, b_code) "
 		            + "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) INTO market_board (b_idx, idx, m_mode, cate, price, sold, img_name) " 
 		            + "VALUES (MARKET_IDX_SEQ.nextval, IDX_SEQ.currval, ?, ?, ?, ?, ?) select * from dual";
+			
+			// 유저 작성글 수 증가
+			String sql2 = "UPDATE user_details SET w_count = nvl(w_count + 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setString(1, market.getEmail_id());
+			pstmt2.executeUpdate();
+			
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, market.getTitle());
@@ -76,6 +84,7 @@ public class MarketBoardDao {
 			try {
 				conn.setAutoCommit(true);
 				pstmt.close();
+				pstmt2.close();
 				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
@@ -107,12 +116,6 @@ public class MarketBoardDao {
 
 			int start = cpage * pagesize - (pagesize - 1);
 			int end = cpage * pagesize;
-			System.out.println("-----------------");
-			System.out.println(cpage + "*" + pagesize + "- (" + pagesize + "- 1)");
-			System.out.println(cpage + "*" + pagesize);
-			System.out.println(start);
-			System.out.println(end);
-			System.out.println("-----------------");
 			pstmt.setInt(1, b_code);
 			pstmt.setInt(2, end);
 			pstmt.setInt(3, start);
@@ -350,57 +353,43 @@ public class MarketBoardDao {
 	// 유저 거래게시글 삭제하기
 	public int delMarket(int idx, String email_id) {
 		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
 		int row = 0;
+		
 		try {
 			conn = ds.getConnection();
-			// 비인증 ..
-			// 삭제 > 비번
-			// 처리 > 글번호 ,비번
+			conn.setAutoCommit(false);
 
-			// 아이디검증
-			String checkemail = "select email_id from board where idx=?";
-
-			// 게시글 삭제 쿼리
-			String delcomments = "delete from comments where idx=?";
-			String delmarket = "delete from market_board where idx=?";
+			// 댓글 삭제 쿼리
+			String delcomments = "delete comments where idx=?";
+			pstmt1 = conn.prepareStatement(delcomments);
+			pstmt1.setInt(1, idx);
+			row = pstmt1.executeUpdate();
+							
+			// 게시글 삭제 (거래게시판)
+			String delmarket = "delete market_board where idx=?";
+			pstmt2 = conn.prepareStatement(delmarket);
+			pstmt2.setInt(1, idx);
+			row = pstmt2.executeUpdate();
+			System.out.println("거래삭제 row = " + row);
+			
+			if (row < 0) {
+				throw new Exception("거래게시판 삭제 실패");
+			}
+			
+			// 게시글 삭제 (게시판)
 			String delboard = "delete from board where idx=?";
-
-			pstmt = conn.prepareStatement(checkemail);
-			pstmt.setInt(1, idx);
-			pstmt.setString(2,email_id );
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) { // 삭제글은 존재
-				// session의 email_id와 삭제시 cmd로 받아온 게시판 idx가 해당 글의 email_id와 동일한지
-				if (email_id.equals(rs.getString("email_id"))) {
-					
-					System.out.println("이메일 검증 통과 : " + rs.getString("email_id") + email_id);
-					// 댓글삭제
-					pstmt = conn.prepareStatement(delcomments);
-					pstmt.setInt(1, idx);
-					pstmt.executeUpdate();
-					System.out.println("댓글삭제");
-					// 게시글 삭제 (거래게시판)
-					pstmt = conn.prepareStatement(delmarket);
-					pstmt.setInt(1, idx);
-					pstmt.executeUpdate();
-					System.out.println("거래삭제 row = " + row);
-					// 게시글 삭제 (게시판)
-					pstmt = conn.prepareStatement(delboard);
-					pstmt.setInt(1, idx);
-					row = pstmt.executeUpdate();
-					System.out.println("보드삭제 row = " + row);
-					if (row > 0) {
-						conn.commit(); // 3개의 delete 실반영
-					}
-
-				}else { //이메일 검증 실패
-					row = -1;
-				}
-			}else {
-				row = 0;
+			pstmt3 = conn.prepareStatement(delboard);
+			pstmt3.setInt(1, idx);
+			row = pstmt3.executeUpdate();
+			System.out.println("보드삭제 row = " + row);
+			
+			if (row < 0) {
+				throw new Exception("보드게시판 삭제 실패");
+			} else { //이메일 검증 실패
+				conn.commit();
 			}
 			
 		} catch (Exception e) {
@@ -414,89 +403,9 @@ public class MarketBoardDao {
 			}
 		} finally {
 			try {
-				pstmt.close();
-				rs.close();
-				conn.close();// 반환
-			} catch (Exception e2) {
-
-			}
-		}
-		return row;
-	}
-
-	// 관리자,스태프 거래게시글 삭제하기
-	public int adminDelMarket(int idx, String email_id) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		PreparedStatement pstmt1 = null;
-		PreparedStatement pstmt2 = null;
-		PreparedStatement pstmt3 = null;
-		ResultSet rs = null;
-		int row = 0;
-		try {
-			conn = ds.getConnection();
-			// 비인증 ..
-			// 삭제 > 비번
-			// 처리 > 글번호 ,비번
-
-			// 관리자 검증
-			String checkadmin = "select isadmin from member where email_id=?";
-
-			// 게시글 삭제 쿼리
-			String delcomments = "delete from comments where idx_fk=?";
-			String delmarket = "delete from market_board where idx=?";
-			String delboard = "delete from mboard where idx=?";
-
-			pstmt = conn.prepareStatement(checkadmin);
-			pstmt.setString(1, email_id);
-			rs = pstmt.executeQuery();
-			conn.setAutoCommit(false);
-
-			if (rs.next()) { // 삭제글은 존재
-				// session의 email_id와 삭제시 cmd로 받아온 게시판 idx가 해당 글의 email_id와 동일한지
-				if (checkadmin == "M" || checkadmin == "S") {
-					// 댓글삭제
-					pstmt1 = conn.prepareStatement(delcomments);
-					pstmt1.setInt(1, idx);
-					pstmt1.executeUpdate();
-
-					// 게시글 삭제 (거래게시판)
-					pstmt2 = conn.prepareStatement(delmarket);
-					pstmt2.setInt(1, idx);
-					pstmt2.executeUpdate();
-
-					// 게시글 삭제 (게시판)
-					pstmt3 = conn.prepareStatement(delboard);
-					pstmt3.setInt(1, idx);
-					pstmt3.executeUpdate();
-
-					if (row > 0) {
-						conn.commit(); // 두개의 delete 실반영
-					}
-
-				} else { // 관리자가 아닌 경우
-					row = -1;
-				}
-			} else { // 삭제하는 글이 존재하지 않는 경우
-				row = 0;
-			}
-
-		} catch (Exception e) {
-			// rollback
-			// 예외가 발생하면
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-
-				e1.printStackTrace();
-			}
-		} finally {
-			try {
-				pstmt.close();
 				pstmt1.close();
 				pstmt2.close();
 				pstmt3.close();
-				rs.close();
 				conn.close();// 반환
 			} catch (Exception e2) {
 
@@ -504,6 +413,7 @@ public class MarketBoardDao {
 		}
 		return row;
 	}
+
 
 	// 댓글 입력하기
 	public int writeComments(Comments comments) {

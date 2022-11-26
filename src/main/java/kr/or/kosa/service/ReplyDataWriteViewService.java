@@ -36,7 +36,7 @@ public class ReplyDataWriteViewService implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/replyDatawrite.jsp");
+		  	forward.setPath("/WEB-INF/view/databoard_rewrite.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

@@ -554,4 +554,6 @@ public class UserDao {
 			}
 			return row;
 		}
+		
+		//sns유저 로그인 확인
 }
