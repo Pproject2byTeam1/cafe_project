@@ -15,6 +15,7 @@ import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dto.BoardListGet;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.CommentList;
+import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.UserDetails;
 
@@ -42,7 +43,7 @@ public class UserActivityService implements Action {
 			List<BoardListGet> writeboardlist = dao.getBoardListByMe(userId);
 			
 			//자신이 쓴 댓글 가져오기
-			List<CommentList> commnetlist = commentdao.getCommentListByMe(userId);
+			List<Comments> commnetlist = commentdao.getCommentListByMe(userId);
 			
 			//자신이 좋아요 한 글 가져오기
 			List<BoardListGet> likeboardlist = dao.getBoardListByLike(userId);
