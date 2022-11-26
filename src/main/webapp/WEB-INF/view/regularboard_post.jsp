@@ -56,15 +56,13 @@
            let email_id = '<c:out value="${member.email_id}" />';
            let yespark = '<c:out value="${yespark}" />';
            let idx = '<c:out value="${board.idx}" />';
+           let b_code = '<c:out value="${board.b_code}" />';
+           let depth = '<c:out value="${board.depth}" />';
+           let step = '<c:out value="${board.step}" />';
            
            /* 게시물 좋아요 비동기 처리 */
            $("#yesbtn").click(function(){
         	   
-        	   
-              
-              console.log("hahaha");
-              console.log(email_id);
-              console.log("sdfs" + yespark);
               
               if(yespark == "no"){
                  
@@ -120,6 +118,16 @@
               }
               
               
+           });
+           
+           /* 답글 작성 */
+           $("#replyWrite").click(function(){
+        	 
+        	  	let link = "/WebCafe_Project/replyWriteView.do?idx="+idx+"&b_code="+b_code+"&depth="+depth+"&step="+step;
+        	   	console.log(link);
+        	   
+        		location.href=link;
+        	   
            });
            
         });
@@ -179,7 +187,7 @@
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-5">
-													<p class="card-text"><img src="./image/rank_icon/${user.rank}.gif">${board.nick}</p>
+													<p class="card-text"><img src="image/rank_icon/${user.rank}.gif">${board.nick}</p>
 												</div>
 												<div class="col-md-2">
 													<p class="text-right card-text">조회수:${board.hits}</p>
@@ -210,7 +218,7 @@
 
 											<div align="right" class="col-md-12">
 												<div>
-													<button type="button" id="Write" class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
+													<button type="button" id="replyWrite" class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
 													<c:if test="${member != null}">
 														<c:if test="${yespark == 'no'}">
 	                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;

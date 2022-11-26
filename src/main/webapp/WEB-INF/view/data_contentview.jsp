@@ -57,6 +57,9 @@
 		let email_id = '<c:out value="${member.email_id}" />';
         let yes = '<c:out value="${yes}" />';
         let idx = '<c:out value="${board.idx}" />';
+        let b_code = '<c:out value="${board.b_code}" />';
+        let depth = '<c:out value="${board.depth}" />';
+        let step = '<c:out value="${board.depth}" />';
 
         /* 게시물 좋아요 비동기 처리 */
         $("#yesbtn").click(function(){
@@ -131,6 +134,17 @@
  			}
 			
 		});
+        
+        /* 답글 작성 */
+        $("#replyWrite").click(function(){
+     	 
+     	  	let link = "/WebCafe_Project/replyWriteDataBoardView.do?idx="+idx+"&b_code="+b_code+"&depth="+depth+"&step="+step;
+     	   	console.log(link);
+     	   
+     		location.href=link;
+     	   
+        });
+        
 	});
 </script>
 
@@ -138,19 +152,14 @@
 
 <body>
 
-	<!-- ======= Header ======= -->
-	<header id="header" class="header fixed-top d-flex align-items-center">
-
-		<jsp:include page="/common/top.jsp"></jsp:include>
-
-	</header>
-	<!-- End Header -->
-
-	<!-- ======= Sidebar ======= -->
-
-	<jsp:include page="/common/side2.jsp"></jsp:include>
-
-	<!-- End Sidebar -->
+     <!-- ======= Header ======= -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
 
 	<main id="main" class="main">
 		<div class="pagetitle">
@@ -222,7 +231,7 @@
                                     				<c:if test="${yes != 'no'}">
                                     					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
                                     				</c:if>
-													<button type="button" id="Write"
+													<button type="button" id="replyWrite"
 														class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
 														<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
 													<button type="button" id="delete"

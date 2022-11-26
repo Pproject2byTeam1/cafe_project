@@ -15,6 +15,7 @@ import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.User;
 
 public class Data_Board_Post_Service implements Action {
@@ -42,10 +43,9 @@ public class Data_Board_Post_Service implements Action {
 			Board_Dao bdao = new Board_Dao();
 
 			bdao.updateHits(idx);
-			Board board = dao.getData_BoardByIdx(idx);
+			DataBoard board = dao.getData_BoardByIdx(idx);
+			
 			User rank = udao.selectUserById(board.getEmail_id());
-
-			System.out.println("ahhaha");
 			
 			if (user != null) {
 				Yes_Dao yesdao = new Yes_Dao();

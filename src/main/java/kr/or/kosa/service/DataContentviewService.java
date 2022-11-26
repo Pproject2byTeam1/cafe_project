@@ -39,7 +39,7 @@ public class DataContentviewService implements Action {
 			if (user != null) {
 				Yes_Dao yesdao = new Yes_Dao();
 				int idx_t = Integer.parseInt(idx);
-				String yes = yesdao.getYesByIdxEmail(idx_t, user.getEmail_id());
+				String yes = yesdao.getYesEmailByIdxEmail(idx_t, user.getEmail_id());
 
 				if (yes != null) {
 					request.setAttribute("yes", yes);

@@ -14,7 +14,6 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
-import kr.or.kosa.service.DataContentviewService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
@@ -38,7 +37,10 @@ import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
 import kr.or.kosa.service.Regular_Board_Write_Service;
-import kr.or.kosa.service.UpdatePwdService;
+import kr.or.kosa.service.ReplyDataWriteService;
+import kr.or.kosa.service.ReplyDataWriteViewService;
+import kr.or.kosa.service.ReplyRegularWriteService;
+import kr.or.kosa.service.ReplyRegularWriteViewService;
 import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
@@ -253,6 +255,25 @@ public class FrontController extends HttpServlet {
 			
 			action = new DeleteOkService();
 	        forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/replyWriteView.do")) { //자유 게시판 답글 작성 페이지 이동
+			
+			action = new ReplyRegularWriteViewService();
+			forward = action.execute(request, response);
+		} else if(urlcommand.equals("/replyRegularWriteok.do")) { //자유 게시판 답글 작성 
+			
+			action = new ReplyRegularWriteService();
+			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/replyWriteDataBoardView.do")) { //데이터 게시판 답글 작성 페이지 이동
+			
+			action = new ReplyDataWriteViewService();
+			forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/replyWriteDataBoard.do")) { //데이터 게시판 답글 작성
+			
+			action = new ReplyDataWriteService();
+			forward = action.execute(request, response);
 			
 		}
 	
