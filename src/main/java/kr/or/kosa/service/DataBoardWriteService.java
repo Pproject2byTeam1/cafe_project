@@ -13,12 +13,12 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dao.MarketBoardDao;
+import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.MarketBoard;
+import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.User;
 
-public class MarketBoardWriteService implements Action {
+public class DataBoardWriteService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -42,11 +42,13 @@ public class MarketBoardWriteService implements Action {
 			int b_code = Integer.parseInt(multi.getParameter("b_code"));
 			String title = multi.getParameter("title");
 			String content = multi.getParameter("content");
-			
-			//거래게시판 추가 가져오기
+		
+			//데이터게시판 추가 가져오기 (oriname/savenamevolume)
 			String m_mode = multi.getParameter("m_mode");
 			String cate = multi.getParameter("cate");
 			int price = Integer.parseInt(multi.getParameter("price"));
+			String ori_name = multi.getParameter("ori_name");
+			int volume = Integer.parseInt(multi.getParameter("volume"));
 			
 			//유저정보 가져오기
 			HttpSession session = request.getSession();
@@ -55,7 +57,7 @@ public class MarketBoardWriteService implements Action {
 		    String msg = "";
 			String url = "";
 		    
-			System.out.println(b_code + title + content + m_mode + cate + price + user);
+			
 			
 			if(user == null) {
 		    	msg = "실패";
@@ -68,39 +70,36 @@ public class MarketBoardWriteService implements Action {
 				String filename1 = multi.getFilesystemName(file1);
 				
 				//게시판 DAO 기능 불러오기
-				MarketBoardDao marketdao = new MarketBoardDao();
+				DataBoardDao datadao = new DataBoardDao();
 				//게시판 형태 가져오기
-				MarketBoard market = new MarketBoard();
+				DataBoard data = new DataBoard();
 				
 				//게시판 write DAO에 넣어줄 값들.
-				market.setB_code(b_code);
-				market.setTitle(title);
-				market.setContent(content);
-				market.setEmail_id(user.getEmail_id());
-				market.setNick(user.getNick());
+				data.setB_code(b_code);
+				data.setTitle(title);
+				data.setContent(content);
+				data.setEmail_id(user.getEmail_id());
+				data.setNick(user.getNick());
 				
-				//거래 게시판 추가 사항.
-				market.setM_mode(m_mode);
-				market.setCate(cate);
-				market.setPrice(price);
-				market.setSold("판매중");
+				//자료 게시판 추가 사항.
+				data.getOri_name();
 				
 				//파일 이름 판단 및 img_name DAO 넣기
 				if(filename1 == null) {
-					market.setImg_name("");
+					data.setOri_name(filename1);
 				}else {
-					market.setImg_name(filename1);
+					data.setOri_name(filename1);
 				}
 				
 				//필요 요소 넣고 작성 메서드 콜
-				result = marketdao.writeMarket(market);
+				result = datadao.writeData(data);
 				
 				if (result > 0) {
 					msg = "성공";
-					url = "/WebCafe_Project/marketboard_list.do?b_code=" + b_code;
+					url = "/WebCafe_Project/databoard_list.do?b_code=" + b_code;
 				} else {
 					msg = "실패";
-					url = "/WebCafe_Project/marketboard_write.do?b_code=" + b_code;
+					url = "/WebCafe_Project/databoard_write.do?b_code=" + b_code;
 				}
 		    }
 			

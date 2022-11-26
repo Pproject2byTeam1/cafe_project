@@ -29,25 +29,31 @@ public class DeleteOkService implements Action {
 	        int idx = Integer.parseInt(request.getParameter("idx"));
 	        String email_id = request.getParameter("email_id");
 	       DataBoardDao databoard = new DataBoardDao();
-	    
+	       int b_code  = Integer.parseInt(request.getParameter("b_code"));
 	
 			int row =databoard.deleteDataBoard(idx);
-			
-			String msg = "";
-			
+			  
+	         String msg="";
+	         String url="";
+	       //  board_delete.do?idx=" + ${board.idx}
 			if(row < 0) {
-				msg = "실패";
+				 msg="삭제에 실패하였습니다";
+		            url="databoard_list.do?b_code=6";
 			}else {
-				msg = "확인";
+				msg="성공적으로 삭제되었습니다";
+	            url="databoard_list.do?b_code=6";
 			}
 			forward = new ActionForward();
-		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/index.jsp");
+			  request.setAttribute("board_msg",msg);
+		         request.setAttribute("board_url",url);
+		 
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
+
+	         forward.setRedirect(false);
+	         forward.setPath("/WEB-INF/view/redirect.jsp");
 		return forward;
 	}
 
