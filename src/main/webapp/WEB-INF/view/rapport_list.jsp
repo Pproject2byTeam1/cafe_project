@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,8 @@
 <title>카페人중독</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
-
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -39,61 +40,40 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/free.css" rel="stylesheet">
 <script type="text/javascript">
+
 	$(function(){
-	
 		
-		var chkObj = document.getElementsByname("RowCheck");
-		var rowCnt = chkObj.length;
-		
-		$("input[name='allCheck']").click(function(){
-			var chk_listArr = $("input[name='RowCheck']");
-			for( var 1=0; i<chck_listArr.length; i++){
-				chk_listArr[i].checked = this.checked;
-				
-			}
-		});
-		
-		$("input[name='RowCheck']").click(function(){
-			if($("input[name='RowCheck']:checked").length == rowCnt){
-				$("input[name='allCheck']")[0].checked = true;
-			}else{
-				$("input[name ='allCheck']")[0].checked = false;
-			}
-		});
-
-	});
-	
-	function deleteValue(){
-		
-		var url ="delete";
-		var valueArr = new Array();
-		var list=$("input[name='RowCheck']");
-		for(var i=0; i<kist.length; i++){
-			valueArr.push(list[i].value);
-		}
-		
-	}
-	if(valueArr.length ==0){
-		alert("선택된 글이 없습니다.");
-	}else{
-		var chk=confirm("정말로 취소 하시겠습니까?");
+		const data1 = {"idx":${idx}};
 		$.ajax({
-			url :url,
-			type: 'POST',
-			dataType:"html",
-			data:{
-				valueArr : valueArr
+				url:"Deleterapport",
+				data:data1,
+				dataType:"html",
+				success:function(responsetxt){
+					 console.log(responstext);
+					 $('#')
+					
+					
+				}
 				
-			},
-			success : function(jdata){
-				alter("취소 성공");
-				location.replace("requestlist");
-			}
-
-	}
-
+		})
+		
+		
+		
+		
+		
+		
+		
 	});
+		
+		
 
+	
+	
+	
+	
+	
+
+	
 
 </script>
 
@@ -179,7 +159,7 @@
 
 						<tr>
 							<th scope="col"><input type="checkbox" name="allCheck"></th>
-						<th scope="col">글/댓글</th>
+							<th scope="col">글/댓글</th>
 							<th scope="col">게시판 종류</th>
 							<th scope="col">글제목</th>
 							<th scope="col">닉네임</th>
@@ -190,45 +170,47 @@
 
 						</tr>
 
-				<script type="text/javascript">
-						console.log("${member}");
+						<script type="text/javascript">
+					
 						</script>
 						<c:if test="${reportlist== null}">
 							<tr>
-								<td >데이터가 없습니다</td>
+								<td>데이터가 없습니다</td>
 							</tr>
 						</c:if>
-							<c:forEach var="reportlist" items="${reportlist}" varStatus="status">
+						<c:forEach var="reportlist" items="${reportlist}"
+							varStatus="status">
 							<tr>
-							<th scope="col"><input type="checkbox" name="RowCheck" value="${reportlist.idx}"></th>
-							<c:choose>
-								<c:when test="${request.b_code eq'null'} ">
-								<th scope="col">댓글</th>
-								</c:when>
-								<c:otherwise>
-								<th scope="col">글</th>
-								</c:otherwise>
-							</c:choose>
-							<c:choose>
-							<c:when test="${request.b_code eq'1'}">
-								<th scope="col">자유게시판</th>
-								</c:when>
-								<c:when test="${request.b_code eq'2'}">
-								<th scope="col">출석게시판</th>
-								</c:when>
-								<c:when test="${request.b_code eq'3'}">
-								<th scope="col">전체일정</th>
-								</c:when>
+								<th scope="col"><input type="checkbox" name="RowCheck"
+									class="rowChk" value="${reportlist.idx}"></th><input type="hidden" idx="idx" value="${reportlist.idx}" />
+								<c:choose>
+									<c:when test="${request.b_code eq'null'} ">
+										<th scope="col">댓글</th>
+									</c:when>
+									<c:otherwise>
+										<th scope="col">글</th>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${request.b_code eq'1'}">
+										<th scope="col">자유게시판</th>
+									</c:when>
+									<c:when test="${request.b_code eq'2'}">
+										<th scope="col">출석게시판</th>
+									</c:when>
+									<c:when test="${request.b_code eq'3'}">
+										<th scope="col">전체일정</th>
+									</c:when>
 									<c:when test="${request.b_code eq'4'}">
-								<th scope="col">사진공유</th>
-								</c:when>
+										<th scope="col">사진공유</th>
+									</c:when>
 									<c:when test="${request.b_code eq'5'}">
-								<th scope="col">유로거래</th>
-								</c:when>
-								<c:otherwise>
-								<th scope="col">자료공유</th>
-								</c:otherwise>
-							</c:choose>
+										<th scope="col">유로거래</th>
+									</c:when>
+									<c:otherwise>
+										<th scope="col">자료공유</th>
+									</c:otherwise>
+								</c:choose>
 
 								<th scope="col">${reportlist.title}</th>
 								<th scope="col">${reportlist.nick}</th>
@@ -236,43 +218,47 @@
 								<th scope="col">${reportlist.hits}</th>
 								<th scope="col">${reportlist.report_count}</th>
 								<th scope="col"><button type="button"
-										class="btn btn-danger" onclick="window.open('data_post.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button></th>
+										class="btn btn-danger"
+										onclick="window.open('data_post.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+										<button type="button" class="btn btn-danger" id="deletebtn">신고취소</button>
+										</th>
 							</tr>
 						</c:forEach>
-				
+
 					</table>
-					<div align ="right">		 <button type="button"class="btn btn-danger" onlick="deleteValue();">신고취소</button>
+					<div align="right">
+						<button type="button" class="btn btn-danger" id="deletebtn">신고취소</button>
 					</div>
-							
+
 					<!-- End Table with hoverable rows -->
 					<!-- 페이징  -->
 					<nav aria-label="Page navigation example">
-					<ul class="pagination justify-content-center">
-					
-		                <c:if test="${cpage > 1}">
-		                  <li class="page-item">
-		                    <a class="page-link" href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
-		                  </li>
-	                    </c:if>
-	                    	
-	                    <c:forEach var="i" begin="1" end="${pagecount}" step="1">
-	                    	<c:choose>
-								<c:when test="${cpage==i}">
-										<li class="page-item"><a class="page-link active" >${i}</a></li>
-								</c:when>
-								<c:otherwise>
-		                  			<li class="page-item"><a class="page-link" href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
-								</c:otherwise>
-							</c:choose>
-	                    </c:forEach>
-	                    
-	                    <c:if test="${cpage < pagecount}">
-	                    	<li class="page-item">
-							<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
-							</li>
-						</c:if>
-					</ul>
-				</nav>
+						<ul class="pagination justify-content-center">
+
+							<c:if test="${cpage > 1}">
+								<li class="page-item"><a class="page-link"
+									href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1"
+									aria-disabled="true"><<</a></li>
+							</c:if>
+
+							<c:forEach var="i" begin="1" end="${pagecount}" step="1">
+								<c:choose>
+									<c:when test="${cpage==i}">
+										<li class="page-item"><a class="page-link active">${i}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link"
+											href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
+							<c:if test="${cpage < pagecount}">
+								<li class="page-item"><a class="page-link"
+									href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a></li>
+							</c:if>
+						</ul>
+					</nav>
 					<!-- End Centered Pagination -->
 				</div>
 			</div>

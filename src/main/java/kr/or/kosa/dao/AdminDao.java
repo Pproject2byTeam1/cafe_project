@@ -219,7 +219,7 @@ public class AdminDao {
 		int totalcount = 0;
 		try {
 			conn = ds.getConnection(); // dbcp 연결객체 얻기
-			String sql = "select count(idx) cnt from board where report_count>0";
+			String sql = "select count(idx) cnt from board where report_count>3";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -239,7 +239,36 @@ public class AdminDao {
 		return totalcount;
 	}
 	
-	
+	//신고 갯수 초기화
+	public boolean deleteRapport(int idx) {
+		//update jspboard set readnum = readnum + 1 where idx=?
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+		try {
+			conn = ds.getConnection();
+			String sql="update BOARD set REPORT_COUNT=0  where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			
+			int row = pstmt.executeUpdate();
+			if(row > 0 ) {
+				result = true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();//반환
+			}catch (Exception e) {
+				
+			}
+		}
+		return result;
+	}
+
 	
 	
 	
