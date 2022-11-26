@@ -15,11 +15,10 @@ import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
 
-public class Regular_Board_Write_Service implements Action {
+public class RegularBoardEditService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		
 		ActionForward forward = new ActionForward();
 		
 		try {
@@ -34,12 +33,8 @@ public class Regular_Board_Write_Service implements Action {
  			int b_code = Integer.parseInt(request.getParameter("b_code"));
  			int idx = Integer.parseInt(request.getParameter("idx"));
  			String email_idx = request.getParameter("id");
- 			String todo = request.getParameter("todo");
- 			
- 			
- 			System.out.println(b_code);
-			System.out.println(email_idx);
-			System.out.println(todo);
+
+ 	
  			
  			// 로그인 안할경우 로그인 페이지로
 			if (user == null) {
@@ -76,40 +71,6 @@ public class Regular_Board_Write_Service implements Action {
 	              
 	            url="/WEB-INF/view/redirect.jsp";
 	         }
-			
-			// 수정확인버튼
-			if (todo.equals("modify")) {
-				
-				String title = request.getParameter("title");
-				String content = request.getParameter("content");
-				
-				System.out.println(title);
-				System.out.println(content);
-				
-				
-				Board_Dao bdao = new Board_Dao();
-				int editboard = bdao.updateUseIdxBoard(title,content,idx);
-				
-					if(editboard > 0){
-						String board_msg = "수정 완료.";
-			            String board_url = "/WebCafe_Project/regular_list.do?b_code=1";
-			              
-			            request.setAttribute("board_msg", board_msg);
-			            request.setAttribute("board_url", board_url);
-			              
-			            url="/WEB-INF/view/redirect.jsp";
-					}
-				
-				
-			}
-			
-			// 글쓰기 (todo가 'write'일경우)
-			if (todo.equals("write")) {
-	 			
-	 			url="/WEB-INF/view/regularboard_write.jsp";
-	 			
-	         }
-			
 			
  		
  			request.setAttribute("infolist", infolist);

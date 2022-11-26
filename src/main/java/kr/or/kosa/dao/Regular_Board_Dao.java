@@ -23,17 +23,20 @@ public class Regular_Board_Dao {
 	}
 	
 	//자유게시판 특정 게시글 조회
-	public Board getRegular_BoardByIdx(int idx) {
+	public Regular_Board getRegular_BoardByIdx(int idx) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Board board = new Board(); 
+		Regular_Board board = new Regular_Board(); 
 		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select idx, title, nick, content, hits, to_char(w_date, 'YYYY-MM-dd') w_date, report_count, notic, email_id from board where idx = ?";
+			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'YYYY-MM-dd') w_date, b.report_count, b.notic, b.email_id, b.b_code, i.refer, i.depth, i.step "
+                    + "from board b join regular_board i "
+                    + "on b.idx = i.idx "
+                    + "where b.idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			
@@ -51,6 +54,11 @@ public class Regular_Board_Dao {
 				board.setReport_count(rs.getInt("report_count"));
 				board.setNotic(rs.getString("notic"));
 				board.setEmail_id(rs.getString("email_id"));
+				board.setB_code(rs.getInt("b_code"));
+				board.setRefer(rs.getInt("refer"));
+				board.setDepth(rs.getInt("depth"));
+				board.setStep(rs.getInt("step"));
+				
 				
 			}else {
 				System.out.println("조회 데이터 없음");
