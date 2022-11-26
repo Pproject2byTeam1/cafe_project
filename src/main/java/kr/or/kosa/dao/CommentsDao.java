@@ -84,25 +84,193 @@ public class CommentsDao {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		int row = 0;
 		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "insert into comments(idx, content, email_id, nick, refer, depth, step)"
-						+ "values(?, ?, ?, ?, ?, ?, ?)";
+			conn.setAutoCommit(false);
+			
+			String sql = "INSERT INTO comments (co_idx, idx, content, email_id, nick, refer) "
+						+ "VALUES (CO_IDX_SEQ.nextval, ?, ?, ?, ?, CO_IDX_SEQ.currval)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, comments.getIdx());
 			pstmt.setString(2, comments.getContent());
 			pstmt.setString(3, comments.getEmail_id());
 			pstmt.setString(4, comments.getNick());
-			pstmt.setInt(5, row);
 			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			row = pstmt.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("comments 삽입 실패");
+			}
+			
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			pstmt2.setString(1, comments.getEmail_id());
+			
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("user_detals update 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
+	//댓글 삭제
+	public int deleteCommentByCo_idx(int co_idx, String email_id) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
+			String sql = "update comments set content = '작성자가 삭제한 댓글입니다.' where co_idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, co_idx);
+			
+			row = pstmt.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("comments 삭제 실패");
+			}
+			
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count - 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			pstmt2.setString(1, email_id);
+			
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("user_detals update 실패");
+			}else {
+				conn.commit();
+			}
+			
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
+	
+	//대댓글 삽입
+	public int insertReplyReply(Comments comments) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
+			String sql = "INSERT INTO comments (co_idx, idx, content, email_id, nick, refer, depth, step) "
+						+ "VALUES (CO_IDX_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, comments.getIdx());
+			pstmt.setString(2, comments.getContent());
+			pstmt.setString(3, comments.getEmail_id());
+			pstmt.setString(4, comments.getNick());
+			pstmt.setInt(5, comments.getRefer());
+			pstmt.setInt(6, comments.getDepth()+1);
+			pstmt.setInt(7, comments.getStep()+1);
+			
+			row = pstmt.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("comments 삽입 실패");
+			}
+			
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			pstmt2.setString(1, comments.getEmail_id());
+			
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("user_detals update 실패");
+			}
+			
+			String sql3 = "UPDATE comments set step = nvl(step + 1, 0) where refer=?";
+			pstmt3 = conn.prepareStatement(sql3);
+			
+			pstmt3.setInt(1, comments.getRefer());
+			
+			row = pstmt3.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("comments depth, step update 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
