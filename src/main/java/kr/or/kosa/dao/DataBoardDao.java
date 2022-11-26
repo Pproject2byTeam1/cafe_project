@@ -219,6 +219,7 @@ import kr.or.kosa.dto.MarketBoard;
 		try {
 
 			conn = ds.getConnection();
+			conn.setAutoCommit(false);
 
 			// Board 삽입
 			String sql = "INSERT ALL INTO board (idx, title, nick, content, email_id, b_code) "
@@ -282,11 +283,13 @@ import kr.or.kosa.dto.MarketBoard;
 		public int rewriteData(DataBoard data) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
+			PreparedStatement pstmt2 = null;
 			int row = 0;
 
 			try {
 
 				conn = ds.getConnection();
+				conn.setAutoCommit(false);
 
 				// Board 삽입
 				String sql = "INSERT ALL INTO board (idx, title, nick, content, email_id, b_code) "
@@ -344,7 +347,9 @@ import kr.or.kosa.dto.MarketBoard;
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		int refer_max=0;
+		
 		try {
+			
 			conn = ds.getConnection(); //빌려주세여^^  이따 반납할게요 
 			String sql="select nvl(max(refer),0) from data_board";
 			pstmt = conn.prepareStatement(sql);
@@ -451,6 +456,7 @@ import kr.or.kosa.dto.MarketBoard;
        try {
           
           conn = ds.getConnection();
+          
           String sql = "INSERT ALL "
                    + "INTO board (idx, title, nick, content, email_id, b_code) "
                    + "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) "
@@ -546,6 +552,74 @@ import kr.or.kosa.dto.MarketBoard;
        
        return row;
     }
+    
+  //객채로 title content 수정
+  		public int updateDataBoardTitle(DataBoard board) {
+  			Connection conn = null;
+  			PreparedStatement pstmt = null;
+  			PreparedStatement pstmt2 = null;
+  			int row = 0;
+  			
+  			try {
+  				
+  				conn = ds.getConnection();
+  				conn.setAutoCommit(false);
+  	          
+  				String sql = "UPDATE board SET title =?, content=? WHERE idx=?";
+  				pstmt = conn.prepareStatement(sql);
+  				
+  				pstmt.setString(1, board.getTitle());
+  				pstmt.setString(2, board.getContent());
+  				pstmt.setInt(3, board.getIdx());
+  	
+  				
+  				row = pstmt.executeUpdate();
+  				
+  				
+  				
+  				if(row < 0) {
+  		             throw new Exception("Board 수정 실패");
+  		        }
+  				
+  				String sql2 = "UPDATE data_board set ori_name=?, save_name=?, volume=? where idx=?";
+  				pstmt2 = conn.prepareStatement(sql2);
+  				
+  				pstmt2.setString(1, board.getOri_name());
+  				pstmt2.setString(2, board.getSave_name());
+  				pstmt2.setInt(3, board.getVolume());
+  				pstmt2.setInt(4, board.getIdx());
+  				
+  				
+  				row = pstmt2.executeUpdate();
+  				
+  				if(row < 0) {
+  		             throw new Exception("data_baord 수정 실패");
+  		          }else {
+  		             conn.commit();
+  		          }
+  		          
+  				
+  			} catch (Throwable e) {
+  	          if(conn != null) {
+  	             try {
+  	                conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+  	             } catch (Exception e2) {
+  	                e2.printStackTrace();
+  	             }
+  	          }
+  	       } finally {
+  	          try {
+  	             conn.setAutoCommit(true);
+  	             pstmt.close();
+  	             conn.close();
+  	          } catch (Exception e2) {
+  	             System.out.println(e2.getMessage());
+  	          }
+  	       }
+  			
+  			return row;
+  		}
+  		
     
    
 }

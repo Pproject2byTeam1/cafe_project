@@ -36,10 +36,10 @@ public class DataDeleteOkService implements Action {
 			// board_delete.do?idx=" + ${board.idx}
 			if (row < 0) {
 				msg = "삭제에 실패하였습니다";
-				url = "databoard_list.do?b_code=6";
+				url = "databoard_list.do?b_code"+ b_code;
 			} else {
 				msg = "성공적으로 삭제되었습니다";
-				url = "databoard_list.do?b_code=6";
+				url = "databoard_list.do?b_code"+ b_code;
 			}
 			forward = new ActionForward();
 			request.setAttribute("board_msg", msg);

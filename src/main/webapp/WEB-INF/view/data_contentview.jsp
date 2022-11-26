@@ -60,6 +60,8 @@
         let b_code = '<c:out value="${board.b_code}" />';
         let depth = '<c:out value="${board.depth}" />';
         let step = '<c:out value="${board.depth}" />';
+        
+
 
         /* 게시물 좋아요 비동기 처리 */
         $("#yesbtn").click(function(){
@@ -122,8 +124,7 @@
 
         //삭제
         $("#delete").click(function(){
-			let idx = "<c:out value='${board.idx}'/>";
-			let b_code = "<c:out value='${board.b_code}'/>";
+	
 			console.log(idx);
 			console.log(b_code);
 			
@@ -137,11 +138,7 @@
 		});
     	
         /* 답글 작성 */
-        let b_code = "<c:out value='${b_code}'/>";
-        let idx = "<c:out value='${idx}'/>";
-        let refer ="<c:out value=${refer}'/>";
-        let depth ="<c:out value=${depth}'/>";
-        let step ="<c:out value=${step}'/>";
+        
     	$("#Write").click(function(){
 
 			location.href="databoard_rewrite.do?b_code=" + b_code+"&idx"+idx+"&refer"+refer+"&depth"+depth+"&step"+step;
@@ -234,13 +231,17 @@
                                     				<c:if test="${yes != 'no'}">
                                     					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
                                     				</c:if>
-													<button type="button" id="#Write"
+													<button type="button" id="Write"
 														class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
 														<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
+														
 													<button type="button" id="delete"
-														class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>	
-													<button type="button" id="List"
-														class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
+														class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>
+														
+													<form action="databoard_edit.do?b_code=${b_code}&idx=${board.idx}" method="post">
+				                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
+				                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
+	                                      			</form>
 														</c:if>
 													<button type="button" id="Top"
 														class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
