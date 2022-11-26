@@ -29,10 +29,8 @@ public class DataBoardListService implements Action {
 
 		try {
 			HttpSession session = request.getSession();
-
-			DataBoardDao dao1 = new DataBoardDao();
-
-			Board_Dao dao = new Board_Dao();
+			Board_Dao boarddao = new Board_Dao();
+			DataBoardDao dao = new DataBoardDao();
 			Yes_Dao ydao = new Yes_Dao();
 			CommentsDao cdao = new CommentsDao();
 			UserDao udao = new UserDao();
@@ -48,7 +46,7 @@ public class DataBoardListService implements Action {
 
 			request.setAttribute("infolist", infolist);
 
-			int totalboardcount = dao.totalBoardCountByB_code(b_code);
+			int totalboardcount = boarddao.totalBoardCountByB_code(b_code);
 
 			// 상세보기 >> 다시 리스트로 넘어 올때
 			String ps = request.getParameter("ps");
@@ -96,7 +94,6 @@ public class DataBoardListService implements Action {
 			}
 
 			// List<Comments> comlist1 =dao.getComment(code, pagecount, cpage, pagesize);
-
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
@@ -110,6 +107,7 @@ public class DataBoardListService implements Action {
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalboardcount", totalboardcount);
+			request.setAttribute("b_code", b_code);
 
 			forward = new ActionForward();
 			forward.setRedirect(false);

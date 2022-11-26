@@ -135,17 +135,18 @@
  			}
 			
 		});
-        
+    	
         /* 답글 작성 */
-        $("#replyWrite").click(function(){
-     	 
-     	  	let link = "/WebCafe_Project/replyWriteDataBoardView.do?idx="+idx+"&b_code="+b_code+"&depth="+depth+"&step="+step;
-     	   	console.log(link);
-     	   
-     		location.href=link;
-     	   
-        });
-        
+        let b_code = "<c:out value='${b_code}'/>";
+        let idx = "<c:out value='${idx}'/>";
+        let refer ="<c:out value=${refer}'/>";
+        let depth ="<c:out value=${depth}'/>";
+        let step ="<c:out value=${step}'/>";
+    	$("#Write").click(function(){
+
+			location.href="databoard_rewrite.do?b_code=" + b_code+"&idx"+idx+"&refer"+refer+"&depth"+depth+"&step"+step;
+			
+		});
 	});
 </script>
 
@@ -198,7 +199,7 @@
 													<p class="card-text"><img src="./image/rank_icon/${rank.rank}.gif">${board.nick}</p>
 												</div>
 												<div class="col-md-2">
-													<p class="text-right card-text">조회수:10</p>
+													<p class="text-right card-text">조회수:${board.hits}</p>
 												</div>
 												<div class="col-md-2">
 													<p class="text-right card-text">추천:${board.hits}</p>
@@ -233,7 +234,7 @@
                                     				<c:if test="${yes != 'no'}">
                                     					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
                                     				</c:if>
-													<button type="button" id="replyWrite"
+													<button type="button" id="#Write"
 														class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
 														<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
 													<button type="button" id="delete"

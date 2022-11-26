@@ -44,11 +44,7 @@ public class DataBoardWriteService implements Action {
 			String content = multi.getParameter("content");
 		
 			//데이터게시판 추가 가져오기 (oriname/savenamevolume)
-			String m_mode = multi.getParameter("m_mode");
-			String cate = multi.getParameter("cate");
-			int price = Integer.parseInt(multi.getParameter("price"));
-			String ori_name = multi.getParameter("ori_name");
-			int volume = Integer.parseInt(multi.getParameter("volume"));
+			
 			
 			//유저정보 가져오기
 			HttpSession session = request.getSession();
@@ -66,13 +62,24 @@ public class DataBoardWriteService implements Action {
 		    	Enumeration filenames = multi.getFileNames();
 				
 		    	//파일 중복 정의
-				String file1 = (String) filenames.nextElement();
-				String filename1 = multi.getFilesystemName(file1);
+		    	String file1 = (String) filenames.nextElement(); 
+				String savename = multi.getFilesystemName(file1); //서버저장이름(중복시에_1)
+				String oriname = multi.getOriginalFileName(file1); //원본저장이름
+				
+				long length = multi.getFile(file1).length(); // 파일 객체 가져오기
+				int size1 = Long.valueOf(length).intValue(); // 파일 크기 타입 long -> int
 				
 				//게시판 DAO 기능 불러오기
 				DataBoardDao datadao = new DataBoardDao();
 				//게시판 형태 가져오기
 				DataBoard data = new DataBoard();
+				
+				System.out.println(savename);
+				System.out.println(oriname);
+				System.out.println(user);
+				System.out.println(b_code);
+				System.out.println(title);
+				System.out.println(content);
 				
 				//게시판 write DAO에 넣어줄 값들.
 				data.setB_code(b_code);
@@ -82,17 +89,14 @@ public class DataBoardWriteService implements Action {
 				data.setNick(user.getNick());
 				
 				//자료 게시판 추가 사항.
-				data.getOri_name();
 				
-				//파일 이름 판단 및 img_name DAO 넣기
-				if(filename1 == null) {
-					data.setOri_name(filename1);
-				}else {
-					data.setOri_name(filename1);
-				}
+				//파일 이름 판단 및 databoard DAO 넣기
+				data.setOri_name(oriname);
+				data.setSave_name(savename);
+				data.setVolume(size1);
 				
 				//필요 요소 넣고 작성 메서드 콜
-			//	result = datadao.writeData(data);
+				result = datadao.writeData(data);
 				
 				if (result > 0) {
 					msg = "성공";

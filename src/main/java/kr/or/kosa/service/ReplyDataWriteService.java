@@ -89,7 +89,7 @@ public class ReplyDataWriteService implements Action {
 					url = "/WebCafe_Project/databoard_list.do?b_code=" + b_code;
 				} else {
 					msg = "실패";
-					url = "/WebCafe_Project/databoard_list.do?b_code=" + b_code;
+					url = "/WebCafe_Project/databoard_rewrite.do?b_code=" + b_code;
 				}
 				
 				request.setAttribute("b_code", b_code);
