@@ -30,14 +30,8 @@ public class Data_Board_Post_Service implements Action {
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			int idx = Integer.parseInt(request.getParameter("idx"));
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
-			//session의 아이디값을 받아오기
-			request.setAttribute("member", user);
-			
-			// 자신이 쓴 글만 삭제하기
-
-			request.setAttribute("member", user);
-
 			UserDao udao = new UserDao();
 			DataBoardDao dao = new DataBoardDao();
 			Board_Dao bdao = new Board_Dao();
@@ -60,6 +54,7 @@ public class Data_Board_Post_Service implements Action {
 
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);
+			request.setAttribute("b_code", b_code);
 			request.setAttribute("rank", rank);
 
 			forward = new ActionForward();

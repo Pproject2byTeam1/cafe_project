@@ -46,8 +46,6 @@ public class ReplyRegularWriteService implements Action {
 				
 				int b_code = Integer.parseInt(request.getParameter("b_code"));
 				int replyIdx = Integer.parseInt(request.getParameter("reply_idx"));
-				int depth = Integer.parseInt(request.getParameter("depth"));
-				int step = Integer.parseInt(request.getParameter("step"));
 				String title = request.getParameter("title");
 				String content = request.getParameter("content");
 				
@@ -58,8 +56,6 @@ public class ReplyRegularWriteService implements Action {
 				board.setNick(user.getNick());
 				board.setContent(content);
 				board.setEmail_id(user.getEmail_id());
-				board.setDepth(depth);
-				board.setStep(step);
 				
 				Regular_Board_Dao dao = new Regular_Board_Dao();
 				

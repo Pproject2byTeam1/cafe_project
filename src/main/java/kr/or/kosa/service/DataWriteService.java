@@ -80,7 +80,7 @@ public class DataWriteService implements Action {
 				board.setSave_name(ordi_name);
 			}
 
-			result = dao.insertData_Board(board);
+			//result = dao.insertData_Board(board);
 
 			
 		} catch (IOException e) {

@@ -41,6 +41,19 @@
 <!-- 거래게시판 CSS 시작 -->
 <link href="assets/css/marketboard_read.css" rel="stylesheet">
 <!-- 거래게시판 CSS 끝 -->
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		let b_code = "<c:out value='${b_code}'/>";
+			
+			//글쓰기
+			$("#Write").click(function(){
+				console.log("write 클릭");
+				location.href="marketboard_write.do?b_code=" + b_code;
+				
+			});
+			
+</script>
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">

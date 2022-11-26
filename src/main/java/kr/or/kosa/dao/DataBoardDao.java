@@ -18,63 +18,75 @@ import com.oreilly.servlet.MultipartRequest;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.DataBoard;
+import kr.or.kosa.dto.MarketBoard;
 
-public class DataBoardDao {
-   DataSource ds = null;
+	public class DataBoardDao {
+	   DataSource ds = null;
 
    public DataBoardDao() throws NamingException {
       Context context = new InitialContext();
       ds = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
    }
    
-   //board 에서 특정한 글조회
-   public Board getBoard_data( int idx) {
-      
-      Connection conn = null;
-      PreparedStatement pstmt = null;
-      ResultSet rs = null;
-      Board board = new Board();
-      
-      
-      try {
-         conn = ds.getConnection();
-         
-         String sql ="select  title,nick,content ,to_char(w_date,'yyyy-MM-dd') as w_date from board where b_code =? and idx=?";
-         pstmt=conn.prepareStatement(sql);
-         
-
-         pstmt.setInt(1, idx);
-         rs = pstmt.executeQuery();
-         if (rs.next()) {
-
-         board.setTitle(rs.getString("title"));
-         board.setNick(rs.getString("nick"));
-         board.setContent(rs.getString("content"));
-         board.setW_date(rs.getString("w_date"));
-      
-      
-      
-         
-         } else {
-            System.out.println("조회 데이터 없음");
-         }
-      } catch (SQLException e) {
-      
-         System.out.println(e.getMessage());
-      }finally {
-         try {
-            conn .close();
-            rs.close();
-            pstmt.close();
-         } catch (Exception e2) {
-            System.out.println(e2.getMessage());
-         }
-      }
+   public List<DataBoard> getdata_boardList(int b_code, int cpage, int pagesize){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<DataBoard> boardlist = null;
+		
+		try {
+			conn = ds.getConnection();
+			String sql = "select * "
+						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
+							+ "from board b join data_board d "
+							+ "on b.idx = d.idx "
+							+ "where b_code=? "
+							+ "order by refer desc, step desc) where rn <= ? and rn >= ? ";
+			pstmt = conn.prepareStatement(sql);
+			
+			int start = cpage * pagesize - (pagesize -1);
+			int end = cpage * pagesize;
+			
+			pstmt.setInt(1, b_code);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
+			
+			rs = pstmt.executeQuery();
+			
+			boardlist = new ArrayList<DataBoard>();
+			
+			while(rs.next()) {
+				DataBoard board = new DataBoard ();
+				board.setIdx(rs.getInt("idx"));
+				board.setTitle(rs.getString("title"));
+				board.setNick(rs.getString("nick"));
+				board.setContent(rs.getString("content"));
+				board.setHits(rs.getInt("hits"));
+				board.setW_date(rs.getString("w_date"));
+				board.setReport_count(rs.getInt("report_count"));
+				board.setEmail_id(rs.getString("email_id"));
+				board.setB_code(rs.getInt("b_code"));
+				
+				
+				boardlist.add(board);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환
+			} catch (Exception e2) {
+				
+			}
+		}
+		
+		
+		return boardlist;
+	}
    
-      return board;
-      
-   }
-
    // 자료 게시판 특정 글 조회
    public DataBoard getData_BoardByIdx(int idx) {
       Connection conn = null;
@@ -197,6 +209,171 @@ public class DataBoardDao {
       return datalist;
    }
    
+	// 자료게시판 글 삽입 + 트랜잭션 처리
+	public int writeData(DataBoard data) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		int row = 0;
+
+		try {
+
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+
+			// Board 삽입
+			String sql = "INSERT ALL INTO board (idx, title, nick, content, email_id, b_code) "
+		            + "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) INTO data_board (b_idx, idx, ori_name, save_name, volume, refer) " 
+		            + "VALUES (DATA_IDX_SEQ.nextval, IDX_SEQ.currval, ?, ?, ?, ?) select * from dual";
+			
+	         // 유저 작성글 수 증가
+	         String sql2 = "UPDATE user_details SET w_count = nvl(w_count + 1, 0) WHERE email_id=?";
+	         pstmt2 = conn.prepareStatement(sql2);
+	         pstmt2.setString(1, data.getEmail_id());
+	         pstmt2.executeUpdate();
+	 
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, data.getTitle());
+			pstmt.setString(2, data.getNick());
+			pstmt.setString(3, data.getContent());
+			pstmt.setString(4, data.getEmail_id());
+			pstmt.setInt(5, data.getB_code());
+			pstmt.setString(6, data.getOri_name());
+			pstmt.setString(7, data.getSave_name());
+			pstmt.setInt(8, data.getVolume());
+			
+			int refermax = getMaxRefer();
+			int refer = refermax + 1;
+			pstmt.setInt(9,refer);
+			
+			row = pstmt.executeUpdate();
+			
+			if (row < 0) {
+				throw new Exception("Board 삽입 실패");
+			}
+
+			if (row < 0) {
+				throw new Exception("자료게시판 작성 실패");
+			} else {
+				conn.commit();
+			}
+
+		} catch (Throwable e) {
+			if (conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				pstmt.close();
+				pstmt2.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return row;
+	}   
+	// 자료게시판 답글 삽입 
+		public int rewriteData(DataBoard data) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			PreparedStatement pstmt2 = null;
+			int row = 0;
+
+			try {
+
+				conn = ds.getConnection();
+				conn.setAutoCommit(false);
+
+				// Board 삽입
+				String sql = "INSERT ALL INTO board (idx, title, nick, content, email_id, b_code) "
+			            + "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) INTO data_board (b_idx, idx, ori_name, save_name, volume, refer,depth,step) " 
+			            + "VALUES (DATA_IDX_SEQ.nextval, IDX_SEQ.currval, ?, ?, ?, ?,?,?) select * from dual";
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, data.getTitle());
+				pstmt.setString(2, data.getNick());
+				pstmt.setString(3, data.getContent());
+				pstmt.setString(4, data.getEmail_id());
+				pstmt.setInt(5, data.getB_code());
+				pstmt.setString(6, data.getOri_name());
+				pstmt.setString(7, data.getSave_name());
+				pstmt.setInt(8, data.getVolume());
+				
+				int refermax = getMaxRefer();
+				int refer = refermax + 1;
+				pstmt.setInt(9,refer);
+				
+				row = pstmt.executeUpdate();
+				
+				if (row < 0) {
+					throw new Exception("Board 삽입 실패");
+				}
+
+				if (row < 0) {
+					throw new Exception("자료게시판 작성 실패");
+				} else {
+					conn.commit();
+				}
+
+			} catch (Throwable e) {
+				if (conn != null) {
+					try {
+						conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			} finally {
+				try {
+					conn.setAutoCommit(true);
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
+		}   
+	//글쓰기 (refer) 값 생성하기(원본글)
+	private int getMaxRefer() {
+		Connection conn = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		int refer_max=0;
+		
+		try {
+			
+			conn = ds.getConnection(); //빌려주세여^^  이따 반납할게요 
+			String sql="select nvl(max(refer),0) from data_board";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				refer_max = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close(); // 반납이요 ^^
+			}catch (Exception e) {
+				
+			}
+		}
+		
+		return refer_max;
+		
+	}
+	
+	
    // 좋아요 개수
    public int getYes(int idx) {
 
@@ -274,11 +451,15 @@ public class DataBoardDao {
        
        Connection conn = null;
        PreparedStatement pstmt = null;
+       PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
        int row = 0;
       
        try {
           
           conn = ds.getConnection();
+          conn.setAutoCommit(false);
+          
           String sql = "INSERT ALL "
                    + "INTO board (idx, title, nick, content, email_id, b_code) "
                    + "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) "
@@ -300,20 +481,184 @@ public class DataBoardDao {
           pstmt.setInt(11, databoard.getStep()+1);
           
           row = pstmt.executeUpdate();
-         
-      } catch (Exception e) {
-         System.out.println(e.getMessage());
-      } finally {
-         try {
-            pstmt.close();
-            conn.close();
-         } catch (Exception e2) {
-            System.out.println(e2.getMessage());
-         }
-      }
+          
+			if (row <= 0) {
+				throw new Exception("board 삽입 실패");
+			}
+			
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			
+			pstmt2.setString(1, databoard.getEmail_id());
+			
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("user_detals update 실패");
+			}
+			
+			String sql3 = "UPDATE data_board set step = nvl(step + 1, 0) where refer=?";
+			pstmt3 = conn.prepareStatement(sql3);
+			
+			pstmt3.setInt(1, databoard.getRefer());
+			
+			row = pstmt3.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("comments depth, step update 실패");
+			}else {
+				conn.commit();
+			}
+			
+      } catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
       
        
        return row;
     }
+    
+    
+    //개시글 삭제하기
+    public int deleteDataBoard(int idx ) {
+       Connection conn = null;
+       PreparedStatement pstmt = null;
+       PreparedStatement pstmt2 = null;
+       int row = 0;
+       
+       try {
+          
+          conn = ds.getConnection();
+          conn.setAutoCommit(false);
+          
+          String sql = "delete from board where idx=? ";
+          pstmt = conn.prepareStatement(sql);
+          
+          pstmt.setInt(1, idx);
+       
+          
+          row = pstmt.executeUpdate();
+          
+          if(row < 0) {
+             throw new Exception("Board 삭제 실패");
+          }
+          
+          String sql2 = "delete data_board where idx=?";
+          pstmt2 = conn.prepareStatement(sql2);
+          
+          pstmt2.setInt(1, idx);
+          
+          row = pstmt.executeUpdate();
+          
+          if(row < 0) {
+             throw new Exception("data_baord 수정 실패");
+          }else {
+             conn.commit();
+          }
+          
+       } catch (Throwable e) {
+          if(conn != null) {
+             try {
+                conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+             } catch (Exception e2) {
+                e2.printStackTrace();
+             }
+          }
+       } finally {
+          try {
+             conn.setAutoCommit(true);
+             pstmt.close();
+             conn.close();
+          } catch (Exception e2) {
+             System.out.println(e2.getMessage());
+          }
+       }
+       
+       return row;
+    }
+    
+  //객채로 title content 수정
+  		public int updateDataBoardTitle(DataBoard board) {
+  			Connection conn = null;
+  			PreparedStatement pstmt = null;
+  			PreparedStatement pstmt2 = null;
+  			int row = 0;
+  			
+  			try {
+  				
+  				conn = ds.getConnection();
+  				conn.setAutoCommit(false);
+  	          
+  				String sql = "UPDATE board SET title =?, content=? WHERE idx=?";
+  				pstmt = conn.prepareStatement(sql);
+  				
+  				pstmt.setString(1, board.getTitle());
+  				pstmt.setString(2, board.getContent());
+  				pstmt.setInt(3, board.getIdx());
+  	
+  				
+  				row = pstmt.executeUpdate();
+  				
+  				
+  				
+  				if(row < 0) {
+  		             throw new Exception("Board 수정 실패");
+  		        }
+  				
+  				String sql2 = "UPDATE data_board set ori_name=?, save_name=?, volume=? where idx=?";
+  				pstmt2 = conn.prepareStatement(sql2);
+  				
+  				pstmt2.setString(1, board.getOri_name());
+  				pstmt2.setString(2, board.getSave_name());
+  				pstmt2.setInt(3, board.getVolume());
+  				pstmt2.setInt(4, board.getIdx());
+  				
+  				
+  				row = pstmt2.executeUpdate();
+  				
+  				if(row < 0) {
+  		             throw new Exception("data_baord 수정 실패");
+  		          }else {
+  		             conn.commit();
+  		          }
+  		          
+  				
+  			} catch (Throwable e) {
+  	          if(conn != null) {
+  	             try {
+  	                conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+  	             } catch (Exception e2) {
+  	                e2.printStackTrace();
+  	             }
+  	          }
+  	       } finally {
+  	          try {
+  	             conn.setAutoCommit(true);
+  	             pstmt.close();
+  	             conn.close();
+  	          } catch (Exception e2) {
+  	             System.out.println(e2.getMessage());
+  	          }
+  	       }
+  			
+  			return row;
+  		}
+  		
+    
    
 }

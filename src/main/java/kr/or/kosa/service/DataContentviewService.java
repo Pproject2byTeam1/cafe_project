@@ -60,7 +60,7 @@ public class DataContentviewService implements Action {
 				// if(isread)System.out.println("조회증가 : " + isread);
 				// 데이터 하나 조회
 
-				Board databoard = datadao.getBoard_data(Integer.parseInt(idx));
+				Board databoard = datadao.getData_BoardByIdx(Integer.parseInt(idx));
 
 				request.setAttribute("idx", idx);
 				request.setAttribute("b_code", b_code);

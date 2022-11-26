@@ -33,6 +33,7 @@
 <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
 <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 <!-- 거래게시판 CSS 시작 -->
+<link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/marketboard_list.css" rel="stylesheet">
 <!-- 거래게시판 CSS 끝 -->
 <script type="text/javascript">
@@ -144,7 +145,7 @@
 					</div>
 					
 					<!-- Bordered Tabs -->
-	
+					
 					<ul class="nav nav-tabs nav-tabs-bordered" id="searchTab"
 						role="tablist">
 						<li class="nav-item" role="presentation">
