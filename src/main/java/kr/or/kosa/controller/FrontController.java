@@ -14,13 +14,13 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
-import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
+import kr.or.kosa.service.LoginCheckService;
 import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
 import kr.or.kosa.service.Logout_Service;
@@ -91,7 +91,12 @@ public class FrontController extends HttpServlet {
          action = new Login_Service();
          forward = action.execute(request, response);
          
-      } else if(urlcommand.equals("/logout.do")) { //로그아웃
+      } else if(urlcommand.equals("/snsLogin.do")) { //sns 로그인 (+회원가입)
+          
+          action = new LoginCheckService();
+          forward = action.execute(request, response);
+          
+       } else if(urlcommand.equals("/logout.do")) { //로그아웃
          
          action = new Logout_Service();
          forward = action.execute(request, response);

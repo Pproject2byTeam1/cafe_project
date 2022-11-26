@@ -138,8 +138,8 @@
 		                <tbody>
 		                <c:forEach var="list" items="${commnetlist}">
 		                  <tr class="listrow">
-		                    <th scope="row" class="idx">${list.idx}</th>
-		                    <td scope="row">${list.title}<span class="badge bg-primary rounded-pill">${list.c_count}</span></td>
+		                    <th scope="row" class="idx">${list.idx}</th><!-- setEmail_id <= title, setDepth <= c_count -->
+		                    <td scope="row">${list.email_id}<span class="badge bg-primary rounded-pill">${list.depth}</span></td>
 		                    <td>${list.content}</td>
 		                    <td>${list.w_date}</td>
 		                  </tr>
@@ -227,16 +227,21 @@
   		$('#dataTable2').DataTable();
   		$('#dataTable3').DataTable();
   		
-  		$('.paginate_button ').click(function(){
+  		$('.page-link ').click(function(){
   			$('.listrow').click(function(){
-  	  			alert("누른 글 번호: "+ $(this).children('.idx').text());
+  	  			const idx = $(this).children('.idx').text();
+  	  			const b_code = $(this).children().children('.d-none').text();
+  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
+  	  		});
+  		});
+  		$('.paginate_button').click(function(){
+  			$('.listrow').click(function(){
   	  			const idx = $(this).children('.idx').text();
   	  			const b_code = $(this).children().children('.d-none').text();
   	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
   	  		});
   		});
   		$('.listrow').click(function(){
-  			alert("누른 글 번호: "+ $(this).children('.idx').text());
   			const idx = $(this).children('.idx').text();
   			const b_code = $(this).children().children('.d-none').text();
   			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
