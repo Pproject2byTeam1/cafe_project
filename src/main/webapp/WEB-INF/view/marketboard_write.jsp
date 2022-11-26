@@ -119,7 +119,14 @@
 												<input class="form-check-input" type="radio" name="m_mode" value="택배거래">
 												<label class="form-check-label" for="택배거래">택배거래</label>
 											</div>
-
+											<div class="info-body">
+												<label class="col-sm-2 col-form-label">판매상태 : </label>
+												<select id="cate" name="sold" class="form-select" aria-label="Default select example">
+												<option value="판매중">판매중</option>
+												<option value="예약중">예약중</option>
+												<option value="판매완료">판매완료</option>
+												</select>
+											</div>
 										</div>
 									
 									

@@ -42,7 +42,7 @@ public class MarketBoardWriteService implements Action {
 			int b_code = Integer.parseInt(multi.getParameter("b_code"));
 			String title = multi.getParameter("title");
 			String content = multi.getParameter("content");
-			
+			String sold = multi.getParameter("sold");
 			//거래게시판 추가 가져오기
 			String m_mode = multi.getParameter("m_mode");
 			String cate = multi.getParameter("cate");
@@ -83,7 +83,7 @@ public class MarketBoardWriteService implements Action {
 				market.setM_mode(m_mode);
 				market.setCate(cate);
 				market.setPrice(price);
-				market.setSold("판매중");
+				market.setSold(sold);
 				
 				//파일 이름 판단 및 img_name DAO 넣기
 				if(filename1 == null) {
