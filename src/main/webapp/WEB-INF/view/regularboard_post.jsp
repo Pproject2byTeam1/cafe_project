@@ -62,7 +62,12 @@
            
            /* 게시물 좋아요 비동기 처리 */
            $("#yesbtn").click(function(){
-        	   
+              
+              
+              
+              console.log("hahaha");
+              console.log(email_id);
+              console.log("sdfs" + yespark);
               
               if(yespark == "no"){
                  
@@ -122,12 +127,12 @@
            
            /* 답글 작성 */
            $("#replyWrite").click(function(){
-        	 
-        	  	let link = "/WebCafe_Project/replyWriteView.do?idx="+idx+"&b_code="+b_code+"&depth="+depth+"&step="+step;
-        	   	console.log(link);
-        	   
-        		location.href=link;
-        	   
+            
+                let link = "/WebCafe_Project/replyWriteView.do?idx="+idx+"&b_code="+b_code+"&depth="+depth+"&step="+step;
+                 console.log(link);
+              
+              location.href=link;
+              
            });
            
         });
@@ -177,38 +182,39 @@
                   <div class="marketcard">
                      <div class="marketcard-body">
 
-								<div class="row">
-									<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
-									<div class="col-md-12">
-										<div class="col-md-12">
-											<h1 id="marketB_Title">${board.title}</h1><br>
-										</div>
-										
-										<div class="col-md-12">
-											<div class="row">
-												<div class="col-md-5">
-													<p class="card-text"><img src="image/rank_icon/${user.rank}.gif">${board.nick}</p>
-												</div>
-												<div class="col-md-2">
-													<p class="text-right card-text">조회수:${board.hits}</p>
-												</div>
-												<div class="col-md-2">
-													<p class="text-right card-text">추천:${yes}</p>
-												</div>
-												<div class="col-md-3">
-													<p class="text-right card-text">작성일자: ${board.w_date}</p>
-												</div>
-											</div>
-										</div>
-									
+                        <div class="row">
+                           <!-- 상단부 2/3으로 나눠 글 내용 시작 -->
+                           <div class="col-md-12">
+                              <div class="col-md-12">
+                                 <h1 id="marketB_Title">${board.title}</h1><br>
+                              </div>
+                              
+                              <div class="col-md-12">
+                                 <div class="row">
+                                    <div class="col-md-5">
+                                       <p class="card-text"><img src="image/rank_icon/${user.rank}.gif">${board.nick}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                       <p class="text-right card-text">조회수:${board.hits}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                       <p class="text-right card-text">추천:${yes}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                       <p class="text-right card-text">작성일자: ${board.w_date}</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           
 
 
                            <hr>
                               <div class="row">
                                  <div class="col-lg-12">
 
-                                    <text class="form-control" style="height: 500px" readonly> ${board.content}</textarea>
-
+                                    <text class="form-control" style="height: auto" id="text"> ${board.content}</textarea>
+                                    
+                                    
                                  </div>
 
                               </div>
@@ -216,27 +222,53 @@
                               <hr>
                               <div class="row">
 
-											<div align="right" class="col-md-12">
-												<div>
-													<button type="button" id="replyWrite" class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
-													<c:if test="${member != null}">
-														<c:if test="${yespark == 'no'}">
-	                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
-	                                    				</c:if>
-	                                    				<c:if test="${yespark != 'no'}">
-	                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
-	                                    				</c:if>
-													</c:if>
-													<form action="regular_write.do" method="post">
-														<input type="text" value="${board.email_id}" name="id" style="display: none;">
-														<input type="text" value="${idx}" name="idx" style="display: none;">
-														<input type="text" value="modify" name="todo" style="display: none;">
-														<input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
-													</form>
-														
-													<button type="button" id="Top" class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
-												</div>
-											</div>
+                                 <div class="col-md-12">
+                                    <div class="row">
+                                    
+                                    	<!-- 비어있는거 -->
+                                    	<div class="col-md-4"></div>
+                                    	
+                                    	<!-- 좋아요 -->
+                                    	<div class="col-md-4 text-center">
+                                    		<c:if test="${member != null}">
+	                                          <c:if test="${yespark == 'no'}">
+	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
+	                                          </c:if>
+	                                          <c:if test="${yespark != 'no'}">
+	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
+	                                          </c:if>
+	                                        </c:if>
+                                    	</div>
+	                                   	
+	                                   	<!-- 답글 수정 목록 -->
+	                                   	<div class="col-md-1"></div>
+	                                   	
+	                                   	<div class="col-md-1">
+	                                   		<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
+		                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
+		                                          <input type="text" value="${idx}" name="idx" style="display: none;">
+		                                          
+		                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="답글">
+	                                      	 </form>
+	                                   	
+	                                   	</div>
+	                                   	
+                                   		<div class="col-md-1">
+                                			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
+	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
+	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
+	                                          
+	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
+	                                       </form>
+	                                   	
+	                                   	</div>
+	                                   	
+                                   		<div class="col-md-1">
+                                   			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록">
+	                                   	</div>
+		                                       
+                                    </div>
+                                 </div>
 
                               </div>
                            </div>
@@ -429,6 +461,12 @@
 
    <!-- Template Main JS File -->
    <script src="assets/js/main.js"></script>
+   
+   <script type="text/javascript">
+	   	$("#text p img").removeAttr("width");
+	   	$("#text p img").removeAttr("height");
+	   	$("#text p img").attr("style","display: block; margin-left: auto; margin-right: auto; max-width:100%; height:auto;");
+   </script>
 
 </body>
 

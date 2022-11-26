@@ -36,15 +36,12 @@ public class Regular_Board_Write_Service implements Action {
  			String email_idx = request.getParameter("id");
  			String todo = request.getParameter("todo");
  			
- 			
- 			System.out.println(b_code);
-			System.out.println(email_idx);
-			System.out.println(todo);
+
  			
  			// 로그인 안할경우 로그인 페이지로
 			if (user == null) {
 
-	            String board_msg = "권한이 없습니다.";
+	            String board_msg = "로그인을 해주세요.";
 	            String board_url = "/WebCafe_Project/login_view.do";
 	              
 	            request.setAttribute("board_msg", board_msg);
@@ -54,61 +51,10 @@ public class Regular_Board_Write_Service implements Action {
 	           
 	         }
 			
-			// 수정하기화면 가기 (회원 id와 글 id가 같고 todo가 modify일경우)
-			if (user.getEmail_id().equals(email_idx)){
-				
-				Regular_Board_Dao dao = new Regular_Board_Dao();
-				Board board = dao.getRegular_BoardByIdx(idx);
-				request.setAttribute("board", board);
-				request.setAttribute("idx", idx);
-				request.setAttribute("email_idx", email_idx);
-				request.setAttribute("b_code", b_code);
-	        	
-				url="/WEB-INF/view/regularboard_edit.jsp";
-	        	 
-	         } else {
-	        	 
-	        	String board_msg = "작성자가 다릅니다.";
-	            String board_url = "/WebCafe_Project/regular_list.do?b_code=1";
-	              
-	            request.setAttribute("board_msg", board_msg);
-	            request.setAttribute("board_url", board_url);
-	              
-	            url="/WEB-INF/view/redirect.jsp";
-	         }
-			
-			// 수정확인버튼
-			if (todo.equals("modify")) {
-				
-				String title = request.getParameter("title");
-				String content = request.getParameter("content");
-				
-				System.out.println(title);
-				System.out.println(content);
-				
-				
-				Board_Dao bdao = new Board_Dao();
-				int editboard = bdao.updateUseIdxBoard(title,content,idx);
-				
-					if(editboard > 0){
-						String board_msg = "수정 완료.";
-			            String board_url = "/WebCafe_Project/regular_list.do?b_code=1";
-			              
-			            request.setAttribute("board_msg", board_msg);
-			            request.setAttribute("board_url", board_url);
-			              
-			            url="/WEB-INF/view/redirect.jsp";
-					}
-				
-				
-			}
-			
-			// 글쓰기 (todo가 'write'일경우)
-			if (todo.equals("write")) {
+
+			url="/WEB-INF/view/regularboard_write?.jsp";
 	 			
-	 			url="/WEB-INF/view/regularboard_write.jsp";
-	 			
-	         }
+	   
 			
 			
  		
