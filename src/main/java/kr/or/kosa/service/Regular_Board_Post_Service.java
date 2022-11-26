@@ -13,7 +13,6 @@ import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.Regular_Board_Dao;
 import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.Regular_Board;
 import kr.or.kosa.dto.User;
@@ -68,6 +67,8 @@ public class Regular_Board_Post_Service implements Action {
 			request.setAttribute("idx", idx);
 			request.setAttribute("user", user);
 			request.setAttribute("yes", yes);
+			
+			
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

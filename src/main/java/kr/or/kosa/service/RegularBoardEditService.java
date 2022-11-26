@@ -64,7 +64,7 @@ public class RegularBoardEditService implements Action {
 	         } else {
 	        	 
 	        	String board_msg = "작성자가 다릅니다.";
-	            String board_url = "/WebCafe_Project/regular_list.do?b_code=1";
+	            String board_url = "/WebCafe_Project/regular_list.do?b_code="+ b_code;
 	              
 	            request.setAttribute("board_msg", board_msg);
 	            request.setAttribute("board_url", board_url);
