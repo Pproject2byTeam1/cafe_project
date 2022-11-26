@@ -34,9 +34,9 @@ public class Regular_Board_Dao {
 			
 			conn = ds.getConnection();
 			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'YYYY-MM-dd') w_date, b.report_count, b.notic, b.email_id, b.b_code, i.refer, i.depth, i.step "
-                    + "from board b join regular_board i "
-                    + "on b.idx = i.idx "
-                    + "where b.idx = ?";
+							+ "from board b join regular_board i "
+							+ "on b.idx = i.idx "
+							+ "where b.idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			
@@ -55,7 +55,6 @@ public class Regular_Board_Dao {
 				board.setNotic(rs.getString("notic"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
-				board.setRefer(rs.getInt("refer"));
 				board.setDepth(rs.getInt("depth"));
 				board.setStep(rs.getInt("step"));
 				
@@ -79,8 +78,8 @@ public class Regular_Board_Dao {
 		return board;
 	}
 	
-	//자유 게시판 특정 글 삽입
-	public int insertRegualr_Board(Regular_Board regualr_board) {
+	//자유 게시판 답글 삽입
+	public int insertRegualr_BoardReply(Regular_Board regualr_board) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -89,15 +88,25 @@ public class Regular_Board_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "insert into Regualr_Board(idx, refer, depth, step) values(?, ?, ?, ?)";
+			String sql = "INSERT ALL "
+					+ "INTO board (idx, title, nick, content, email_id, b_code) "
+					+ "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) "
+					+ "INTO regular_board (b_idx, idx, refer, depth, step) "
+					+ "VALUES (IMG_B_IDX_SEQ.nextval, IDX_SEQ.currval, ?, ?, ?) "
+					+ "select * from dual";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, regualr_board.getIdx());
-			pstmt.setInt(2, regualr_board.getRefer());
-			pstmt.setInt(3, regualr_board.getDepth());
-			pstmt.setInt(4, regualr_board.getStep());
+			pstmt.setString(1, regualr_board.getTitle());
+			pstmt.setString(2, regualr_board.getNick());
+			pstmt.setString(3, regualr_board.getContent());
+			pstmt.setString(4, regualr_board.getEmail_id());
+			pstmt.setInt(5, regualr_board.getB_code());
+			pstmt.setInt(6, regualr_board.getRefer());
+			pstmt.setInt(7, regualr_board.getDepth()+1);
+			pstmt.setInt(8, regualr_board.getStep()+1);
 			
 			row = pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {

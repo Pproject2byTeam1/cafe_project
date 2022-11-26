@@ -37,18 +37,18 @@ public class DataBoardListService implements Action {
 			CommentsDao cdao = new CommentsDao();
 			UserDao udao = new UserDao();
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			
 			// 관리자만 삭제가능하게
 			User user = (User) session.getAttribute("member");
 			request.setAttribute("member", user);
+			
 			// 사이드바
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 
 			request.setAttribute("infolist", infolist);
 
-			// 게시물 총 개수 마켓보드dao 사용
-			MarketBoardDao market_dao = new MarketBoardDao();
-			int totalboardcount = market_dao.countMarket(b_code);
+			int totalboardcount = dao.totalBoardCountByB_code(b_code);
 
 			// 상세보기 >> 다시 리스트로 넘어 올때
 			String ps = request.getParameter("ps");
@@ -74,6 +74,7 @@ public class DataBoardListService implements Action {
 				pagecount = (totalboardcount / pagesize) + 1;
 			}
 
+			// 댓글
 
 			List<DataBoard> list = dao.getdata_boardList(b_code, cpage, pagesize);
 
@@ -94,7 +95,8 @@ public class DataBoardListService implements Action {
 				ranklist.add(rank);
 			}
 
-		
+			// List<Comments> comlist1 =dao.getComment(code, pagecount, cpage, pagesize);
+
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);

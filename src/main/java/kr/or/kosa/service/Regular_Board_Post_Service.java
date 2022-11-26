@@ -69,8 +69,6 @@ public class Regular_Board_Post_Service implements Action {
 			request.setAttribute("user", user);
 			request.setAttribute("yes", yes);
 			
-			
-			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
 		  	forward.setPath("/WEB-INF/view/regularboard_post.jsp");
