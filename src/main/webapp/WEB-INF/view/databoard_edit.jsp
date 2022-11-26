@@ -82,18 +82,18 @@
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 								<div class="col-md-12">
 									<!-- 글 제목 -->
-									<form name="bbs" action="databoard_writeok.do" method="POST" enctype="multipart/form-data">
-									<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요." name="title" required>
+									<form name="bbs" action="databoard_editok.do?b_code=${b_code}&idx=${board.idx}" method="POST" enctype="multipart/form-data">
+									<input type="text" class="form-control" id="title" value="${board.title}" placeholder="제목을 입력하세요." name="title" required>
 									<input id="b_code" name="b_code" value="${b_code}" type="hidden" />${b_code}
 									<p>
 									<hr>
 									
 										<div>
-											<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" required>
+											<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" value="upload/${board.ori_name }" required>
 										</div>
 										<div>
 
-										</div>
+										</div> 
 									
 									
 										<div class="col-md-12">
@@ -101,7 +101,10 @@
 											<!-- 글 내용 작성 -->
 											<div class="park-card p-4">
 												<div class="park-card-body row">
-													<textarea name="content" placeholder="내용을 입력해주세요."></textarea>
+													<textarea name="content" placeholder="내용을 입력해주세요.">${board.content}
+													
+													${board.save_name}
+													</textarea>
 												</div>
 											</div>
 											<p>
@@ -116,6 +119,8 @@
 									
 											</div>
 										</div>
+										
+										
 									</form>
 									</div>
 								</div>

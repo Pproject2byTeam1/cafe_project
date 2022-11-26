@@ -13,9 +13,10 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
+import kr.or.kosa.service.DataBoardEditOkService;
+import kr.or.kosa.service.DataBoardEditService;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.Data_Board_Post_Service;
-import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -57,20 +58,20 @@ import kr.or.kosa.service.userVerification;
 
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   public FrontController() {
-      super();
-   }
+	public FrontController() {
+		super();
+	}
 
-   private void doProcess(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
+	private void doProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-      request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 
-      String requestURI = request.getRequestURI();
-      String contextPath = request.getContextPath();
-      String urlcommand = requestURI.substring(contextPath.length());
+		String requestURI = request.getRequestURI();
+		String contextPath = request.getContextPath();
+		String urlcommand = requestURI.substring(contextPath.length());
 
       Action action = null;
       ActionForward forward = null;
@@ -306,16 +307,16 @@ public class FrontController extends HttpServlet {
          }
       }
 
-   }
+	}
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      doProcess(request, response);
-   }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      doProcess(request, response);
-   }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
 }

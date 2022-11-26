@@ -14,6 +14,9 @@
 <meta content="" name="description">
 <meta content="" name="keywords">
 
+<!-- jQuery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -39,6 +42,20 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/databaordlist.css" rel="stylesheet">
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		let b_code = "<c:out value='${b_code}'/>";
+			
+			//글쓰기
+			$("#Write").click(function(){
+
+				location.href="databoard_write.do?b_code=" + b_code;
+				
+			});
+	});
+</script>
+
 </head>
 
 <body>
@@ -75,7 +92,7 @@
       <div align="right">
       <a></a>
    <p><a href="data_content.do">글쓰기 게시판</a></p>
-         <button type="button" class="btn btn-success" location.href ='data_content.do' >글쓰기</button>&nbsp;
+         <button id="Write" type="button" class="btn btn-success">글쓰기</button>&nbsp;
             <select class="selectpicker" data-width="75px" name="ps" onchange="submit()">
                <c:forEach var="i" begin="5" end="20" step="5">
 							   		<c:choose>
@@ -118,10 +135,10 @@
 						</c:if>
 				<!--목록출력하기  -->
              <c:forEach var="board" items="${list}" varStatus="status">
-                <tr onclick="location.href='data_post.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
+                <tr onclick="location.href='databoard_read.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
                      <th scope="row"><input type="checkbox"></th>
                      <td>
-                     
+                     <input id="b_code" value="${board.b_code}" type="hidden" />
                      <span class="mt-4 parent"><h3>${board.title}</h3></span><br>
          
                      <span class="son_name"><img src="./image/rank_icon/${rank[status.index]}.gif">${board.nick}</span>
@@ -134,7 +151,7 @@
 								</c:forEach>	
 								<td>						
 								<c:if test="${board.depth > 0}">
-								<tr onclick="location.href='data_post.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
+								<tr onclick="location.href='databoard_read.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
 									<img src="image/re.gif">
 										${board.title}
 								</c:if>
@@ -201,7 +218,7 @@
       </div>
       <!--하단 버튼  -->
       <div align="right">
-         <button type="button" class="btn btn-secondary">글쓰기</button>&nbsp;
+         <button id="Write"  type="button" class="btn btn-secondary">글쓰기</button>&nbsp;
          <c:if test="${member.isAdmin == 'S' || member.isAdmin =='M' }">
          <button type="button" class="btn btn-secondary">삭제</button>
          </c:if>
