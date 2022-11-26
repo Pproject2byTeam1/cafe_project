@@ -29,16 +29,13 @@ public class Regular_Board_Write_Service implements Action {
 			
  			HttpSession session = request.getSession();
  	        User user = (User) session.getAttribute("member");
+ 	        
+ 	        int b_code = Integer.parseInt(request.getParameter("b_code"));
+ 	        
  			
  			String url = "";
- 			int b_code = Integer.parseInt(request.getParameter("b_code"));
- 			int idx = Integer.parseInt(request.getParameter("idx"));
- 			String email_idx = request.getParameter("id");
- 			String todo = request.getParameter("todo");
- 			
 
- 			
- 			// 로그인 안할경우 로그인 페이지로
+ 			// 로그인 안했으면 로그인 페이지로
 			if (user == null) {
 
 	            String board_msg = "로그인을 해주세요.";
@@ -49,14 +46,13 @@ public class Regular_Board_Write_Service implements Action {
 	              
 	            url="/WEB-INF/view/redirect.jsp";
 	           
+	         }else {
+	        	 
+	        	request.setAttribute("b_code", b_code); 
+	        	url="/WEB-INF/view/regularboard_write.jsp";
+	        	System.out.println("레귤러 라이트까진 탐");
 	         }
-			
-
-			url="/WEB-INF/view/regularboard_write?.jsp";
 	 			
-	   
-			
-			
  		
  			request.setAttribute("infolist", infolist);
 			

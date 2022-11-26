@@ -38,7 +38,6 @@ public class UserActivityService implements Action {
 			String userId = user.getEmail_id();
 			
 			
-			
 			if (email_id != null) {
 				userId = email_id;
 			}
