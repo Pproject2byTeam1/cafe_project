@@ -35,13 +35,14 @@ public class RegularBoardEditService implements Action {
  			String email_idx = request.getParameter("id");
 
  	
+ 			System.out.println(user);
  			
  			// 로그인 안할경우 로그인 페이지로
-			if (user == null) {
+			if (user == null ) {
 
 	            String board_msg = "권한이 없습니다.";
 	            String board_url = "/WebCafe_Project/login_view.do";
-	              
+	               
 	            request.setAttribute("board_msg", board_msg);
 	            request.setAttribute("board_url", board_url);
 	              
@@ -64,7 +65,7 @@ public class RegularBoardEditService implements Action {
 	         } else {
 	        	 
 	        	String board_msg = "작성자가 다릅니다.";
-	            String board_url = "/WebCafe_Project/regular_list.do?b_code="+ b_code;
+	            String board_url = "/WebCafe_Project/regular_post.do?b_code="+ b_code + "&idx=" + idx;
 	              
 	            request.setAttribute("board_msg", board_msg);
 	            request.setAttribute("board_url", board_url);
