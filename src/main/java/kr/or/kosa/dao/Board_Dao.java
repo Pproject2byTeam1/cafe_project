@@ -547,4 +547,35 @@ public class Board_Dao {
 		return row;
 	}
 	
+	//idx값으로 title content 수정
+		public int updateUseIdxBoard(String title, String content, int idx) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "UPDATE board SET title=?, content=? WHERE idx=? ";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, title);
+				pstmt.setString(2, content);
+				pstmt.setInt(3, idx);
+				
+				row = pstmt.executeUpdate();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			
+			return row;
+		}
+	
 }

@@ -14,7 +14,6 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardListService;
-import kr.or.kosa.service.DataContentviewService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
@@ -35,10 +34,11 @@ import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
+import kr.or.kosa.service.RegularBoardEditOkService;
+import kr.or.kosa.service.RegularBoardEditService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
 import kr.or.kosa.service.Regular_Board_Write_Service;
-import kr.or.kosa.service.UpdatePwdService;
 import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
@@ -252,6 +252,16 @@ public class FrontController extends HttpServlet {
 		}else if(urlcommand.equals("/board_delete.do")) {//게시판 삭제(거래)
 			
 			action = new DeleteOkService();
+	        forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/regular_edit.do")) {//게시판 수정(자유)
+			
+			action = new RegularBoardEditService();
+	        forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/regular_editok.do")) {//게시판 수정완료(자유)
+			
+			action = new RegularBoardEditOkService();
 	        forward = action.execute(request, response);
 			
 		}

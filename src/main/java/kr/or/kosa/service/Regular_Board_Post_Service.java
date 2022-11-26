@@ -15,6 +15,7 @@ import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Regular_Board;
 import kr.or.kosa.dto.User;
 
 public class Regular_Board_Post_Service implements Action {
@@ -31,6 +32,7 @@ public class Regular_Board_Post_Service implements Action {
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
 			int idx = Integer.parseInt(request.getParameter("idx"));
+			
 			
 
 			Regular_Board_Dao dao = new Regular_Board_Dao();
@@ -52,11 +54,14 @@ public class Regular_Board_Post_Service implements Action {
 				}
 			}
 			
+			Regular_Board board = dao.getRegular_BoardByIdx(idx);
 			
-			Board board = dao.getRegular_BoardByIdx(idx);
 			User user = udao.selectUserById(board.getEmail_id());
 			int yes = ydao.getYesCountBy_idx(idx);
 			bdao.updateHits(idx);
+			
+			System.out.println(board);
+			System.out.println(user + "포스트서비스");
 		
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);

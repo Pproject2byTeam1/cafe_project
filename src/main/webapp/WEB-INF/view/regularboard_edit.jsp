@@ -74,7 +74,7 @@
             <div class="col-1"></div>
 
 
-            <form name="bbs" action="regular_write.do" method="POST" enctype="multipart/form-data">
+            <form name="bbs" action="regular_editok.do?b_code=${board.b_code}&idx=${idx}" method="POST">
                <div class="col-10">
                   <div class="park-card p-4">
                      <div class="park-card-body row">
@@ -101,9 +101,8 @@
                   </div>
                </div>
                
-               	<input type="text" value="modify" name="todo" style="display: none;">
 				<input type="text" value="${member.email_id}" name="id" style="display: none;">
-				<input type="text" value="${member.nick}" name="nick" style="display: none;">
+				<input type="text" value="${idx}" name="idx" style="display: none;">
                
             </form>
          </div>
