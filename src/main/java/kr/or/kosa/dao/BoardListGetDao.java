@@ -52,7 +52,7 @@ public class BoardListGetDao {//오로지 조회 용도 그 외에는 사용 xx
 				board.setB_code(rs.getInt("b_code"));
 				board.setB_name(rs.getString("b_name"));
 				board.setTitle(rs.getString("title"));
-				board.setB_code(rs.getInt("c_count"));
+				board.setC_count(rs.getInt("c_count"));
 				board.setNick(rs.getString("nick"));
 				board.setW_date(rs.getString("w_date"));
 				board.setEmail_id(rs.getString("email_id"));
@@ -106,7 +106,7 @@ public class BoardListGetDao {//오로지 조회 용도 그 외에는 사용 xx
 					board.setB_code(rs.getInt("b_code"));
 					board.setB_name(rs.getString("b_name"));
 					board.setTitle(rs.getString("title"));
-					board.setB_code(rs.getInt("c_count"));
+					board.setC_count(rs.getInt("c_count"));
 					board.setNick(rs.getString("nick"));
 					board.setW_date(rs.getString("w_date"));
 					board.setEmail_id(rs.getString("email_id"));

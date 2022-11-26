@@ -15,8 +15,9 @@ public class BoardContentService implements Action {
 		HttpSession session = request.getSession();
 		String url="";
 		try {
-			int b_code = Integer.parseInt(request.getParameter("b_code"));
-			String idx= request.getParameter("idx");
+			int b_code = Integer.parseInt((String) request.getParameter("b_code"));
+			String idx= (String) request.getParameter("idx");
+			System.out.println(b_code + ", " + idx);
 			
 			if(b_code == 1) {//자유게시판
 				url="img_board_list.do?idx="+idx+"&b_code"+ b_code;
@@ -31,14 +32,16 @@ public class BoardContentService implements Action {
 			}else if(b_code == 6) {//자료 공유
 				url="data_contentview.do?idx="+idx+"&b_code"+ b_code;
 			}
+			System.out.println("url: "+url);
 			
-			
-			forward = new ActionForward();
-		  	forward.setRedirect(false);
-		  	forward.setPath(url);
 		}catch (Exception e) {
 			e.getMessage();
 		}
+		
+		forward = new ActionForward();
+		forward.setRedirect(false);
+		forward.setPath(url);
+		
 		return forward;
 	}
 
