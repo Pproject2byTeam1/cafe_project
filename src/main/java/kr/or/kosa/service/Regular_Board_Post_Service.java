@@ -10,10 +10,12 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.Regular_Board_Dao;
 import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.Regular_Board;
 import kr.or.kosa.dto.User;
 
@@ -33,15 +35,19 @@ public class Regular_Board_Post_Service implements Action {
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			
 			
-
+			// DAO 불러오기
 			Regular_Board_Dao dao = new Regular_Board_Dao();
 			UserDao udao = new UserDao();
 			Board_Dao bdao = new Board_Dao();
 			Yes_Dao ydao = new Yes_Dao();
+			CommentsDao cdao = new CommentsDao();
 			
+			//세션 불러오기
 			HttpSession session = request.getSession();
 			User user1 = (User) session.getAttribute("member");
 
+			
+			//좋아요 기능
 			if (user1 != null) {
 				Yes_Dao yesdao = new Yes_Dao();
 				String yes = yesdao.getYesEmailByIdxEmail(idx, user1.getEmail_id());
@@ -53,17 +59,21 @@ public class Regular_Board_Post_Service implements Action {
 				}
 			}
 			
+			//특정 게시글 조회, 댓글 조회
 			Regular_Board board = dao.getRegular_BoardByIdx(idx);
+			List<Comments> comments = cdao.getCommentListByIdx(idx);
 			
+			//특정 유저 단순정보 조회
 			User user = udao.selectUserById(board.getEmail_id());
 			int yes = ydao.getYesCountBy_idx(idx);
+			
+			//조회수 증가
 			bdao.updateHits(idx);
 			
-			System.out.println(board);
-			System.out.println(user + "포스트서비스");
 		
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);
+			request.setAttribute("comments", comments);
 			request.setAttribute("idx", idx);
 			request.setAttribute("user", user);
 			request.setAttribute("yes", yes);
