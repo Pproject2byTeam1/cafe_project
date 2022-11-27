@@ -99,12 +99,9 @@ public class Board_Dao {
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "select * "
-						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
-							+ "from board b join regular_board d "
-							+ "on b.idx = d.idx "
-							+ "where b_code=? "
-							+ "order by refer desc, step desc) where rn <= ? and rn >= ? ";
+			String sql = "select * from (select * from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
+					+ "from board b join regular_board d on b.idx = d.idx order by b_idx desc) "
+					+ "where b_code=? and rn <= ?) where rn >=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
@@ -314,7 +311,7 @@ public class Board_Dao {
 				System.out.println(e2.getMessage());
 			}
 		}
-		
+		System.out.println("데이터 보드 카운트"+totalcount);
 		return totalcount;
 	}
 	
@@ -519,6 +516,103 @@ public class Board_Dao {
 			}
 			
 			return row;
+		}
+		
+		//게시글 전체 조회
+		public List<Board> getBoardListAttendence(int cpage, String startdate, String enddate){
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<Board> boardlist = new ArrayList<Board>();
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "select * from "
+						+ "(select  rownum rn, b.idx, m.rank, b.NICK, b.CONTENT, to_char(b.w_date,'yyyy-MM-dd / hh:mm')as w_date, b.EMAIL_ID, b.B_CODE  \r\n"
+						+ "from board b left join member m on b.email_id = m.email_id \r\n"
+						+ "WHERE b.b_code = 2 \r\n"
+						+ "and b.w_date between ? and ? \r\n"
+						+ ")where rn between ? and ?";
+				pstmt = conn.prepareStatement(sql);
+				
+				int start = cpage * 10 - 9;
+				int end = cpage * 10;
+				
+				pstmt.setString(1, startdate);
+				pstmt.setString(2, enddate);
+				pstmt.setInt(3, start);
+				pstmt.setInt(4, end);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						
+						Board board = new Board();
+						board.setIdx(rs.getInt("idx"));
+						board.setHits(rs.getInt("rank"));
+						board.setNick(rs.getString("nick"));
+						board.setContent(rs.getString("content"));
+						board.setW_date(rs.getString("w_date"));
+						board.setEmail_id(rs.getString("email_id"));
+						board.setB_code(rs.getInt("b_code"));
+						
+						boardlist.add(board);
+					}while(rs.next());
+				}else {
+					System.out.println("조회 데이터 없음");
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					rs.close();
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+		
+			return boardlist;
+		}
+		
+		//정해진 날짜의 출석판 총 게시글 수
+		public int countAttendenceBoard(String startdate, String enddate) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int count=0;
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "select count(idx) cnt from board WHERE board.b_code = 2 and w_date between ? and ?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, startdate);
+				pstmt.setString(2, enddate);
+				
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt("cnt");
+				}else {
+					System.out.println("조회 데이터 없음");
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			
+			return count;
 		}
 	
 }

@@ -56,7 +56,7 @@
 			         </nav>
      			 </div>
 				<!-- 서블릿 아래 action에다가 적어주세용 -->
-      <form action="user_edit.do" method="post">
+      <form action="user_edit.do" method="post" id="myForm">
          <div class="container">
             <div class="row col-md-12">  
                <div>
@@ -81,6 +81,17 @@
                      <label for="inputNickname" class="col-sm-2 col-form-label">별명</label>
                      <div class="col-sm-8">
                        <input type="text" class="form-control" name="nick" id="inputNickname" value="${userlist.name}">
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="mb-3 row">
+                     <label for="inputNickname" class="col-sm-2 col-form-label">관리등급</label>
+                     <div class="col-sm-8">
+                       <select class="form-select" name="isAdmin" form="myForm">
+						   <option value="F" selected>F</option>
+						   <option value="S">S</option>
+						   <option value="X">X</option>
+	   					</select>
                      </div>
                   </div>
                   <hr>

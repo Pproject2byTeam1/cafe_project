@@ -12,32 +12,51 @@ import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
 
-public class User_details implements Action {
+public class UserKick implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
 		
-		String todo = request.getParameter("todo");
+		
 		String url = "";
-		System.out.println(todo + "투두잉");
+		
 		
 		try {
+			
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
-			String id = request.getParameter("id");
-			
-			UserDao dao = new UserDao();
-			User userlist = dao.idSearchUser(id);
-			
-			request.setAttribute("userlist", userlist);
+	        UserDao udao = new UserDao();
+	     	String id = request.getParameter("id");
 
+	        int row = udao.modifyAdmin(id);
+	        
+	        
 			
-			url="/WEB-INF/view/user_setting_edit.jsp";
+			if (row > 0) {
+			
+				String board_msg = "수정되었습니다.";
+	        	String board_url = "/WebCafe_Project/user_list.do";
 				
+				request.setAttribute("board_msg", board_msg);
+				request.setAttribute("board_url", board_url);
+	        	
+				url="/WEB-INF/view/redirect.jsp";
+			
+			} else {
+			
+				String board_msg = "실패했습니다..";
+	        	String board_url = "/WebCafe_Project/user_list.do";
 				
+				request.setAttribute("board_msg", board_msg);
+				request.setAttribute("board_url", board_url);
+	        	
+				url="/WEB-INF/view/redirect.jsp";
+			}
 				
+			
+			
 			request.setAttribute("infolist", infolist);
 
 			forward = new ActionForward();

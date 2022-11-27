@@ -20,7 +20,7 @@ public class BoardContentService implements Action {
 			System.out.println(b_code + ", " + idx);
 			
 			if(b_code == 1) {//자유게시판
-				url="img_board_list.do?idx="+idx+"&b_code"+ b_code;
+				url="regular_post.do?idx="+idx+"&b_code"+ b_code;
 			}else if(b_code == 2) {//출석체크
 				//url="img_board_list.do?idx="+idx+"&b_code"+ b_code;
 			}else if(b_code == 3) {//전체일정

@@ -64,8 +64,8 @@ public class DataBoardListService implements Action {
 
 			int pagesize = Integer.parseInt(ps);
 			int cpage = Integer.parseInt(cp);
-
 			int pagecount = 0;
+			
 			if (totalboardcount % pagesize == 0) {
 				pagecount = totalboardcount / pagesize;
 			} else {
@@ -73,7 +73,8 @@ public class DataBoardListService implements Action {
 			}
 
 			// 댓글
-
+			
+			//리스트 뿌리기
 			List<DataBoard> list = dao.getdata_boardList(b_code, cpage, pagesize);
 
 			List<Integer> countlist = new ArrayList<Integer>();// 덧글 카운트
@@ -103,12 +104,8 @@ public class DataBoardListService implements Action {
 			request.setAttribute("yes", yescountlist);
 			request.setAttribute("comment", commentcountlist);
 			request.setAttribute("rank", ranklist);
-			request.setAttribute("pagesize", pagesize);
-			request.setAttribute("cpage", cpage);
-			request.setAttribute("pagecount", pagecount);
-			request.setAttribute("totalboardcount", totalboardcount);
 			request.setAttribute("b_code", b_code);
-
+			request.setAttribute("ps", pagesize);
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("/WEB-INF/view/databoard_list.jsp");

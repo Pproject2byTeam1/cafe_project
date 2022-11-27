@@ -159,17 +159,14 @@
 								<div class="btn-group" role="group" aria-label="Basic example">
 									<form action="user_details.do" method="post" target="payviewer" onsubmit="window.open('user_details.do', 'payviewer', 'width=768, height=753,resizeable, scrollbars');">
 										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
-										<input type="text" value="1" name="todo" style="display: none;">
 										<input type="submit" class="btn btn-primary btn-sm EditPoint" value="등급설정">
 									</form>
 									<form action="user_activity.do" method="post">
 										<input type="text" value="${alluser.email_id}" name="email_id" style="display: none;">
-										<input type="text" value="2" name="todo" style="display: none;">
 										<input type="submit" class="btn btn-primary btn-sm UserHistory" value="활동내역">
 									</form>
-									<form action="user_details.do" method="post">
+									<form action="userkick.do" method="post">
 										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
-										<input type="text" value="3" name="todo" style="display: none;">
 										<input type="submit" class="btn btn-danger btn-sm Kick" value="강퇴">
 									</form>
 								</div>

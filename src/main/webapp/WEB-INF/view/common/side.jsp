@@ -7,34 +7,41 @@
 	<ul class="sidebar-nav" id="sidebar-nav">
 
 		<!-- 카페 정보 시작-->
-		<div class="pagetitle">
-			<h1>카페 정보</h1>
-			<div class="card-body">
-				<a class="card-title">관리자 
-					<span>| <img src="image/rank_icon/100.gif" alt="Profile"> ADMIN_NICK </span>
-				</a><br> 
-				<a class="card-title">회원수 <span>| 00명 | 등급안내</span></a><br>
-				<a class="card-title">카페 관리<span>| (관리자활성)</span></a>
-			</div>
-		</div>
-		<!-- 카페 정보 끝 -->
-		
-		<!-- 프로필 시작-->
-		<div class="pagetitle">
-			<h1>
-				<img src="image/rank_icon/1.gif" alt="Profile"> USER_NICK
-			</h1>
-			<nav>
+		<c:if test="${member.isAdmin eq 'M' }">
+			<div class="pagetitle">
+				<h1>카페 정보</h1>
 				<div class="card-body">
-					<a class="card-title"><span>준회원 | 100P</span></a><br> <a
-						class="card-title"><span>글 14개 | 댓글 160개 | 쪽지 5개</span></a><br>
-					<a class="card-title">활동내역 <span>| POINT</span></a><br> <a
-						class="card-title">나의 정보 <span>| COUNT</span></a><br> <a
-						class="card-title">로그아웃 <span>| COUNT</span></a><br> <a
-						class="card-title">가입하기 <span>| (비회훤활성)</span></a><br>
+					<a class="card-title">관리자 
+						<span>| <img src="image/rank_icon/100.gif" alt="Profile"> ADMIN_NICK </span>
+					</a><br> 
+					<a class="card-title">회원수 <span>| 00명 | 등급안내</span></a><br>
+					<a class="card-title">카페 관리<span>| (관리자활성)</span></a>
 				</div>
-			</nav>
-		</div>
+			</div>
+			<!-- 카페 정보 끝 -->
+		</c:if>
+			<!-- 프로필 시작-->
+		<c:if test="${member != null }">
+			<div class="pagetitle card mt-2 pt-4">
+				<div class="card-body">
+					<div class="card d-flex justify-content-center pb-2">
+						<div class="card-body mt-4 ms-5 ps-1 pt-1">
+							<h1>
+								<img class="pb-2" src="image/rank_icon/${member.rank}.gif" alt="Profile"> ${member.nick } 
+							</h1>
+						</div>
+					</div>
+					<div class="card justify-content-center">
+						<div class="card-body mt-4 ms-3 ps-4">
+							<span>&ensp;&ensp;&ensp;&ensp; ${member.rank} | ${member.point}P</span><br> 
+							<span>글 ${member.w_count}개 | 댓글 ${member.re_count}개 </span><br>
+							<span>&ensp;&ensp;&ensp; ${member.point}&nbsp;POINT</span><br> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		
 		<!-- 프로필 끝 -->
 		<c:forEach var="infolist" items="${infolist}">
 			<li class="nav-item">

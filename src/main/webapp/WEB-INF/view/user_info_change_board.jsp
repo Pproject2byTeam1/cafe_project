@@ -92,7 +92,7 @@
                 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">${user.email_id}</div>
+                    <div class="col-lg-9 col-md-8" id="id">${user.email_id}</div>
                   </div>
                   
                   <div class="row">
@@ -160,8 +160,8 @@
 		                    정말 회원탈퇴를 하시겠습니까?
 		                    </div>
 		                    <div class="modal-footer">
-		                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">예</button>
-		                      <button type="button" class="btn btn-primary">아니오</button>
+		                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="deleteUser">예</button>
+		                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">아니오</button>
 		                    </div>
 		                  </div>
 		                </div>
@@ -275,7 +275,9 @@
   <script src="assets/js/main.js"></script>
   <script type="text/javascript">
   	$(function(){
-  		
+  		$('#deleteUser').click(function(){//삭제처리
+  			location.href = "deleteUser.do";
+  		});
   		
   		$('#nickname').keyup(function(){
   			//서버처리결과받기

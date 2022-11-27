@@ -41,8 +41,66 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
-<link href="assets/css/databaordlist.css" rel="stylesheet">
+<!-- <link href="assets/css/databaordlist.css" rel="stylesheet">
+ -->
+ <style>
+/* .btn-success btn-lg {
+   float: right;
+} */
+.selectpicker {
+	width: 75px;
+	height: 35px;
+	border-radius: 5px;
+}
 
+._3Espq6 {
+	width: 38px;
+	height: 22px;
+	font-size: 0.9rem;
+	text-align: center;
+}
+
+.parent {
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+}
+
+.name {
+	font-size: 0.9rem;
+	margin-top: auto;
+	vertical-align: bottom;
+}
+
+._1R-fi- {
+	margin-bottom: 0.5rem;
+	color: #2b2d36;
+	line-height: 1.5;
+	font-weight: 700;
+	font-size: 1.5rem;
+	letter-spacing: -0.01875rem;
+	margin-bottom: 0;
+	color: var(- -gray-600);
+	text-align: center;
+}
+
+.jdc {
+	text-align: center;
+}
+
+.son_name {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.son_date {
+	font-size: 13px;
+}
+
+.son_time {
+	font-size: 13px;
+}
+</style>
 <script type="text/javascript">
 	$(document).ready(function(){
 		let b_code = "<c:out value='${b_code}'/>";
@@ -90,9 +148,11 @@
       <!-- End Page Title -->
       <!--글쓰기 버튼  -->
       <div align="right">
-      <a></a>
-   <p><a href="data_content.do">글쓰기 게시판</a></p>
-         <button id="Write" type="button" class="btn btn-success">글쓰기</button>&nbsp;
+         
+    <!--   <form name="list">  -->
+    <%--  	<form action="databoard_list.do?b_code=${b_code}&ps=${pagesize}" method="post"> --%>
+    <form action="databoard_list.do?b_code=${b_code}" method="post">
+     	  <button id="Write" type="button" class="btn btn-success">글쓰기</button>&nbsp; 
             <select class="selectpicker" data-width="75px" name="ps" onchange="submit()">
                <c:forEach var="i" begin="5" end="20" step="5">
 							   		<c:choose>
@@ -106,6 +166,7 @@
 							   </c:forEach>
       
              </select>
+             </form>
       </div>
 
       <!--  <div><br></div>-->
@@ -175,7 +236,7 @@
                      <span>추천</span>
                   </td>
                   </tr>
-                  
+                  <input id="ori_name" name="ori_name" value="${board.ori_name}" type="hidden" /><!--파일명 받아오기  -->
                      </c:forEach> 
                </tbody>
             </table>
@@ -230,7 +291,7 @@
 					
 		                <c:if test="${cpage > 1}">
 		                  <li class="page-item">
-		                    <a class="page-link" href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+		                    <a class="page-link" href="databoard_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
 		                  </li>
 	                    </c:if>
 	                    	
@@ -240,14 +301,14 @@
 										<li class="page-item"><a class="page-link active" >${i}</a></li>
 								</c:when>
 								<c:otherwise>
-		                  			<li class="page-item"><a class="page-link" href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+		                  			<li class="page-item"><a class="page-link" href="databoard_list.do?b_code=${b_code}&cp=${i}&ps=${pagesize}">${i}</a></li>
 								</c:otherwise>
 							</c:choose>
 	                    </c:forEach>
 	                    
 	                    <c:if test="${cpage < pagecount}">
 	                    	<li class="page-item">
-							<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
+							<a class="page-link" href="databoard_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}">>></a>
 							</li>
 						</c:if>
 					</ul>

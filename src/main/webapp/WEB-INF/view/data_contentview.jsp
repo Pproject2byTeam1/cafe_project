@@ -59,7 +59,7 @@
         let idx = '<c:out value="${board.idx}" />';
         let b_code = '<c:out value="${board.b_code}" />';
         let depth = '<c:out value="${board.depth}" />';
-        let step = '<c:out value="${board.depth}" />';
+        let step = '<c:out value="${board.step}" />';
         
 
 
@@ -128,7 +128,7 @@
 			console.log(idx);
 			console.log(b_code);
 			
- 			location.href="board_delete.do?idx=" + ${board.idx}+"&b_code="+${board.b_code};
+ 			location.href="databoard_delete.do?idx=" + ${board.idx}+"&b_code="+${board.b_code};
  			//	location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
  			if(idx == ${board.idx}){
  				alert("삭제됩니다!");
@@ -144,10 +144,151 @@
 			location.href="databoard_rewrite.do?b_code=" + b_code+"&idx"+idx+"&refer"+refer+"&depth"+depth+"&step"+step;
 			
 		});
+        
+        
+        
+        
+		function inser(data){
+  			$.ajax({
+				url : "ReplyOk",
+				data : data,
+				dataType : "html",
+				success : function(data) {
+					
+					list();
+					swal(data);
+				}
+			});
+  		}
+  		
+  		function del(data2){
+			$.ajax(
+					{
+						url: "ReplyDeleteOk",
+						data: data2,
+						dataType: "html",
+						success: function(data){
+						
+							list();
+							swal(data);
+					}
+				}
+			);
+		}
+  		
+  		function list(){
+			const req2 = {"idx": idx};
+			
+				$.ajax(
+						{
+							url: "ReplyList",
+							data: req2,
+							dataType: "html",
+							success: function(responseText){
+							
+								$("#reply").empty();
+								$("#reply").append(responseText.trim());
+									
+						}
+					}
+				);
+		}
+  		
+  		function replyinser(data){
+  			
+  			$.ajax({
+				url : "ReplyReplyOk",
+				data : data,
+				dataType : "html",
+				success : function(data) {
+					
+					list();
+					swal(data);
+				}
+			});
+  		}
+		
+  		/* 댓글 작성 버튼 클릭 */
+		$("#replywritebtn").click(function(){
+			const data = {"idx": idx, "content": $("#replycontent").val() };
+			
+			inser(data);
+			
+			$("#replycontent").val("");
+			
+		});
+		
+		/* 댓글 삭제 버튼 클릭 */
+		$(document).on('click', '#replydel', function(){
+			const tag = this.closest("div");
+			
+			const data2 = {"idx": $(tag).children("#co_idx").val()};
+			
+			console.log(data2);
+			
+			del(data2);
+			
+		});
+		$(document).on('click', '#replydel2', function(){
+			const tag2 = this.closest("div");
+			
+			const data2 = {"idx": $(tag2).children("#co_idx2").val()};
+			
+			console.log(data2);
+			
+			del(data2);
+			
+		});
+		
+		let replyreplytag = "";
+		
+		/* 대댓글 버튼 클릭 */
+		$(document).on('click', '#replyreplywrite', function(){
+			let tag = this.closest("div");
+			replyreplytag = tag;
+			
+			html = '<div id="replyreplyreset" class="comment-write mb-2"><h5 class="card-title">대댓글</h5>';
+			html += '<div class="form-floating">';
+			html += '<textarea id="replyreplycontent" class="form-control"></textarea>';
+			html += '<label for="floatingTextarea">댓글을 작성해 주세요</label> <input value="${imgboard.idx}" type="hidden" />';
+			html += '</div>';
+			html += '<nav aria-label="Page navigation example">';
+			html += '<ul class="pagination justify-content-end"><div><br>';
+			html += '<button type="button" id="replyreplywritebtn" class="col btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>'
+			html += '<button type="button" id="replyreset" class="col btn btn-outline-secondary btn-sm rounded-pill">작성취소</button>';
+			html += '</div></ul></nav></div>';
+			
+			$(html).insertAfter(this.closest(".comment-card"));
+			
+		});
+		
+		/* 대댓글 작성 취소 */
+		$(document).on('click', '#replyreset', function(){
+			$("#replyreplyreset").remove();
+		});
+		
+		/* 대댓글 작성 */
+		$(document).on('click', '#replyreplywritebtn', function(){
+			
+			const data3 = {
+					"co_idx": $(replyreplytag).children("#co_idx").val(), 
+					"idx": $(replyreplytag).children("#idx").val(), 
+					"content": $("#replyreplycontent").val(),
+					"depth": $(replyreplytag).children("#depth").val(),
+					"step":  $(replyreplytag).children("#step").val()
+				};
+			
+			replyinser(data3);
+			
+		});
+        
+        
+        
 	});
 </script>
 
 </head>
+
 
 <body>
 
@@ -206,11 +347,36 @@
 												</div>
 											</div>
 										</div>
-									
 
 
-									<hr>
-									
+
+										<hr>
+										<div align="center">
+											<c:set var="originalfilename" value="${board.ori_name}" />
+											<c:set var="lowerfilename"
+												value="${fn:toLowerCase(originalfilename)}" />
+											<c:forTokens var="file" items="${lowerfilename}" delims="."
+												varStatus="status">
+												<c:if test="${status.last}">
+													<c:choose>
+										<c:when
+															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
+															<a href="upload/${originalfilename}" target="_blank">미리보기</a>
+															<a
+																href="filedownload.board?file_name=${originalfilename}"
+																id="download">다운로드</a>
+														</c:when>
+														<c:otherwise>
+															<a
+																href="filedownload.board?file_name=${originalfilename}"
+																id="download">${originalfilename}</a>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
+											</c:forTokens>
+
+										</div>
+										<hr>
 										<div class="row">
 											<div class="col-lg-12">
 
@@ -223,7 +389,7 @@
 										<hr>
 										<div class="row">
 
-											<div align="right" class="col-md-12">
+											<div  class="col-md-12">
 												<div>
 													<c:if test="${yes == 'no'}">
                                     					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
@@ -232,19 +398,15 @@
                                     					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
                                     				</c:if>
 													<button type="button" id="Write"
-														class="btn btn-outline-secondary btn-sm rounded-pill">답글</button>
+														class="btn btn-outline-secondary btn-sm rounded-pill" >답글</button>
 														<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
-														
-													<button type="button" id="delete"
-														class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>
-														
+													<button type="button" id="delete"class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>
 													<form action="databoard_edit.do?b_code=${b_code}&idx=${board.idx}" method="post">
 				                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
 				                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
 	                                      			</form>
 														</c:if>
-													<button type="button" id="Top"
-														class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
+													<button type="button" id="Top"class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
 												</div>
 											</div>
 
@@ -272,124 +434,114 @@
 							<!-- columns -->
 							<div class="col-lg-12">
 
-								<!-- 댓글 카드 섹션 -->
-								<div class="ccard">
-									<div class="comment-write">
-										<h5 class="card-title">
-											댓글 <span>/ 4개</span>
-										</h5>
-
-										<!-- 작성란 -->
-										<div class="quill-editor-default">
-											<p>댓글 내용을 입력하세요</p>
-										</div>
-										<nav aria-label="Page navigation example">
-											<ul class="pagination justify-content-end">
-
-												<div class="col-sm-2 text-lg-end">
-													<br>
-													<button type="button"
-														class="btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>
-												</div>
-												<div class="modal fade" id="basicModal" tabindex="-1">
-													<div class="modal-dialog">
-														<div class="modal-content">
-															<div class="modal-body">내용을 입력하세요.</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary"
-																	data-bs-dismiss="modal">Close</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</ul>
-										</nav>
-										<!-- End 작성란 -->
-									</div>
-								</div>
-
+							
+								
 								<!-- 댓글 목록 카드 섹션 시작 -->
 								<div class="ccard">
-									<div class="comment-card">
-										<div class="comment-box"><!--  댓글박스 -->
+							<div class="row">
+			<div class="col-1"></div>
+
+			<div class="col-10">
+
+				<section class="section dashboard">
+					<div class="row">
+						<!-- columns -->
+						<div class="col-lg-12">
+
+							<!-- 댓글 카드 섹션 -->
+							<div class="ccard">
+								<div class="comment-write">
+									<h5 class="card-title">댓글</h5>
+
+									<!-- 작성란 -->
+									<div class="form-floating">
+										<textarea id="replycontent" class="form-control"></textarea>
+										<label for="floatingTextarea">댓글을 작성해 주세요</label> <input
+											id="idx" value="${imgboard.idx}" type="hidden" />
+									</div>
+									<nav aria-label="Page navigation example">
+										<ul class="pagination justify-content-end">
+
+											<div class="col-sm-2 text-lg-end">
+												<br>
+												<button type="button" id="replywritebtn"
+													class="btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>
+											</div>
+										</ul>
+									</nav>
+									<!-- End 작성란 -->
+								</div>
+							</div>
+
+							<!-- 댓글 목록 카드 섹션 시작 -->
+
+							<div class="ccard" id="reply">
+								<c:forEach var="comments" items="${comments}">
+									<c:if test="${comments.depth <= 0}">
+										<div class="comment-card">
+											<div class="comment-box">
+												<div class="row">
+													<div class="col">
+														<h5 class="card-title" id='replynick'>
+															<img src="image/rank_icon/1.gif" alt="Profile"
+																class="rounded-circle">${comments.nick}
+														</h5>
+													</div>
+													<div id='replydate' class="col comment-date">${comments.w_date}</div>
+												</div>
+												<h6 class="card-text" id='replycontent'>${comments.content}</h6>
+												<h6></h6>
+
+												<div align="right" class="actions">
+													<input id="co_idx" value="${comments.co_idx}" type="hidden" />
+													<input id="idx" value="${comments.idx}" type="hidden" /> <input
+														id="depth" value="${comments.depth}" type="hidden" /> <input
+														id="step" value="${comments.step}" type="hidden" />
+													<button type="button" id='replyreplywrite'
+														class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
+													<c:if test='${member.email_id eq comments.email_id }'>
+														<button type="button" id="replydel"
+															class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+													</c:if>
+
+												</div>
+											</div>
+										</div>
+									</c:if>
+									<c:if test="${comments.depth > 0}">
+										<div class="Recomment-box">
 											<div class="row">
 												<div class="col">
 													<h5 class="card-title">
-														<img src="image/rank_icon/1.gif" alt="Profile"
-															class="rounded-circle"> USER_NICK
+														<i class="bi bi-arrow-return-right"></i> <img
+															src="image/rank_icon/1.gif" alt="Profile"
+															class="rounded-circle"> ${comments.nick}
 													</h5>
 												</div>
-												<div class="col comment-date">22.11.21 12:10</div>
+												<div class="col comment-date">${comments.w_date}</div>
 											</div>
-											<h6 class="card-text">댓글의 내용~~~</h6>
+											<h6 class="Recomment-text">${comments.content}</h6>
 											<h6></h6>
 
 											<div align="right" class="actions">
-												<button type="button"
-													class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-											
-												<button type="button"
-													class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-												<form action ="board_delete.do?idx=${idx}" method="GET">
-												<button type="submit"
+											<c:if test='${member.email_id eq comments.email_id }'>
+												<input id="co_idx2" value="${comments.co_idx}" type="hidden" />
+												<button type="button" id="replydel2"
 													class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-												</form>
-											
+											</c:if>
 											</div>
 										</div>
-									</div>
+									</c:if>
+								</c:forEach>
 
-									<div class="Recomment-box">
-										<div class="row">
-											<div class="col">
-												<h5 class="card-title">
-													<i class="bi bi-arrow-return-right"></i> <img
-														src="image/rank_icon/1.gif" alt="Profile"
-														class="rounded-circle"> USER_NICK
-												</h5>
-											</div>
-											<div class="col comment-date">22.11.21 12:10</div>
-										</div>
-										<h6 class="Recomment-text">대댓글 대댓글</h6>
-										<h6></h6>
+								<!-- 댓글 목록 카드 섹션 끝 -->
 
-										<div align="right" class="actions">
-											<button type="button"
-												class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-											<button type="button"
-												class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-											<button type="button"
-												class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-										</div>
-									</div>
-
-									<div class="comment-card">
-										<div class="comment-box">
-											<div class="row">
-												<div class="col">
-													<h5 class="card-title">
-														<img src="image/rank_icon/1.gif" alt="Profile"
-															class="rounded-circle"> USER_NICK
-													</h5>
-												</div>
-												<div class="col comment-date">22.11.21 12:10</div>
-											</div>
-											<h6 class="card-text">댓글의 내용~~~</h6>
-											<h6></h6>
-
-											<div align="right" class="actions">
-												<button type="button"
-													class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-												<button type="button"
-													class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-												<form action="regular_write.do?b_code=${b_code}" method="GET">
-					<input type="text" value="${b_code}" name="b_code" style="display: none;">
-					<input type="submit" class="btn btn-secondary float-right" value="글쓰기">
-					</form>
-											</div>
-										</div>
-
-									</div>
+							</div>
+						</div>
+				</section>
+			</div>
+			<div class="col-1"></div>
+		</div>
 									<!-- 댓글 목록 카드 섹션 끝 -->
 
 								</div>

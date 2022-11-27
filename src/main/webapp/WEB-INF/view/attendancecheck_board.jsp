@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -10,6 +13,10 @@
   <title>카페人중독</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="sysdate"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set> 
+	<!-- jQuery -->
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -38,13 +45,13 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
-  <jsp:include page="/common/top.jsp"></jsp:include>
+  <jsp:include page="/WEB-INF/view/common/top.jsp"></jsp:include>
 
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
   
-   <jsp:include page="/common/side.jsp"></jsp:include>
+   <jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
   
   <!-- End Sidebar -->
 
@@ -77,117 +84,80 @@
 					<br>
 					<br>
 					<ul class="list-group list-group-horizontal list-inline nav">
-						<li><a href="#" class="btn btn-default">1</a></li>
-						<li><a href="#" class="btn btn-default">2</a></li>
-						<li><a href="#" class="btn btn-default">3</a></li>
-						<li><a href="#" class="btn btn-default">4</a></li>
-						<li><a href="#" class="btn btn-default">5</a></li>
-						<li><a href="#" class="btn btn-default">6</a></li>
-						<li><a href="#" class="btn btn-default">7</a></li>
-						<li><a href="#" class="btn btn-default">8</a></li>
-						<li><a href="#" class="btn btn-default">9</a></li>
-						<li><a href="#" class="btn btn-default">10</a></li>
-						<li><a href="#" class="btn btn-default">11</a></li>
-						<li><a href="#" class="btn btn-default">12</a></li>
-						<li><a href="#" class="btn btn-default">13</a></li>
-						<li><a href="#" class="btn btn-default">14</a></li>
-						<li><a href="#" class="btn btn-default">15</a></li>
-						<li><a href="#" class="btn btn-default">16</a></li>
-						<li><a href="#"class="btn btn-default">17</a></li>
-						<li><a href="#"class="btn btn-default">18</a></li>
-						<li><a href="#"class="btn btn-default">19</a></li>
-						<li><a href="#"class="btn btn-default">20</a></li>
-						<li><a href="#"class="btn btn-default">21</a></li>
-						<li><a href="#"class="btn btn-default">22</a></li>
-						<li><a href="#"class="btn btn-default">23</a></li>
-						<li><a href="#"class="btn btn-default">24</a></li>
-						<li><a href="#" class="btn btn-default btn-outline-success"><b>25</b></a></li>
-						<li><a href="#"class="btn btn-default">26</a></li>
-						<li><a href="#"class="btn btn-default">27</a></li>
-						<li><a href="#"class="btn btn-default">28</a></li>
-						<li><a href="#"class="btn btn-default">29</a></li>
-						<li><a href="#"class="btn btn-default">30</a></li>
+					<c:forEach begin="1" end="${days}" step="1" var="day" varStatus="status">
+						<li><a href="#" class="btn btn-default">
+						<c:choose>
+						<c:when test="${status.count == nowday2}">
+						<b>${status.count}</b>
+						</c:when>
+						<c:otherwise>
+						${status.count}
+						</c:otherwise>
+						</c:choose>
+						</a></li>
+					</c:forEach>
 					</ul>
 					<!-- 작성란 -->
-	              <div class="quill-editor-default">
-	                <p>출석 체크</p>
-	              </div>
-	              <nav aria-label="Page navigation example">
-	              <ul class="pagination justify-content-end">
-	              	<div class="col-sm-10 align-self-center text-md-start">오늘의 출석인 수: 2명</div>
-	              	<div  class="col-sm-2 text-lg-end">
-	              	<button type="button" class="btn btn-success" hidden>출석하기</button>
-	              	<!-- Basic Modal -->
-	              	<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#basicModal" >
-	                	출석하기
-	              	</button>
-	              	</div>
-	              	<div class="modal fade" id="basicModal" tabindex="-1">
-	                	<div class="modal-dialog">
-	                  	<div class="modal-content">
-	                    	<div class="modal-body">
-	                    	하루에 한번만 출석 가능
-	                     	</div>
-	                    	<div class="modal-footer">
-	                      		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	                    	</div>
-	                  	</div>
-	                </div>
-	              </div><!-- End Basic Modal-->
-	              </ul>
-	              </nav>
-	              <!-- End 작성란 -->
+					<c:if test="${userid == '' || sysdate != date5}">
+					  <div class="insertCheckToday">
+			              <div class="quill-editor-default">
+			                <p>출석 체크</p>
+			              </div><!-- 서버시간 기준으로 오늘날짜가 아닌 경우 안보이게 처리-->
+			              <nav aria-label="Page navigation example">
+			              <ul class="pagination justify-content-end">
+		              	  <div class="col-sm-10 align-self-center text-md-start">오늘의 출석인 수: ${count}명</div>
+		              	  <div  class="col-sm-2 text-lg-end">
+		              	  <!-- Basic Modal -->
+			              	  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#basicModal" >
+			                	출석하기
+			              	  </button>
+			              	 </div>
+			              </ul>
+			              </nav>
+			              <div class="modal fade" id="basicModal" tabindex="-1">
+			                <div class="modal-dialog">
+			                	
+			                  <div class="modal-content">
+			                    <div class="modal-body">
+			                    하루에 한번만 출석 가능
+			                     </div>
+			                    <div class="modal-footer">
+			                      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div><!-- End Basic Modal-->
+		              </div>
+		              </c:if><!-- End 작성란 -->
                 </div>
               </div>
             </div><!-- End 카드 -->
             <!-- 댓글 -->
             <div class="col-lg-12">
 	          <div class="card">
-	            <div class="card-body row">
 	            <h5 class="card-title">&nbsp;&nbsp;&nbsp;출석명단</h5>
+	            <c:forEach var="list" items="${boardlist}" varStatus="status">
+	            <!-- 1round -->
+	            <div class="card-body row">
 	            <hr>
 	            <div class="col-sm-2">
-	              <table>
-		             <tr>
-			             <td><img src="assets/img/messages-2.jpg" alt="" class="rounded-circle w-75 p-3"></td>
-			             <td><h5 class="card-title">닉네임1</h5></td>
-		             </tr>
-	              </table>
+	            	<h5 class="card-title"><img src="image/rank_icon/${list.hits}.gif" alt="랭크 아이콘">${list.nick}</h5>
 	            </div>
-	              <div class="col-sm-1 align-self-center text-lg-end"><em class="rank2">2등</em></div>
-	              <div class="col-sm-6 align-self-center"><p class="text-justify ">ㅊㅊ</p></div>
+	              <div class="col-sm-7 align-self-center"><p class="text-justify ">${list.content}</p></div>
 	              <div class="col-sm-3 align-self-center text-lg-end">
 	              <nav style="--bs-breadcrumb-divider: '|';">
 	                <ol class="breadcrumb">
-	                  <li class="breadcrumb-item">11 / 25</li>
-	                  <li class="breadcrumb-item">01 : 02</li>
+	                  <li class="breadcrumb-item">${list.w_date}</li>
+	                  <c:if test="${list.email_id == userId}">
 	                  <li class="breadcrumb-item active"><a href="#" class="btn btn-warning">삭제</a></li>
+	                  </c:if>
 	                </ol>
 	              </nav>
 	              </div>
-	              <hr>
-	            </div>
-	            <div class="card-body row">
-	            <div class="col-sm-2">
-	              <table>
-		             <tr>
-			             <td><img src="assets/img/messages-1.jpg" alt="" class="rounded-circle w-75 p-3"></td>
-			             <td><h5 class="card-title">닉네임2</h5></td>
-		             </tr>
-	              </table>
-	            </div>
-	              <div class="col-sm-1 align-self-center text-lg-end"><em class="rank1">1등</em></div>
-	              <div class="col-sm-6 align-self-center"><p class="text-justify">ㅊㅊㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</p></div>
-	              <div class="col-sm-3 align-self-center text-lg-end">
-	              <nav style="--bs-breadcrumb-divider: '|';">
-	                <ol class="breadcrumb">
-	                  <li class="breadcrumb-item">11 / 25</li>
-	                  <li class="breadcrumb-item">01 : 02</li>
-	                  <!-- <li class="breadcrumb-item active"><a href="#" hidden="" class="btn btn-warning">삭제</a></li> -->
-	                </ol>
-	              </nav>
-	              <hr>
-	            </div>
+	              </div>
+	              <!-- 1round -->
+	              </c:forEach>
+	            <hr>
 				<ul class="pagination justify-content-center">
                   <li class="page-item">
                     <a class="page-link" href="#" aria-label="Previous">

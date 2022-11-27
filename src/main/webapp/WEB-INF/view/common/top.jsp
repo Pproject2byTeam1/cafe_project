@@ -205,17 +205,17 @@
 		</c:if>
 
 
-		<c:if test="${member != null}">
+		<c:if test="${member != null}">        
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="image/rank_icon/1.gif" alt="Profile" class="">
-            <span class="d-none d-md-block dropdown-toggle ps-2">USER_NICK</span>
+            <img src="image/rank_icon/${member.rank}.gif" alt="Profile" class="">
+            <span class="d-none d-md-block dropdown-toggle ps-2">${member.nick}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><img src="image/rank_icon/1.gif" alt="Profile" class=""> USER_NICK</h6>
+              <h6><img src="image/rank_icon/${member.rank}.gif" alt="Profile" class="">${member.nick }</h6>
               <span>RANK_NAME (POINT)</span>
             </li>
             <li>
@@ -266,7 +266,7 @@
         <c:if test="${member == null}">
         
         	<div class="row m-4 pt-3">
-        		<p class="col-6"><a href="register.do">JOIN</a></p>
+        		<p class="col-6"><a href="snsLogin.do">JOIN</a></p>
     			<p class="col-6"><a href="login_view.do">LOGIN</a></p>
         	</div>
         

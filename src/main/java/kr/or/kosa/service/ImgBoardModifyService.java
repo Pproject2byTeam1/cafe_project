@@ -8,47 +8,42 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dao.UserDao;
+import kr.or.kosa.dao.Img_Board_Dao;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.User;
+import kr.or.kosa.dto.Img_Board;
 
-public class User_details implements Action {
+public class ImgBoardModifyService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		
 		ActionForward forward = new ActionForward();
 		
-		String todo = request.getParameter("todo");
-		String url = "";
-		System.out.println(todo + "투두잉");
-		
 		try {
+			
+			//사이드 바
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
-			String id = request.getParameter("id");
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			int idx = Integer.parseInt(request.getParameter("idx"));
 			
-			UserDao dao = new UserDao();
-			User userlist = dao.idSearchUser(id);
+			Img_Board_Dao imgdao = new Img_Board_Dao();
+			Img_Board board = imgdao.getImg_BoardByIdx(idx);
 			
-			request.setAttribute("userlist", userlist);
-
-			
-			url="/WEB-INF/view/user_setting_edit.jsp";
-				
-				
-				
 			request.setAttribute("infolist", infolist);
-
+			request.setAttribute("board", board);
+			request.setAttribute("b_code", b_code);
+			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath(url);
+		  	forward.setPath("/WEB-INF/view/imgboard_modify.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
 		return forward;
-	} 
+	}
 
 }
