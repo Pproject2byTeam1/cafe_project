@@ -555,5 +555,38 @@ public class UserDao {
 			return row;
 		}
 		
-		//sns유저 로그인 확인
+		//sns유저 가입
+		public int joinSnsUser(String email_id, String phone, String name, String nick, String birth) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "insert all into member(EMAIL_ID, NAME, NICK, BIRTH) VALUES (?,?,?,?)"
+						+ "into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL;";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, email_id);
+				pstmt.setString(2, name);
+				pstmt.setString(3, email_id);//초기 닉네임은 id와 동일
+				pstmt.setString(4, birth);
+				pstmt.setString(5, email_id);
+				pstmt.setString(6, birth);
+				pstmt.setString(7, phone);
+				row = pstmt.executeUpdate();
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;//2가 나와야 정상
+		}
 }
