@@ -246,7 +246,7 @@ public class UserDao {
 	
 	
 	//특정 유저 비번, 닉네임, 포인트 바꾸기
-		public User editSettingUser(String id, String password, String name, int point) {
+		public User editSettingUser(String id, String password, String name,String isAdmin, int point) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -255,7 +255,7 @@ public class UserDao {
 			try {
 				conn = ds.getConnection();
 				
-				String sql = "UPDATE member SET password=?, name=?, point=? "
+				String sql = "UPDATE member SET password=?, name=?, isadmin=? , point=? "
 						+ "WHERE email_id=?";
 				
 				pstmt = conn.prepareStatement(sql);
@@ -263,8 +263,9 @@ public class UserDao {
 				
 				pstmt.setString(1, password);
 				pstmt.setString(2, name);
-				pstmt.setInt(3, point);
-				pstmt.setString(4, id);
+				pstmt.setString(3, isAdmin);
+				pstmt.setInt(4, point);
+				pstmt.setString(5, id);
 				rs = pstmt.executeQuery();
 				
 				
@@ -274,6 +275,7 @@ public class UserDao {
 					userlist.setEmail_id(rs.getString("email_id"));
 					userlist.setPassword(rs.getString("password"));
 					userlist.setName(rs.getString("name"));
+					userlist.setIsAdmin(rs.getString("isadmin"));
 					userlist.setPoint(rs.getInt("point"));				
 					
 				}

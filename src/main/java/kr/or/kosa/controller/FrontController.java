@@ -55,6 +55,7 @@ import kr.or.kosa.service.SnsCheckService;
 import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserDeleteService;
 import kr.or.kosa.service.UserInfoService;
+import kr.or.kosa.service.UserKick;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.UserUpdateService;
 import kr.or.kosa.service.User_Edit;
@@ -346,7 +347,18 @@ public class FrontController extends HttpServlet {
            action = new RegularBoardWriteOkService();
            forward = action.execute(request, response);
      
-        }
+        }else if(urlcommand.equals("/userkick.do")){ // 자유게시판 글쓰기
+            
+            action = new UserKick();
+            forward = action.execute(request, response);
+      
+         }else if(urlcommand.equals("/windowclose.do")) { //게시판 글 작성
+ 			
+ 			forward = new ActionForward();
+ 		  	forward.setRedirect(false);
+ 		  	forward.setPath("/WEB-INF/view/windowClose.jsp");
+ 			
+ 		}
    
       
       
