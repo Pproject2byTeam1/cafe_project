@@ -19,6 +19,9 @@ import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
+import kr.or.kosa.service.ImgBoardDeleteService;
+import kr.or.kosa.service.ImgBoardModifyService;
+import kr.or.kosa.service.ImgBoardModifyServiceOk;
 import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -180,7 +183,22 @@ public class FrontController extends HttpServlet {
          
          action = new ImgBoardWriteService();
          forward = action.execute(request, response);
-         
+          
+      } else if(urlcommand.equals("/imgboardDelete.do")) { //이미지 게시판 글 삭제
+    	  
+    	  action = new ImgBoardDeleteService();
+    	  forward = action.execute(request, response);
+    	  
+      } else if(urlcommand.equals("/imgboardModifyView.do")) { //이미지 게시판 글 수정 view
+    	  
+    	  action = new ImgBoardModifyService();
+    	  forward = action.execute(request, response);
+    	  
+      } else if(urlcommand.equals("/imgboardmodify.do")) { //이미지 게시판 글 수정 로직
+    	  
+    	  action = new ImgBoardModifyServiceOk();
+    	  forward = action.execute(request, response);
+    	  
       } else if(urlcommand.equals("/calendar_list.do")) { // 달력
          
          action = new Calender_Board_List_Service();

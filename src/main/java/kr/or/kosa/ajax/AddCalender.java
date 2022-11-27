@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.dao.Calender_Dao;
 import kr.or.kosa.dto.Calender;
+import kr.or.kosa.dto.User;
 
 @WebServlet("/AddCalender")
 public class AddCalender extends HttpServlet {
@@ -36,28 +38,33 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 			String content = request.getParameter("content");
 			String finish = request.getParameter("finish");
 			
-			Calender calender = new Calender();
-			calender.setTitle(title);
-			calender.setNick(nick);
-			calender.setContent(content);
-			calender.setEmail_id(email_id);
-			calender.setB_code(b_code);
-			calender.setStart_date(start_date);
-			calender.setEnd_date(end_date);
-			calender.setFinish(finish);
-			
-			Calender_Dao dao = new Calender_Dao();
-			int row = dao.AddCalender(calender);
-			
-			String msg = "";
-			
-			if(row > 0) {
-				msg = "확인";
-			}else {
-				msg = "실패";
-			}
-			
-			System.out.println(msg);
+			HttpSession session = request.getSession();
+		    User user = (User) session.getAttribute("member");
+		    
+		    String msg = "";
+		    
+		    if(user == null) {
+		    	msg = "로그인이 필요한 기능입니다.";
+		    }else {
+		    	Calender calender = new Calender();
+				calender.setTitle(title);
+				calender.setNick(nick);
+				calender.setContent(content);
+				calender.setEmail_id(email_id);
+				calender.setB_code(b_code);
+				calender.setStart_date(start_date);
+				calender.setEnd_date(end_date);
+				calender.setFinish(finish);
+				
+				Calender_Dao dao = new Calender_Dao();
+				int row = dao.AddCalender(calender);
+				
+				if(row > 0) {
+					msg = "확인";
+				}else {
+					msg = "실패";
+				}
+		    }
 			
 			out.print(msg);
 			

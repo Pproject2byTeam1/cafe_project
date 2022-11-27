@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dto.Comments;
+import kr.or.kosa.dto.User;
 
 
 @WebServlet("/ReplyList")
@@ -35,6 +37,9 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
     		
     		CommentsDao dao = new CommentsDao();
     		List<Comments> replylist = dao.getCommentListByIdx(idx);
+    		
+    		HttpSession session = request.getSession();
+		    User user = (User) session.getAttribute("member");
     		
     		for(Comments reply : replylist) {
     			if(reply.getDepth() <= 0) {
@@ -63,7 +68,6 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	    				out.print("</div>");
 	    			out.print("</div>");
     			}else {
-	    			out.print("<c:if test='" + reply.getDepth() + ">0'>");
 	    			out.print("<div class='Recomment-box'>");
 	    				out.print("<div class='row'>");
 	    					out.print("<div class='col'>");
@@ -77,13 +81,12 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	    				out.print("<h6 class='Recomment-text'>"+reply.getContent()+"</h6>");
 	    				out.print("<h6></h6>");
 	    				out.print("<div align='right' class='actions'>");
-	    					out.print("<c:if test='${member.email_id eq comments.email_id }'>");
+	    					if(user.getEmail_id().equals(reply.getEmail_id())) {
 	    						out.print("<input id='co_idx2' value='" + reply.getCo_idx() + "' type='hidden' />");
 	    						out.print("<button type='button' id='replydel2' class='btn btn-outline-secondary btn-sm rounded-pill'>삭제</button>");
-	    					out.print("</c:if>");
+	    					}	
 	    				out.print("</div>");
 	    			out.print("</div>");
-	    			out.print("</c:if>");
     			}
     		}
     	

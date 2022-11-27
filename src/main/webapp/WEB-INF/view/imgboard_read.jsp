@@ -43,6 +43,17 @@
   			let email_id = '<c:out value="${member.email_id}" />';
   			let yes = '<c:out value="${yes}" />';
   			let idx = '<c:out value="${imgboard.idx}" />';
+  			let b_code ='<c:out value="${imgboard.b_code}" />';
+  			
+  			/* 게시글 삭제 */
+  			$("#imgdel").click(function(){
+  				 location.href="imgboardDelete.do?idx="+idx+"&b_code="+b_code;
+  			});
+  			
+  			/* 게시글 수정 */
+  			$("#imgmodify").click(function(){
+  				location.href="imgboardModifyView.do?idx="+idx+"&b_code="+b_code;
+  			})
   			
 	  		/* 게시물 좋아요 비동기 처리 */
 	  		$("#yesbtn").click(function(){
@@ -186,7 +197,7 @@
 				
 				console.log(data2);
 				
-				//del(data2);
+				del(data2);
 				
 			});
 			$(document).on('click', '#replydel2', function(){
@@ -194,6 +205,7 @@
 				
 				const data2 = {"idx": $(tag2).children("#co_idx2").val()};
 				
+				console.log(data2);
 				
 				del(data2);
 				
@@ -308,7 +320,8 @@
 												<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
 												</c:if>
 												<c:if test="${member.email_id == imgboard.email_id}">
-													<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button">삭제</button> &nbsp;
+													<button id="imgmodify" class="col btn btn-outline-secondary btn-sm rounded-pill" type="button">수정</button> &nbsp;
+													<button id="imgdel" class="col btn btn-outline-secondary btn-sm rounded-pill" type="button">삭제</button> &nbsp;
 												</c:if>
 											</div>
 										</c:if>
