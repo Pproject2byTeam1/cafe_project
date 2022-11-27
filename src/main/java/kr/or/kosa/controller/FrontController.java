@@ -43,6 +43,7 @@ import kr.or.kosa.service.ReplyDataWriteService;
 import kr.or.kosa.service.ReplyDataWriteViewService;
 import kr.or.kosa.service.ReplyRegularWriteService;
 import kr.or.kosa.service.ReplyRegularWriteViewService;
+import kr.or.kosa.service.SnsCheckService;
 import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
@@ -78,7 +79,7 @@ public class FrontController extends HttpServlet {
       //회원가입, 로그인
       if(urlcommand.equals("/register.do")) { //회원가입
          
-         action = null;//추후 생성 생각 중
+         action = null;//일단 내버려 둠..
          forward = action.execute(request, response);
          
       } else if(urlcommand.equals("/login_view.do")) { //로그인 화면 뿌리기
@@ -91,12 +92,17 @@ public class FrontController extends HttpServlet {
          action = new Login_Service();
          forward = action.execute(request, response);
          
-      } else if(urlcommand.equals("/snsLogin.do")) { //sns 로그인 (+회원가입)
+      } else if(urlcommand.equals("/snsLogin.do")) { //sns 로그인 (+회원가입 페이지) 이동
           
-          action = new LoginCheckService();
+    	  action = new SnsCheckService();
           forward = action.execute(request, response);
           
-       } else if(urlcommand.equals("/logout.do")) { //로그아웃
+     } else if(urlcommand.equals("/registerok.do")) { //sns회원 등록
+           
+    	 action = new LoginCheckService();
+         forward = action.execute(request, response);
+           
+      } else if(urlcommand.equals("/logout.do")) { //로그아웃
          
          action = new Logout_Service();
          forward = action.execute(request, response);
