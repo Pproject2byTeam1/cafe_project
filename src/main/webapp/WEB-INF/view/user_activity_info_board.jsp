@@ -247,57 +247,6 @@
   			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
   		});
   		
-  		$('#nickname').keyup(function(){
-  			//서버처리결과받기
-  			$.ajax({
-  				url:"nickVerification.do",
-  				data:{nickname: $('#nickname').val()},
-  				type: "POST",
-  				dataType:"json",
-  				success: function(responseText){
-  					var text = responseText;
-  					if(text.toString().replace(/\s/gi, "") == "true"){
-  						$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
-  						$("#chageInfo").attr("disabled",true);
-  					}else{
-  						$("#qqqq").html("<p class='text-success'>사용 가능합니다.</p>");
-  						$("#chageInfo").removeAttr("disabled");
-  					}
-  				}
-  			});
-  		});
-  		$("#renewPassword").keyup(function () {
-  			console.log("pwd: "+$('#currentPassword').val());
-  			$.ajax({
-  				url:"userVerification.do",
-  				data:{password: $('#currentPassword').val()},
-  				type: "POST",
-  				dataType:"json",
-  				success: function(responseText){
-  					var text = responseText;
-  					if(text.toString().replace(/\s/gi, "") == "true"){
-	  					if ($("#newPassword").val() != $("#renewPassword").val() || $("#renewPassword").val().length < 10) {
-			              $("#aaaa").html("<p class='text-danger' >비밀번호가 일치하지 않거나 10자 미만입니다.</p>");
-			           	  $("#changepwd").attr("disabled",true);
-			            } else {
-			              $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
-			              $("#changepwd").removeAttr("disabled");
-			            }
-	  				}else{
-	  					$("#aaaa").html("<p class='text-danger' >비밀번호가 정확하지 않습니다.</p>");
-	  				}
-  				}
-  			})
-          });
-  		$('#tel').keyup(function(){
-  			console.log("tel: "+$('#tel').val());
-  			console.log("length: "+$('#tel').val().length);
-  			if($('#tel').val().length != 11 || $('#tel').val() == null){
-  				$("#chageInfo").attr("disabled",true);
-  			}else{
-  				$("#chageInfo").removeAttr("disabled");
-  			}
-  		})
   	});
   </script>
 

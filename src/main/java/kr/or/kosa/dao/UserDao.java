@@ -86,20 +86,22 @@ public class UserDao {
 	}
 	
 	//특정 유저 단순정보 조회
-	public User selectUserById(String userid) {
+	public UserDetails selectUserById(String userid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		User user = null;
+		UserDetails user = null;
 		
 		try {
 			conn = ds.getConnection(); //dbcp 연결객체 얻기
-			String sql="select email_id, password, name, nick, to_char(birth, 'yyyyMMdd') as birth, point, isadmin, rank from member where email_id = ?";
+			String sql="select m.email_id, m.password, m.name, m.nick, to_char(m.birth, 'yyyyMMdd') as birth, m.point, m.isadmin, m.rank, ud.w_count, ud.re_count "
+						+ "from member m join user_details ud "
+						+ "on m.email_id = ud.email_id where m.email_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				user = new User();
+				user = new UserDetails();
 
 				user.setEmail_id(rs.getString("email_id"));
 				user.setPassword(rs.getString("password"));
@@ -109,6 +111,8 @@ public class UserDao {
 				user.setPoint(rs.getInt("point"));
 				user.setIsAdmin(rs.getString("isadmin"));
 				user.setRank(rs.getInt("rank"));
+				user.setW_count(rs.getInt("w_count"));
+				user.setRe_count(rs.getInt("re_count"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -424,7 +428,7 @@ public class UserDao {
 		}
 		
 		//특정 유저 관련 검증1
-		public int verificationUser1(String email_id, String col1) {
+		public int verificationUser1(String col1) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -433,11 +437,10 @@ public class UserDao {
 			try {
 				conn = ds.getConnection();
 				
-				String sql = "select count(*) cnt from Member where NICK = ? and email_id = ? ";
+				String sql = "select count(*) cnt from Member where NICK = ? ";
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, col1);
-				pstmt.setString(2, email_id);
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
 					row = rs.getInt(1);
@@ -564,13 +567,16 @@ public class UserDao {
 			try {
 				conn = ds.getConnection();
 				
-				String sql = "insert all into member(EMAIL_ID, NAME, NICK, BIRTH) VALUES (?,?,?,?)"
-						+ "into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL;";
-				
+				String sql = "insert all into member(EMAIL_ID, NAME, NICK, BIRTH) VALUES (?,?,?,?) into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL";
+				System.out.println(email_id + ", " + phone + ", " + name + ", " + nick + ", " + birth);
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, email_id);
 				pstmt.setString(2, name);
-				pstmt.setString(3, email_id);//초기 닉네임은 id와 동일
+				if(nick.equals("")) {//초기 닉네임은 받은게 없으면 id와 동일
+					pstmt.setString(3, email_id);
+				}else {
+					pstmt.setString(3, nick);
+				}
 				pstmt.setString(4, birth);
 				pstmt.setString(5, email_id);
 				pstmt.setString(6, birth);
@@ -588,5 +594,35 @@ public class UserDao {
 				}
 			}
 			return row;//2가 나와야 정상
+		}
+		
+		//특정 유저 삭제
+		public int deleteUser(String id) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "delete from member where email_id=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				
+				row = pstmt.executeUpdate();
+				
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
 		}
 }

@@ -13,12 +13,13 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
-import kr.or.kosa.service.DataBoardEditOkService;
-import kr.or.kosa.service.DataBoardEditService;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
+import kr.or.kosa.service.ImgBoardDeleteService;
+import kr.or.kosa.service.ImgBoardModifyService;
+import kr.or.kosa.service.ImgBoardModifyServiceOk;
 import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
@@ -46,7 +47,9 @@ import kr.or.kosa.service.ReplyDataWriteService;
 import kr.or.kosa.service.ReplyDataWriteViewService;
 import kr.or.kosa.service.ReplyRegularWriteService;
 import kr.or.kosa.service.ReplyRegularWriteViewService;
+import kr.or.kosa.service.SnsCheckService;
 import kr.or.kosa.service.UserActivityService;
+import kr.or.kosa.service.UserDeleteService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.UserUpdateService;
@@ -81,7 +84,7 @@ public class FrontController extends HttpServlet {
       //회원가입, 로그인
       if(urlcommand.equals("/register.do")) { //회원가입
          
-         action = null;//추후 생성 생각 중
+         action = null;//일단 내버려 둠..
          forward = action.execute(request, response);
          
       } else if(urlcommand.equals("/login_view.do")) { //로그인 화면 뿌리기
@@ -94,17 +97,27 @@ public class FrontController extends HttpServlet {
          action = new Login_Service();
          forward = action.execute(request, response);
          
-      } else if(urlcommand.equals("/snsLogin.do")) { //sns 로그인 (+회원가입)
+      } else if(urlcommand.equals("/snsLogin.do")) { //sns 로그인 (+회원가입 페이지) 이동
           
-          action = new LoginCheckService();
+    	  action = new SnsCheckService();
           forward = action.execute(request, response);
           
-       } else if(urlcommand.equals("/logout.do")) { //로그아웃
+     } else if(urlcommand.equals("/registerok.do")) { //sns회원 등록
+           
+    	 action = new LoginCheckService();
+         forward = action.execute(request, response);
+           
+      } else if(urlcommand.equals("/logout.do")) { //로그아웃
          
          action = new Logout_Service();
          forward = action.execute(request, response);
          
-      } else if(urlcommand.equals("/user_list.do")) { //유저 정보들 보기
+      } else if(urlcommand.equals("/deleteUser.do")) { //탈퇴
+          
+          action = new UserDeleteService();
+          forward = action.execute(request, response);
+          
+       } else if(urlcommand.equals("/user_list.do")) { //유저 정보들 보기
          
          action = new UserListService();
          forward = action.execute(request, response);
@@ -180,7 +193,22 @@ public class FrontController extends HttpServlet {
          
          action = new ImgBoardWriteService();
          forward = action.execute(request, response);
-         
+          
+      } else if(urlcommand.equals("/imgboardDelete.do")) { //이미지 게시판 글 삭제
+    	  
+    	  action = new ImgBoardDeleteService();
+    	  forward = action.execute(request, response);
+    	  
+      } else if(urlcommand.equals("/imgboardModifyView.do")) { //이미지 게시판 글 수정 view
+    	  
+    	  action = new ImgBoardModifyService();
+    	  forward = action.execute(request, response);
+    	  
+      } else if(urlcommand.equals("/imgboardmodify.do")) { //이미지 게시판 글 수정 로직
+    	  
+    	  action = new ImgBoardModifyServiceOk();
+    	  forward = action.execute(request, response);
+    	  
       } else if(urlcommand.equals("/calendar_list.do")) { // 달력
          
          action = new Calender_Board_List_Service();
@@ -305,6 +333,12 @@ public class FrontController extends HttpServlet {
 			
 			action = new DataBoardEditOkService();
 		}
+      } else if(urlcommand.equals("/checkBoard.do")) { //출석 게시판 이동
+          
+          action = new CheckBoardService();
+          forward = action.execute(request, response);
+          
+       }
    
       
       

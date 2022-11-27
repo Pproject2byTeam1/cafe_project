@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.UserDao;
-import kr.or.kosa.dto.User;
+import kr.or.kosa.dto.UserDetails;
 
 public class Login_Service implements Action {
 
@@ -22,7 +22,7 @@ public class Login_Service implements Action {
 			String password = request.getParameter("password");
 			
 			UserDao dao = new UserDao();
-			User user = dao.selectUserById(email_id);
+			UserDetails user = dao.selectUserById(email_id);
 			
 			HttpSession session = request.getSession();
 			String url = "";

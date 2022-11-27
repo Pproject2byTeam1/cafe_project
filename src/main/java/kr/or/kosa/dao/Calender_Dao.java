@@ -25,6 +25,7 @@ public class Calender_Dao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
 		int row = 0;
 		
 		try {
@@ -67,8 +68,18 @@ public class Calender_Dao {
 			pstmt2.setString(3, finish);
 			
 			row = pstmt2.executeUpdate();
+			
 			if(row < 0) {
 				throw new Exception("Calender 삽입 실패");
+			}
+			
+			String sql3 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
+			pstmt3 = conn.prepareStatement(sql3);
+			pstmt3.setString(1, calender.getEmail_id());
+			row = pstmt3.executeUpdate();
+			
+			if(row < 0) {
+				throw new Exception("작성 정보 업로드 실패");
 			}else {
 				conn.commit();
 			}
