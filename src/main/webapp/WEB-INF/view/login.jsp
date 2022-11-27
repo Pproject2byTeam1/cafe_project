@@ -162,7 +162,7 @@
 var naverLogin = new naver.LoginWithNaverId(
 		{
 			clientId: "OGifRqdUtHJWY_oTLDrQ", //내 애플리케이션 정보에 cliendId를 입력해줍니다.
-			callbackUrl: "http://localhost:8090/WebCafe_Project/snsLogin.do", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
+			callbackUrl: "http://localhost:8090/WebCafe_Project/login_view.do", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
 			isPopup: false,
 			callbackHandle: true
 		}
@@ -174,15 +174,9 @@ window.addEventListener('load', function () {
 	naverLogin.getLoginStatus(function (status) {
 		if (status) {
 			const email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
-			const birthyear=naverLogin.user.getBirthyear();
-			const id=naverLogin.user.getId();
-	        const birthday=naverLogin.user.getBirthday();
-	        const name = naverLogin.user.getName();
-	        const mobile = naverLogin.user.getMobile();
-			console.log(naverLogin.user); 
-    		
             if( email == undefined || email == null) {
 				alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
+				console.log(naverLogin.user);
 				naverLogin.reprompt();
 				return;
 			}
