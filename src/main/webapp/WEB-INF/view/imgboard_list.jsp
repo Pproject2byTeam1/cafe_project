@@ -75,7 +75,7 @@
   						$(data).each(function(){
   							html = '<figure>';
   								html += '<a href="img_board_read.do?idx=' + this.idx + '"><img src="image/imgTest/' + this.img_name + '"></a>';
-  								html += '<figcaption>' + this.b_idx + '.' + this.title + '</figcaption>'
+  								html += '<figcaption>' + this.title + '</figcaption>'
   							html += "</figure>";
   							console.log(html);
   							$('#columns').append(html);
@@ -142,7 +142,7 @@
 	            		<a href="img_board_read.do?idx=${list.idx}&b_code=${list.b_code}">
 	            			<img src="upload/${list.img_name}">
 	            		</a>
-	            		<figcaption>${list.b_idx}. ${list.title}</figcaption>
+	            		<figcaption>${list.title}</figcaption>
 	        		</figure>
   				</c:forEach>
   				
