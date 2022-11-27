@@ -110,9 +110,7 @@
 								<a href="#"><img alt=""
 									src="image/login_img/google_login.png" class="w-100 p-3"></a>
 								<!-- 네이버 로그인 버튼 노출 영역 (근데 작다..)-->
-    							<div id="naver_id_login">
-    							<input type="text" hidden="" id="hiddentext" name="hiddentext">
-    							</div>
+    							<div id="naver_id_login"></div>
 								<a href="#"><img alt=""
 									src="image/login_img/kakao_login.png" class="w-100 p-3"></a>
 									
@@ -169,7 +167,6 @@
         naver_id_login.setState(state);
         //naver_id_login.setPopup();
         naver_id_login.init_naver_id_login();
-        $('#hiddentext').val(naver_id_login.getProfileData('email'));
     </script>
 <!-- <script type="text/javascript">
 

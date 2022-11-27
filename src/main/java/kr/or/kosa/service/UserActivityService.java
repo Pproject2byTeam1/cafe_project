@@ -54,7 +54,7 @@ public class UserActivityService implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);///WEB-INF/view/
-		  	forward.setPath("user_activity_info_board.jsp");
+		  	forward.setPath("/WEB-INF/view/user_activity_info_board.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

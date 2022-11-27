@@ -17,7 +17,7 @@ public class SnsCheckService implements Action {
 		String url = "";
 		
 		try {
-			String email = request.getParameter("hiddentext");
+			String email = request.getParameter("email");
 			System.out.println(email);
 			UserDao dao = new UserDao();
 			User user = dao.selectUserById(email);
@@ -26,7 +26,7 @@ public class SnsCheckService implements Action {
 				session.setAttribute("member", user);
 				url = "/index.jsp";
 			}else {//아니면 등록 페이지 ㄱㄱ
-				url = "/snsRegister.jsp";
+				url = "/WEB-INF/view/snsRegister.jsp";
 			}
 			
 			

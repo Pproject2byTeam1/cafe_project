@@ -38,13 +38,13 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
-  <jsp:include page="/common/top.jsp"></jsp:include>
+  <jsp:include page="/WEB-INF/view/common/top.jsp"></jsp:include>
 
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
   
-   <jsp:include page="/common/side.jsp"></jsp:include>
+   <jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
   
   <!-- End Sidebar -->
 
@@ -109,34 +109,36 @@
 						<li><a href="#"class="btn btn-default">30</a></li>
 					</ul>
 					<!-- 작성란 -->
-	              <div class="quill-editor-default">
-	                <p>출석 체크</p>
-	              </div>
-	              <nav aria-label="Page navigation example">
-	              <ul class="pagination justify-content-end">
-	              	<div class="col-sm-10 align-self-center text-md-start">오늘의 출석인 수: 2명</div>
-	              	<div  class="col-sm-2 text-lg-end">
-	              	<button type="button" class="btn btn-success" hidden>출석하기</button>
-	              	<!-- Basic Modal -->
-	              	<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#basicModal" >
-	                	출석하기
-	              	</button>
-	              	</div>
-	              	<div class="modal fade" id="basicModal" tabindex="-1">
-	                	<div class="modal-dialog">
-	                  	<div class="modal-content">
-	                    	<div class="modal-body">
-	                    	하루에 한번만 출석 가능
-	                     	</div>
-	                    	<div class="modal-footer">
-	                      		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	                    	</div>
-	                  	</div>
-	                </div>
-	              </div><!-- End Basic Modal-->
-	              </ul>
-	              </nav>
-	              <!-- End 작성란 -->
+					  <div class="insertCheckToday">
+			              <div class="quill-editor-default">
+			                <p>출석 체크</p>
+			              </div><!-- 서버시간 기준으로 오늘날짜가 아닌 경우 안보이게 처리-->
+			              <nav aria-label="Page navigation example">
+			              <ul class="pagination justify-content-end">
+		              	  <div class="col-sm-10 align-self-center text-md-start">오늘의 출석인 수: 2명</div>
+		              	  <div  class="col-sm-2 text-lg-end">
+		              	  <!-- Basic Modal -->
+			              	  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#basicModal" >
+			                	출석하기
+			              	  </button>
+			              	 </div>
+			              </ul>
+			              </nav>
+			              <div class="modal fade" id="basicModal" tabindex="-1">
+			                <div class="modal-dialog">
+			                	
+			                  <div class="modal-content">
+			                    <div class="modal-body">
+			                    하루에 한번만 출석 가능
+			                     </div>
+			                    <div class="modal-footer">
+			                      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div><!-- End Basic Modal-->
+			              <!-- End 작성란 -->
+		              </div>
                 </div>
               </div>
             </div><!-- End 카드 -->
@@ -147,15 +149,9 @@
 	            <h5 class="card-title">&nbsp;&nbsp;&nbsp;출석명단</h5>
 	            <hr>
 	            <div class="col-sm-2">
-	              <table>
-		             <tr>
-			             <td><img src="assets/img/messages-2.jpg" alt="" class="rounded-circle w-75 p-3"></td>
-			             <td><h5 class="card-title">닉네임1</h5></td>
-		             </tr>
-	              </table>
+	            	<h5 class="card-title"><img src="image/rank_icon/3.gif" alt="랭크 아이콘">닉네임1</h5>
 	            </div>
-	              <div class="col-sm-1 align-self-center text-lg-end"><em class="rank2">2등</em></div>
-	              <div class="col-sm-6 align-self-center"><p class="text-justify ">ㅊㅊ</p></div>
+	              <div class="col-sm-7 align-self-center"><p class="text-justify ">ㅊㅊ</p></div>
 	              <div class="col-sm-3 align-self-center text-lg-end">
 	              <nav style="--bs-breadcrumb-divider: '|';">
 	                <ol class="breadcrumb">
@@ -169,23 +165,18 @@
 	            </div>
 	            <div class="card-body row">
 	            <div class="col-sm-2">
-	              <table>
-		             <tr>
-			             <td><img src="assets/img/messages-1.jpg" alt="" class="rounded-circle w-75 p-3"></td>
-			             <td><h5 class="card-title">닉네임2</h5></td>
-		             </tr>
-	              </table>
+	            	<h5 class="card-title"><img src="image/rank_icon/1.gif" alt="랭크 아이콘">닉네임3</h5>
 	            </div>
-	              <div class="col-sm-1 align-self-center text-lg-end"><em class="rank1">1등</em></div>
-	              <div class="col-sm-6 align-self-center"><p class="text-justify">ㅊㅊㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</p></div>
+	              <div class="col-sm-7 align-self-center"><p class="text-justify">ㅊㅊㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ</p></div>
 	              <div class="col-sm-3 align-self-center text-lg-end">
 	              <nav style="--bs-breadcrumb-divider: '|';">
 	                <ol class="breadcrumb">
-	                  <li class="breadcrumb-item">11 / 25</li>
-	                  <li class="breadcrumb-item">01 : 02</li>
-	                  <!-- <li class="breadcrumb-item active"><a href="#" hidden="" class="btn btn-warning">삭제</a></li> -->
+	                  <li class="breadcrumb-item">11 / 25</li><!-- MM/dd -->
+	                  <li class="breadcrumb-item">01 : 02</li><!-- hh : mm -->
+	                  <li class="breadcrumb-item active" hidden=""><a href="#" class="btn btn-warning">삭제</a></li>
 	                </ol>
 	              </nav>
+	              </div>
 	              <hr>
 	            </div>
 				<ul class="pagination justify-content-center">

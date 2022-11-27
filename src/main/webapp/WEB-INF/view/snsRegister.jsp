@@ -184,9 +184,9 @@
 	  var birthyear = naver_id_login.getProfileData('birthyear');
 	  var mobile = naver_id_login.getProfileData('mobile');
 	  $('#email_id').val(email);
-	  $('#email_id').setAttribute("readonly",true);
+	  $('#email_id').prop("readonly",true);
 	  $('#name').val(name);
-	  $('#name').setAttribute("readonly",true);
+	  $('#name').prop("readonly",true);
 	  if(mobile != null){
 		  $('#phone').val(mobile.replace("-",""));
 		}else{
