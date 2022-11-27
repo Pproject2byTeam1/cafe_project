@@ -13,6 +13,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
+import kr.or.kosa.service.CheckBoardService;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
@@ -303,7 +304,12 @@ public class FrontController extends HttpServlet {
          action = new ReplyDataWriteService();
          forward = action.execute(request, response);
          
-      }
+      } else if(urlcommand.equals("/checkBoard.do")) { //출석 게시판 이동
+          
+          action = new CheckBoardService();
+          forward = action.execute(request, response);
+          
+       }
    
       
       
