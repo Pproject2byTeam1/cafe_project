@@ -175,8 +175,9 @@
 						<c:forEach var="board" items="${list}" varStatus="status">
 							<tr>
 								<div>
+										<c:if test="${member.isAdmin == 'S' || member.isAdmin =='M' }">
 										<th scope="row"><input type="checkbox"></th>
-										
+										</c:if>
 										
 										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}'" style="cursor:pointer">
 										<span class="mt-4 parent"><h3>${board.title}</h3></span><br>
@@ -234,18 +235,19 @@
 			<div class="row">
 				<div class="col-md-8"></div>
 				<div class="col-md-2 text-right" >
-					<form action="regular_write.do?b_code=${b_code}" method="GET">
+					<form action="regular_write.do" method="get">
 					<input type="text" value="${b_code}" name="b_code" style="display: none;">
 					<input type="submit" class="btn btn-secondary float-right" value="글쓰기">
 					</form>
 				</div>
-				
+				<c:if test="${member.isAdmin == 'S' || member.isAdmin =='M' }">
 				<div class="col-md-2">
 					<form action="user_details.do" method="post">
 					<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
 					<input type="submit" class="btn btn-danger float-right" value="삭제">
 					</form>
 				</div>
+				</c:if>
 				
 				
 			</div>
@@ -257,7 +259,7 @@
 			
 	               <c:if test="${cpage > 1}">
 	                 <li class="page-item">
-	                   <a class="page-link" href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+	                   <a class="page-link" href="regular_list.do?b_code=${b_code}&cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
 	                 </li>
 	                  </c:if>
 	                  	
@@ -267,14 +269,14 @@
 								<li class="page-item"><a class="page-link active" >${i}</a></li>
 						</c:when>
 						<c:otherwise>
-	                 			<li class="page-item"><a class="page-link" href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+	                 			<li class="page-item"><a class="page-link" href="regular_list.do?b_code=${b_code}&cp=${i}&ps=${pagesize}">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
 	                  </c:forEach>
 	                  
 	                  <c:if test="${cpage < pagecount}">
 	                  	<li class="page-item">
-					<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
+					<a class="page-link" href="regular_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}">>></a>
 					</li>
 				</c:if>
 			</ul>

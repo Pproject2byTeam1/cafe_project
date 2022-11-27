@@ -84,7 +84,7 @@
 									<!-- 글 제목 -->
 									<form name="bbs" action="databoard_writeok.do" method="POST" enctype="multipart/form-data">
 									<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요." name="title" required>
-									<input id="b_code" name="b_code" value="${b_code}" type="hidden" />${b_code}
+									<input id="b_code" name="b_code" value="${b_code}" type="hidden" />
 									<p>
 									<hr>
 									

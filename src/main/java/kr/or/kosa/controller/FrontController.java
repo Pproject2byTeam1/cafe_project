@@ -17,7 +17,8 @@ import kr.or.kosa.service.CheckBoardService;
 import kr.or.kosa.service.DataBoardEditOkService;
 import kr.or.kosa.service.DataBoardEditService;
 import kr.or.kosa.service.DataBoardListService;
-import kr.or.kosa.service.DataWriteService;
+import kr.or.kosa.service.DataBoardWriteService;
+import kr.or.kosa.service.DataBoardWriteViewService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardDeleteService;
@@ -41,11 +42,13 @@ import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
+import kr.or.kosa.service.RegularBoardDeleteService;
 import kr.or.kosa.service.RegularBoardEditOkService;
 import kr.or.kosa.service.RegularBoardEditService;
+import kr.or.kosa.service.RegularBoardWriteOkService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
-import kr.or.kosa.service.Regular_Board_Write_Service;
+import kr.or.kosa.service.RegularBoardWriteService;
 import kr.or.kosa.service.ReplyDataWriteService;
 import kr.or.kosa.service.ReplyDataWriteViewService;
 import kr.or.kosa.service.ReplyRegularWriteService;
@@ -54,6 +57,7 @@ import kr.or.kosa.service.SnsCheckService;
 import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserDeleteService;
 import kr.or.kosa.service.UserInfoService;
+import kr.or.kosa.service.UserKick;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.UserUpdateService;
 import kr.or.kosa.service.User_Edit;
@@ -272,7 +276,7 @@ public class FrontController extends HttpServlet {
          
       }else if(urlcommand.equals("/regular_write.do")){ // 자유게시판 글쓰기
          
-         action = new Regular_Board_Write_Service();
+         action = new RegularBoardWriteService();
          forward = action.execute(request, response);
    
       }else if(urlcommand.equals("/marketboard_list.do")){ // 거래 게시판 리스트
@@ -300,7 +304,7 @@ public class FrontController extends HttpServlet {
          action = new MarketBoardWriteViewService();
          forward = action.execute(request, response);
          
-      }else if(urlcommand.equals("/data_list.do")){ // 자료 게시판 목록보기
+      }else if(urlcommand.equals("/databoard_read.do")){ // 자료 게시판 목록보기
          
          action = new Data_Board_Post_Service();
          forward = action.execute(request, response);
@@ -310,12 +314,17 @@ public class FrontController extends HttpServlet {
          action = new DeleteOkService();
            forward = action.execute(request, response);
          
-      }else if(urlcommand.equals("/data_write.do")) {// 자료 게시판 작성
-         
-         action = new DataWriteService();
-           forward = action.execute(request, response);
-         
-      } else if(urlcommand.equals("/data_rewriteview.do")) { //자료 게시판 답글 작성 페이지 이동
+      }else if(urlcommand.equals("/databoard_write.do")) {// 자료 게시판 작성페이지 가기
+			
+			action = new DataBoardWriteViewService();
+	        forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/databoard_writeok.do")) {// 자료 게시판 작성하기
+			
+			action = new DataBoardWriteService();
+	        forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/databoard_rewrite.do")) { //자료 게시판 답글 작성 페이지 이동
          
          action = new ReplyDataWriteViewService();
          forward = action.execute(request, response);
@@ -334,13 +343,36 @@ public class FrontController extends HttpServlet {
 			
 			action = new DataBoardEditOkService();
 			forward = action.execute(request, response);
+		}else if(urlcommand.equals("/databoard_list.do")) { //자료 게시판 목록
 			
 		} else if(urlcommand.equals("/checkBoard.do")) { //출석 게시판 이동
           
           action = new CheckBoardService();
           forward = action.execute(request, response);
           
-       }
+       }else if(urlcommand.equals("/regularwriteok.do")){ // 자유게시판 글쓰기
+           
+           action = new RegularBoardWriteOkService();
+           forward = action.execute(request, response);
+     
+        }else if(urlcommand.equals("/userkick.do")){ // 자유게시판 글쓰기
+            
+            action = new UserKick();
+            forward = action.execute(request, response);
+      
+         }else if(urlcommand.equals("/windowclose.do")) { //게시판 글 작성
+ 			
+ 			forward = new ActionForward();
+ 		  	forward.setRedirect(false);
+ 		  	forward.setPath("/WEB-INF/view/windowClose.jsp");
+ 			
+ 		}else if(urlcommand.equals("/regulardelete.do")){ // 자유게시판 글쓰기
+            
+            action = new RegularBoardDeleteService();
+            forward = action.execute(request, response);
+      
+         }
+   
    
       
       

@@ -31,8 +31,8 @@ public class DeleteOkService implements Action {
 	       DataBoardDao databoard = new DataBoardDao();
 	       int b_code  = Integer.parseInt(request.getParameter("b_code"));
 	
-	       int row =0;
-			//int row =databoard.deleteDataBoard(idx);
+	      // int row =0;
+			int row =databoard.deleteDataBoard(idx);
 			  
 	         String msg="";
 	         String url="";

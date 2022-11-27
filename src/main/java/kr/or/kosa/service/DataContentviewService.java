@@ -26,6 +26,9 @@ public class DataContentviewService implements Action {
 		try {
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			String idx = request.getParameter("idx");
+			int depth = Integer.parseInt(request.getParameter("depth"));
+			int step = Integer.parseInt(request.getParameter("step"));
+		
 			// 사이드바
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();

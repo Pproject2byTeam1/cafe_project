@@ -99,12 +99,9 @@ public class Board_Dao {
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "select * "
-						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
-							+ "from board b join regular_board d "
-							+ "on b.idx = d.idx "
-							+ "where b_code=? "
-							+ "order by refer desc, step desc) where rn <= ? and rn >= ? ";
+			String sql = "select * from (select * from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
+					+ "from board b join regular_board d on b.idx = d.idx order by b_idx desc) "
+					+ "where b_code=? and rn <= ?) where rn >=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
@@ -314,7 +311,7 @@ public class Board_Dao {
 				System.out.println(e2.getMessage());
 			}
 		}
-		
+		System.out.println("데이터 보드 카운트"+totalcount);
 		return totalcount;
 	}
 	

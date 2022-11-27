@@ -18,17 +18,27 @@ public class User_Edit implements Action {
 			String id = request.getParameter("id");
 			String password = request.getParameter("password");
 			String nick = request.getParameter("nick");
+			String isAdmin = request.getParameter("isAdmin");
 			int point = Integer.parseInt(request.getParameter("point"));
 			
 			UserDao dao = new UserDao();
-			dao.editSettingUser(id, password, nick, point);
+			dao.editSettingUser(id, password, nick, isAdmin, point);
 			
 			
 			request.setAttribute("id", id);
 			
+			
+			
+			String board_msg = "수정되었습니다.";
+        	String board_url = "/WebCafe_Project/windowclose.do";
+			
+			request.setAttribute("board_msg", board_msg);
+			request.setAttribute("board_url", board_url);
+        	
+			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("user_details.do");
+		  	forward.setPath("/WEB-INF/view/redirect.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

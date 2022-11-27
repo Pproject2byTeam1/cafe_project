@@ -15,7 +15,7 @@ import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
 
-public class Regular_Board_Write_Service implements Action {
+public class RegularBoardWriteService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -50,7 +50,6 @@ public class Regular_Board_Write_Service implements Action {
 	        	 
 	        	request.setAttribute("b_code", b_code); 
 	        	url="/WEB-INF/view/regularboard_write.jsp";
-	        	System.out.println("레귤러 라이트까진 탐");
 	         }
 	 			
  		

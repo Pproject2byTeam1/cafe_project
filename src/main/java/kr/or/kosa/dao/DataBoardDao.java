@@ -3,9 +3,7 @@ package kr.or.kosa.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.naming.Context;
@@ -13,12 +11,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.oreilly.servlet.MultipartRequest;
-
 import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.DataBoard;
-import kr.or.kosa.dto.MarketBoard;
 
 	public class DataBoardDao {
 	   DataSource ds = null;
@@ -37,7 +31,7 @@ import kr.or.kosa.dto.MarketBoard;
 		try {
 			conn = ds.getConnection();
 			String sql = "select * "
-						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
+						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.ori_name, d.refer, d.depth, d.step "
 							+ "from board b join data_board d "
 							+ "on b.idx = d.idx "
 							+ "where b_code=? "
@@ -66,7 +60,7 @@ import kr.or.kosa.dto.MarketBoard;
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
-				
+				board.setOri_name(rs.getString("ori_name"));
 				
 				boardlist.add(board);
 			}
@@ -121,6 +115,12 @@ import kr.or.kosa.dto.MarketBoard;
             board.setEmail_id(rs.getString("email_id"));
             board.setOri_name(rs.getString("ori_name"));
             board.setSave_name(rs.getString("save_name"));
+            
+            //계층형
+            int refer = rs.getInt("refer");
+            int step =rs.getInt("step");
+        
+            
             board.setVolume(rs.getInt("volume"));
             board.setRefer(rs.getInt("refer"));
             board.setDepth(rs.getInt("depth"));
@@ -659,6 +659,86 @@ import kr.or.kosa.dto.MarketBoard;
   			return row;
   		}
   		
-    
-   
+    //대댓글
+   public int reWriteOk(DataBoard board) {
+	
+	   
+		//refer , step , depth 설정을 하려면 기존 정보(read 글)
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	   
+	   int result =0;
+	   try {
+		   conn = ds.getConnection();
+			
+			int idx = board.getIdx(); 
+		   // idx,title, nick ,content,email_id ,b_code
+			//b_code ori_name, save_name, volume refer
+	
+		   
+		   //1.현제 내가 읽은 글의 refer, depth ,step
+			 String refer_depth_step_sal="select refer, depth ,step from data_baord where idx = ?";
+			 
+			 //step업데이트
+			 String step_update_sql ="update data_board set step= step+1 where step  > ? and refer =? ";
+			 
+		   //대댓글 
+		String  rewrite_sql= "INSERT ALL INTO board (idx, title, nick, content, email_id, b_code) "
+	            + "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) INTO data_board (b_idx, idx, ori_name, save_name, volume, refer,depth,step) " 
+	            + "VALUES (DATA_IDX_SEQ.nextval, IDX_SEQ.currval, ?, ?, ?, ?,?,?) select * from dual";
+	   
+				pstmt = conn.prepareStatement(refer_depth_step_sal);
+				pstmt.setInt(1, idx);
+				rs = pstmt.executeQuery();	
+				if(rs.next()) { //데이터가 있다면 ... 원본글의  refer , step , depth 존재
+					int refer = rs.getInt("refer");
+					int step = rs.getInt("step");
+					int depth = rs.getInt("depth");
+					
+					pstmt = conn.prepareStatement(step_update_sql); //컴파일
+					//기존 step + 1 >> update 구문 실행
+					pstmt.setInt(1, step);
+					pstmt.setInt(2, refer);
+					pstmt.executeUpdate();
+
+					//filename,filesize,refer,depth,step
+					pstmt = conn.prepareStatement(rewrite_sql); //컴파일
+					pstmt.setString(1, board.getTitle());
+					pstmt.setString(2, board.getNick());
+					pstmt.setString(3, board.getContent());
+					pstmt.setString(4, board.getEmail_id());
+					pstmt.setInt(5, board.getB_code());
+					pstmt.setString(6, board.getOri_name());
+					pstmt.setString(7, board.getSave_name());
+					pstmt.setInt(8, board.getVolume());
+					
+					pstmt.setInt(9, refer);
+					pstmt.setInt(10, depth+1);
+					pstmt.setInt(11, step+1);
+					
+				
+					int row = pstmt.executeUpdate();
+					if(row > 0) {
+						result = row;
+					}else {
+						result = -1;
+					}
+
+				}
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					pstmt.close();
+					rs.close();
+					conn.close();//반환
+				}catch (Exception e) {
+					
+				}
+			}
+			
+			return result;
+   }
 }
