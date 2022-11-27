@@ -142,7 +142,7 @@ public class Board_Dao {
 				rs.close();
 				conn.close();//반환
 			} catch (Exception e2) {
-				
+				System.out.println(e2.getMessage());
 			}
 		}
 		
