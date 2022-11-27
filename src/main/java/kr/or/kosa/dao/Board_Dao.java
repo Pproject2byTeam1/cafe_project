@@ -314,7 +314,7 @@ public class Board_Dao {
 				System.out.println(e2.getMessage());
 			}
 		}
-		
+		System.out.println("데이터 보드 카운트"+totalcount);
 		return totalcount;
 	}
 	

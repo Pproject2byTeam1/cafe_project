@@ -16,7 +16,8 @@ import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.DataBoardEditOkService;
 import kr.or.kosa.service.DataBoardEditService;
 import kr.or.kosa.service.DataBoardListService;
-import kr.or.kosa.service.DataWriteService;
+import kr.or.kosa.service.DataBoardWriteService;
+import kr.or.kosa.service.DataBoardWriteViewService;
 import kr.or.kosa.service.Data_Board_Post_Service;
 import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardWriteService;
@@ -269,7 +270,7 @@ public class FrontController extends HttpServlet {
          action = new MarketBoardWriteViewService();
          forward = action.execute(request, response);
          
-      }else if(urlcommand.equals("/data_list.do")){ // 자료 게시판 목록보기
+      }else if(urlcommand.equals("/databoard_read.do")){ // 자료 게시판 목록보기
          
          action = new Data_Board_Post_Service();
          forward = action.execute(request, response);
@@ -279,12 +280,17 @@ public class FrontController extends HttpServlet {
          action = new DeleteOkService();
            forward = action.execute(request, response);
          
-      }else if(urlcommand.equals("/data_write.do")) {// 자료 게시판 작성
-         
-         action = new DataWriteService();
-           forward = action.execute(request, response);
-         
-      } else if(urlcommand.equals("/data_rewriteview.do")) { //자료 게시판 답글 작성 페이지 이동
+      }else if(urlcommand.equals("/databoard_write.do")) {// 자료 게시판 작성페이지 가기
+			
+			action = new DataBoardWriteViewService();
+	        forward = action.execute(request, response);
+			
+		}else if(urlcommand.equals("/databoard_writeok.do")) {// 자료 게시판 작성하기
+			
+			action = new DataBoardWriteService();
+	        forward = action.execute(request, response);
+			
+		} else if(urlcommand.equals("/databoard_rewrite.do")) { //자료 게시판 답글 작성 페이지 이동
          
          action = new ReplyDataWriteViewService();
          forward = action.execute(request, response);
@@ -301,10 +307,15 @@ public class FrontController extends HttpServlet {
 			
 		} else if(urlcommand.equals("/databoard_editok.do")) { //자료 게시판 수정
 			
+			action = new DataBoardEditOkService();
+			forward = action.execute(request, response);
+		}else if(urlcommand.equals("/databoard_list.do")) { //자료 게시판 목록
+			
 			forward = action.execute(request, response);
 			
-			action = new DataBoardEditOkService();
+			action = new DataBoardListService();
 		}
+   
    
       
       
