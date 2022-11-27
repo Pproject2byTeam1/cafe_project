@@ -175,8 +175,9 @@
 						<c:forEach var="board" items="${list}" varStatus="status">
 							<tr>
 								<div>
+										<c:if test="${member.isAdmin == 'S' || member.isAdmin =='M' }">
 										<th scope="row"><input type="checkbox"></th>
-										
+										</c:if>
 										
 										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}'" style="cursor:pointer">
 										<span class="mt-4 parent"><h3>${board.title}</h3></span><br>
@@ -239,13 +240,14 @@
 					<input type="submit" class="btn btn-secondary float-right" value="글쓰기">
 					</form>
 				</div>
-				
+				<c:if test="${member.isAdmin == 'S' || member.isAdmin =='M' }">
 				<div class="col-md-2">
 					<form action="user_details.do" method="post">
 					<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
 					<input type="submit" class="btn btn-danger float-right" value="삭제">
 					</form>
 				</div>
+				</c:if>
 				
 				
 			</div>

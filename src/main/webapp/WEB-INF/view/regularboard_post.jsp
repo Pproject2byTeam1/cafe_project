@@ -404,7 +404,7 @@
 	                                      	 </form>
 	                                   	
 	                                   	</div>
-	                                   	
+	                                   	<c:if test="${member.email_id == board.email_id}">
                                    		<div class="col-md-1">
                                 			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
 	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
@@ -412,8 +412,8 @@
 	                                          
 	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
 	                                       </form>
-	                                   	
 	                                   	</div>
+	                                   	</c:if>
 	                                   	
                                    		<div class="col-md-1">
                                    			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록">
