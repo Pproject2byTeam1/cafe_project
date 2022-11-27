@@ -13,6 +13,9 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.Calender_Board_List_Service;
+import kr.or.kosa.service.CheckBoardService;
+import kr.or.kosa.service.DataBoardEditOkService;
+import kr.or.kosa.service.DataBoardEditService;
 import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataWriteService;
 import kr.or.kosa.service.Data_Board_Post_Service;
@@ -329,11 +332,10 @@ public class FrontController extends HttpServlet {
 			
 		} else if(urlcommand.equals("/databoard_editok.do")) { //자료 게시판 수정
 			
+			action = new DataBoardEditOkService();
 			forward = action.execute(request, response);
 			
-			action = new DataBoardEditOkService();
-		}
-      } else if(urlcommand.equals("/checkBoard.do")) { //출석 게시판 이동
+		} else if(urlcommand.equals("/checkBoard.do")) { //출석 게시판 이동
           
           action = new CheckBoardService();
           forward = action.execute(request, response);
