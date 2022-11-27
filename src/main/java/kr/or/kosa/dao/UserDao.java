@@ -591,4 +591,34 @@ public class UserDao {
 			}
 			return row;//2가 나와야 정상
 		}
+		
+		//특정 유저 삭제
+		public int deleteUser(String id) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "delete from member where email_id=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				
+				row = pstmt.executeUpdate();
+				
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
+		}
 }

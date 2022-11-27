@@ -45,6 +45,7 @@ import kr.or.kosa.service.ReplyRegularWriteService;
 import kr.or.kosa.service.ReplyRegularWriteViewService;
 import kr.or.kosa.service.SnsCheckService;
 import kr.or.kosa.service.UserActivityService;
+import kr.or.kosa.service.UserDeleteService;
 import kr.or.kosa.service.UserInfoService;
 import kr.or.kosa.service.UserListService;
 import kr.or.kosa.service.UserUpdateService;
@@ -107,7 +108,12 @@ public class FrontController extends HttpServlet {
          action = new Logout_Service();
          forward = action.execute(request, response);
          
-      } else if(urlcommand.equals("/user_list.do")) { //유저 정보들 보기
+      } else if(urlcommand.equals("/deleteUser.do")) { //탈퇴
+          
+          action = new UserDeleteService();
+          forward = action.execute(request, response);
+          
+       } else if(urlcommand.equals("/user_list.do")) { //유저 정보들 보기
          
          action = new UserListService();
          forward = action.execute(request, response);

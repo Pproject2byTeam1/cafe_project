@@ -87,12 +87,11 @@
 										<span class="input-group-text">
 											이메일
 										</span> 
-										<input type="email" class="form-control" name="email_id" id="email_id" readonly="readonly">
+										<input type="email" class="form-control" name="email_id" id="email_id" >
 									</div>
 									<div class="input-group mb-3">
 										<span class="input-group-text">이름</span>
-										<input type="text" class="form-control"
-											name="name" id="name" readonly="readonly">
+										<input type="text" class="form-control" name="name" id="name">
 									</div>
 									<div class="input-group mb-3">
 				                     <span class="input-group-text">비밀번호</span>
@@ -185,7 +184,9 @@
 	  var birthyear = naver_id_login.getProfileData('birthyear');
 	  var mobile = naver_id_login.getProfileData('mobile');
 	  $('#email_id').val(email);
+	  $('#email_id').setAttribute("readonly",true);
 	  $('#name').val(name);
+	  $('#name').setAttribute("readonly",true);
 	  if(mobile != null){
 		  $('#phone').val(mobile.replace("-",""));
 		}else{
