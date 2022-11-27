@@ -257,7 +257,7 @@
 			
 	               <c:if test="${cpage > 1}">
 	                 <li class="page-item">
-	                   <a class="page-link" href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+	                   <a class="page-link" href="regular_list.do?b_code=${b_code}&cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
 	                 </li>
 	                  </c:if>
 	                  	
@@ -267,14 +267,14 @@
 								<li class="page-item"><a class="page-link active" >${i}</a></li>
 						</c:when>
 						<c:otherwise>
-	                 			<li class="page-item"><a class="page-link" href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+	                 			<li class="page-item"><a class="page-link" href="regular_list.do?b_code=${b_code}&cp=${i}&ps=${pagesize}">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
 	                  </c:forEach>
 	                  
 	                  <c:if test="${cpage < pagecount}">
 	                  	<li class="page-item">
-					<a class="page-link" href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a>
+					<a class="page-link" href="regular_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}">>></a>
 					</li>
 				</c:if>
 			</ul>

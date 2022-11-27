@@ -40,7 +40,8 @@ public class RegularBoardWriteOkService implements Action {
  			String title = request.getParameter("title");
  			String content = request.getParameter("content");
  			
-
+ 			
+ 			System.out.println(content + "아무말");
  			// 로그인 안하거나 풀렸으면 로그인 페이지로
 			if (user == null) {
 
@@ -52,7 +53,17 @@ public class RegularBoardWriteOkService implements Action {
 	              
 	            url="/WEB-INF/view/redirect.jsp";
 	           
-	         }else {
+	         } else if (content.trim().equals("")) {
+	        	 
+	        	String board_msg = "내용이 없어 취소되었습니다.";
+	            String board_url = "/WebCafe_Project/regular_list.do?b_code="+b_code;
+	              
+	            request.setAttribute("board_msg", board_msg);
+	            request.setAttribute("board_url", board_url);
+	              
+	            url="/WEB-INF/view/redirect.jsp";
+	        	 
+	         } else {
 	        	 
 	        	Regular_Board_Dao rdao = new Regular_Board_Dao();
 	        	Regular_Board dto = new Regular_Board();

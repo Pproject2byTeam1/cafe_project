@@ -94,9 +94,7 @@
                   
                   <div class="park-card p-4">
                      <div class="park-card-body row">
-                        <textarea name="content" placeholder="작성해주세요">
-                        
-                        </textarea>
+                        <textarea name="content" placeholder="작성해주세요"> </textarea>
                      </div>
                   </div>
                </div>
