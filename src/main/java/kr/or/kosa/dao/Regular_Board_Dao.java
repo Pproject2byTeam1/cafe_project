@@ -226,25 +226,51 @@ public class Regular_Board_Dao {
 			return refer_max;
 		}
 	
-	//자유 게시판 특정 글 삭제
-	public int deleteRegualr_Board(int idx) {
+
+	
+	public int deleteRegualr_Board(int idx, String email_id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		int row = 0;
 		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "delete from Regular_Board where idx=?";
+			conn.setAutoCommit(false);
+			
+			String sql = "delete from regular_board where idx=?";
 			pstmt = conn.prepareStatement(sql);
-			
 			pstmt.setInt(1, idx);
-			
 			row = pstmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
+			if(row <= 0) {
+				throw new Exception("regular_board 삭제 실패");
+			}
+			
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count - 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setString(1, email_id);
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("사용자 세부사항 수정 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {

@@ -41,6 +41,7 @@ import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
+import kr.or.kosa.service.RegularBoardDeleteService;
 import kr.or.kosa.service.RegularBoardEditOkService;
 import kr.or.kosa.service.RegularBoardEditService;
 import kr.or.kosa.service.RegularBoardWriteOkService;
@@ -358,7 +359,12 @@ public class FrontController extends HttpServlet {
  		  	forward.setRedirect(false);
  		  	forward.setPath("/WEB-INF/view/windowClose.jsp");
  			
- 		}
+ 		}else if(urlcommand.equals("/regulardelete.do")){ // 자유게시판 글쓰기
+            
+            action = new RegularBoardDeleteService();
+            forward = action.execute(request, response);
+      
+         }
    
       
       
