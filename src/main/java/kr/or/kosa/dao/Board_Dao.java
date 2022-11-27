@@ -167,7 +167,7 @@ public class Board_Dao {
 						+ "(select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.email_id, b.b_code, i.b_idx, i.img_name "
 						+ "from Board b join img_board i "
 						+ "on b.idx = i.idx "
-						+ "where b_code=?) "
+						+ "where b_code=? order by rn desc) "
 						+ "where rn <= ? and rn >= ?";
 			pstmt = conn.prepareStatement(sql);
 			

@@ -31,6 +31,7 @@
   	<!-- Template Main CSS File -->
   	<link href="assets/css/style.css" rel="stylesheet">
   	<link href="assets/css/calendar.css" rel="stylesheet">
+  	<link href="assets/css/comments.css" rel="stylesheet">
   	
   	 <!--fullcalendar css-->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js"></script>
@@ -251,6 +252,11 @@
 		}
   		
   		loadlist();
+  		
+  		/* 댓글 시작 */
+  		
+  		
+  		/* 댓글 끝 */
   	});
   	
   		
@@ -736,18 +742,108 @@
 
 									</div>
 								</div>
+							</div>
 
-								<!-- 댓글 -->
-								<div class="card">
-									<div class="card-body row ms-2 mt-2">
-										<h5 class="card-title">댓글</h5>
-										<div id="comment"></div>
+
+							<!-- 댓글 -->
+							
+							<div class="row mx-1">
+
+								<section class="section dashboard">
+									<!-- columns -->
+
+									<!-- 댓글 카드 섹션 -->
+									<div class=" ccard">
+										<div class="comment-write">
+											<h5 class="card-title">댓글</h5>
+
+											<!-- 작성란 -->
+											<div class="row">
+												<div class="col-9 form-floating">
+													<textarea id="replycontent" class="form-control"></textarea>
+													<label for="floatingTextarea">댓글을 작성해 주세요</label> <input
+														id="idx" value="${imgboard.idx}" type="hidden" />
+												</div>
+												<div class="col-3">
+													<button type="button" id="replywritebtn"
+														class="btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>
+												</div>
+											</div>
+
+											<!-- End 작성란 -->
+										</div>
+									</div>
+
+									<!-- 댓글 목록 카드 섹션 시작 -->
+
+									<div class="ccard" id="reply">
+										<c:forEach var="comments" items="${comments}">
+											<c:if test="${comments.depth <= 0}">
+												<div class="comment-card">
+													<div class="comment-box">
+														<div class="row">
+															<div class="col">
+																<h5 class="card-title" id='replynick'>
+																	<img src="image/rank_icon/1.gif" alt="Profile"
+																		class="rounded-circle">${comments.nick}
+																</h5>
+															</div>
+															<div id='replydate' class="col comment-date">${comments.w_date}</div>
+														</div>
+														<h6 class="card-text" id='replycontent'>${comments.content}</h6>
+														<h6></h6>
+
+														<div align="right" class="actions">
+															<input id="co_idx" value="${comments.co_idx}"
+																type="hidden" /> <input id="idx"
+																value="${comments.idx}" type="hidden" /> <input
+																id="depth" value="${comments.depth}" type="hidden" /> <input
+																id="step" value="${comments.step}" type="hidden" />
+															<button type="button" id='replyreplywrite'
+																class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
+															<c:if test='${member.email_id eq comments.email_id }'>
+																<button type="button" id="replydel"
+																	class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+															</c:if>
+
+														</div>
+													</div>
+												</div>
+											</c:if>
+											<c:if test="${comments.depth > 0}">
+												<div class="Recomment-box">
+													<div class="row">
+														<div class="col">
+															<h5 class="card-title">
+																<i class="bi bi-arrow-return-right"></i> <img
+																	src="image/rank_icon/1.gif" alt="Profile"
+																	class="rounded-circle"> ${comments.nick}
+															</h5>
+														</div>
+														<div class="col comment-date">${comments.w_date}</div>
+													</div>
+													<h6 class="Recomment-text">${comments.content}</h6>
+													<h6></h6>
+
+													<div align="right" class="actions">
+														<c:if test='${member.email_id eq comments.email_id }'>
+															<input id="co_idx2" value="${comments.co_idx}"
+																type="hidden" />
+															<button type="button" id="replydel2"
+																class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+														</c:if>
+													</div>
+												</div>
+											</c:if>
+										</c:forEach>
+
+										<!-- 댓글 목록 카드 섹션 끝 -->
 
 									</div>
-								</div>
-								<!-- 댓글 끝 -->
-
+								</section>
 							</div>
+
+
 						</div>
 					</div>
 				</div>
