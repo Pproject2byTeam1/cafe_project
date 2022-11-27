@@ -86,20 +86,22 @@ public class UserDao {
 	}
 	
 	//특정 유저 단순정보 조회
-	public User selectUserById(String userid) {
+	public UserDetails selectUserById(String userid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		User user = null;
+		UserDetails user = null;
 		
 		try {
 			conn = ds.getConnection(); //dbcp 연결객체 얻기
-			String sql="select email_id, password, name, nick, to_char(birth, 'yyyyMMdd') as birth, point, isadmin, rank from member where email_id = ?";
+			String sql="select m.email_id, m.password, m.name, m.nick, to_char(m.birth, 'yyyyMMdd') as birth, m.point, m.isadmin, m.rank, ud.w_count, ud.re_count "
+						+ "from member m join user_details ud "
+						+ "on m.email_id = ud.email_id where m.email_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				user = new User();
+				user = new UserDetails();
 
 				user.setEmail_id(rs.getString("email_id"));
 				user.setPassword(rs.getString("password"));
@@ -109,6 +111,8 @@ public class UserDao {
 				user.setPoint(rs.getInt("point"));
 				user.setIsAdmin(rs.getString("isadmin"));
 				user.setRank(rs.getInt("rank"));
+				user.setW_count(rs.getInt("w_count"));
+				user.setRe_count(rs.getInt("re_count"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -195,11 +195,14 @@ public class Img_Board_Dao {
 	public int insertImg_Board(Img_Board img_board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		int row = 0;
 		
 		try {
 			
 			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
 			String sql = "INSERT ALL "
 						+ "INTO board (idx, title, nick, content, email_id, b_code) "
 						+ "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) "
@@ -218,10 +221,29 @@ public class Img_Board_Dao {
 			
 			row = pstmt.executeUpdate();
 			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setString(1, img_board.getEmail_id());
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("img_board 삽입 실패");
+			}else {
+				conn.commit();
+			}
+			
+		}  catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
@@ -236,21 +258,46 @@ public class Img_Board_Dao {
 	public int updateImg_Board(Img_Board img_board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		int row = 0;
 		
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "update Img_Board set img_name where idx=?";
+			conn.setAutoCommit(false);
+			
+			String sql = "update board set title=?, content=? where idx=?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, img_board.getTitle());
+			pstmt.setString(2, img_board.getContent());
+			pstmt.setInt(3, img_board.getIdx());
 			
-			pstmt.setString(1, img_board.getImg_name());
-			pstmt.setInt(2, img_board.getIdx());
+			row = pstmt.executeUpdate();
 			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			String sql2 = "update img_board set img_name=? where idx=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setString(1, img_board.getImg_name());
+			pstmt2.setInt(2, img_board.getIdx());
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("img_board 수정 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
@@ -262,24 +309,49 @@ public class Img_Board_Dao {
 	}
 	
 	//이미지 게시판 특정 글 삭제
-	public int deleteImg_Board(int idx) {
+	public int deleteImg_Board(int idx, String email_id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		int row = 0;
 		
 		try {
 			
 			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
 			String sql = "delete from Img_Board where idx=?";
 			pstmt = conn.prepareStatement(sql);
-			
 			pstmt.setInt(1, idx);
-			
 			row = pstmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
+			if(row <= 0) {
+				throw new Exception("imgboard 삭제 실패");
+			}
+			
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count - 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setString(1, email_id);
+			row = pstmt2.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("사용자 세부사항 수정 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {

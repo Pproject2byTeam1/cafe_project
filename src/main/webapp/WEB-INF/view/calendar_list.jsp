@@ -252,11 +252,6 @@
 		}
   		
   		loadlist();
-  		
-  		/* 댓글 시작 */
-  		
-  		
-  		/* 댓글 끝 */
   	});
   	
   		
@@ -310,6 +305,144 @@
   			//참석 여부
   			yes();
 
+  			/* 댓글시작 */
+  			list();
+  			
+  			$("#replywritebtn").click(function(){
+				const data = {"idx": idx, "content": $("#replycontent").val() };
+				
+				inser(data);
+				
+				$("#replycontent").val("");
+				
+			});
+  			/* 댓글 삭제 버튼 클릭 */
+			$(document).on('click', '#replydel', function(){
+				const tag = this.closest("div");
+				
+				const data2 = {"idx": $(tag).children("#co_idx").val()};
+				
+				console.log(data2);
+				
+				del(data2);
+				
+			});
+  			/* 대댓글 삭제 버튼 클릭 */
+			$(document).on('click', '#replydel2', function(){
+				const tag2 = this.closest("div");
+				
+				const data2 = {"idx": $(tag2).children("#co_idx2").val()};
+				
+				console.log(data2);
+				
+				del(data2);
+				
+			});
+  			
+			let replyreplytag = "";
+			
+			/* 대댓글 작성 버튼 클릭 */
+			$(document).on('click', '#replyreplywrite', function(){
+				let tag = this.closest("div");
+				replyreplytag = tag;
+				
+				html = '<div id="replyreplyreset" class="comment-write mb-2"><h5 class="card-title">대댓글</h5>';
+				html += '<div class="form-floating">';
+				html += '<textarea id="replyreplycontent" class="form-control"></textarea>';
+				html += '<label for="floatingTextarea">댓글을 작성해 주세요</label> <input value="${imgboard.idx}" type="hidden" />';
+				html += '</div>';
+				html += '<nav aria-label="Page navigation example">';
+				html += '<ul class="pagination justify-content-end"><div><br>';
+				html += '<button type="button" id="replyreplywritebtn" class="col btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>'
+				html += '<button type="button" id="replyreset" class="col btn btn-outline-secondary btn-sm rounded-pill">작성취소</button>';
+				html += '</div></ul></nav></div>';
+				
+				$(html).insertAfter(this.closest(".comment-card"));
+				
+			});
+			
+			/* 대댓글 작성 취소 */
+			$(document).on('click', '#replyreset', function(){
+				$("#replyreplyreset").remove();
+			});
+			
+			/* 대댓글 작성 */
+			$(document).on('click', '#replyreplywritebtn', function(){
+				
+				const data3 = {
+						"co_idx": $(replyreplytag).children("#co_idx").val(), 
+						"idx": $(replyreplytag).children("#idx").val(), 
+						"content": $("#replyreplycontent").val(),
+						"depth": $(replyreplytag).children("#depth").val(),
+						"step":  $(replyreplytag).children("#step").val()
+					};
+				
+				replyinser(data3);
+				
+			});
+  			
+  			/* 댓글 끝 */
+  		}
+  		
+  		/* 댓글 생성 */
+  		function inser(data){
+  			$.ajax({
+				url : "ReplyOk",
+				data : data,
+				dataType : "html",
+				success : function(data) {
+					
+					list();
+					swal(data);
+				}
+			});
+  		}
+  		/* 댓글 삭제 */
+  		function del(data2){
+			$.ajax(
+					{
+						url: "ReplyDeleteOk",
+						data: data2,
+						dataType: "html",
+						success: function(data){
+						
+							list();
+							swal(data);
+					}
+				}
+			);
+		}
+  		/* 댓글 목록 불러오기 */
+  		function list(){
+			const req2 = {"idx": idx};
+			
+				$.ajax(
+						{
+							url: "ReplyList",
+							data: req2,
+							dataType: "html",
+							success: function(responseText){
+							
+								$("#reply").empty();
+								$("#reply").append(responseText.trim());
+									
+						}
+					}
+				);
+		}
+  		/* 대댓글 작성 */
+  		function replyinser(data){
+  			
+  			$.ajax({
+				url : "ReplyReplyOk",
+				data : data,
+				dataType : "html",
+				success : function(data) {
+					
+					list();
+					swal(data);
+				}
+			});
   		}
   		
   		//그 일정에 대한 댓글 불러오기
