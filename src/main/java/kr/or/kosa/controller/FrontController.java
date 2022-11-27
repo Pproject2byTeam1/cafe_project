@@ -43,9 +43,10 @@ import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.RegularBoardEditOkService;
 import kr.or.kosa.service.RegularBoardEditService;
+import kr.or.kosa.service.RegularBoardWriteOkService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
-import kr.or.kosa.service.Regular_Board_Write_Service;
+import kr.or.kosa.service.RegularBoardWriteService;
 import kr.or.kosa.service.ReplyDataWriteService;
 import kr.or.kosa.service.ReplyDataWriteViewService;
 import kr.or.kosa.service.ReplyRegularWriteService;
@@ -272,7 +273,7 @@ public class FrontController extends HttpServlet {
          
       }else if(urlcommand.equals("/regular_write.do")){ // 자유게시판 글쓰기
          
-         action = new Regular_Board_Write_Service();
+         action = new RegularBoardWriteService();
          forward = action.execute(request, response);
    
       }else if(urlcommand.equals("/marketboard_list.do")){ // 거래 게시판 리스트
@@ -340,7 +341,12 @@ public class FrontController extends HttpServlet {
           action = new CheckBoardService();
           forward = action.execute(request, response);
           
-       }
+       }else if(urlcommand.equals("/regularwriteok.do")){ // 자유게시판 글쓰기
+           
+           action = new RegularBoardWriteOkService();
+           forward = action.execute(request, response);
+     
+        }
    
       
       

@@ -234,7 +234,7 @@
 			<div class="row">
 				<div class="col-md-8"></div>
 				<div class="col-md-2 text-right" >
-					<form action="regular_write.do?b_code=${b_code}" method="GET">
+					<form action="regular_write.do" method="get">
 					<input type="text" value="${b_code}" name="b_code" style="display: none;">
 					<input type="submit" class="btn btn-secondary float-right" value="글쓰기">
 					</form>

@@ -63,7 +63,7 @@
             <ol class="breadcrumb">
                <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
                <li class="breadcrumb-item"><a
-                  href="reguler_list.do?b_code=${b_code}">자유게시판</a></li>
+                  href="regular_list.do?b_code=${b_code}">자유게시판</a></li>
                <li class="breadcrumb-item active">글쓰기</li>
             </ol>
          </nav>
@@ -74,14 +74,14 @@
             <div class="col-1"></div>
 
 
-            <form name="bbs" action="regular_write.do" method="POST" enctype="multipart/form-data">
+            <form name="bbs" action="regularwriteok.do?b_code=${b_code}" method="POST" enctype="form-data">
                <div class="col-10">
                   <div class="park-card p-4">
                      <div class="park-card-body row">
                         <div class="md-3 row">
                            <label for="staticEmail" class="col-sm-2 col-form-label">Title :</label>
                            <div class="col-sm-8">
-                              <input type="text" class="form-control" id="title" name="title" value="">
+                              <input type="text" class="form-control" id="title" name="title" value="" placeholder="작성해주세요" autofocus required>
                            </div>
                            <div class="col-sm-2">
                               <button type="submit" id="btn" class="btn btn-primary">확인</button>
@@ -94,18 +94,13 @@
                   
                   <div class="park-card p-4">
                      <div class="park-card-body row">
-                        <textarea name="content"> 
-                              
-                              작성할곳
-                              
-                          </textarea>
+                        <textarea name="content" placeholder="작성해주세요">
+                        
+                        </textarea>
                      </div>
                   </div>
                </div>
-               
-                <input type="text" value="modify" name="todo" style="display: none;">
-				<input type="text" value="${member.email_id}" name="id" style="display: none;">
-				<input type="text" value="${member}" name="nick" style="display: none;">
+          
                
             </form>
          </div>
