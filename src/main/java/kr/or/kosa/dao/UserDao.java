@@ -428,7 +428,7 @@ public class UserDao {
 		}
 		
 		//특정 유저 관련 검증1
-		public int verificationUser1(String email_id, String col1) {
+		public int verificationUser1(String col1) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -437,11 +437,10 @@ public class UserDao {
 			try {
 				conn = ds.getConnection();
 				
-				String sql = "select count(*) cnt from Member where NICK = ? and email_id = ? ";
+				String sql = "select count(*) cnt from Member where NICK = ? ";
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, col1);
-				pstmt.setString(2, email_id);
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
 					row = rs.getInt(1);
@@ -568,13 +567,16 @@ public class UserDao {
 			try {
 				conn = ds.getConnection();
 				
-				String sql = "insert all into member(EMAIL_ID, NAME, NICK, BIRTH) VALUES (?,?,?,?)"
-						+ "into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL;";
-				
+				String sql = "insert all into member(EMAIL_ID, NAME, NICK, BIRTH) VALUES (?,?,?,?) into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL";
+				System.out.println(email_id + ", " + phone + ", " + name + ", " + nick + ", " + birth);
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, email_id);
 				pstmt.setString(2, name);
-				pstmt.setString(3, email_id);//초기 닉네임은 id와 동일
+				if(nick.equals("")) {//초기 닉네임은 받은게 없으면 id와 동일
+					pstmt.setString(3, email_id);
+				}else {
+					pstmt.setString(3, nick);
+				}
 				pstmt.setString(4, birth);
 				pstmt.setString(5, email_id);
 				pstmt.setString(6, birth);
@@ -592,5 +594,35 @@ public class UserDao {
 				}
 			}
 			return row;//2가 나와야 정상
+		}
+		
+		//특정 유저 삭제
+		public int deleteUser(String id) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int row = 0;
+			
+			try {
+				conn = ds.getConnection();
+				
+				String sql = "delete from member where email_id=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				
+				row = pstmt.executeUpdate();
+				
+				
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				try {
+					pstmt.close();
+					conn.close();//반환
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return row;
 		}
 }

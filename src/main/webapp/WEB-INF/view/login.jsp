@@ -12,6 +12,9 @@
 <meta content="" name="description">
 <meta content="" name="keywords">
 
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    
 <!-- content에 자신의 OAuth2.0 클라이언트ID를 넣습니다. -->
 <meta name ="google-signin-client_id" content="921928889538-s4valdhb19eee3o6h4hgeheq8i8q90qk.apps.googleusercontent.com">
 
@@ -106,10 +109,11 @@
 								<hr>
 								<a href="#"><img alt=""
 									src="image/login_img/google_login.png" class="w-100 p-3"></a>
-								<a id="naverIdLogin_loginButton" href="javascript:void(0)">
-								<img alt="" src="image/login_img/naver_login.png" class="w-100 p-3"></a>
+								<!-- 네이버 로그인 버튼 노출 영역 (근데 작다..)-->
+    							<div id="naver_id_login"></div>
 								<a href="#"><img alt=""
 									src="image/login_img/kakao_login.png" class="w-100 p-3"></a>
+									
 							</div>
 						</div>
 						<!-- End 회원가입 -->
@@ -155,14 +159,21 @@
 	<!-- Template Main JS File -->
 	<script src="assets/js/main.js"></script>
 	
-	<!-- 네이버 스크립트 -->
-<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <script type="text/javascript">
+        var naver_id_login = new naver_id_login("OGifRqdUtHJWY_oTLDrQ", "http://localhost:8090/WebCafe_Project/snsLogin.do");
+        var state = naver_id_login.getUniqState();
+        naver_id_login.setButton("green", 3, 40);
+        naver_id_login.setDomain("http://localhost:8090/WebCafe_Project/login_view.do");
+        naver_id_login.setState(state);
+        //naver_id_login.setPopup();
+        naver_id_login.init_naver_id_login();
+    </script>
+<!-- <script type="text/javascript">
 
 var naverLogin = new naver.LoginWithNaverId(
 		{
 			clientId: "OGifRqdUtHJWY_oTLDrQ", //내 애플리케이션 정보에 cliendId를 입력해줍니다.
-			callbackUrl: "http://localhost:8090/WebCafe_Project/login_view.do", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
+			callbackUrl: "http://localhost:8090/WebCafe_Project/snsLogin.do", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
 			isPopup: false,
 			callbackHandle: true
 		}
@@ -176,8 +187,8 @@ window.addEventListener('load', function () {
 			const email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
             if( email == undefined || email == null) {
 				alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
-				console.log(naverLogin.user);
-				naverLogin.reprompt();
+				//console.log(naverLogin.user);
+				//naverLogin.reprompt();
 				return;
 			}
 		} else {
@@ -202,7 +213,7 @@ function naverLogout() {
 		closePopUp();
 		}, 1000);
 }
-</script>
+</script> -->
 </body>
 
 </html>

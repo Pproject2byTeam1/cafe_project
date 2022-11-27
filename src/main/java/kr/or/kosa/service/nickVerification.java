@@ -18,16 +18,11 @@ public class nickVerification implements Action {
 		
 		try {
 			int row = 0;
-	        //유저정보 가져오기
-			HttpSession session = request.getSession();
-			User user2 = (User) session.getAttribute("member");
-			String userId = user2.getEmail_id();
-			
 			UserDao dao = new UserDao();
 			String nickname = (String) request.getParameter("nickname");
 			
 			//검증 실행
-			row = dao.verificationUser1(userId,nickname);
+			row = dao.verificationUser1(nickname);
 			System.out.println(row);
 			if(row>0) {
 				System.out.println("카운트가 됨");
@@ -40,7 +35,7 @@ public class nickVerification implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("verification.jsp");
+		  	forward.setPath("/WEB-INF/view/verification.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
