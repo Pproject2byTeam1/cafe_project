@@ -60,32 +60,39 @@ public class ImgBoardWriteService implements Action {
 				
 				String file1 = (String) filenames.nextElement();
 				String filename1 = multi.getFilesystemName(file1);
+				String type = multi.getContentType(file1);
 				
-				Img_Board_Dao imgdao = new Img_Board_Dao();
-				
-				Img_Board img = new Img_Board();
-				
-				img.setTitle(title);
-				img.setContent(content);
-				img.setB_code(b_code);
-				img.setEmail_id(user.getEmail_id());
-				img.setNick(user.getNick());
-				
-				if(filename1 == null) {
-					img.setImg_name("");
+				if(!type.equals("image/jpeg")) {
+					msg = "올바른 이미지를 선택하세요";
+					url = "/WebCafe_Project/imgboardWriteView.do?b_code=" + b_code;
 				}else {
-					img.setImg_name(filename1);
+					Img_Board_Dao imgdao = new Img_Board_Dao();
+					
+					Img_Board img = new Img_Board();
+					
+					img.setTitle(title);
+					img.setContent(content);
+					img.setB_code(b_code);
+					img.setEmail_id(user.getEmail_id());
+					img.setNick(user.getNick());
+					
+					if(filename1 == null) {
+						img.setImg_name("");
+					}else {
+						img.setImg_name(filename1);
+					}
+					
+					result = imgdao.insertImg_Board(img);
+					
+					if (result > 0) {
+						msg = "성공";
+						url = "/WebCafe_Project/img_board_list.do?b_code=" + b_code;
+					} else {
+						msg = "실패";
+						url = "/WebCafe_Project/img_board_list.do?b_code=" + b_code;
+					}
 				}
 				
-				result = imgdao.insertImg_Board(img);
-				
-				if (result > 0) {
-					msg = "성공";
-					url = "/WebCafe_Project/img_board_list.do?b_code=" + b_code;
-				} else {
-					msg = "실패";
-					url = "/WebCafe_Project/img_board_list.do?b_code=" + b_code;
-				}
 		    }
 			
 			request.setAttribute("board_msg", msg);

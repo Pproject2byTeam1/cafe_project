@@ -34,19 +34,27 @@ public class ReplyDeleteOk extends HttpServlet {
     		
     		HttpSession session = request.getSession();
 		    User user = (User) session.getAttribute("member");
-    		
-    		CommentsDao codao = new CommentsDao();
-    		
-    		int result = codao.deleteCommentByCo_idx(idx, user.getEmail_id());
-    		
-    		String msg = "";
-    		if(result > 0) {
-    			msg = "성공";
-    		}else {
-    			msg = "실패";
-    		}
-    		
-    		out.print(msg);
+		    
+		    String msg = "";
+		    
+		    if(user == null) {
+		    	
+		    	msg = "로그인이 필요한 기능입니다.";
+		    	
+		    }else {
+			    CommentsDao codao = new CommentsDao();
+	    		
+	    		int result = codao.deleteCommentByCo_idx(idx, user.getEmail_id());
+	    		
+	    		if(result > 0) {
+	    			msg = "성공";
+	    		}else {
+	    			msg = "실패";
+	    		}
+	    		
+		    }
+		    
+		    out.print(msg);
 			
 		} catch(Exception e) {
     		System.out.println(e.getMessage());

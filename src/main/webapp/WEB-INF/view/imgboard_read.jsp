@@ -156,8 +156,6 @@
 	  		
 	  		function replyinser(data){
 	  			
-	  			console.log(data);
-	  			
 	  			$.ajax({
 					url : "ReplyReplyOk",
 					data : data,
@@ -185,6 +183,18 @@
 				const tag = this.closest("div");
 				
 				const data2 = {"idx": $(tag).children("#co_idx").val()};
+				
+				console.log(data2);
+				
+				//del(data2);
+				
+			});
+			$(document).on('click', '#replydel2', function(){
+				const tag2 = this.closest("div");
+				
+				const data2 = {"idx": $(tag2).children("#co_idx2").val()};
+				
+				
 				del(data2);
 				
 			});
@@ -193,7 +203,7 @@
 			
 			/* 대댓글 버튼 클릭 */
 			$(document).on('click', '#replyreplywrite', function(){
-				tag = this.closest("div");
+				let tag = this.closest("div");
 				replyreplytag = tag;
 				
 				html = '<div id="replyreplyreset" class="comment-write mb-2"><h5 class="card-title">대댓글</h5>';
@@ -363,35 +373,61 @@
 
 							<div class="ccard" id="reply">
 								<c:forEach var="comments" items="${comments}">
-									<div class="comment-card">
-										<div class="comment-box">
+									<c:if test="${comments.depth <= 0}">
+										<div class="comment-card">
+											<div class="comment-box">
+												<div class="row">
+													<div class="col">
+														<h5 class="card-title" id='replynick'>
+															<img src="image/rank_icon/1.gif" alt="Profile"
+																class="rounded-circle">${comments.nick}
+														</h5>
+													</div>
+													<div id='replydate' class="col comment-date">${comments.w_date}</div>
+												</div>
+												<h6 class="card-text" id='replycontent'>${comments.content}</h6>
+												<h6></h6>
+
+												<div align="right" class="actions">
+													<input id="co_idx" value="${comments.co_idx}" type="hidden" />
+													<input id="idx" value="${comments.idx}" type="hidden" /> <input
+														id="depth" value="${comments.depth}" type="hidden" /> <input
+														id="step" value="${comments.step}" type="hidden" />
+													<button type="button" id='replyreplywrite'
+														class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
+													<c:if test='${member.email_id eq comments.email_id }'>
+														<button type="button" id="replydel"
+															class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+													</c:if>
+
+												</div>
+											</div>
+										</div>
+									</c:if>
+									<c:if test="${comments.depth > 0}">
+										<div class="Recomment-box">
 											<div class="row">
 												<div class="col">
-													<h5 class="card-title" id='replynick'>
-														<img src="image/rank_icon/1.gif" alt="Profile"
-															class="rounded-circle">${comments.nick}
+													<h5 class="card-title">
+														<i class="bi bi-arrow-return-right"></i> <img
+															src="image/rank_icon/1.gif" alt="Profile"
+															class="rounded-circle"> ${comments.nick}
 													</h5>
 												</div>
-												<div id='replydate' class="col comment-date">${comments.w_date}</div>
+												<div class="col comment-date">${comments.w_date}</div>
 											</div>
-											<h6 class="card-text" id='replycontent'>${comments.content}</h6>
+											<h6 class="Recomment-text">${comments.content}</h6>
 											<h6></h6>
 
 											<div align="right" class="actions">
-												<input id="co_idx" value="${comments.co_idx}" type="hidden" />
-												<input id="idx" value="${comments.idx}" type="hidden" />
-												<input id="depth" value="${comments.depth}" type="hidden" />
-												<input id="step" value="${comments.step}" type="hidden" />
-												<button type="button" id='replyreplywrite'
-													class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-												<c:if test='${member.email_id eq comments.email_id }'>
-													<button type="button" id="replydel"
-														class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-												</c:if>
-												
+											<c:if test='${member.email_id eq comments.email_id }'>
+												<input id="co_idx2" value="${comments.co_idx}" type="hidden" />
+												<button type="button" id="replydel2"
+													class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+											</c:if>
 											</div>
 										</div>
-									</div>
+									</c:if>
 								</c:forEach>
 
 								<!-- 댓글 목록 카드 섹션 끝 -->

@@ -86,7 +86,7 @@
 								<div class="mb-3 row">
 									<label for="staticEmail" class="col-2 col-form-label">Title : </label>
 									<div class="col-8">
-										<input type="text" class="form-control" id="title" name="title">
+										<input type="text" class="form-control" id="title" name="title" required>
 										<input id="b_code" name="b_code" value="${b_code}" type="hidden" />
 									</div>
 									<div class="col-2">
@@ -96,14 +96,14 @@
 								<div class="col-md-6">
 								</div>
 								<div class="col-md-12">
-									<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1">
+									<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" required>
 								</div>
 							</div>
 						</div>
 						
 						<div class="park-card p-4">
 							<div class="park-card-body row">
-								<textarea name="content"> 
+								<textarea name="content" required> 
         			 				글을 작성해주세요.
         						</textarea>
 							</div>
