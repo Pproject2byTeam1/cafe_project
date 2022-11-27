@@ -188,7 +188,7 @@ text-align: center;
                      <span>댓글</span>
                      </span>
                   </td>
-                  
+                  <input type="hideen" >
                   <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${yeslist}">
                      <span class="_1R-fi-">${yeslist}</span><br>
                      <span>추천</span>

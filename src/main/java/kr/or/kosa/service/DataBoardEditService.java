@@ -65,7 +65,7 @@ public class DataBoardEditService implements Action {
 	         } else {
 	        	 
 	        	String board_msg = "작성자가 다릅니다.";
-	            String board_url = "/WebCafe_Project/regular_post.do?b_code="+ b_code + "&idx=" + idx;
+	            String board_url = "/WebCafe_Project/databoard_read.do?b_code="+ b_code + "&idx=" + idx;
 	              
 	            request.setAttribute("board_msg", board_msg);
 	            request.setAttribute("board_url", board_url);
