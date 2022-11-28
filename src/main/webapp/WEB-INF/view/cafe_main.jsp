@@ -70,8 +70,224 @@
 		</div>
 		<!-- End Page Title -->
 
-		
+		<!-- Card with an image overlay -->
+          <div class="card">
+          <div class="embed-responsive">
+            <img src="image/sample/bulb.jpg" class="card-img-top" alt="...">
+          </div>
+            <div class="card-img-overlay">
+              <h5 class="card-title">대문 이름</h5>
+              <p class="card-text">설명란</p>
+            </div>
+          
+          </div><!-- End Card with an image overlay -->
+          
+   <section class="section dashboard"><!-- 대충 영역을 잡는 부분 -->
+      <div class="row">
+          
+          <!-- Left side columns -->
+        <div class="col-lg-12">
+          <div class="row">
 
+            <!-- Sales Card -->
+            <div class="col-lg-6">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">항목이름 <span>| 소제목</span></h5>
+
+                    <div class="ps-3">
+                      <table class="table table-hover table-sm datatable">
+                      	<thead>
+                      	<tr><th><span class="text-success pt-1 fw-bold">#</span></th><th><span class="text-success pt-1 fw-bold">항목 1</span></th><th><span class="text-success pt-1 fw-bold">항목 2</span></th><th><span class="text-success pt-1 fw-bold">항목 3</span></th><th><span class="text-success pt-1 fw-bold">항목 4</span></th></tr>
+                      	</thead>
+                      	<tbody>
+                      	<tr><th><span class="text-success pt-1 fw-bold">1</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tr><th><span class="text-success pt-1 fw-bold">2</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tr><th><span class="text-success pt-1 fw-bold">3</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	</tbody>
+                      </table>
+                    </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-lg-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">항목이름2 <span>| 소제 2</span></h5>
+
+                    <div class="ps-3">
+                    <table class="table table-hover table-sm datatable">
+                      	<thead>
+                      	<tr><th><span class="text-primary pt-1 fw-bold">#</span></th><th><span class="text-primary pt-1 fw-bold">항목 1</span></th><th><span class="text-primary pt-1 fw-bold">항목 2</span></th><th><span class="text-primary pt-1 fw-bold">항목 3</span></th></tr>
+                      	</thead>
+                      	<tbody>
+                      	<tr><th><span class="text-primary pt-1 fw-bold">1</span></th><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tr><th><span class="text-primary pt-1 fw-bold">2</span></th><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tr><th><span class="text-primary pt-1 fw-bold">3</span></th><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	</tbody>
+                      </table>
+                    </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xl-12">
+
+              <div class="card info-card customers-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">항목 3 <span>| 소제 3</span></h5>
+
+                    <div class="ps-3">
+                      <table class="table table-hover datatable">
+                      	<thead>
+                      	<tr><th><span class="text-danger pt-1 fw-bold">#</span></th><th><span class="text-danger pt-1 fw-bold">항목 1</span></th><th><span class="text-danger pt-1 fw-bold">항목 2</span></th><th><span class="text-danger pt-1 fw-bold">항목 3</span></th><th><span class="text-danger pt-1 fw-bold">항목 4</span></th><th><span class="text-danger pt-1 fw-bold">항목 5</span></th><th><span class="text-danger pt-1 fw-bold">항목 6</span></th><th><span class="text-danger pt-1 fw-bold">항목 7</span></th><th><span class="text-danger pt-1 fw-bold">항목 8</span></th><th><span class="text-danger pt-1 fw-bold">항목 9</span></th></tr>
+                      	</thead>
+                      	<tbody>
+                      	<tr><th><span class="text-danger pt-1 fw-bold">1</span></th><td>내ㅐㅐㅐㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내ㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tr><th><span class="text-danger pt-1 fw-bold">2</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tr><th><span class="text-danger pt-1 fw-bold">3</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tr><th><span class="text-danger pt-1 fw-bold">4</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tr><th><span class="text-danger pt-1 fw-bold">5</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	</tbody>
+                      </table>
+                    </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+
+            <!-- Reports -->
+            <div class="col-12">
+              <div class="card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Reports <span>/Today</span></h5>
+                  
+                  <div class="d-flex align-items-center  revenue-card">
+					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="ri-thumb-up-line"></i>
+                    </div>
+                    <div class="ps-3">
+                    <h3 class="pt-1 fw-bold">Best Text</h3>
+                    </div>
+                    <div class="ps-3">
+                    <h5 class="card-title">글 제목</h5>
+                    </div>
+                    <div class="ps-3">
+                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">스탠드</a><span> | 2022-03-18</span>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
+						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
+					</ul>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center sales-card">
+					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="ri-thumb-up-line"></i>
+                    </div>
+                    <div class="ps-3">
+                    <h3 class="pt-1 fw-bold">Another Text</h3>
+                    </div>
+                    <div class="ps-3">
+                    <h5 class="card-title">글 제목</h5>
+                    </div>
+                    <div class="ps-3">
+                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/4.gif" alt="아이콘">dddr2</a><span> | 2021-09-27</span>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
+						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
+					</ul>
+                    </div>
+                  </div>
+                  
+                  <!-- End Line Chart -->
+
+                </div>
+
+              </div>
+            </div><!-- End Reports -->
+
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+          </div>
+        </div><!-- End Left side columns -->
+	</div>
+	</section>
 	</main>
 	<!-- End #main -->
 
