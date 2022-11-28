@@ -91,15 +91,9 @@ public class MarketSearch extends HttpServlet {
 
 			List<MarketBoard> list = market_dao.searchMarket(b_code, cpage, pagesize, sold, search);
 
-			// 전체 목록 가져오기
-			/*
-			 * int pagersize=10; ThePager pager = new
-			 * ThePager(totalboardcount,cpage,pagesize,pagersize,"marketboard_list.do");
-			 */
-			JSONObject yescountlist = new JSONObject ();
-			JSONObject commentcountlist = new JSONObject ();
-			JSONObject ranklist = new JSONObject ();
-			JSONObject json = new JSONObject();
+			List<Integer> yescountlist = new ArrayList<Integer>();
+			List<Integer> commentcountlist = new ArrayList<Integer>();
+			List<Integer> ranklist = new ArrayList<Integer>();
 			
 			for (MarketBoard mb : list) {
 				int idx = mb.getIdx();
@@ -109,12 +103,17 @@ public class MarketSearch extends HttpServlet {
 				User user = udao.selectUserById(email_id);
 				int rank = user.getRank();
 				
-				yescountlist.put("yes", yescount);
-				commentcountlist.put("comments", commentcount);
-				ranklist.put("rank", rank);
+				yescountlist.add(yescount);
+				commentcountlist.add(commentcount);
+				ranklist.add(rank);
 				
 			}
-			System.out.println(json);
+			
+			JSONObject json = new JSONObject();
+			
+			json.put("yescountlist", yescountlist);
+			json.put("commentcountlist", commentcountlist);
+			json.put("ranklist", ranklist);
 			
 			// page.put("pager", pager);
 			json.put("page", pagesize);
@@ -125,21 +124,10 @@ public class MarketSearch extends HttpServlet {
 			json.put("search", search);
 			json.put("soldcount", soldcount);
 			json.put("infolist", infolist);
-			json.put("list", list);
-			yescountlist.put("yes", yescountlist);
-			commentcountlist.put("comments", commentcountlist);
-			ranklist.put("rank", ranklist);
-			/*
-			 * json.put("yes", yescountlist); json.put("comments", commentcountlist);
-			 * json.put("rank", ranklist);
-			 */
 			
-			json.put("yes", yescountlist);
-			json.put("comments", commentcountlist);
-			json.put("rank", ranklist);
+			json.put("list", list);
 			
 			out.print(json);
-			System.out.println(json);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

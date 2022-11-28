@@ -9,8 +9,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import kr.or.kosa.dto.Board;
-import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.Regular_Board;
 
 //자유 게시판
@@ -333,14 +331,12 @@ public class Regular_Board_Dao {
 					pstmt.executeUpdate();
 
 					//filename,filesize,refer,depth,step
-					pstmt = conn.prepareStatement(rewrite_sql); //컴파일 
-					pstmt.setString(1, writer);
-					pstmt.setString(2, pwd);
-					pstmt.setString(3, subject);
-					pstmt.setString(4, content);
-					pstmt.setString(5, email);
-					pstmt.setString(6, homepage);
-					pstmt.setString(7, filename);
+					/*
+					 * pstmt = conn.prepareStatement(rewrite_sql); //컴파일 pstmt.setString(1, writer);
+					 * pstmt.setString(2, pwd); pstmt.setString(3, subject); pstmt.setString(4,
+					 * content); pstmt.setString(5, email); pstmt.setString(6, homepage);
+					 * pstmt.setString(7, filename);
+					 */
 					
 					//답변
 					pstmt.setInt(8, refer);
