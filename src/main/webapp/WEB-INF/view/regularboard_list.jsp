@@ -195,16 +195,15 @@
 								</div>
 							</tr>
 
-
-							<%--  </c:forEach> --%>
+							<%--  </c:forEach> 
 
 
 							<c:if test="${board.depth>0}">
 								<tr>
 									<th scope="row"><input type="checkbox"></th>
-									<td>&nbsp;&nbsp;&nbsp;
+									<td>&nbsp;
 										<h3>
-											<img src="../../image/re.gif"> [Re]${board.title}
+											<img src="image/re.gif"> [Re]${board.title}
 										</h3>
 
 
@@ -221,7 +220,7 @@
 										items="33"> <span class="_1R-fi-">33</span><br> <span>추천
 										</td>
 								</tr>
-							</c:if>
+							</c:if>--%>
 						</c:forEach>
 					</tbody>
 				</table>

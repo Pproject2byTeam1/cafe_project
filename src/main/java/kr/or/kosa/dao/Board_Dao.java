@@ -99,9 +99,15 @@ public class Board_Dao {
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "select * from (select * from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.refer, d.depth, d.step "
-					+ "from board b join regular_board d on b.idx = d.idx order by b_idx desc) "
-					+ "where b_code=? and rn <= ?) where rn >=?";
+			String sql = "select * "
+							+ "from (select * "
+								+ "from (select rownum rn, b.idx, b_idx, refer, depth, step, title, nick, content, hits, to_char(w_date, 'yyyy-MM-dd') as w_date, report_count, notic, email_id, b_code "
+									+ "from board b join regular_board d "
+									+ "on b.idx = d.idx "
+									+ "where b.b_code = ? "
+									+ "order by refer desc, step asc) "
+								+ "where rownum <= ?) "
+							+ "where rn >= ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
@@ -126,6 +132,7 @@ public class Board_Dao {
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
+				board.setDepth(rs.getInt("depth"));
 				
 				
 				boardlist.add(board);

@@ -19,7 +19,7 @@ public class ReplyRegularWriteViewService implements Action {
 		try {
 			
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
-			int idx = Integer.parseInt(request.getParameter("idx"));
+			int refer = Integer.parseInt(request.getParameter("refer"));
 			int depth = Integer.parseInt(request.getParameter("depth"));
 			int step = Integer.parseInt(request.getParameter("step"));
 			
@@ -29,13 +29,13 @@ public class ReplyRegularWriteViewService implements Action {
 			
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("b_code", b_code);
-			request.setAttribute("idx", idx);
+			request.setAttribute("refer", refer);
 			request.setAttribute("depth", depth);
 			request.setAttribute("step", step);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/replyRegularwrite.jsp");
+		  	forward.setPath("/WEB-INF/view/regularboard_reply.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

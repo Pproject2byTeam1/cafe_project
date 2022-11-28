@@ -45,17 +45,22 @@ public class ReplyRegularWriteService implements Action {
 			}else {
 				
 				int b_code = Integer.parseInt(request.getParameter("b_code"));
-				int replyIdx = Integer.parseInt(request.getParameter("reply_idx"));
+				int depth = Integer.parseInt(request.getParameter("depth"));
+				int refer = Integer.parseInt(request.getParameter("refer"));
+				int step = Integer.parseInt(request.getParameter("step"));
 				String title = request.getParameter("title");
 				String content = request.getParameter("content");
+				String nick = request.getParameter(user.getNick());
 				
 				Regular_Board board = new Regular_Board();
-				board.setRefer(replyIdx);
-				board.setB_code(b_code);
 				board.setTitle(title);
-				board.setNick(user.getNick());
+				board.setNick(nick);
 				board.setContent(content);
 				board.setEmail_id(user.getEmail_id());
+				board.setB_code(b_code);
+				board.setRefer(refer);
+				board.setDepth(depth);
+				board.setStep(step);
 				
 				Regular_Board_Dao dao = new Regular_Board_Dao();
 				
