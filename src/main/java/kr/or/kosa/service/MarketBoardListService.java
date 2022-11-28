@@ -67,12 +67,6 @@ public class MarketBoardListService implements Action {
 				pagecount = (totalboardcount / pagesize) + 1; 
 			}
 			
-			//전체 목록 가져오기
-			/*
-			 * int pagersize=10; ThePager pager = new
-			 * ThePager(totalboardcount,cpage,pagesize,pagersize,"marketboard_list.do");
-			 */
-			
 			System.out.println("몇번페이지 : " + cpage);
 			System.out.println("pagesize : " + pagesize);
 			List<MarketBoard> list = market_dao.listMarket(b_code, cpage, pagesize);
@@ -95,8 +89,7 @@ public class MarketBoardListService implements Action {
 				ranklist.add(rank);
 			
 			}
-			
-			//request.setAttribute("pager", pager);
+		
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);

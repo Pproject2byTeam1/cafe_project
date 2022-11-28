@@ -2,7 +2,6 @@ package kr.or.kosa.service;
 
 import java.util.List;
 
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,8 +12,8 @@ import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.Rank_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.Rank;
+import kr.or.kosa.utils.BoardFactory;
 
 public class AdminMainEditService implements Action {
 
@@ -34,7 +33,10 @@ public class AdminMainEditService implements Action {
 				int b_code = info.getB_code();
 				
 				if(info.getMain_idx() == 1 || info.getMain_idx() == 2 || info.getMain_idx() == 3 || info.getMain_idx() == 4) {
-					List<Board> board = getBoard(b_type, b_code);
+					List<? extends Board> board = BoardFactory.createBoard(b_type, b_code);
+					
+					
+					
 				}
 			}
 			
@@ -48,37 +50,6 @@ public class AdminMainEditService implements Action {
 		}
 
 		return forward;
-	}
-	
-	private List<Board> getBoard(String b_type, int b_code) {
-		
-		List<Board> list = null; 
-		
-		try {
-			
-			if(b_type.equals("b1")) { //자유 게시판
-				
-			}else if(b_type.equals("b2")) { //출석체크
-				
-			}else if(b_type.equals("b3")) { //이미지 게시판
-				
-				Board_Dao dao = new Board_Dao();
-				//list = dao.getImg_boardList(b_code, 1, 5);
-				
-			}else if(b_type.equals("b4")) { //자료 게시판
-				
-			}else if(b_type.equals("b5")) { //거래 게시판
-				
-			}else if(b_type.equals("b6")) { //일정 관리 게시판
-				
-			}
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
-		
-		return list;
 	}
 
 }
