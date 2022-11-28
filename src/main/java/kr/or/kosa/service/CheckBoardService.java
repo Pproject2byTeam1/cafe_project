@@ -2,8 +2,8 @@ package kr.or.kosa.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
 
@@ -23,7 +23,7 @@ public class CheckBoardService implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
-		List<Board> boardlist = null;
+		List<AttendanceBoad> boardlist = null;
 		int count = 0;
 		
 		//날짜계산 준비
@@ -117,8 +117,10 @@ public class CheckBoardService implements Action {
 				pagecount = (count / pagesize) + 1; 
 			}
 			
+			int b_code = Integer.parseInt(request.getParameter("b_code")); 
+			
 			//작성목록 가져가기
-			boardlist = dao.getBoardListAttendence(cpage, nowday, nextday);
+			boardlist = dao.getBoardListAttendence(b_code, cpage, nowday, nextday);
 			request.setAttribute("boardlist", boardlist);
 
 			request.setAttribute("pagesize", pagesize);

@@ -42,82 +42,23 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/free.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
-/* .btn-success btn-lg {
-   float: right;
-} */
-.selectpicker {
-	width: 75px;
-	height: 35px;
-	border-radius: 5px;
+#datafloat {
+	float: left;
 }
 
-._3Espq6 {
-	width: 38px;
-	height: 22px;
-	font-size: 0.9rem;
-	text-align: center;
-}
-
-.parent {
-	width: 500px;
-	display: flex;
-	flex-direction: column;
-}
-
-.name {
-	font-size: 0.9rem;
-	margin-top: auto;
-	vertical-align: bottom;
-}
-
-._1R-fi- {
-	margin-bottom: 0.5rem;
-	color: #2b2d36;
-	line-height: 1.5;
-	font-weight: 700;
-	font-size: 1.5rem;
-	letter-spacing: -0.01875rem;
-	margin-bottom: 0;
-	color: var(- -gray-600);
-	text-align: center;
-}
-
-.jdc {
-	text-align: center;
-}
-
-.son_name {
-	font-size: 13px;
+#title {
 	font-weight: bold;
 }
 
-.son_date {
-	font-size: 13px;
-}
-
-.son_time {
-	gk font-size: 13px;
-}
-/*  표 style */
-.card-body {
-	overflow-x: auto;
-}
-
-.table table-hover {
-	width: 100%;
-	min-width: 500px;
-	display: block;
-	overflow: auto;
+#buttom {
+	width: 200px;
 }
 </style>
-<script>
-	tinymce.init({
-		selector : '#mytextarea'
-	});
-</script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 
 </head>
 
@@ -149,30 +90,43 @@
 				</ol>
 			</nav>
 		</div>
-		<!--버튼 날짜   -->
+		<!--상단 메뉴 이름  -->
+		<div class="row">
+
+			<div class="col-md-3" align="center">시작일</div>
+
+			<div class="col-md-3" align="center">종료일</div>
+			<div class="col-md-3" align="left">
+
+
+			</div>
+		</div>
+		<!-- 상단 메뉴 이름 끝 -->
+		<!-- 상단 메뉴  -->
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-2">
-				
-				<div align="center">시작일</div> 	
-				<input type="date" id="calend_date" class="form-control">
-				
+
+				<div class="col-md-3" align="right">
+
+					<input type="date" id="calend_date" class="form-control">
 				</div>
-				<div class="col-md-2">
-				
-				종료일: 	
-				<input type="date" id="calend_date" class="form-control">
+
+				<div class="col-md-3" align="right">
+
+					<input type="date" id="calend_date" class="form-control">
 				</div>
-				<div class="col-md-2">
-			  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button type="button" class="btn btn-danger">오늘</button>
-                <button type="button" class="btn btn-warning">주</button>
-                <button type="button" class="btn btn-success">월</button>
-              </div>
+
+				<div class="col-md-3" align="center">
+					<div id="buttom" class="btn-group" role="group"
+						aria-label="Basic mixed styles example">
+						<button type="button" class="btn btn-danger">년</button>
+						<button type="button" class="btn btn-warning">월</button>
+						<button type="button" class="btn btn-success">일</button>
+					</div>
+					<div></div>
 				</div>
-				<div class="col-md-2">	
-				<select class="form-select" id="validationDefault04" required>
+				<div class="col-md-3" align="left">
+					<select class="form-select" id="validationDefault04" required>
 						<option selected disabled value="">게시판을 선택하세요</option>
 						<option>자유게시판</option>
 						<option>출석체크</option>
@@ -182,49 +136,54 @@
 						<option>자료공유</option>
 					</select>
 				</div>
-				<div class="col-md-1"></div>
+				
+
 			</div>
 		</div>
-		<br>
-		<br>
+	<!-- 상단 메뉴 끝 -->
+		<hr>
+		<br> <br>
 
 
 
 		<!-- 여기부터 정보를 보이기 -->
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="card">여기는 그래프</div>
-				</div>
-				<div class="col-md-4">
-					<!-- Table with hoverable rows -->
-					전체게시판 랭킹
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th scope="col">NO.</th>
-								<th scope="col">Name</th>
-								<th scope="col">조회수</th>
-								<th scope="col">작성글수</th>
+		<div class="card">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-4">여기 그래프</div>
+					<div class="col-md-4">
+						<div id="title" align="center">
+							<h5>전체게시판 랭킹</h5>
+						</div>
 
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th scope="row">1</th>
-								<td>자유게시판</td>
-								<td>43234</td>
-								<td>1234</td>
-							</tr>
+						<!-- Table with hoverable rows -->
 
-						</tbody>
-					</table>
-					<!-- End Table with hoverable rows -->
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th scope="col">NO.</th>
+									<th scope="col">Name</th>
+									<th scope="col">조회수</th>
+									<th scope="col">작성글수</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">1</th>
+									<td>자유게시판</td>
+									<td>43234</td>
+									<td>1234</td>
+								</tr>
+
+							</tbody>
+						</table>
+						<!-- End Table with hoverable rows -->
+					</div>
+					<div class="col-md-4">전체 시간대별 활동령</div>
 				</div>
-				<div class="col-md-4">전체 시간대별 활동령</div>
 			</div>
 		</div>
-
 	</main>
 	<!-- End #main -->
 

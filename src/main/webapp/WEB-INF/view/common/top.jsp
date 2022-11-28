@@ -32,7 +32,7 @@
         	   <li class="nav-item dropdown">
             	   <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>메인</a>
             	   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            	       <li><a class="dropdown-item" href="#!">메인페이지 관리</a></li>
+            	       <li><a class="dropdown-item" href="adminmain_edit.jsp">메인페이지 관리</a></li>
             	   </ul>
            		</li>
        		</ul>
@@ -43,7 +43,7 @@
                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>회원</a>
                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                    <li><a class="dropdown-item" href="user_list.do">회원 조회</a></li>
-                   <li><a class="dropdown-item" href="#!">신고 현황</a></li>
+                   <li><a class="dropdown-item" href="rapport_list.do">신고 현황</a></li>
                </ul>
            </li>
        </ul>
@@ -54,7 +54,7 @@
                		<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>통계</a>
                		<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                    		<li><a class="dropdown-item" href="#!">활동 분석</a></li>
-                   		<li><a class="dropdown-item" href="#!">회원 분석</a></li>
+                   		<li><a class="dropdown-item" href="memberAnalysis.do">회원 분석</a></li>
                		</ul>
            		</li>
        		</ul>
@@ -223,7 +223,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="user_activity.do">
                 <i class="bi bi-person"></i>
                 <span>나의 활동 내역</span>
               </a>
@@ -233,7 +233,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="userinfo.do">
                 <i class="bi bi-gear"></i>
                 <span>나의 정보</span>
               </a>

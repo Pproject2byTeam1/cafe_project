@@ -93,7 +93,7 @@ public class MarketBoardEditOkService implements Action {
 	 			marketboard.setImg_name(filename1);
 	 			
 	 			
-	 			int result = dbao.updateDataBoardTitle(databoard);
+	 			int result = mdao.updateMarketBoardTitle(marketboard);
 	 			
 	 			
 	 			
@@ -101,7 +101,7 @@ public class MarketBoardEditOkService implements Action {
 				if (result > 0) {
 
 					String board_msg = "완료되었습니다.";
-		            String board_url = "/WebCafe_Project/databoard_read.do?b_code="+ b_code +"&idx="+ idx;
+		            String board_url = "/WebCafe_Project/marketboard_read.do?b_code="+ b_code +"&idx="+ idx;
 		              
 		            request.setAttribute("board_msg", board_msg);
 		            request.setAttribute("board_url", board_url);

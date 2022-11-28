@@ -241,6 +241,13 @@
   	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
   	  		});
   		});
+  		$('.sorting ').click(function(){
+  			$('.listrow').click(function(){
+  	  			const idx = $(this).children('.idx').text();
+  	  			const b_code = $(this).children().children('.d-none').text();
+  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
+  	  		});
+  		});
   		$('.listrow').click(function(){
   			const idx = $(this).children('.idx').text();
   			const b_code = $(this).children().children('.d-none').text();
