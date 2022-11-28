@@ -138,7 +138,8 @@ public class MarketBoardDao {
 				board.setCate(rs.getString("cate"));
 				board.setTitle(rs.getString("title"));
 				//태그제거 정규표현식 + 글자수 제한
-				board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
+				//board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
+				board.setContent(rs.getString("content"));
 				board.setImg_name(rs.getString("img_name"));
 				board.setPrice(rs.getInt("price"));
 				board.setHits(rs.getInt("hits"));
@@ -237,7 +238,8 @@ public class MarketBoardDao {
 					board.setCate(rs.getString("cate"));
 					board.setTitle(rs.getString("title"));
 					//컨텐츠 태그제거정규표현식 + 글자수 제한
-					board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
+					//board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
+					board.setContent(rs.getString("content"));
 					board.setImg_name(rs.getString("img_name"));
 					board.setPrice(rs.getInt("price"));
 					board.setHits(rs.getInt("hits"));

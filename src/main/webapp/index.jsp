@@ -57,7 +57,7 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    <p><a href="register.do">회원가입(미완)</a></p>
+    <p><a href="snsLogin.do">회원가입(미완)</a></p>
     <p><a href="login_view.do">로그인</a></p>
     <br>
     <p><a href="img_board_list.do?b_code=4">이미지 게시판</a></p>
@@ -76,7 +76,9 @@
     <p><a href="user_activity.do">유저 활동 내역</a></p>
     <p><a href="user-grade.html">유저등급표시</a></p>
     <p><a href="rank-edit-board.jsp">랭크변환</a></p>
-
+    <br>
+  	<p><a href="cafemain.do">유저 메인 화면 가기</a></p>
+	<p><a href="adminmain_edit.jsp">관리자메인페이지관리</a></p>
 
     <section class="section dashboard">
       <div class="row">

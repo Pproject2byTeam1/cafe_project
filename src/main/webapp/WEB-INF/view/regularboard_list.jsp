@@ -180,7 +180,15 @@
 										</c:if>
 										
 										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}'" style="cursor:pointer">
-										<span class="mt-4 parent"><h3>${board.title}</h3></span><br>
+										<span class="mt-4 parent">
+										<h3>
+											<c:if test="${board.depth > 0}">
+												<c:forEach var="index" begin="1" end="${board.depth}">
+													<img src="image/re.gif" width="12" height="15">
+												</c:forEach>
+											</c:if>
+											${board.title}
+										</h3></span><br>
 										<span class="son_name"><img src="./image/rank_icon/${rank[status.index]}.gif">${board.nick}</span> <span
 										class="son_date">${board.w_date}</span> <span class="son_time">
 										</span></td>
@@ -195,16 +203,15 @@
 								</div>
 							</tr>
 
-
-							<%--  </c:forEach> --%>
+							<%--  </c:forEach> 
 
 
 							<c:if test="${board.depth>0}">
 								<tr>
 									<th scope="row"><input type="checkbox"></th>
-									<td>&nbsp;&nbsp;&nbsp;
+									<td>&nbsp;
 										<h3>
-											<img src="../../image/re.gif"> [Re]${board.title}
+											<img src="image/re.gif"> [Re]${board.title}
 										</h3>
 
 
@@ -221,7 +228,7 @@
 										items="33"> <span class="_1R-fi-">33</span><br> <span>추천
 										</td>
 								</tr>
-							</c:if>
+							</c:if>--%>
 						</c:forEach>
 					</tbody>
 				</table>

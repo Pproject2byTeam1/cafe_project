@@ -72,26 +72,26 @@
 														
 							$(".list").empty();
 							
-							 for(let index in data){
-								 console.log(data);
-								 console.log(list.title);
+							console.log(data);
+							
+							for(let index in data.list){
 
-								html = '<div class="mcard" onclick="location.href=' + "'marketboard_read.do?b_code=" + this.b_code + '&idx=' + this.idx + "'" + ';">';
+								html = '<div class="mcard" onclick="location.href=' + "'marketboard_read.do?b_code=" + data.list[index].b_code + '&idx=' + data.list[index].idx + "'" + ';">';
 								html += '<div class="mimg">'
-								html += '<img src="image/board/upload/' + data.img_name + '" id="mimg"/>';
+								html += '<img src="image/board/upload/' + data.list[index].img_name + '" id="mimg"/>';
 								html += '</div>'
-								html += '<span id="marketB_Text.ns">' + this.m_mode + '|' + this.sold + '|' + this.cate + '</span>';
+								html += '<span id="marketB_Text.ns">' + data.list[index].m_mode + '|' + data.list[index].sold + '|' + data.list[index].cate + '</span>';
 								html += '<p>';
-								html += '<span id="marketB_Title">' + this.title + '</span>';
+								html += '<span id="marketB_Title">' + data.list[index].title + '</span>';
 								html += '<br>';
-								html += '<span id="marketB_Text">' + this.content + '</span>';
+								html += '<span id="marketB_Text">' + data.list[index].content + '</span>';
 								html += '<br>';
-								html += '<span id="marketB_Price">' + this.price + ' 원</span>';
+								html += '<span id="marketB_Price">' + data.list[index].price + ' 원</span>';
 								html += '<br>'
-								html += '<span id="marketB_info">조회수 : ' + this.hits + '| 댓글 : ' + this.comments + '| 찜 : ' + this.yes  + '</span>';
+								html += '<span id="marketB_info">조회수 : ' + data.list[index].hits + '| 댓글 : ' + data.commentcountlist[index] + '| 찜 : ' + data.yescountlist[index]  + '</span>';
 								html += '<br>';
-									html += '<span id="marketB_Text.ns"><img src="image/rank_icon/' + this.rank  + '.gif" alt="Profile"'
-										html += 'class="rounded-circle">' + this.nick + '|' + this.w_date + '</span>';
+									html += '<span id="marketB_Text.ns"><img src="image/rank_icon/' + data.ranklist[index]  + '.gif" alt="Profile"'
+										html += 'class="rounded-circle">' + data.list[index].nick + '|' + data.list[index].w_date + '</span>';
 								html += '</div>';
 								
 								$('.list').append(html);
@@ -99,7 +99,7 @@
 								
 							}; 
 							
-							$('.list .mcard').last().remove();
+							//$('.list .mcard').last().remove();
 							
 						}
 					});

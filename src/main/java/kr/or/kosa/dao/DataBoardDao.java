@@ -35,7 +35,7 @@ import kr.or.kosa.dto.DataBoard;
 							+ "from board b join data_board d "
 							+ "on b.idx = d.idx "
 							+ "where b_code=? "
-							+ "order by refer desc, step desc) where rn <= ? and rn >= ? ";
+							+ "order by b_idx desc, refer desc, step asc) where rn <= ? and rn >= ? ";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);

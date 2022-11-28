@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
+import kr.or.kosa.service.CafeMain;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.CheckBoardService;
 import kr.or.kosa.service.DataBoardEditOkService;
@@ -20,6 +21,7 @@ import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataBoardWriteService;
 import kr.or.kosa.service.DataBoardWriteViewService;
 import kr.or.kosa.service.Data_Board_Post_Service;
+import kr.or.kosa.service.DeleteAttendanceService;
 import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardDeleteService;
 import kr.or.kosa.service.ImgBoardModifyService;
@@ -28,6 +30,7 @@ import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
+import kr.or.kosa.service.InsertAttendanceService;
 import kr.or.kosa.service.LoginCheckService;
 import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
@@ -41,14 +44,16 @@ import kr.or.kosa.service.MessageDeleteService;
 import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
+import kr.or.kosa.service.RankChangeService;
+import kr.or.kosa.service.RankUpdateService;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.RegularBoardDeleteService;
 import kr.or.kosa.service.RegularBoardEditOkService;
 import kr.or.kosa.service.RegularBoardEditService;
 import kr.or.kosa.service.RegularBoardWriteOkService;
+import kr.or.kosa.service.RegularBoardWriteService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
-import kr.or.kosa.service.RegularBoardWriteService;
 import kr.or.kosa.service.ReplyDataWriteService;
 import kr.or.kosa.service.ReplyDataWriteViewService;
 import kr.or.kosa.service.ReplyRegularWriteService;
@@ -67,16 +72,15 @@ import kr.or.kosa.service.adminUpdateService;
 import kr.or.kosa.service.nickVerification;
 import kr.or.kosa.service.userVerification;
 
-
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   public FrontController() {
-      super();
-   }
+	public FrontController() {
+		super();
+	}
 
-   private void doProcess(HttpServletRequest request, HttpServletResponse response)
+	private void doProcess(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
 
       request.setCharacterEncoding("UTF-8");
@@ -371,6 +375,31 @@ public class FrontController extends HttpServlet {
             action = new RegularBoardDeleteService();
             forward = action.execute(request, response);
       
+        } else if(urlcommand.equals("/insertAttendance.do")){ // 출석게시판 글쓰기
+             
+             action = new InsertAttendanceService();
+             forward = action.execute(request, response);
+       
+        } else if(urlcommand.equals("/deleteAttendance.do")){ // 출석게시판 글삭제
+            
+            action = new DeleteAttendanceService();
+            forward = action.execute(request, response);
+      
+         }else if(urlcommand.equals("/rankeditboard.do")){ // 랭크변환리스트
+             
+             action = new RankChangeService();
+             forward = action.execute(request, response);
+       
+          }else if(urlcommand.equals("/rankupdate.do")){ // 랭크추가하기
+              
+              action = new RankUpdateService();
+              forward = action.execute(request, response);
+        
+           } else if(urlcommand.equals("/cafemain.do")) { //카페 메인 화면
+        	 
+        	 action = new CafeMain();
+             forward = action.execute(request, response);
+        	 
          }
    
    
@@ -389,14 +418,14 @@ public class FrontController extends HttpServlet {
 
    }
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      doProcess(request, response);
-   }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      doProcess(request, response);
-   }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
 }

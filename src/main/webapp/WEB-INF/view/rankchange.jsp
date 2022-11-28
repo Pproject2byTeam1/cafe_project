@@ -7,7 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -27,7 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-  
+ 
 </head>
 <body>
   <!-- ======= Header ======= -->
@@ -42,7 +43,7 @@
   
   <main id="main" class="main">
   
-			<!-- 여기서부터 작성 와랄ㄹ라  -->
+		
 		<div class="pagetitle" >
 			<h1>등급관리</h1>
 			<nav>
@@ -52,8 +53,7 @@
 			   </ol>
 			</nav>
 		</div>
-		
-		
+
 	<div class="container">
 		<div class="card">
 			<div class="card-body">
@@ -67,10 +67,11 @@
 			            	<div class="row">
 			            		<br><br>
 			            	</div>
+			            	<form  onclick="location.href='rankeditboard.do?b_code=6&rank=${rank}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
 			            	<button type="button" class="btn float-right btn-success" style="float:right"> 
 									저장하기
 							</button>
-			                
+			                </form>
 			                
 			             	  <br><br>
 			              
@@ -93,7 +94,9 @@
 			                     </tr>
 			                  </thead>
 			                  <tbody>
+			                     
 			                     <tr>
+											                     
 			                        <td>
 			                           1
 			                        </td>
@@ -106,8 +109,10 @@
 			                        <td>
 			                           
 			                        </td>
+			                        
 			                     </tr>
 			                     <tr>
+			                     	<c:forEach var="rank" items="${rank}" varStatus="status"><!--dao에 리스트 불러와서 추가행  -->
 			                        <td>
 			                           2
 			                        </td>
@@ -120,6 +125,7 @@
 			                        <td>
 			                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
 			                        </td>
+			                        </c:forEach>
 			                     </tr>
 			                     <tr>
 			                        <td>
@@ -157,7 +163,7 @@
 			                           
 			                        </td>
 			                        <td>
-			                           <button type="button" class="btn btn btn-secondary">
+			                           <button type="button" class="btn btn btn-secondary" id="RankNew">
 			                              추가하기
 			                           </button>
 			                        </td>

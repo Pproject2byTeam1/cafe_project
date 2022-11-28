@@ -86,7 +86,7 @@
 							<nav aria-label="Page navigation example">
 								<ul class="pagination justify-content-end">
 
-									<div class="col-sm-2 text-lg-end">
+									<div align="right" class="col-sm-2 text-lg-end">
 										<br>
 										<button type="button"
 											class="btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>

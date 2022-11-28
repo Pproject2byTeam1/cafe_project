@@ -42,6 +42,21 @@
 			</div>
 		</c:if>
 		
+		<c:if test="${member == null}">
+			<div class="pagetitle card mt-2 pt-4">
+				<div class="card-body">
+					<div class="row p-3 ms-1">
+						<div class="col-md-6">
+							<a href="login_view.do">로그인</a>
+						</div>
+						<div class="col-md-6">
+							<a href="snsLogin.do">회원가입</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		
 		<!-- 프로필 끝 -->
 		<c:forEach var="infolist" items="${infolist}">
 			<li class="nav-item">
@@ -60,7 +75,7 @@
 					</a>
 				</c:if> 
 				<c:if test="${infolist.b_type eq 'b4'}">
-					<a class="nav-link " href="data_list.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
+					<a class="nav-link " href="databoard_read.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
 				<c:if test="${infolist.b_type eq 'b5'}">

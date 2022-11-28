@@ -50,7 +50,7 @@ public class CheckBoardService implements Action {
 		Date date=null;
 		try {
 			date = format.parse(nowday);
-			request.setAttribute("date5", date);//입력된 날짜 yyyy-MM-dd
+			request.setAttribute("date5", format.format(date));//입력된 날짜 yyyy-MM-dd
 			
 		} catch (ParseException e2) {
 			e2.printStackTrace();
@@ -58,7 +58,9 @@ public class CheckBoardService implements Action {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		
-		//각 월, 일 구하기
+		//각 년 월, 일 구하기
+		int year = cal.get(Calendar.YEAR);
+		request.setAttribute("year", year);
 		int month = cal.get(Calendar.MONTH)+1;
 		request.setAttribute("month", month);
 		int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -80,19 +82,48 @@ public class CheckBoardService implements Action {
 	        //유저정보 가져가기
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("member");
-			String userId = "";
+			String userId = null;
 			if(user != null) {
 				userId = user.getEmail_id();
 			}
+			System.out.println(userId);
 			request.setAttribute("userId", userId);
-			//작성목록 가져가기
+
 			Board_Dao dao = new Board_Dao();
-			boardlist = dao.getBoardListAttendence(1, nowday, nextday);
-			request.setAttribute("boardlist", boardlist);
 			
 			//총 숫자 가져가기
 			count = dao.countAttendenceBoard(nowday, nextday);
 			request.setAttribute("count", count);
+			
+			//상세보기 >> 다시  LIST 넘어올때  >> 현재 페이지 설정
+			String ps = request.getParameter("ps");
+			String cp = request.getParameter("cp");
+
+			if(ps == null || ps.trim().equals("")) {
+				ps = "10"; //List 페이지 처음 호출 경우 -> 10개씩 
+			}
+			
+			if(cp == null || cp.trim().equals("")) {
+				cp = "1"; //default 값 설정 -> 1번째 페이지 보겠다 
+			}
+			
+			int pagesize = Integer.parseInt(ps);
+			int cpage = Integer.parseInt(cp);
+			int pagecount = 0;
+			
+			if(count % pagesize == 0) {
+				pagecount = count / pagesize;
+			}else {
+				pagecount = (count / pagesize) + 1; 
+			}
+			
+			//작성목록 가져가기
+			boardlist = dao.getBoardListAttendence(cpage, nowday, nextday);
+			request.setAttribute("boardlist", boardlist);
+
+			request.setAttribute("pagesize", pagesize);
+			request.setAttribute("cpage", cpage);
+			request.setAttribute("pagecount", pagecount);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
