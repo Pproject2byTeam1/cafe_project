@@ -85,7 +85,7 @@ public class DataBoardEditOkService implements Action {
 	 			databoard.setSave_name(filename1);
 	 			databoard.setVolume(size1);
 	 			
-	 			int result = dbao.updateMarketBoardTitle(databoard);
+	 			int result = dbao.updateDataBoardTitle(databoard);
 	 			
 	 			
 	 			
