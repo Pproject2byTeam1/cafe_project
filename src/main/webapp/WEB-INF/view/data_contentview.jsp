@@ -15,7 +15,7 @@
 <meta content="" name="keywords">
 
 <!-- jQuery -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
@@ -55,7 +55,7 @@
 	$(function(){
 		
 		let email_id = '<c:out value="${member.email_id}" />';
-        let yes = '<c:out value="${yes}" />';
+        let yespark = '<c:out value="${yes}" />';
         let idx = '<c:out value="${board.idx}" />';
         let b_code = '<c:out value="${board.b_code}" />';
         let depth = '<c:out value="${board.depth}" />';
@@ -282,7 +282,7 @@
 			
 		});
         
-        
+		list();
         
 	});
 </script>
@@ -340,7 +340,7 @@
 													<p class="text-right card-text">조회수:${board.hits}</p>
 												</div>
 												<div class="col-md-2">
-													<p class="text-right card-text">추천:${board.hits}</p>
+													<p class="text-right card-text">추천:${yes}</p>
 												</div>
 												<div class="col-md-3">
 													<p class="text-right card-text">작성일자: ${board.w_date}</p>
@@ -391,14 +391,15 @@
 
 											<div  class="col-md-12">
 												<div>
-													<c:if test="${yes == 'no'}">
+													<c:if test="${yespark == 'no'}">
                                     					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
                                     				</c:if>
-                                    				<c:if test="${yes != 'no'}">
+                                    				<c:if test="${yespark != 'no'}">
                                     					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
                                     				</c:if>
-													<button type="button" id="Write"
-														class="btn btn-outline-secondary btn-sm rounded-pill" >답글</button>
+                                    				<form action="databoard_rewrite.do?b_code= + b_code+'&idx'+idx+'&refer'+refer+'&depth'+depth+'&step'+step" method="post">
+													<input type="submit" id="Write" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정" >
+													</form>
 														<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
 													<button type="button" id="delete"class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>
 													<form action="databoard_edit.do?b_code=${b_code}&idx=${board.idx}" method="post">
@@ -457,7 +458,7 @@
 									<div class="form-floating">
 										<textarea id="replycontent" class="form-control"></textarea>
 										<label for="floatingTextarea">댓글을 작성해 주세요</label> <input
-											id="idx" value="${imgboard.idx}" type="hidden" />
+											id="idx" value="${board.idx}" type="hidden" />
 									</div>
 									<nav aria-label="Page navigation example">
 										<ul class="pagination justify-content-end">

@@ -197,7 +197,10 @@
 				<!--목록출력하기  -->
              <c:forEach var="board" items="${list}" varStatus="status">
                 <tr onclick="location.href='databoard_read.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
-                     <th scope="row"><input type="checkbox"></th>
+                    
+                     <th scope="row"><input type="checkbox"></th>&nbsp;
+                     
+                     <form onclick="location.href='databoard_read.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'" style="cursor:pointer">
                      <td>
                      <input id="b_code" value="${board.b_code}" type="hidden" />
                      <span class="mt-4 parent"><h3>${board.title}</h3></span><br>
@@ -235,44 +238,17 @@
                      <span class="_1R-fi-">${yes[status.index]}</span><br>
                      <span>추천</span>
                   </td>
+                  </form>
                   </tr>
                   <input id="ori_name" name="ori_name" value="${board.ori_name}" type="hidden" /><!--파일명 받아오기  -->
+                  
                      </c:forEach> 
                </tbody>
             </table>
-                 <%--  </c:forEach> --%>
+    
                  
                 
       
-   <%-- <tr>	
-         <th scope="row"><input type="checkbox"></th>
-                     <td>
-                   &nbsp;&nbsp;&nbsp;
-                     <h3 ><img src="./image/re.gif">
-                     [Re]${board.title}</h3>
-                     
-                  
-                     </td>
-                     <td></td>
-                     
-                  <td class="p-5 jdc"><span class="_3Espq6" >
-                     <span class="_1R-fi-">${board.hits}</span><br>
-                     <span>조회</span>
-                     </span>
-                  </td>
-                  <td class="p-5 jdc"><span class="_3Espq6" var="yes" items="${countlist}">
-                     <span class="_1R-fi-">${comment[status.index]}</span><br>
-                     <span>댓글</span>
-                     </span>
-                  </td>
-                  <td class="p-5 jdc"><span class="_3Espq6" var="comment" items="${yeslist}">
-                     <span class="_1R-fi-">${yes[status.index]}</span><br>
-                     <span>추천
-                  </td>
-                  </tr> 
-                --%>
-           
-            <!-- End Table with hoverable rows -->
 
          </div>
 
