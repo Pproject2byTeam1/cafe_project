@@ -78,7 +78,7 @@
     <p><a href="rank-edit-board.jsp">랭크변환</a></p>
     <br>
   	<p><a href="cafemain.do">유저 메인 화면 가기</a></p>
-
+	<p><a href="adminmain_edit.jsp">관리자메인페이지관리</a></p>
 
     <section class="section dashboard">
       <div class="row">

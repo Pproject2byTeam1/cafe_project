@@ -90,7 +90,15 @@ public class MarketSearch extends HttpServlet {
 			}
 
 			List<MarketBoard> list = market_dao.searchMarket(b_code, cpage, pagesize, sold, search);
+			JSONArray jsonlist = JSONArray.fromObject(list);
+			JSONArray jsonlist2 = new JSONArray();
 
+			// 전체 목록 가져오기
+			/*
+			 * int pagersize=10; ThePager pager = new
+			 * ThePager(totalboardcount,cpage,pagesize,pagersize,"marketboard_list.do");
+			 */
+			
 			List<Integer> yescountlist = new ArrayList<Integer>();
 			List<Integer> commentcountlist = new ArrayList<Integer>();
 			List<Integer> ranklist = new ArrayList<Integer>();
@@ -100,6 +108,7 @@ public class MarketSearch extends HttpServlet {
 				String email_id = mb.getEmail_id();
 				int yescount = ydao.getYesCountBy_idx(idx);
 				int commentcount = cdao.getCommentCountBy_idx(idx);
+				
 				User user = udao.selectUserById(email_id);
 				int rank = user.getRank();
 				
