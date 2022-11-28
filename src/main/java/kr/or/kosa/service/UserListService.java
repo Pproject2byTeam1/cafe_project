@@ -29,7 +29,17 @@ public class UserListService implements Action {
 	        User user = (User) session.getAttribute("member");
 	        String url = "";
 	        
-	        if (user.getIsAdmin().equals("S") || user.getIsAdmin().equals("M") ) {
+	        if (user == null) {
+				
+	        	String board_msg = "권한이 없습니다.";
+	            String board_url = "/WebCafe_Project/login_view.do";
+	              
+	            request.setAttribute("board_msg", board_msg);
+	            request.setAttribute("board_url", board_url);
+	              
+	            url="/WEB-INF/view/redirect.jsp";
+	            
+			}  else if (user.getIsAdmin().equals("S") || user.getIsAdmin().equals("M") ) {
 
 	        	UserDao dao = new UserDao();
 				
@@ -71,16 +81,6 @@ public class UserListService implements Action {
 				url="/WEB-INF/view/user_list.jsp";
 	        
 	        	
-			} else {
-				
-				String board_msg = "권한이 없습니다.";
-	        	String board_url = "/WebCafe_Project/index.jsp";
-	        	
-	        	request.setAttribute("board_msg", board_msg);
-				request.setAttribute("board_url", board_url);
-	        	
-				url="/WEB-INF/view/redirect.jsp";
-				
 			}
 	        
 	        forward = new ActionForward();

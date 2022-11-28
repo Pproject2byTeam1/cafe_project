@@ -88,9 +88,23 @@
                      <label for="inputNickname" class="col-sm-2 col-form-label">관리등급</label>
                      <div class="col-sm-8">
                        <select class="form-select" name="isAdmin" form="myForm">
-						   <option value="F" selected>F</option>
-						   <option value="S">S</option>
-						   <option value="X">X</option>
+                       <c:choose>
+							<c:when test="${userlist.isAdmin eq 'F'}">
+							   <option value="F" selected>F</option>
+							   <option value="S">S</option>
+							   <option value="X">X</option>
+						    </c:when>
+						    <c:when test="${userlist.isAdmin eq 'S'}">
+							   <option value="F" >F</option>
+							   <option value="S" selected>S</option>
+							   <option value="X">X</option>
+						    </c:when>
+						    <c:when test="${userlist.isAdmin eq 'X'}">
+							   <option value="F" >F</option>
+							   <option value="S">S</option>
+							   <option value="X" selected>X</option>
+						    </c:when>
+					   </c:choose>
 	   					</select>
                      </div>
                   </div>
