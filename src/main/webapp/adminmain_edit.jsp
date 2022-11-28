@@ -42,21 +42,53 @@
   
   <style type="text/css">
   
-	.image-box {
-	width:900px;
-	}
-	
-	.icon-box {
-    width:50;
-    height:50px;
-    overflow:hidden;
-    margin:0 auto;
-	}
+.maincard {
+	background-color : white;
+	margin-bottom: 30px;
+	border-radius: 1em;
+	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+	padding : 15px;
+}
 
-	.image-banner {
-   
-	}
-	
+#wrap1::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: #e0e0e0;
+}
+.container.wide {
+  width: 100%;
+  height: 200px;
+}
+
+.ex {
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.ex-container {
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.ex-container:last-child {
+  margin: 0;
+}
+
+@media (max-width: 100%;) {
+  .flex {
+    flex-direction: column;
+  }
+
+
   </style>
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -70,10 +102,6 @@
      <header id="header" class="header fixed-top d-flex align-items-center">
         <c:import url="/WEB-INF/view/common/admintop.jsp" />
      </header><!-- End Header -->
-     
-     <!-- ======= Sidebar ======= -->
-     
-     <!-- End Sidebar -->
 
   <main id="main" class="main">
 
@@ -82,106 +110,153 @@
     </div><!-- End Page Title -->
 
 		<!-- 관리자 메인페이지 관리 시작 -->
-        <div class="col-xl-12">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-12">
-					<div align="right" class="col-md-12">
-						<!-- 본인확인 -->
-						<c:if test="${member.isAdmin =='M'}">
-						<button type="button" id="edit" 
-							class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-						<button type="button" id="delete" 
-							class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>
-						</c:if>
-						<!-- 본인확인 -->
-						
-					</div>
-				</div>
-					<form name="bbs" action=".do" method="POST" enctype="multipart/form-data">
-						<div class="row">
-							<div class="col-md-4">
-								칸반보드
-							</div>
-							<div class="col-md-8">
-								<div class="row">
-									<div class="marketcard">
-										<div class="marketcard-body">
-										<div class="row">
-										    <div class="col-md-8">
-												<textarea id="inputname" name="cafe_name" row="1" cols="20" maxlength="20">카페이름</textarea>
-										    </div>
-										</div>
-										    <p>
-										    <div class="icon-box col-md-12">
-												카페아이콘 : <input type="file" class="form-control" placeholder="카페 아이콘" accept="image/*" id="getfile" name="cafe_icon" required>
-											</div>
-										
-											<div class="image-box col-md-12">
-												카페 메인 배너 : <input type="file" class="form-control" placeholder="카페 메인 배너" accept="image/*" id="getfile" name="cafe_img" onchange="setThumbnail(event);" required>
-												
-												<div id="image-thumbnail"></div>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-									tiny
-									</div>
-								</div>
-								<div class="row">
-									<div class="marketcard col-md-6">
-										<table class="table table-striped">
-										  <thead>
-										    <tr>
-										      <th scope="col">First</th>
-										      <th scope="col">Last</th>
-										      <th scope="col">Handle</th>
-										    </tr>
-										  </thead>
-										  <tbody>
-										    <tr>
-										      <td>Mark</td>
-										      <td>Otto</td>
-										      <td>@mdo</td>
-										    </tr>
-										    <tr>
-										      <td>Jacob</td>
-										      <td>Thornton</td>
-										      <td>@fat</td>
-										    </tr>
-										    <tr>
-										      <td>Jacob</td>
-										      <td>Thornton</td>
-										      <td>@fat</td>
-										    </tr>
-										  </tbody>
-										</table>
-									</div>
-									<div class="marketcard col-md-6">
-									게시판 리스트 2
-									</div>
-								</div>
-								<div class="row">
-									<div class="marketcard col-md-6">
-									게시판 리스트 3
-									</div>
-									<div class="marketcard col-md-6">
-									게시판 리스트 4
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div align="right" class="col-md-12">
+					<!-- 본인확인 -->
+					<c:if test="${member.isAdmin =='M'}">
+					<button type="submit" id="edit" 
+						class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
+					<button type="button" id="cancel" 
+						class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>
+					</c:if>
+					<!-- 본인확인 -->
 					
 				</div>
 			</div>
+		<form name="bbs" action=".do" method="POST" enctype="multipart/form-data">
+			<div class="container-fluid">
+			<div class="wrap1">
+			<div class="col-md-12">
+				<div class="maincard">
+					<div class="row">
+						<div class="col-md-4">
+							<div>
+						      <a class="logo d-flex align-items-center">
+						        <img src="assets/img/logo.png" alt="">
+						        <span id="cafename" class="d-none d-lg-block"><input type="text" name="cafe_name" id="inputname" placeholder="카페 이름" rows="1" cols="20"></input></span>
+						      </a>
+						    </div>
+						</div>
+				
+						<div class="col-md-8">
+							<div class="row">
+							 <label for="form-control" class="col">아이콘 : <input type="file" name="cafe_icon" class="form-control" placeholder="카페 아이콘" accept="image/*" id="getfile" onchange="seticon(event)" required></label>
+							 <label for="form-control" class="col">메인 배너 : <input type="file" name="cafe_img"  class="form-control" placeholder="카페 메인 배너" accept="image/*" id="getfile" onchange="setBanner(event)" required></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+				
+			<!-- 게시판 리스트 기능 -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="maincard">
+							<div class="row">
+								<div class="col">
+									<div align="center" class="col-md-4">							
+										<button type="submit" id="edit" 
+											class="btn btn-outline-secondary btn-sm rounded-pill">게시판 추가</button>
+										<button type="button" id="cancel" 
+											class="btn btn-outline-secondary btn-sm rounded-pill">구분선 추가</button>
+										<button type="button" id="cancel" 
+											class="btn btn-outline-secondary btn-sm rounded-pill">휴지통</button>
+									</div>
+								</div>
+								<div class="col">
+								
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="maincard">
+						<div class="col-md-12">
+							<div class="ex-container">
+								<div class="container wide" id="image-thumbnail"></div>
+								
+							</div>
+						</div>
+						<div class="col-md-12">
+						<hr>
+							<textarea rows="" cols=""></textarea>
+						</div>
+						
+					</div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="maincard">
+							<table class="table table-striped">
+							  <thead>
+							    <tr>
+							      <th scope="col">자유게시판</th>
+							      <th scope="col">제목</th>
+							      <th scope="col">시간</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr>
+							      <td>Mark</td>
+							      <td>Otto</td>
+							      <td>@mdo</td>
+							    </tr>
+							    <tr>
+							      <td>Jacob</td>
+							      <td>Thornton</td>
+							      <td>@fat</td>
+							    </tr>
+							    <tr>
+							      <td>Jacob</td>
+							      <td>Thornton</td>
+							      <td>@fat</td>
+							    </tr>
+							      <tr>
+							      <td>Jacob</td>
+							      <td>Thornton</td>
+							      <td>@fat</td>
+							    </tr>
+							      <tr>
+							      <td>Jacob</td>
+							      <td>Thornton</td>
+							      <td>@fat</td>
+							    </tr>
+							  </tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="maincard">
+							
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="maincard">
+						게시판3
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="maincard">
+						게시판4
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
 		</div>
-  		
-      </div>
+		</form>
+	</div>
+			
 
+			
+					
+						
+										
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -204,14 +279,29 @@
   <script type="text/javascript">
   
 
-	  function setThumbnail(event) {
+	  function setBanner(event) {
 	      var reader = new FileReader();
 	
 	      reader.onload = function(event) {
 	        var img = document.createElement("img");
 	        img.setAttribute("src", event.target.result);
-	        img.setAttribute("style", "width=600px; height=150px;");
+	       
+	        
 	        document.querySelector("div#image-thumbnail").appendChild(img);
+	      };
+	
+	      reader.readAsDataURL(event.target.files[0]);
+	    }
+	  
+	  function setIcon(event) {
+	      var reader = new FileReader();
+	
+	      reader.onload = function(event) {
+	        var img = document.createElement("img");
+	        img.setAttribute("src", event.target.result);
+	        img.setAttribute("style", "width=50px; height=50px;");
+	       
+	        document.querySelector("div#image-icon").appendChild(img);
 	      };
 	
 	      reader.readAsDataURL(event.target.files[0]);
@@ -222,79 +312,35 @@
 			var inputLength = $(this).val().length; //입력한 값의 글자수
 			var remain = 20-inputLength;
 			var value = document.getElementById("inputname").value;
-		    console.log(value);
-			//2. h1 태그 영역에 30/70 이렇게 출력이 되도록 작성...html()
-			$("#cafename").html(value);
+		   
 			
-			//3. remain이 50~70 사이면 글자색을 blue.. css 연결
-			//   remain이 30~49 사이면 글자색을 orange.. css
-			//   remain이 10~29 사이면 글자색을 magenta.. css
-			//   remain이 1~9 사이면 글자색을 red.. css
-			//   더 이상 글자 입력이 안 되도록
+			$("#cafename").html(value);
+		
 			if(remain<1){
 				alert("더 이상 글자 입력 안 됩니다.");
 			}
 		});
 
-   
-  	$(function(){
-  		$('#deleteUser').click(function(){//삭제처리
-  			location.href = "deleteUser.do";
-  		});
-  		
-  		$('#nickname').keyup(function(){
-  			//서버처리결과받기
-  			$.ajax({
-  				url:"nickVerification.do",
-  				data:{nickname: $('#nickname').val()},
-  				type: "POST",
-  				dataType:"json",
-  				success: function(responseText){
-  					var text = responseText;
-  					if(text.toString().replace(/\s/gi, "") == "true"){
-  						$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
-  						$("#chageInfo").attr("disabled",true);
-  					}else{
-  						$("#qqqq").html("<p class='text-success'>사용 가능합니다.</p>");
-  						$("#chageInfo").removeAttr("disabled");
-  					}
-  				}
-  			});
-  		});
-  		$("#renewPassword").keyup(function () {
-  			console.log("pwd: "+$('#currentPassword').val());
-  			$.ajax({
-  				url:"userVerification.do",
-  				data:{password: $('#currentPassword').val()},
-  				type: "POST",
-  				dataType:"json",
-  				success: function(responseText){
-  					var text = responseText;
-  					if(text.toString().replace(/\s/gi, "") == "true"){
-	  					if ($("#newPassword").val() != $("#renewPassword").val() || $("#renewPassword").val().length < 10) {
-			              $("#aaaa").html("<p class='text-danger' >비밀번호가 일치하지 않거나 10자 미만입니다.</p>");
-			           	  $("#changepwd").attr("disabled",true);
-			            } else {
-			              $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
-			              $("#changepwd").removeAttr("disabled");
-			            }
-	  				}else{
-	  					$("#aaaa").html("<p class='text-danger' >비밀번호가 정확하지 않습니다.</p>");
-	  				}
-  				}
-  			})
-          });
-  		$('#tel').keyup(function(){
-  			console.log("tel: "+$('#tel').val());
-  			console.log("length: "+$('#tel').val().length);
-  			if($('#tel').val().length != 11 || $('#tel').val() == null){
-  				$("#chageInfo").attr("disabled",true);
-  			}else{
-  				$("#chageInfo").removeAttr("disabled");
-  			}
-  		})
-  	});
-  </script>
+	  </script>   
+
+	 
+	<script>
+		tinymce
+				.init({
+					selector : 'textarea',
+					plugins : 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+					toolbar : 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+					tinycomments_mode : 'embedded',
+					tinycomments_author : 'Author name',
+					mergetags_list : [ {
+						value : 'First.Name',
+						title : 'First Name'
+					}, {
+						value : 'Email',
+						title : 'Email'
+					}, ]
+				});
+	</script>
 
 </body>
 
