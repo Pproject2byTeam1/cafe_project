@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Comments;
+import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.utils.tagRemove;
 
@@ -668,6 +669,72 @@ public class MarketBoardDao {
 		return row;
 	}
 
-	// 게시글 수정하기 처리
+	//객채로 title content 수정
+		public int updateMarketBoardTitle(MarketBoard board) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			PreparedStatement pstmt2 = null;
+			int row = 0;
+			
+			try {
+				
+				conn = ds.getConnection();
+				conn.setAutoCommit(false);
+	          
+				String sql = "UPDATE board SET title =?, content=? WHERE idx=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, board.getTitle());
+				pstmt.setString(2, board.getContent());
+				pstmt.setInt(3, board.getIdx());
+	
+				
+				row = pstmt.executeUpdate();
+				
+				
+				
+				if(row < 0) {
+		             throw new Exception("Board 수정 실패");
+		        }
+				
+				String sql2 = "UPDATE market_board set m_mode=?, cate=?, price=?, sold=?, img_name=? where idx=?";
+				pstmt2 = conn.prepareStatement(sql2);
+				
+				pstmt2.setString(1, board.getM_mode());
+				pstmt2.setString(2, board.getCate());
+				pstmt2.setInt(3, board.getPrice());
+				pstmt2.setString(4, board.getSold());
+				pstmt2.setString(5, board.getImg_name());
+				pstmt2.setInt(6, board.getIdx());
+				
+				row = pstmt2.executeUpdate();
+				
+				if(row < 0) {
+		             throw new Exception("data_baord 수정 실패");
+		          }else {
+		             conn.commit();
+		          }
+		          
+				
+			} catch (Throwable e) {
+	          if(conn != null) {
+	             try {
+	                conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+	             } catch (Exception e2) {
+	                e2.printStackTrace();
+	             }
+	          }
+	       } finally {
+	          try {
+	             conn.setAutoCommit(true);
+	             pstmt.close();
+	             conn.close();
+	          } catch (Exception e2) {
+	             System.out.println(e2.getMessage());
+	          }
+	       }
+			
+			return row;
+		}
 
 }

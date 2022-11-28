@@ -36,6 +36,8 @@ import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
 import kr.or.kosa.service.Logout_Service;
 import kr.or.kosa.service.MarketBoardDeleteService;
+import kr.or.kosa.service.MarketBoardEditOkService;
+import kr.or.kosa.service.MarketBoardEditService;
 import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MarketBoardWriteService;
@@ -398,6 +400,16 @@ public class FrontController extends HttpServlet {
         	 action = new CafeMain();
              forward = action.execute(request, response);
         	 
+         }else if(urlcommand.equals("/marketboardEdit.do")){ // 거래 게시판 읽기
+             
+             action = new MarketBoardEditService();
+             forward = action.execute(request, response);
+             
+         }else if(urlcommand.equals("/marketboardEditOk.do")){ // 거래 게시판 읽기
+          
+          action = new MarketBoardEditOkService();
+          forward = action.execute(request, response);
+          
          }
    
    

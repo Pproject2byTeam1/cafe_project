@@ -15,13 +15,15 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.DataBoardDao;
+import kr.or.kosa.dao.MarketBoardDao;
 import kr.or.kosa.dao.Regular_Board_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.DataBoard;
+import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
 
-public class DataBoardEditOkService implements Action {
+public class MarketBoardEditOkService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -38,8 +40,9 @@ public class DataBoardEditOkService implements Action {
  			HttpSession session = request.getSession();
  	        User user = (User) session.getAttribute("member");
  			
- 	       String url = "";
- 	
+ 	        String url = "";
+ 	        
+ 	        System.out.println("여기 타는거에요?");
  			
  			// 로그인 안할경우 로그인 페이지로
 			if (user == null) {
@@ -61,31 +64,36 @@ public class DataBoardEditOkService implements Action {
 	  			int b_code = Integer.parseInt(multi.getParameter("b_code"));
 	  			int idx = Integer.parseInt(multi.getParameter("idx")); 
 	  			
+	  			
 	  			String title = multi.getParameter("title");
 	 			String content = multi.getParameter("content");
+	 			int price = Integer.parseInt(multi.getParameter("price"));
+	 			String cate = multi.getParameter("cate");
+	 			String m_mode = multi.getParameter("m_mode");
+	 			String sold = multi.getParameter("sold");
 	 			
 	 			Enumeration filenames = multi.getFileNames();
 				
 				String file1 = (String) filenames.nextElement();
 				String filename1 = multi.getFilesystemName(file1);
-				String oriname = multi.getOriginalFileName(file1);
-				long length = multi.getFile(file1).length();
-				int size1 = Long.valueOf(length).intValue();
 				
 				
-	 			DataBoard databoard = new DataBoard();
-	 			DataBoardDao dbao = new DataBoardDao();
+				
+	 			MarketBoard marketboard = new MarketBoard();
+	 			MarketBoardDao mdao = new MarketBoardDao();
 	 		
-	 			databoard = dbao.getData_BoardByIdx(idx);
+	 			marketboard = mdao.readMarket(idx);
 	 			
-	 			databoard.setTitle(title);
-	 			databoard.setContent(content);
+	 			marketboard.setTitle(title);
+	 			marketboard.setContent(content);
+	 			marketboard.setPrice(price);
+	 			marketboard.setCate(cate);
+	 			marketboard.setM_mode(m_mode);
+	 			marketboard.setSold(sold);
+	 			marketboard.setImg_name(filename1);
 	 			
-	 			databoard.setOri_name(oriname);
-	 			databoard.setSave_name(filename1);
-	 			databoard.setVolume(size1);
 	 			
-	 			int result = dbao.updateMarketBoardTitle(databoard);
+	 			int result = dbao.updateDataBoardTitle(databoard);
 	 			
 	 			
 	 			
