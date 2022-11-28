@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.service.BoardContentService;
+import kr.or.kosa.service.CafeMain;
 import kr.or.kosa.service.Calender_Board_List_Service;
 import kr.or.kosa.service.CheckBoardService;
 import kr.or.kosa.service.DataBoardEditOkService;
@@ -67,16 +68,15 @@ import kr.or.kosa.service.adminUpdateService;
 import kr.or.kosa.service.nickVerification;
 import kr.or.kosa.service.userVerification;
 
-
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
-   private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-   public FrontController() {
-      super();
-   }
+	public FrontController() {
+		super();
+	}
 
-   private void doProcess(HttpServletRequest request, HttpServletResponse response)
+	private void doProcess(HttpServletRequest request, HttpServletResponse response)
          throws ServletException, IOException {
 
       request.setCharacterEncoding("UTF-8");
@@ -371,6 +371,11 @@ public class FrontController extends HttpServlet {
             action = new RegularBoardDeleteService();
             forward = action.execute(request, response);
       
+         } else if(urlcommand.equals("/cafemain.do")) { //카페 메인 화면
+        	 
+        	 action = new CafeMain();
+             forward = action.execute(request, response);
+        	 
          }
    
    
@@ -389,14 +394,14 @@ public class FrontController extends HttpServlet {
 
    }
 
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      doProcess(request, response);
-   }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-         throws ServletException, IOException {
-      doProcess(request, response);
-   }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
 }

@@ -320,7 +320,7 @@ public class Img_Board_Dao {
 			conn = ds.getConnection();
 			conn.setAutoCommit(false);
 			
-			String sql = "delete from Img_Board where idx=?";
+			String sql = "delete from board where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			row = pstmt.executeUpdate();

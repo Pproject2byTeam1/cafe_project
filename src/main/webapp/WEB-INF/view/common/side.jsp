@@ -42,6 +42,21 @@
 			</div>
 		</c:if>
 		
+		<c:if test="${member == null}">
+			<div class="pagetitle card mt-2 pt-4">
+				<div class="card-body">
+					<div class="row p-3 ms-1">
+						<div class="col-md-6">
+							<a href="login_view.do">로그인</a>
+						</div>
+						<div class="col-md-6">
+							<a href="snsLogin.do">회원가입</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		
 		<!-- 프로필 끝 -->
 		<c:forEach var="infolist" items="${infolist}">
 			<li class="nav-item">
