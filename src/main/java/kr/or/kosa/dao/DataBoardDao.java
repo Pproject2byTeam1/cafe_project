@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.DataBoard;
 
@@ -148,11 +149,11 @@ import kr.or.kosa.dto.DataBoard;
 
 
    // 전체 자료게시판 조회
-   public List<Board> getAllDatalist(int b_code, int cpage, int pagesize) {
+   public List<AttendanceBoad> getAllDatalist(int b_code, int cpage, int pagesize) {
       Connection conn = null;
       PreparedStatement pstmt = null;
       ResultSet rs = null;
-      List<Board> datalist = null;
+      List<AttendanceBoad> datalist = null;
 
       try {
 
@@ -162,7 +163,7 @@ import kr.or.kosa.dto.DataBoard;
                + "        order by refer desc, step desc) where rn <= ? and rn >= ?";
          pstmt = conn.prepareStatement(sql);
          
-         datalist = new ArrayList<Board>();
+         datalist = new ArrayList<AttendanceBoad>();
          int start = cpage * pagesize - (pagesize - 1);
          int end = cpage * pagesize;
          pstmt.setInt(1, b_code);
@@ -171,7 +172,7 @@ import kr.or.kosa.dto.DataBoard;
 
          rs = pstmt.executeQuery();
          
-         datalist = new ArrayList<Board>();
+         datalist = new ArrayList<AttendanceBoad>();
 
          while (rs.next()) {
             DataBoard data = new DataBoard();
@@ -184,7 +185,6 @@ import kr.or.kosa.dto.DataBoard;
             data.setW_date(rs.getString("w_date"));
 
             // 계층형
-
             data.setRefer(rs.getInt("refer"));
             data.setStep(rs.getInt("step"));
             data.setDepth(rs.getInt("depth"));

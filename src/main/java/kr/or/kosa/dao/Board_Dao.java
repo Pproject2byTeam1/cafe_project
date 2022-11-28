@@ -11,9 +11,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Calender;
-import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.Regular_Board;
 
@@ -29,15 +29,12 @@ public class Board_Dao {
 	}
 	
 	//게시글 전체 조회
-	public List<Board> getBoardListAll(int cpage, int pagesize){
+	public List<AttendanceBoad> getBoardListAll(int cpage, int pagesize){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Board> boardlist = new ArrayList<Board>();
-		
-
-		
+		List<AttendanceBoad> boardlist = new ArrayList<AttendanceBoad>();
 		
 		try {
 			
@@ -58,7 +55,7 @@ public class Board_Dao {
 			if(rs.next()) {
 				do {
 					
-					Board board = new Board();
+					AttendanceBoad board = new AttendanceBoad();
 					board.setIdx(rs.getInt("idx"));
 					board.setTitle(rs.getString("title"));
 					board.setNick(rs.getString("nick"));
@@ -323,12 +320,12 @@ public class Board_Dao {
 	}
 	
 	//특정 게시글 조회
-	public Board getBoardByIdx(int idx) {
+	public AttendanceBoad getBoardByIdx(int idx) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Board board = new Board();
+		AttendanceBoad board = new AttendanceBoad();
 		
 		try {
 			
@@ -370,10 +367,9 @@ public class Board_Dao {
 	}
 	
 	//게시글 삽입(출석판용)
-	public int insertBoard(Board board) {
+	public int insertBoard(AttendanceBoad board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		//PreparedStatement pstmt2 = null;
 		int row = 0;
 		
 		try {
@@ -391,11 +387,6 @@ public class Board_Dao {
 			
 			row = pstmt.executeUpdate();
 			
-//			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
-//			pstmt2 = conn.prepareStatement(sql2);
-//			pstmt2.setString(1, board.getEmail_id());
-//			row = pstmt2.executeUpdate();
-			
 			if(row <= 0) {
 				throw new Exception("board 삽입 실패");
 			}else {
@@ -412,7 +403,6 @@ public class Board_Dao {
 		} finally {
 			try {
 				conn.setAutoCommit(true);
-				//pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
@@ -424,7 +414,7 @@ public class Board_Dao {
 	}
 	
 	//게시글 수정
-	public int updateBoard(Board board) {
+	public int updateBoard(AttendanceBoad board) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -547,11 +537,11 @@ public class Board_Dao {
 		}
 		
 		//출석 게시글 전체 조회
-		public List<Board> getBoardListAttendence(int cpage, String startdate, String enddate){
+		public List<AttendanceBoad> getBoardListAttendence(int b_code, int cpage, String startdate, String enddate){
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			List<Board> boardlist = new ArrayList<Board>();
+			List<AttendanceBoad> boardlist = new ArrayList<AttendanceBoad>();
 			
 			try {
 				
@@ -559,7 +549,7 @@ public class Board_Dao {
 				String sql = "select * from "
 						+ "(select  rownum rn, b.idx, m.rank, b.NICK, b.CONTENT, to_char(b.w_date,'yyyy-MM-dd / hh:mm')as w_date, b.EMAIL_ID, b.B_CODE  \r\n"
 						+ "from board b left join member m on b.email_id = m.email_id \r\n"
-						+ "WHERE b.b_code = 2 \r\n"
+						+ "WHERE b.b_code = ? \r\n"
 						+ "and b.w_date between ? and ? \r\n"
 						+ ")where rn between ? and ?";
 				pstmt = conn.prepareStatement(sql);
@@ -567,17 +557,18 @@ public class Board_Dao {
 				int start = cpage * 10 - 9;
 				int end = cpage * 10;
 				
-				pstmt.setString(1, startdate);
-				pstmt.setString(2, enddate);
-				pstmt.setInt(3, start);
-				pstmt.setInt(4, end);
+				pstmt.setInt(1, b_code);
+				pstmt.setString(2, startdate);
+				pstmt.setString(3, enddate);
+				pstmt.setInt(4, start);
+				pstmt.setInt(5, end);
 				
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
 					do {
 						
-						Board board = new Board();
+						AttendanceBoad board = new AttendanceBoad();
 						board.setIdx(rs.getInt("idx"));
 						board.setHits(rs.getInt("rank"));
 						board.setNick(rs.getString("nick"));

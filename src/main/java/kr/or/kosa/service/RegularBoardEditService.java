@@ -8,10 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.Regular_Board_Dao;
-import kr.or.kosa.dto.Board;
+import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
 
@@ -54,7 +53,7 @@ public class RegularBoardEditService implements Action {
 			if (user.getEmail_id().equals(email_idx)){
 				
 				Regular_Board_Dao dao = new Regular_Board_Dao();
-				Board board = dao.getRegular_BoardByIdx(idx);
+				AttendanceBoad board = dao.getRegular_BoardByIdx(idx);
 				request.setAttribute("board", board);
 				request.setAttribute("idx", idx);
 				request.setAttribute("email_idx", email_idx);
