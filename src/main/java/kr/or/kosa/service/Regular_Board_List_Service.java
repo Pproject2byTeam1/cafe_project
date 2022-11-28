@@ -77,8 +77,6 @@ public class Regular_Board_List_Service implements Action {
 				
 				User user = udao.selectUserById(email_id);
 				int rank = user.getRank();
-				System.out.println(idx);
-				System.out.println("cocount : " + commentcount);
 				yescountlist.add(yescount);
 				commentcountlist.add(commentcount);
 				ranklist.add(rank);

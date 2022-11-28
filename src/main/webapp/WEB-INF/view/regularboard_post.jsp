@@ -59,6 +59,7 @@
            let b_code = '<c:out value="${board.b_code}" />';
            let depth = '<c:out value="${board.depth}" />';
            let step = '<c:out value="${board.step}" />';
+           let refer = '<c:out value="${board.refer}" />';
            
            
            
@@ -70,7 +71,7 @@
            /* 게시물 좋아요 비동기 처리 */
            $("#yesbtn").click(function(){
               
-              
+        	   list();
               
               console.log("hahaha");
               console.log(email_id);
@@ -136,7 +137,7 @@
            /* 답글 작성 */
            $("#replyWrite").click(function(){
             
-                let link = "/WebCafe_Project/replyWriteView.do?idx="+idx+"&b_code="+b_code+"&depth="+depth+"&step="+step;
+                let link = "/WebCafe_Project/regular_reWriteView.do?refer="+refer+"&b_code="+b_code+"&depth="+depth+"&step="+step+"&idx="+idx;
                  console.log(link);
               
               location.href=link;
@@ -394,8 +395,8 @@
 	                                   	
 	                                   	<!-- 답글 수정 목록 -->
 	                                   	
-	                                   	<c:if test="${member.email_id == board.email_id}">
 	                                   	
+	                                   	<c:if test="${member.isAdmin == 'S' || member.isAdmin =='M'}">
 	                                   	<div class="col-md-1">
 	                                   		<form action="regulardelete.do?" method="get">
 	                                          <input type="text" value="${board.b_code}" name="b_code" style="display: none;">
@@ -404,6 +405,8 @@
 	                                          <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill" value="삭제">
 	                                       </form>
 	                                   	</div>
+	                                   	</c:if>
+	                                   	<c:if test="${member.email_id == board.email_id}">
                                    		<div class="col-md-1">
                                 			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
 	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
@@ -415,13 +418,7 @@
 	                                   	</c:if>
 	                                   	
 	                                   	<div class="col-md-1">
-	                                   		<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
-		                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
-		                                          <input type="text" value="${idx}" name="idx" style="display: none;">
-		                                          
-		                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="답글">
-	                                      	 </form>
-	                                   	
+	                                   		<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글">
 	                                   	</div>
 	                                   	
                                    		<div class="col-md-1">
