@@ -9,6 +9,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class CafeBannerDao {
+	
 	DataSource ds = null;
 	
 	public CafeBannerDao() throws NamingException {
