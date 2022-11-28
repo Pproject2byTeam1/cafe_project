@@ -87,8 +87,6 @@ public class DataBoardEditOkService implements Action {
 	 			
 	 			int result = dbao.updateDataBoardTitle(databoard);
 	 			
-	 			
-	 			
 				
 				if (result > 0) {
 
