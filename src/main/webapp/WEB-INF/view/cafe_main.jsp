@@ -70,58 +70,7 @@
 		</div>
 		<!-- End Page Title -->
 
-		<section class="section dashboard">
-			<div
-				class="row align-items-top container h-100 d-flex justify-content-center">
-				<!-- columns -->
-				<div class="col-lg-6">
-					<div class="row">
-						<!-- 로그인 -->
-						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">Login</h5>
-
-								<form action="loginok.do" method="post" name="loginForm" id="loginForm">
-									<div class="input-group mb-3">
-										<span class="input-group-text">
-											<i class="bi bi-person-fill"></i>
-										</span> 
-										<input type="email" class="form-control" name="email_id" id="inputEmail5">
-									</div>
-									<div class="input-group mb-3">
-										<span class="input-group-text"><i class="bi bi-key"></i></span>
-										<input type="password" class="form-control"
-											name="password" id="inputPassword5">
-									</div>
-									<div class="text-lg-end">
-										<button type="submit" class="btn btn btn-primary">로그인</button>
-									</div>
-								</form>
-								
-							</div>
-						</div>
-						<!-- End 로그인 -->
-						<!-- 회원가입 -->
-						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">Register</h5>
-								<p>소셜 로그인 및 이메일로 가입할 수 있습니다.</p>
-								<hr>
-								<a href="#"><img alt=""
-									src="image/login_img/google_login.png" class="w-100 p-3"></a>
-								<!-- 네이버 로그인 버튼 노출 영역 (근데 작다..)-->
-    							<div id="naver_id_login"></div>
-								<a href="#"><img alt=""
-									src="image/login_img/kakao_login.png" class="w-100 p-3"></a>
-									
-							</div>
-						</div>
-						<!-- End 회원가입 -->
-					</div>
-				</div>
-				<!-- columns -->
-			</div>
-		</section>
+		
 
 	</main>
 	<!-- End #main -->
@@ -159,15 +108,5 @@
 	<!-- Template Main JS File -->
 	<script src="assets/js/main.js"></script>
 	
-<script type="text/javascript">
-        var naver_id_login = new naver_id_login("OGifRqdUtHJWY_oTLDrQ", "http://localhost:8090/WebCafe_Project/snsLogin.do");
-        var state = naver_id_login.getUniqState();
-        naver_id_login.setButton("green", 3, 40);
-        naver_id_login.setDomain("http://localhost:8090/WebCafe_Project/login_view.do");
-        naver_id_login.setState(state);
-        //naver_id_login.setPopup();
-        naver_id_login.init_naver_id_login();
-    </script>
-</body>
 
 </html>
