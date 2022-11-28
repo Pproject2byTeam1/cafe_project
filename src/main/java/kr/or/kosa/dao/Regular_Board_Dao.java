@@ -142,7 +142,7 @@ public class Regular_Board_Dao {
 						+ "INTO board (idx, title, nick, content, email_id, b_code) "
 						+ "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) "
 						+ "INTO regular_board (b_idx, idx, refer) "
-						+ "VALUES (REGULAR_B_IDX_SEQ.nextval, IDX_SEQ.currval, REGULAR_B_IDX_SEQ.currval) "
+						+ "VALUES (REGULAR_B_IDX_SEQ.nextval, IDX_SEQ.currval, ?) "
 						+ "select * from dual";
 				pstmt = conn.prepareStatement(sql);
 				
@@ -152,6 +152,7 @@ public class Regular_Board_Dao {
 				pstmt.setString(4, regualr_board.getEmail_id());
 				pstmt.setInt(5, regualr_board.getB_code());
 				
+				pstmt.setInt(6, getMaxRefer()+1);
 				
 				row = pstmt.executeUpdate();
 				
@@ -281,93 +282,6 @@ public class Regular_Board_Dao {
 		return row;
 	}
 	
-	
-	//게시글 상세 (답글 쓰기) 
-		public int insertRegualr_BoardReply(Regular_Board regualr_board) {
-
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			int result = 0;
-			try {
-				conn = ds.getConnection();
-				
-				String title = regualr_board.getTitle();
-				String nick = regualr_board.getNick();
-				String content = regualr_board.getContent();
-				String email_id = regualr_board.getEmail_id();
-				int b_code = regualr_board.getB_code();
-				
-				//1. 답글 
-				//현재 내가 읽은 글의 refer , depth , step (원본글 ,답글)
-				String refer_depth_step_sal ="select refer , depth , step from regular_board where idx=?";
-				
-				//2. 위치
-				//step (순서) : 나중에 쓴 답글이 위로 올라오게 하겠다
-				//내가 읽은 글의 step 보다 큰 값은 +1 해서 증가 시켜 놓는다
-				//refer 값으로 판단
-				//ex)   원본글                 refer=1 , step=0 , depth=0 
-			    //				원본글답글           refer=1 , step=1+1 >2 >3,  depth=1
-				//	        원본글답글           refer=1 , step=1>2 ,       depth=1
-				//      원본글답글           refer=1 , step=0+1>1    
-				String step_update_sql = "update jspboard set step= step+1 where step  > ? and refer =? ";
-				// "update jspboard set step= step+1 where step  > 0 and refer =1 ";
-				
-				//답글  insert 
-				String rewrite_sql="insert into jspboard(idx,writer,pwd,subject,content,email,homepage,writedate,readnum,filename,filesize,refer,depth,step)" + 
-					    		   " values(jspboard_idx.nextval,?,?,?,?,?,?,sysdate,0,?,0,?,?,?)";
-				
-				pstmt = conn.prepareStatement(refer_depth_step_sal);
-				pstmt.setInt(1, regualr_board.getIdx());
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()) { //데이터가 있다면 ... 원본글의  refer , step , depth 존재
-					int refer = rs.getInt("refer");
-					int step = rs.getInt("step");
-					int depth = rs.getInt("depth");
-					
-					pstmt = conn.prepareStatement(step_update_sql); //컴파일
-					//기존 step + 1 >> update 구문 실행
-					pstmt.setInt(1, step);
-					pstmt.setInt(2, refer);
-					pstmt.executeUpdate();
-
-					//filename,filesize,refer,depth,step
-					/*
-					 * pstmt = conn.prepareStatement(rewrite_sql); //컴파일 pstmt.setString(1, writer);
-					 * pstmt.setString(2, pwd); pstmt.setString(3, subject); pstmt.setString(4,
-					 * content); pstmt.setString(5, email); pstmt.setString(6, homepage);
-					 * pstmt.setString(7, filename);
-					 */
-					
-					//답변
-					pstmt.setInt(8, refer);
-					pstmt.setInt(9, depth+1); // 규칙 현재 읽은 글에 depth + 1
-					pstmt.setInt(10, step+1); // 순서 update 통해서  자리 확보 + 1
-					
-					int row = pstmt.executeUpdate();
-					if(row > 0) {
-						result = row;
-					}else {
-						result = -1;
-					}
-
-				}
-		
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				try {
-					pstmt.close();
-					rs.close();
-					conn.close();//반환
-				}catch (Exception e) {
-					
-				}
-			}
-			
-			return result;
-		}
 	
 	
 }
