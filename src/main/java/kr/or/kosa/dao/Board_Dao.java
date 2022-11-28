@@ -373,7 +373,7 @@ public class Board_Dao {
 	public int insertBoard(Board board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
+		//PreparedStatement pstmt2 = null;
 		int row = 0;
 		
 		try {
@@ -391,10 +391,10 @@ public class Board_Dao {
 			
 			row = pstmt.executeUpdate();
 			
-			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
-			pstmt2 = conn.prepareStatement(sql2);
-			pstmt2.setString(1, board.getEmail_id());
-			row = pstmt2.executeUpdate();
+//			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
+//			pstmt2 = conn.prepareStatement(sql2);
+//			pstmt2.setString(1, board.getEmail_id());
+//			row = pstmt2.executeUpdate();
 			
 			if(row <= 0) {
 				throw new Exception("board 삽입 실패");
@@ -412,7 +412,7 @@ public class Board_Dao {
 		} finally {
 			try {
 				conn.setAutoCommit(true);
-				pstmt2.close();
+				//pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {

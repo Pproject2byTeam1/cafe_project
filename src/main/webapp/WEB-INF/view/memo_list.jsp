@@ -38,23 +38,7 @@
   
   <!-- 무한 스크롤 -->
   <script src="https://unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
-  
-  <!-- 무한 스크롤 js 코드 -->
-	<script type="text/javascript">
-	
-		$(document).ready(function(){
-			
-			$('#autoScroll').jscroll({
-				autoTrigger: true,
-				loadingHtml: '<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>',
-				nextSelector: 'a.nextPage:last',
-				contentSelector: '#columns',
-				padding: 20
-			});
-			
-		});
-  	
-  	</script>
+
 
 </head>
 

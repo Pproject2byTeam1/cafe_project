@@ -325,7 +325,7 @@ public class CommentsDao {
 			try {
 				
 				conn = ds.getConnection();
-				String sql = "select c.co_idx ,b.idx, b.title,nvl(c2.\"cnt\",0) as \"c_count\", c.content, to_char(c.w_date,'yyyy-MM-dd') as w_date \r\n"
+				String sql = "select c.co_idx ,b.idx, b.b_code, b.title,nvl(c2.\"cnt\",0) as \"c_count\", c.content, to_char(c.w_date,'yyyy-MM-dd') as w_date \r\n"
 						+ "from comments c join board b \r\n"
 						+ "on c.idx = b.idx \r\n"
 						+ "left join (select count(co_idx)as \"cnt\", idx from comments group by idx) c2\r\n"
@@ -343,6 +343,7 @@ public class CommentsDao {
 					comment.setIdx(rs.getInt("idx"));
 					comment.setEmail_id(rs.getString("title"));//임시방편으로 다른 String에다 넣음
 					comment.setDepth(rs.getInt("c_count"));//임시방편으로 다른 int에다 넣음
+					comment.setRefer(rs.getInt("b_code"));//임시방편으로 다른 int에다 넣음
 					String str = rs.getString("content");
 					if(str.length() < 15) {
 					comment.setContent(rs.getString("content"));
