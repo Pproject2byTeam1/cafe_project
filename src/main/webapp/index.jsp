@@ -76,7 +76,7 @@
     <p><a href="user_activity.do">유저 활동 내역</a></p>
     <p><a href="user-grade.html">유저등급표시</a></p>
     <p><a href="rank-edit-board.jsp">랭크변환</a></p>
-
+	<p><a href="adminmain_edit.jsp">관리자메인페이지관리</a></p>
 
     <section class="section dashboard">
       <div class="row">
