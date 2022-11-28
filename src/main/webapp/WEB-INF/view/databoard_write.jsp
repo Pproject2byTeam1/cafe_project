@@ -82,20 +82,22 @@
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 								<div class="col-md-12">
 									<!-- 글 제목 -->
-									<form name="bbs" action="databoard_writeok.do" method="POST" enctype="multipart/form-data">
-									<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요." name="title" required>
-									<input id="b_code" name="b_code" value="${b_code}" type="hidden" />
-									<p>
-									<hr>
-									
-										<div>
-											<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" required>
-										</div>
-										<div>
+									<form name="bbs" action="databoard_writeok.do" method="POST"
+										enctype="multipart/form-data">
+										<input type="text" class="form-control" id="title"
+											placeholder="제목을 입력하세요." name="title" required> <input
+											id="b_code" name="b_code" value="${b_code}" type="hidden" />
+										<p>
+										<hr>
 
+										<div>
+											<input type="file" class="form-control"
+												accept="image/board/*" id="getfile" name="filename1"
+												required>
 										</div>
-									
-									
+										<div></div>
+
+
 										<div class="col-md-12">
 											<hr>
 											<!-- 글 내용 작성 -->
@@ -109,25 +111,25 @@
 										<hr>
 										<div align="right" class="col-md-12">
 											<div>
-												<button type="submit" id="submit" 
+												<button type="submit" id="submit"
 													class="btn btn-outline-secondary btn-sm rounded-pill">등록</button>
-												<button type="button" id="List" 
+												<button type="button" id="List"
 													class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
-									
+
 											</div>
 										</div>
 									</form>
-									</div>
 								</div>
-								
-								
 							</div>
+
+
 						</div>
 					</div>
-
 				</div>
+
 			</div>
-		
+		</div>
+
 
 		<!-- 보드 페이지 시작 -->
 
@@ -176,7 +178,6 @@
 				
 				$('#pageContainer').css("display", "flex");
 				$('#pageContainer').css("justify-content", "center");
-				$('#pageContainer').append("<img id='preview' src='' width='500px' style='padding-top: 25px;'>")
 				document.querySelector('#preview').src = reader.result;
 			};
 		};
