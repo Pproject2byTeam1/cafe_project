@@ -78,9 +78,11 @@
                 <div class="card-body">
                   <h5 class="card-title">출석부 <span>/ Today</span></h5>
                   <hr>
-					<button type="button" class="btn btn-outline-info rounded-pill bi bi-caret-left-fill"></button>
-					<span>2022 년 11 월</span>
-					<button type="button" class="btn btn-outline-info rounded-pill bi bi-caret-right-fill"></button>
+					<a href="checkBoard.do?inputdate=${year}-${month-1}-01">
+					<button type="button" class="btn btn-outline-info rounded-pill bi bi-caret-left-fill"></button></a>
+					<span>${year} 년 ${month} 월</span>
+					<a href="checkBoard.do?inputdate=${year}-${month+1}-01">
+					<button type="button" class="btn btn-outline-info rounded-pill bi bi-caret-right-fill"></button></a>
 					<br>
 					<br>
 					<ul class="list-group list-group-horizontal list-inline nav">
@@ -95,82 +97,95 @@
 						</c:choose>
 					</c:forEach>
 					</ul>
-					<!-- 작성란 -->
-					<c:if test="${userid != '' && sysdate == date5}"><!-- 로그인 상태와 오늘 날짜여야만 보임 -->
-					  <div class="insertCheckToday">
-			              <div class="quill-editor-default">
-			                <p>출석 체크</p>
-			              </div><!-- 서버시간 기준으로 오늘날짜가 아닌 경우 안보이게 처리-->
-			              <nav aria-label="Page navigation example">
-			              <ul class="pagination justify-content-end">
-		              	  <div class="col-sm-10 align-self-center text-md-start">오늘의 출석인 수: ${count}명</div>
-		              	  <div  class="col-sm-2 text-lg-end">
-		              	  <!-- Basic Modal -->
-			              	  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#basicModal" >
-			                	출석하기
-			              	  </button>
-			              	 </div>
-			              </ul>
-			              </nav>
-			              <div class="modal fade" id="basicModal" tabindex="-1">
-			                <div class="modal-dialog">
-			                	
-			                  <div class="modal-content">
-			                    <div class="modal-body">
-			                    하루에 한번만 출석 가능
-			                     </div>
-			                    <div class="modal-footer">
-			                      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			                    </div>
-			                  </div>
-			                </div>
-			              </div><!-- End Basic Modal-->
-		              </div>
-		              </c:if><!-- End 작성란 -->
+					<br>
+					
+		              <br>
+		              <div class="col-sm-10 align-self-center text-md-start" id = "count">오늘의 출석인 수: ${count}명</div>
                 </div>
               </div>
             </div><!-- End 카드 -->
-            <!-- 댓글 -->
+            <!-- 작성란 -->
+<c:if test="${userId != null && sysdate == date5}"><!-- 로그인 상태와 오늘 날짜여야만 보임 -->
+		<div class="container">
+			<div class="row">
+				<div class="col-1"></div>
+				<form name="bbs" action="insertAttendance.do" method="POST" enctype="multipart/form-data">
+					<div class="col-12">
+						<div class="park-card p-4">
+							<div class="park-card-body row">
+								<textarea name="content" required> 
+        			 				글을 작성해주세요.
+        						</textarea>
+							</div>
+							<div class="col-2">
+								<button type="submit" id="btn" class="btn btn-primary">출석하기</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-1"></div>
+		</div>
+</c:if><!-- End 작성란 -->
+            
+            <!-- 작성글 -->
             <div class="col-lg-12">
 	          <div class="card">
 	            <h5 class="card-title">&nbsp;&nbsp;&nbsp;출석명단</h5>
+	            <div id = "boardlist">
 	            <c:forEach var="list" items="${boardlist}" varStatus="status">
 	            <!-- 1round -->
 	            <div class="card-body row">
-	            <hr>
-	            <div class="col-sm-2">
-	            	<h5 class="card-title"><img src="image/rank_icon/${list.hits}.gif" alt="랭크 아이콘">${list.nick}</h5>
-	            </div>
+	              <hr>
+	              <div class="col-sm-2">
+	            	  <h5 class="card-title"><img src="image/rank_icon/${list.hits}.gif" alt="랭크 아이콘">${list.nick}</h5>
+	              </div>
+	              <input type="text" hidden="" value="${list.idx}" class="idx">
 	              <div class="col-sm-7 align-self-center"><p class="text-justify ">${list.content}</p></div>
 	              <div class="col-sm-3 align-self-center text-lg-end">
-	              <nav style="--bs-breadcrumb-divider: '|';">
-	                <ol class="breadcrumb">
-	                  <li class="breadcrumb-item">${list.w_date}</li>
-	                  <c:if test="${list.email_id == userId}">
-	                  <li class="breadcrumb-item active"><a href="#" class="btn btn-warning">삭제</a></li>
-	                  </c:if>
-	                </ol>
-	              </nav>
-	              </div>
+		              <nav style="--bs-breadcrumb-divider: '|';">
+			                <ol class="breadcrumb">
+				                  <li class="breadcrumb-item">${list.w_date}</li>
+				                  <c:if test="${list.email_id == userId}">
+				                  <li class="breadcrumb-item active"><a class="btn btn-warning" id="attendanceDelete">삭제</a></li>
+				                  </c:if>
+			                </ol>
+		               </nav>
+	               </div>
 	              </div>
 	              <!-- 1round -->
 	              </c:forEach>
+	              </div>
 	            <hr>
-				<ul class="pagination justify-content-center">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>	            
+				<!-- 보드 페이지 시작 -->
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+					
+			               <c:if test="${cpage > 1}">
+			                 <li class="page-item">
+			                   <a class="page-link" href="checkBoard.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true">&laquo;</a>
+			                 </li>
+			                  </c:if>
+			                  	
+			                  <c:forEach var="i" begin="1" end="${pagecount}" step="1">
+			                  	<c:choose>
+									<c:when test="${cpage==i}">
+											<li class="page-item"><a class="page-link active" >${i}</a></li>
+									</c:when>
+									<c:otherwise>
+				                 			<li class="page-item"><a class="page-link" href="checkBoard.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+									</c:otherwise>
+								</c:choose>
+			                  </c:forEach>
+			                  
+			                <c:if test="${cpage < pagecount}">
+		                  	<li class="page-item">
+								<a class="page-link" href="checkBoard.do?cp=${cpage+1}&ps=${pagesize}">&raquo;</a>
+							</li>
+						    </c:if>
+					</ul>
+				</nav>	            
 	          </div>
 
 	        </div>
@@ -211,7 +226,33 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+<script>
+		tinymce
+				.init({
+					selector : 'textarea',
+					plugins : 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+					toolbar : 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+					tinycomments_mode : 'embedded',
+					tinycomments_author : 'Author name',
+					mergetags_list : [ {
+						value : 'First.Name',
+						title : 'First Name'
+					}, {
+						value : 'Email',
+						title : 'Email'
+					}, ]
+				});
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			//삭제
+			$('#attendanceDelete').click(function(){
+				const idx = $(this).parent().parent().parent().parent().parent().children('.idx').val();
+				console.log(idx);
+				location.href="deleteAttendance.do?idx="+idx;
+			});
+		});
+	</script>
 </body>
 
 </html>
