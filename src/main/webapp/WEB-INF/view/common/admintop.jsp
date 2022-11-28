@@ -3,7 +3,7 @@
    
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.jsp" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
+        <img id="image-icon" src="assets/img/logo.png" alt="" style="width=50px; height=50px;">
         <span id="cafename" class="d-none d-lg-block">카페人중독 (CAFE_NAME)</span>
       </a>
     </div><!-- End Logo -->
