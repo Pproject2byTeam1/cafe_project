@@ -10,8 +10,8 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.DataBoardDao;
-import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.User;
 
 public class DataBoardEditService implements Action {
@@ -52,7 +52,7 @@ public class DataBoardEditService implements Action {
 			if (user.getEmail_id().equals(email_idx)){
 				
 				DataBoardDao dao = new DataBoardDao();
-				AttendanceBoad board = dao.getData_BoardByIdx(idx);
+				DataBoard board = dao.getData_BoardByIdx(idx);
 				request.setAttribute("board", board);
 				request.setAttribute("b_code", b_code);
 				request.setAttribute("email_idx", email_idx);

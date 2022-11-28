@@ -149,11 +149,11 @@ import kr.or.kosa.dto.DataBoard;
 
 
    // 전체 자료게시판 조회
-   public List<AttendanceBoad> getAllDatalist(int b_code, int cpage, int pagesize) {
+   public List<DataBoard> getAllDatalist(int b_code, int cpage, int pagesize) {
       Connection conn = null;
       PreparedStatement pstmt = null;
       ResultSet rs = null;
-      List<AttendanceBoad> datalist = null;
+      List<DataBoard> datalist = null;
 
       try {
 
@@ -163,7 +163,7 @@ import kr.or.kosa.dto.DataBoard;
                + "        order by refer desc, step desc) where rn <= ? and rn >= ?";
          pstmt = conn.prepareStatement(sql);
          
-         datalist = new ArrayList<AttendanceBoad>();
+         datalist = new ArrayList<DataBoard>();
          int start = cpage * pagesize - (pagesize - 1);
          int end = cpage * pagesize;
          pstmt.setInt(1, b_code);
@@ -171,8 +171,6 @@ import kr.or.kosa.dto.DataBoard;
          pstmt.setInt(3, start);
 
          rs = pstmt.executeQuery();
-         
-         datalist = new ArrayList<AttendanceBoad>();
 
          while (rs.next()) {
             DataBoard data = new DataBoard();
