@@ -74,7 +74,7 @@
   						
   						$(data).each(function(){
   							html = '<figure>';
-  								html += '<a href="img_board_read.do?idx=' + this.idx + '"><img src="image/imgTest/' + this.img_name + '"></a>';
+  								html += '<a href="img_board_read.do?idx=' + this.idx + '"><img src="upload/' + this.img_name + '"></a>';
   								html += '<figcaption>' + this.title + '</figcaption>'
   							html += "</figure>";
   							console.log(html);
