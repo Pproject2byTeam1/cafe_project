@@ -120,17 +120,15 @@
 <c:set var="pagesize" value='<%=request.getAttribute("pagesize")%>' />
 	<c:set var="cpage" value='<%=request.getAttribute("cpage")%>' />
 	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
-   <!-- ======= Header ======= -->
-   <header id="header" class="header fixed-top d-flex align-items-center">
-<jsp:include page="/common/side2.jsp"></jsp:include>
-      <jsp:include page="/common/top.jsp"></jsp:include>
 
-   </header>
-   <!-- End Header -->
-
-   <!-- ======= Sidebar ======= -->
-
-   <jsp:include page="/common/side.jsp"></jsp:include>
+  <!-- ======= Header ======= -->
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
 
    <!-- End Sidebar -->
 

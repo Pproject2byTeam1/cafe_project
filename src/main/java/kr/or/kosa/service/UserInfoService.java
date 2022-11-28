@@ -31,30 +31,50 @@ public class UserInfoService implements Action {
 			User user = new User();
 			UserDetails details = new UserDetails();
 			User user2 = (User) session.getAttribute("member");
-			String userId = user2.getEmail_id();
+			String url = "";
 			
-			UserDao dao = new UserDao();
-			user = dao.selectUserById(userId);
-			details = dao.selectUserDetailById(userId);
+			if (user2 == null) {
+				
+	        	String board_msg = "권한이 없습니다.";
+	            String board_url = "/WebCafe_Project/login_view.do";
+	              
+	            request.setAttribute("board_msg", board_msg);
+	            request.setAttribute("board_url", board_url);
+	              
+	            url="/WEB-INF/view/redirect.jsp";
+	            
+			} else {
+				
+				String userId = user2.getEmail_id();
+				
+				UserDao dao = new UserDao();
+				user = dao.selectUserById(userId);
+				details = dao.selectUserDetailById(userId);
+				
+				String phone = details.getPhone();
+				String number = phone.substring(0, 3) + " - " + phone.substring(3, 7) + " - " + phone.substring(7, 11);
+				
+				String birth = user.getBirth();
+				String day = birth.substring(0,4) + "년 " + birth.substring(4,6) + "월 " + birth.substring(6,8) + "일";
+				
+				String join = details.getJoin_date();
+				String date = join.substring(0,4) + "년 " + join.substring(4,6) + "월 " + join.substring(6,8) + "일";
+				
+				url="/WEB-INF/view/user_info_change_board.jsp";
+				
+				request.setAttribute("user", user);
+				request.setAttribute("details", details);
+				request.setAttribute("phone", number);
+				request.setAttribute("birthday", day);
+				request.setAttribute("joindate", date);
+				
+			}
 			
-			String phone = details.getPhone();
-			String number = phone.substring(0, 3) + " - " + phone.substring(3, 7) + " - " + phone.substring(7, 11);
 			
-			String birth = user.getBirth();
-			String day = birth.substring(0,4) + "년 " + birth.substring(4,6) + "월 " + birth.substring(6,8) + "일";
-			
-			String join = details.getJoin_date();
-			String date = join.substring(0,4) + "년 " + join.substring(4,6) + "월 " + join.substring(6,8) + "일";
-			
-			request.setAttribute("user", user);
-			request.setAttribute("details", details);
-			request.setAttribute("phone", number);
-			request.setAttribute("birthday", day);
-			request.setAttribute("joindate", date);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/user_info_change_board.jsp");
+		  	forward.setPath(url);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

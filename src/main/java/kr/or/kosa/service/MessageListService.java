@@ -24,15 +24,36 @@ public class MessageListService implements Action {
 			HttpSession session = request.getSession();
 			MessageDao dao = new MessageDao();
 			User user2 = (User) session.getAttribute("member");
-			String userId = user2.getEmail_id();
 			
-			List<Message> messagelist = dao.getMessageByReceiveId(userId );//테스트용
+			String url="";
 			
-			request.setAttribute("messagelist", messagelist);
+			 if (user2 == null) {
+					
+		        	String board_msg = "권한이 없습니다.";
+		            String board_url = "/WebCafe_Project/windowclose.do";
+		              
+		            request.setAttribute("board_msg", board_msg);
+		            request.setAttribute("board_url", board_url);
+		              
+		            url="/WEB-INF/view/redirect.jsp";
+		            
+			} else {
+				
+
+				String userId = user2.getEmail_id();
+				
+				List<Message> messagelist = dao.getMessageByReceiveId(userId );//테스트용
+				
+				request.setAttribute("messagelist", messagelist);
+				
+				url="/WEB-INF/view/memo_list.jsp";
+				
+			}
+			
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/memo_list.jsp");
+		  	forward.setPath(url);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
