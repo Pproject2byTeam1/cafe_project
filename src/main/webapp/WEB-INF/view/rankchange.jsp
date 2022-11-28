@@ -28,7 +28,85 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+ <script type="text/javascript">
+
+ $(function)(){
+	 let rank=<c:out value="${list.rank}"/>';
+	 let r_name=<c:out value="${list.r_name}"/>';
+	 let r_point=<c:out value="${list.r_point}"/>';
+	 
+	 
+	 function insert(data){
+		 
+		 
+		 $.ajax({
+			
+			 url : "RankOk",
+			 data :data,
+			 dataType :"html";
+			success : function(data){
+	
+				list();
+				swal(data);
+	
+			}
+			 
+
+		 });
+		 
  
+	 }
+	 
+	function list(){
+		
+		
+		const req2 = {"rank" : rank};
+		
+		$.ajax({
+			
+				url :"RankList";
+				data : req,
+				dataType :"html",
+				success : function(responseText){
+					
+					
+					
+				}
+							
+			
+			
+			
+			
+		});
+
+	} 
+	 
+	 
+	 
+	 /*추가하기*/
+	 $("#RankNew").click(function(){
+		 
+	  const data = {"rank" : rank , "r_name" :$("#r_rank").val() , "r_point" :$("#r_point").val()};
+	  insert(data);
+	  $("#r_rank").val("");
+	 
+	 
+	 });
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+ }
+ 
+ 
+ </script>
 </head>
 <body>
   <!-- ======= Header ======= -->
@@ -111,61 +189,38 @@
 			                        </td>
 			                        
 			                     </tr>
+			                 
+			                     <c:forEach var="rank" items="${list}"   varStatus="status">
+			                 	    <c:if test="${rank.rank>1}">    
 			                     <tr>
-			                     	<c:forEach var="rank" items="${rank}" varStatus="status"><!--dao에 리스트 불러와서 추가행  -->
+			                     	
 			                        <td>
-			                           2
+			                           ${rank.rank}
 			                        </td>
 			                        <td>
-			                           <input type="text" class="form-control" id="기입하세용" placeholder="정회원">
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="${rank.r_name}" value="${rank.r_name}" id="r_rank">
+			                          
 			                        </td>
 			                        <td>
-			                           <input type="text" class="form-control" id="기입하세용" placeholder="100점 이상">
+			                           <input type="text" class="form-control" id="기입하세용" placeholder="${rank.r_point}점 이상" id="r_point">
+			                          
 			                        </td>
 			                        <td>
 			                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
 			                        </td>
-			                        </c:forEach>
+			                       
 			                     </tr>
+			                        </c:if>
+			                      </c:forEach>
+			                
+			                 
 			                     <tr>
 			                        <td>
-			                           3
 			                        </td>
 			                        <td>
-			                           <input type="text" class="form-control" id="기입하세용" placeholder="특별회원">
 			                        </td>
 			                        <td>
-			                           <input type="text" class="form-control" id="기입하세용" placeholder="200점 이상">
-			                        </td>
-			                        <td>
-			                           <input type="button" class="btn btn-danger " onclick="alert('삭제되었습니다!')" value="삭제">
-			                        </td>
-			                     </tr>
-			                     <tr>
-			                        <td>
-			                           4
-			                        </td>
-			                        <td>
-			                           <input type="text" class="form-control" id="기입하세용" placeholder="우수회원">
-			                        </td>
-			                        <td>
-			                           <input type="text" class="form-control" id="기입하세용" placeholder="300점 이상">
-			                        </td>
-			                        <td>
-			                           <input type="button" class="btn btn-danger" onclick="alert('삭제되었습니다!')" value="삭제">
-			                        </td>
-			                     </tr>
-			                     <tr>
-			                        <td>
-			                           
-			                        </td>
-			                        <td>
-			                           
-			                        </td>
-			                        <td>
-			                           <button type="button" class="btn btn btn-secondary" id="RankNew">
-			                              추가하기
-			                           </button>
+			                           <button type="button" class="btn btn btn-secondary" id="RankNew"> 추가하기 </button>
 			                        </td>
 			                        <td>
 			                        </td>

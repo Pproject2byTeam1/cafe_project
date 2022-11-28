@@ -26,6 +26,7 @@ public class RankChangeService implements Action {
 		User user = (User) session.getAttribute("member");
 		String userId = (String) session.getAttribute("userid");
 		String email_idx = request.getParameter("id");
+		
 		try {
 			Rank_Dao dao = new Rank_Dao();
 			
@@ -62,8 +63,9 @@ public class RankChangeService implements Action {
 	    	
 			}
 			List<Rank> list = dao.getRankListAll();
-			List rank = new ArrayList();
-			request.setAttribute("rank", rank);
+			
+			request.setAttribute("list", list);
+		
 			forward = new ActionForward();
     		forward.setRedirect(false);
     		forward.setPath(url);
