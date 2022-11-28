@@ -56,13 +56,13 @@
     clear: both;
 }
 
-.container {
+.imgbox {
   position: relative;
   width: 100%;
   height: 200px;
   background-color: #e0e0e0;
 }
-.container.wide {
+.imgbox.wide {
   width: 100%;
   height: 200px;
 }
@@ -74,12 +74,12 @@
   flex-direction: row;
 }
 
-.ex-container {
+.ex-imgbox {
   margin-right: 20px;
   margin-bottom: 20px;
 }
 
-.ex-container:last-child {
+.ex-imgbox:last-child {
   margin: 0;
 }
 
@@ -93,6 +93,17 @@
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+ <script type="text/javascript">
+  	
+ 	document.addEventListener('DOMContentLoaded', function() {
+  		
+ 
+ 		
+  	});
+  	
+  	
+ </script>
 
 </head>
 
@@ -121,6 +132,7 @@
 					<button type="button" id="cancel" 
 						class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>
 					</c:if>
+					<hr>
 					<!-- 본인확인 -->
 					
 				</div>
@@ -128,19 +140,20 @@
 		<form name="bbs" action=".do" method="POST" enctype="multipart/form-data">
 			<div class="container-fluid">
 			<div class="wrap1">
-			<div class="col-md-12">
+			<div class="col-lg-12">
 				<div class="maincard">
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-5">
 							<div>
 						      <a class="logo d-flex align-items-center">
 						        <img src="assets/img/logo.png" alt="">
-						        <span id="cafename" class="d-none d-lg-block"><input type="text" name="cafe_name" id="inputname" placeholder="카페 이름" rows="1" cols="20"></input></span>
+						        <span id="cafename" class=""><input type="text" name="cafe_name" id="inputname" placeholder="카페 이름" rows="1" cols="10"></input></span>
 						      </a>
+						      	<span id="size"></span>
 						    </div>
 						</div>
 				
-						<div class="col-md-8">
+						<div class="col-md-7">
 							<div class="row">
 							 <label for="form-control" class="col">아이콘 : <input type="file" name="cafe_icon" class="form-control" placeholder="카페 아이콘" accept="image/*" id="getfile" onchange="seticon(event)" required></label>
 							 <label for="form-control" class="col">메인 배너 : <input type="file" name="cafe_img"  class="form-control" placeholder="카페 메인 배너" accept="image/*" id="getfile" onchange="setBanner(event)" required></label>
@@ -155,29 +168,29 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="maincard">
-							<div class="row">
-								<div class="col">
-									<div align="center" class="col-md-4">							
-										<button type="submit" id="edit" 
-											class="btn btn-outline-secondary btn-sm rounded-pill">게시판 추가</button>
-										<button type="button" id="cancel" 
-											class="btn btn-outline-secondary btn-sm rounded-pill">구분선 추가</button>
-										<button type="button" id="cancel" 
-											class="btn btn-outline-secondary btn-sm rounded-pill">휴지통</button>
-									</div>
-								</div>
-								<div class="col">
-								
-								</div>
+						<div class="row">
+							<div align="right" class="col">							
+								<button type="button" id="add_btn" 
+									class="btn btn-outline-secondary btn-sm rounded-pill">게시판 추가</button>
+								<button type="button" id="hr" 
+									class="btn btn-outline-secondary btn-sm rounded-pill">구분선 추가</button>
+								<button type="button" id="del" 
+									class="btn btn-outline-secondary btn-sm rounded-pill">휴지통</button>
 							</div>
+						</div>
+						
+							<div class="col">
+								
+							</div>
+							
 					</div>
 				</div>
 				<div class="col-md-8">
 					<div class="maincard">
 						<div class="col-md-12">
-							<div class="ex-container">
-								<div class="container wide" id="image-thumbnail"></div>
-								
+						<!-- 배너 이미지 미리보기 -->
+							<div class="ex-imgbox">
+								<div class="imgbox wide" id="image-thumbnail"></div>
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -190,7 +203,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="maincard">
-							<table class="table table-striped">
+							<table class="table table-striped" style="text-align:center;">
 							  <thead>
 							    <tr>
 							      <th scope="col">자유게시판</th>
@@ -230,19 +243,68 @@
 					</div>
 					<div class="col-md-6">
 						<div class="maincard">
-							
+							<select class="form-select" aria-label="Default select example">
+							  <option selected>게시판 선택</option>
+							  <option value="1">자유게시판</option>
+							  <option value="2">이미지게시판</option>
+							  <option value="3">거래게시판</option>
+							  <option value="4">출석게시판</option>							  
+							</select>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="maincard">
-						게시판3
+							<table class="table table-striped" style="text-align:center;">
+							  <thead>
+							    <tr>
+							     <th scope="col"><img src="image/board/5/1.jpg" width="145px" height="145px"></th>
+							     <th scope="col"><img src="image/board/5/2.jpg" width="145px" height="145px"></th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr>
+							      <td>하이dd</td>
+						       	  <td>방가방가</td>
+							    </tr>
+							    <tr>
+							      <td><span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"
+								    class="rounded-circle">user</td>
+							      <td><span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"
+								    class="rounded-circle">user</td>
+							    </tr>
+							   </tbody>
+							   <thead>
+							    <tr>
+							     <th scope="col"><img src="image/board/5/3.jpg" width="145px" height="145px"></th>
+					             <th scope="col"><img src="image/board/5/1detail.jpg" width="145px" height="145px"></th>
+					            </tr>
+					           </thead>
+							  <tbody>
+							    <tr>
+							      <td>하이dd</td>
+						       	  <td>방가방가</td>
+							    </tr>
+							    <tr>
+							      <td><span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"
+								    class="rounded-circle">user</td>
+							      <td><span id="marketB_Text.ns"><img src="image/rank_icon/1.gif" alt="Profile"
+								    class="rounded-circle">user</td>
+							    </tr>
+							   </tbody>
+							</table>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="maincard">
-						게시판4
+							<select class="form-select" aria-label="Default select example">
+							  <option selected>게시판 선택</option>
+							  <option value="1">자유게시판</option>
+							  <option value="2">이미지게시판</option>
+							  <option value="3">거래게시판</option>
+							  <option value="4">출석게시판</option>							  
+							</select>
 						</div>
 					</div>
 				</div>
@@ -251,10 +313,7 @@
 		</div>
 		</form>
 	</div>
-			
-
-			
-					
+	
 						
 										
   </main><!-- End #main -->
@@ -310,14 +369,15 @@
 	  $('#inputname').keyup(function(){
 			
 			var inputLength = $(this).val().length; //입력한 값의 글자수
-			var remain = 20-inputLength;
+			var remain = 9-inputLength;
 			var value = document.getElementById("inputname").value;
 		   
 			
 			$("#cafename").html(value);
+			$("#size").html("남은 글자수 : " + remain);
 		
 			if(remain<1){
-				alert("더 이상 글자 입력 안 됩니다.");
+				alert("카페 이름이 너무 깁니다.");
 			}
 		});
 
