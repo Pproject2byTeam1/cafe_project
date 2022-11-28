@@ -42,6 +42,8 @@ import kr.or.kosa.service.MessageDeleteService;
 import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
+import kr.or.kosa.service.RankChangeService;
+import kr.or.kosa.service.RankUpdateService;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.RegularBoardDeleteService;
 import kr.or.kosa.service.RegularBoardEditOkService;
@@ -371,6 +373,19 @@ public class FrontController extends HttpServlet {
             action = new RegularBoardDeleteService();
             forward = action.execute(request, response);
       
+         }else if(urlcommand.equals("/rankeditboard.do")){ // 랭크변환리스트
+             
+             action = new RankChangeService();
+             forward = action.execute(request, response);
+       
+          }else if(urlcommand.equals("/rankupdate.do")){ // 랭크추가하기
+              
+              action = new RankUpdateService();
+              forward = action.execute(request, response);
+        
+           } 
+       
+     
          } else if(urlcommand.equals("/cafemain.do")) { //카페 메인 화면
         	 
         	 action = new CafeMain();

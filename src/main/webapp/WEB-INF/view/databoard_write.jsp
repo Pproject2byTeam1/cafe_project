@@ -76,7 +76,7 @@
 
 				<div class="col-md-12">
 					<div class="marketcard">
-						<div class="marketcard-body">
+						<div class="marketcard-body" id="pageContainer">
 
 							<div class="row">
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
@@ -145,7 +145,7 @@
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
 
-<script>
+<script type="text/javascript">
 		tinymce
 				.init({
 					selector : 'textarea',
@@ -161,6 +161,25 @@
 						title : 'Email'
 					}, ]
 				});
+		
+		var file = document.querySelector('#getfile');
+
+		file.onchange = function() {
+			var fileList = file.files;
+
+			// 읽기
+			var reader = new FileReader();
+			reader.readAsDataURL(fileList[0]);
+
+			//로드 한 후
+			reader.onload = function() {
+				
+				$('#pageContainer').css("display", "flex");
+				$('#pageContainer').css("justify-content", "center");
+				$('#pageContainer').append("<img id='preview' src='' width='500px' style='padding-top: 25px;'>")
+				document.querySelector('#preview').src = reader.result;
+			};
+		};
 	</script>
 
 <!-- Template Main JS File -->

@@ -115,7 +115,7 @@ DataSource ds = null;
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "insert into Rank(rank, r_name, r_point) values(?,?,?)";
+			String sql = "insert into Rank(rank, r_name, r_point) values(rank_seq.next_val,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, rank.getRank());
@@ -147,7 +147,7 @@ DataSource ds = null;
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "update Rank set rank=?, r_name=?, r_point=?";
+			String sql = "update Rank set rank=, r_name=?, r_point=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, rank.getRank());
