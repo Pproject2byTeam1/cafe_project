@@ -33,7 +33,7 @@
 					</div>
 					<div class="card justify-content-center">
 						<div class="card-body mt-4 ms-3 ps-4">
-							<span>&ensp;&ensp;&ensp;&ensp; ${member.rank} | ${member.point}P</span><br> 
+							<span>&ensp;&ensp;&ensp;&ensp; <img class="pb-2" src="image/rank_icon/${member.rank}.gif" alt="Profile"> | ${member.point}P</span><br> 
 							<span>글 ${member.w_count}개 | 댓글 ${member.re_count}개 </span><br>
 							<span>&ensp;&ensp;&ensp; ${member.point}&nbsp;POINT</span><br> 
 						</div>
@@ -60,28 +60,40 @@
 		<!-- 프로필 끝 -->
 		<c:forEach var="infolist" items="${infolist}">
 			<li class="nav-item">
+			
+				<!-- 자유게시판 -->
 				<c:if test="${infolist.b_type eq 'b1'}">
 					<a class="nav-link " href="regular_list.do?b_code=${infolist.b_code}"> <i
 					 	class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
+				
+				<!-- 출석게시판 -->
 				<c:if test="${infolist.b_type eq 'b2'}">
-					<a class="nav-link " href="#"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
+					<a class="nav-link " href="checkBoard.do"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
+				
+				<!-- 이미지게시판 -->
 				<c:if test="${infolist.b_type eq 'b3'}">
 					<a class="nav-link " href="img_board_list.do?b_code=${infolist.b_code}"> <i
 						class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
+				
+				<!-- 자료게시판 -->
 				<c:if test="${infolist.b_type eq 'b4'}">
-					<a class="nav-link " href="databoard_read.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
+					<a class="nav-link " href="databoard_list.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
+				
+				<!-- 거래게시판 -->
 				<c:if test="${infolist.b_type eq 'b5'}">
 					<a class="nav-link " href="marketboard_list.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
+				
+				<!-- 일정게시판 -->
 				<c:if test="${infolist.b_type eq 'b6'}">
 					<a class="nav-link " href="calendar_list.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> 
 					<span>${infolist.b_name}</span>
