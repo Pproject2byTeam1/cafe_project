@@ -24,134 +24,125 @@ import net.sf.json.JSONObject;
 
 @WebServlet("/MarketSearch")
 public class MarketSearch extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	public MarketSearch() {
-		super();
-	}
+   public MarketSearch() {
+      super();
+   }
 
-	private void doProcess(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+   private void doProcess(HttpServletRequest request, HttpServletResponse response)
+         throws ServletException, IOException {
 
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
+      request.setCharacterEncoding("UTF-8");
+      response.setContentType("text/html;charset=UTF-8");
+      PrintWriter out = response.getWriter();
 
-		try {
+      try {
 
-			// 사이드 바
-			Board_Info_Dao infodao = new Board_Info_Dao();
-			List<Board_Info> infolist = infodao.getSideBoardList();
+         // 사이드 바
+         Board_Info_Dao infodao = new Board_Info_Dao();
+         List<Board_Info> infolist = infodao.getSideBoardList();
 
-			String search = request.getParameter("search");
-			String sold = request.getParameter("sold");
-			int b_code = Integer.parseInt(request.getParameter("b_code"));
+         String search = request.getParameter("search");
+         String sold = request.getParameter("sold");
+         int b_code = Integer.parseInt(request.getParameter("b_code"));
 
-			if (search == null || search.trim().equals("")) {
-				search = "no";
-			}
-			if (sold == null || sold.trim().equals("")) {
-				sold = "all";
-			}
+         if (search == null || search.trim().equals("")) {
+            search = "no";
+         }
+         if (sold == null || sold.trim().equals("")) {
+            sold = "all";
+         }
 
-			MarketBoardDao market_dao = new MarketBoardDao();
-			Yes_Dao ydao = new Yes_Dao();
-			CommentsDao cdao = new CommentsDao();
-			UserDao udao = new UserDao();
+         MarketBoardDao market_dao = new MarketBoardDao();
+         Yes_Dao ydao = new Yes_Dao();
+         CommentsDao cdao = new CommentsDao();
+         UserDao udao = new UserDao();
 
-			// 상세보기 >> 다시 LIST 넘어올때 >> 현재 페이지 설정
-			String ps = request.getParameter("ps");
-			String cp = request.getParameter("cp");
+         // 상세보기 >> 다시 LIST 넘어올때 >> 현재 페이지 설정
+         String ps = request.getParameter("ps");
+         String cp = request.getParameter("cp");
 
-			if (ps == null || ps.trim().equals("")) {
-				ps = "8"; // List 페이지 처음 호출 경우 -> 8개씩
-			}
+         if (ps == null || ps.trim().equals("")) {
+            ps = "8"; // List 페이지 처음 호출 경우 -> 8개씩
+         }
 
-			if (cp == null || cp.trim().equals("")) {
-				cp = "1"; // default 값 설정 -> 1번째 페이지 보겠다
-			}
+         if (cp == null || cp.trim().equals("")) {
+            cp = "1"; // default 값 설정 -> 1번째 페이지 보겠다
+         }
 
-			int pagesize = Integer.parseInt(ps);
-			int cpage = Integer.parseInt(cp);
-			int pagecount = 0;
-			int soldcount = market_dao.countSoldF(b_code);
-			int totalboardcount = 0;
-			// 게시물 총 건수
-			if (sold.equals("판매중")) {
-				totalboardcount = soldcount;
-			} else {
-				totalboardcount = market_dao.countMarket(b_code);
-			}
+         int pagesize = Integer.parseInt(ps);
+         int cpage = Integer.parseInt(cp);
+         int pagecount = 0;
+         int soldcount = market_dao.countSoldF(b_code);
+         int totalboardcount = 0;
+         // 게시물 총 건수
+         if (sold.equals("판매중")) {
+            totalboardcount = soldcount;
+         } else {
+            totalboardcount = market_dao.countMarket(b_code);
+         }
 
-			if (totalboardcount % pagesize == 0) {
-				pagecount = totalboardcount / pagesize;
-			} else {
-				pagecount = (totalboardcount / pagesize) + 1;
-			}
+         if (totalboardcount % pagesize == 0) {
+            pagecount = totalboardcount / pagesize;
+         } else {
+            pagecount = (totalboardcount / pagesize) + 1;
+         }
 
-			List<MarketBoard> list = market_dao.searchMarket(b_code, cpage, pagesize, sold, search);
-			JSONArray jsonlist = JSONArray.fromObject(list);
-			JSONArray jsonlist2 = new JSONArray();
+         List<MarketBoard> list = market_dao.searchMarket(b_code, cpage, pagesize, sold, search);
 
-			// 전체 목록 가져오기
-			/*
-			 * int pagersize=10; ThePager pager = new
-			 * ThePager(totalboardcount,cpage,pagesize,pagersize,"marketboard_list.do");
-			 */
-			
-			List<Integer> yescountlist = new ArrayList<Integer>();
-			List<Integer> commentcountlist = new ArrayList<Integer>();
-			List<Integer> ranklist = new ArrayList<Integer>();
-			
-			for (MarketBoard mb : list) {
-				int idx = mb.getIdx();
-				String email_id = mb.getEmail_id();
-				int yescount = ydao.getYesCountBy_idx(idx);
-				int commentcount = cdao.getCommentCountBy_idx(idx);
-				
-				User user = udao.selectUserById(email_id);
-				int rank = user.getRank();
-				
-				yescountlist.add(yescount);
-				commentcountlist.add(commentcount);
-				ranklist.add(rank);
-				
-			}
-			
-			JSONObject json = new JSONObject();
-			
-			json.put("yescountlist", yescountlist);
-			json.put("commentcountlist", commentcountlist);
-			json.put("ranklist", ranklist);
-			
-			// page.put("pager", pager);
-			json.put("page", pagesize);
-			json.put("cpage", cpage);
-			json.put("pagecount", pagecount);
-			json.put("totalboardcount", totalboardcount);
-			json.put("sold", sold);
-			json.put("search", search);
-			json.put("soldcount", soldcount);
-			json.put("infolist", infolist);
-			
-			json.put("list", list);
-			
-			out.print(json);
+         List<Integer> yescountlist = new ArrayList<Integer>();
+         List<Integer> commentcountlist = new ArrayList<Integer>();
+         List<Integer> ranklist = new ArrayList<Integer>();
+         
+         for (MarketBoard mb : list) {
+            int idx = mb.getIdx();
+            String email_id = mb.getEmail_id();
+            int yescount = ydao.getYesCountBy_idx(idx);
+            int commentcount = cdao.getCommentCountBy_idx(idx);
+            User user = udao.selectUserById(email_id);
+            int rank = user.getRank();
+            
+            yescountlist.add(yescount);
+            commentcountlist.add(commentcount);
+            ranklist.add(rank);
+            
+         }
+         
+         JSONObject json = new JSONObject();
+         
+         json.put("yescountlist", yescountlist);
+         json.put("commentcountlist", commentcountlist);
+         json.put("ranklist", ranklist);
+         
+         // page.put("pager", pager);
+         json.put("page", pagesize);
+         json.put("cpage", cpage);
+         json.put("pagecount", pagecount);
+         json.put("totalboardcount", totalboardcount);
+         json.put("sold", sold);
+         json.put("search", search);
+         json.put("soldcount", soldcount);
+         json.put("infolist", infolist);
+         
+         json.put("list", list);
+         
+         out.print(json);
 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+      }
 
-	}
+   }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doProcess(request, response);
-	}
+   protected void doGet(HttpServletRequest request, HttpServletResponse response)
+         throws ServletException, IOException {
+      doProcess(request, response);
+   }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doProcess(request, response);
-	}
+   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+         throws ServletException, IOException {
+      doProcess(request, response);
+   }
 
 }
