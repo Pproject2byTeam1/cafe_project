@@ -129,7 +129,7 @@
 			console.log(idx);
 			console.log(b_code);
 			
- 			location.href="databoard_delete.do?idx=" + idx +"&b_code="+ b_code;
+ 			location.href="data_delete.do?idx=" + idx +"&b_code="+ b_code;
  			
  			if(idx == ${board.idx}){
  				alert("삭제됩니다!");
@@ -150,8 +150,7 @@
 			location.href="databoard_rewrite.do?b_code="+b_code+"&idx="+idx+"&refer="+refer+"&depth="+depth+"&step="+step;
 			
 		});
-        
-        
+     
         
         
 		function inser(data){
@@ -289,6 +288,11 @@
 		});
         
 		list();
+		
+		
+		
+		
+		
         
 	});
 </script>
@@ -371,14 +375,13 @@
 													<c:choose>
 										<c:when
 															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
+															<button type="button" class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
 															<a href="upload/${originalfilename}" target="_blank">미리보기</a>
-															<a
-																href="filedownload.board?file_name=${originalfilename}"
+															<a href="filedownload.board?file_name=${originalfilename}"
 																id="download">다운로드</a>
 														</c:when>
 														<c:otherwise>
-															<a
-																href="filedownload.board?file_name=${originalfilename}"
+															<a href="filedownload.board?file_name=${originalfilename}"
 																id="download">${originalfilename}</a>
 														</c:otherwise>
 													</c:choose>
@@ -434,7 +437,7 @@
 
 					</div>
 
-
+<input id="ori_name" name="ori_name" value="${board.ori_name}" type="hidden" />
 
 
 
@@ -606,9 +609,9 @@
 <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
-
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>

@@ -35,9 +35,9 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	String downloadpath = request.getSession().getServletContext().getRealPath(savepath);
     String FilePath = downloadpath + "\\" + filename;
     
-    //PrintWriter out = response.getWriter();
-    //out.print(downloadpath +"<br>");
-    //out.print(FilePath); //실경로 + 파일명
+    PrintWriter out = response.getWriter();
+   out.print(downloadpath +"<br>");
+  out.print("파일경로 :"+FilePath); //실경로 + 파일명
     
     //IO작업 하기
     //파일을 읽어서 출력
