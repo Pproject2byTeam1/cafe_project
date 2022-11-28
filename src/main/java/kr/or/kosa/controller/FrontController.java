@@ -383,10 +383,7 @@ public class FrontController extends HttpServlet {
               action = new RankUpdateService();
               forward = action.execute(request, response);
         
-           } 
-       
-     
-         } else if(urlcommand.equals("/cafemain.do")) { //카페 메인 화면
+           } else if(urlcommand.equals("/cafemain.do")) { //카페 메인 화면
         	 
         	 action = new CafeMain();
              forward = action.execute(request, response);
