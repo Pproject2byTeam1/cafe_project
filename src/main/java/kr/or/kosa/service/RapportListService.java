@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.AdminDao;
+import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
