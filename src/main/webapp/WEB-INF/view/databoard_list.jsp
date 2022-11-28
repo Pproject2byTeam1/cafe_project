@@ -202,11 +202,16 @@
 
 								<th scope="row"><input type="checkbox"></th>
 
-								<form action="databoard_read.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}"
-									style="cursor: pointer">
+								<form action="databoard_read.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}&depth=${depth}"style="cursor: pointer">
 									<td>
 										<input id="b_code" value="${board.b_code}" type="hidden" /> 
-										<span class="mt-4 parent"><h3>${board.title}</h3></span><br>
+										<span class="mt-4 parent"><h3>
+										<c:if test="${board.depth > 0}">
+												<c:forEach var="index" begin="1" end="${board.depth}">
+													<img src="image/re.gif" width="12" height="15">
+												</c:forEach>
+											</c:if>
+										${board.title}</h3></span><br>
 
 										<span class="son_name">
 											<img src="./image/rank_icon/${rank[status.index]}.gif">${board.nick}
@@ -244,7 +249,6 @@
       </div>
       <!--하단 버튼  -->
       <div align="right">
-         <button id="Write"  type="button" class="btn btn-secondary">글쓰기</button>&nbsp;
          <c:if test="${member.isAdmin == 'S' || member.isAdmin =='M' }">
          <button type="button" class="btn btn-secondary">삭제</button>
          </c:if>
@@ -256,7 +260,7 @@
 					
 		                <c:if test="${cpage > 1}">
 		                  <li class="page-item">
-		                    <a class="page-link" href="databoard_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+		                    <a class="page-link" href="databoard_list.do?b_code=${b_code}&cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
 		                  </li>
 	                    </c:if>
 	                    	
