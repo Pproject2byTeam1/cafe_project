@@ -13,8 +13,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Comments;
-import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.MarketBoard;
+import kr.or.kosa.utils.tagRemove;
 
 public class MarketBoardDao {
 
@@ -110,7 +110,7 @@ public class MarketBoardDao {
 						    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
 						    "b.report_count, b.email_id, b.b_code " +
 						    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
-						    "where b_code=? and rn <= ?) " +
+						    "where b_code=? and rownum <= ?) " +
 						    "where rn >=?";
 			pstmt = conn.prepareStatement(sql);
 
@@ -119,20 +119,26 @@ public class MarketBoardDao {
 			pstmt.setInt(1, b_code);
 			pstmt.setInt(2, end);
 			pstmt.setInt(3, start);
-
+			
+			System.out.println("출력 시작번호 : " + start);
+			System.out.println("출력 끝번호 : " + end);
+			
 			rs = pstmt.executeQuery();
-
+			
+			tagRemove tag = new tagRemove();
 			list = new ArrayList<MarketBoard>();
 
 			while (rs.next()) {
 				MarketBoard board = new MarketBoard();
 				board.setIdx(rs.getInt("idx"));
+				board.setB_idx(rs.getInt("b_idx"));
 				board.setB_code(b_code);
 				board.setSold(rs.getString("sold"));
 				board.setM_mode(rs.getString("m_mode"));
 				board.setCate(rs.getString("cate"));
 				board.setTitle(rs.getString("title"));
-				board.setContent(rs.getString("content"));
+				//태그제거 정규표현식 + 글자수 제한
+				board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
 				board.setImg_name(rs.getString("img_name"));
 				board.setPrice(rs.getInt("price"));
 				board.setHits(rs.getInt("hits"));
@@ -158,36 +164,55 @@ public class MarketBoardDao {
 	}
 
 	// 거래게시판 특정조건 조회
-	public List<MarketBoard> searchMarket(int b_code, int cpage, int pagesize, String search) {
+	public List<MarketBoard> searchMarket(int b_code, int cpage, int pagesize, String sold, String search) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<MarketBoard> list = null;
-		System.out.println(search);
 		
-		if (search.equals("all")) {
+		if (sold.equals("all") && search.equals("no")) {
 			return listMarket(b_code, cpage, pagesize);
 			
 		} else {
 			
 			try {
 				conn = ds.getConnection();
+				String sql1 = "select * " +
+						"from (select * " +
+					    "from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
+					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
+					    "b.report_count, b.email_id, b.b_code " +
+					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
+					    "where b_code=? and rownum <= ?) " +
+					    "where rn >=? and search=?"; //all, 검색
+				String sql2 = "select * " +
+						"from (select * " +
+					    "from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
+					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
+					    "b.report_count, b.email_id, b.b_code " +
+					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
+					    "where b_code=? and rownum <= ?) " +
+					    "where rn >=? and sold=?"; // 판매중
+				String sql3 = "select * " +
+						"from (select * " +
+					    "from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
+					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
+					    "b.report_count, b.email_id, b.b_code " +
+					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
+					    "where b_code=? and rownum <= ?) " +
+					    "where rn >=? and sold=? and search=?"; // 판매중 , 검색
 
-				String sql1 = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
-						+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
-						+ "b.report_count, b.email_id, b.b_code " + "from board b join market_board m on b.idx = m.idx "
-						+ "where b_code=? order by rn desc) where rn <= ? and rn >= ? and sold =?";
-				
-				String sql2 = "select * from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, "
-						+ "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, "
-						+ "b.report_count, b.email_id, b.b_code " + "from board b join market_board m on b.idx = m.idx "
-						+ "where b_code=? order by rn desc) where rn <= ? and rn >= ? and title=?";
-
-				if (search.equals("판매중")) {
+				if(sold.equals("all")) {
 					pstmt = conn.prepareStatement(sql1);
-				} else {
+					pstmt.setString(4, search);
+				} else if(sold.equals("판매중") && search.equals("no")) {
 					pstmt = conn.prepareStatement(sql2);
+					pstmt.setString(4, sold);
+				} else {
+					pstmt = conn.prepareStatement(sql3);
+					pstmt.setString(4, sold);
+					pstmt.setString(5, search);
 				}
 				int start = cpage * pagesize - (pagesize - 1);
 				int end = cpage * pagesize;
@@ -195,20 +220,24 @@ public class MarketBoardDao {
 				pstmt.setInt(1, b_code);
 				pstmt.setInt(2, end);
 				pstmt.setInt(3, start);
-				pstmt.setString(4, search);
+				
 				rs = pstmt.executeQuery();
-
+				tagRemove tag = new tagRemove();
+				
 				list = new ArrayList<MarketBoard>();
-
+				
 				while (rs.next()) {
+
 					MarketBoard board = new MarketBoard();
 					board.setIdx(rs.getInt("idx"));
+					board.setB_idx(rs.getInt("b_idx"));
 					board.setB_code(rs.getInt("b_code"));
 					board.setSold(rs.getString("sold"));
 					board.setM_mode(rs.getString("m_mode"));
 					board.setCate(rs.getString("cate"));
 					board.setTitle(rs.getString("title"));
-					board.setContent(rs.getString("content"));
+					//컨텐츠 태그제거정규표현식 + 글자수 제한
+					board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
 					board.setImg_name(rs.getString("img_name"));
 					board.setPrice(rs.getInt("price"));
 					board.setHits(rs.getInt("hits"));
@@ -231,9 +260,10 @@ public class MarketBoardDao {
 					System.out.println(e2.getMessage());
 				}
 			}
-
+			
+			return list;
+			
 		}
-		return list;
 	}
 
 	// 게시판 코드 넣어 특정 게시판의 총 게시물 건수 구하기
