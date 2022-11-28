@@ -20,6 +20,7 @@ import kr.or.kosa.service.DataBoardListService;
 import kr.or.kosa.service.DataBoardWriteService;
 import kr.or.kosa.service.DataBoardWriteViewService;
 import kr.or.kosa.service.Data_Board_Post_Service;
+import kr.or.kosa.service.DeleteAttendanceService;
 import kr.or.kosa.service.DeleteOkService;
 import kr.or.kosa.service.ImgBoardDeleteService;
 import kr.or.kosa.service.ImgBoardModifyService;
@@ -28,6 +29,7 @@ import kr.or.kosa.service.ImgBoardWriteService;
 import kr.or.kosa.service.ImgBoardWriteViewService;
 import kr.or.kosa.service.Img_Board_List_Service;
 import kr.or.kosa.service.Img_Board_Read_Service;
+import kr.or.kosa.service.InsertAttendanceService;
 import kr.or.kosa.service.LoginCheckService;
 import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
@@ -46,9 +48,9 @@ import kr.or.kosa.service.RegularBoardDeleteService;
 import kr.or.kosa.service.RegularBoardEditOkService;
 import kr.or.kosa.service.RegularBoardEditService;
 import kr.or.kosa.service.RegularBoardWriteOkService;
+import kr.or.kosa.service.RegularBoardWriteService;
 import kr.or.kosa.service.Regular_Board_List_Service;
 import kr.or.kosa.service.Regular_Board_Post_Service;
-import kr.or.kosa.service.RegularBoardWriteService;
 import kr.or.kosa.service.ReplyDataWriteService;
 import kr.or.kosa.service.ReplyDataWriteViewService;
 import kr.or.kosa.service.ReplyRegularWriteService;
@@ -371,7 +373,17 @@ public class FrontController extends HttpServlet {
             action = new RegularBoardDeleteService();
             forward = action.execute(request, response);
       
-         }
+        } else if(urlcommand.equals("/insertAttendance.do")){ // 출석게시판 글쓰기
+             
+             action = new InsertAttendanceService();
+             forward = action.execute(request, response);
+       
+        } else if(urlcommand.equals("/deleteAttendance.do")){ // 출석게시판 글삭제
+            
+            action = new DeleteAttendanceService();
+            forward = action.execute(request, response);
+      
+       }
    
    
       
