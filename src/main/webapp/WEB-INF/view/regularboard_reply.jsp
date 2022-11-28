@@ -81,7 +81,7 @@
                         <div class="md-3 row">
                            <label for="staticEmail" class="col-sm-2 col-form-label">Title :</label>
                            <div class="col-sm-8">
-                              <input type="text" class="form-control" id="title" name="title" value="" placeholder="작성해주세요" autofocus required>
+                              <input type="text" class="form-control" id="title" name="title" value="${board.title}[답글]" placeholder="작성해주세요" autofocus required>
                            		<input name="refer" value="${refer}" type="hidden" />
                            		<input name="b_code" value="${b_code}" type="hidden" />
                            		<input name="depth" value="${depth}" type="hidden" />
@@ -98,7 +98,7 @@
                   
                   <div class="park-card p-4">
                      <div class="park-card-body row">
-                        <textarea name="content" placeholder="작성해주세요"> </textarea>
+                        <textarea name="content" placeholder="작성해주세요"> ${board.content } </textarea>
                      </div>
                   </div>
                </div>

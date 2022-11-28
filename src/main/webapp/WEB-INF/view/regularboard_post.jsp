@@ -137,7 +137,7 @@
            /* 답글 작성 */
            $("#replyWrite").click(function(){
             
-                let link = "/WebCafe_Project/regular_reWriteView.do?refer="+refer+"&b_code="+b_code+"&depth="+depth+"&step="+step;
+                let link = "/WebCafe_Project/regular_reWriteView.do?refer="+refer+"&b_code="+b_code+"&depth="+depth+"&step="+step+"&idx="+idx;
                  console.log(link);
               
               location.href=link;

@@ -39,7 +39,7 @@ public class ReplyRegularWriteService implements Action {
 			
 			if(user == null) {
 				
-				msg = "실패";
+				msg = "세션이 만료되었습니다.";
 				url = "/WebCafe_Project/login_view.do";
 				
 			}else {
