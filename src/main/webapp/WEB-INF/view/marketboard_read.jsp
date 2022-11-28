@@ -55,6 +55,8 @@
 				
 			});
 			
+	
+			
 </script>
 
 <!-- Template Main CSS File -->
@@ -71,6 +73,16 @@
 			console.log(idx);
 			console.log(b_code);
  			location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
+			
+		});
+  		
+		//글수정
+		$("#edit").click(function(){
+			
+			let b_code = "<c:out value='${b_code}'/>";
+			let idx = "<c:out value='${list.idx}'/>";
+			console.log("edit 클릭");
+			location.href="marketboardEdit.do?b_code="  + b_code + "&idx=" + ${list.idx};
 			
 		});
 		
