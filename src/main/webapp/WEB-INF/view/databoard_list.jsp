@@ -241,7 +241,7 @@
 				</table>
 
 
-
+<input id="ori_name" name="ori_name" value="${board.ori_name}" type="hidden" />
 
 
 			</div>
