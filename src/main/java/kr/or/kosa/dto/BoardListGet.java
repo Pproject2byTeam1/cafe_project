@@ -1,9 +1,11 @@
 package kr.or.kosa.dto;
 
-public class BoardListGet extends Board {
+public class BoardListGet extends AttendanceBoad {
+	
 	private String b_name;//게시판 종류이름
 	private int c_count;//댓글 수
 	private int like;//좋아요 수
+	
 	public String getB_name() {
 		return b_name;
 	}
