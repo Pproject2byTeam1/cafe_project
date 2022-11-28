@@ -92,8 +92,10 @@ public class InsertAttendanceService implements Action {
 			}
 			request.setAttribute("board_msg", msg);
 			request.setAttribute("board_url", "checkBoard.do");
+			
+			int b_code = Integer.parseInt(multi.getParameter("b_code"));
 			//작성목록 가져가기
-				boardlist = dao.getBoardListAttendence(1, nowday, nextday);//임시적으로 1페이지만 구함
+				boardlist = dao.getBoardListAttendence(b_code, 1, nowday, nextday);//임시적으로 1페이지만 구함
 				request.setAttribute("boardlist", boardlist);
 			
 		} catch (Exception e) {
