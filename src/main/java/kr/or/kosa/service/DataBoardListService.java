@@ -77,10 +77,10 @@ public class DataBoardListService implements Action {
 			//리스트 뿌리기
 			List<DataBoard> list = dao.getdata_boardList(b_code, cpage, pagesize);
 
-			List<Integer> countlist = new ArrayList<Integer>();// 덧글 카운트
-			List<Integer> yescountlist = new ArrayList();
-			List<Integer> commentcountlist = new ArrayList();
-			List ranklist = new ArrayList();
+			List<Integer> yescountlist = new ArrayList<Integer>();
+			List<Integer> commentcountlist = new ArrayList<Integer>();
+			List<Integer> ranklist = new ArrayList<Integer>();
+			
 			for (DataBoard re : list) {
 				int idx = re.getIdx();
 				String email_id = re.getEmail_id();
@@ -94,7 +94,6 @@ public class DataBoardListService implements Action {
 				ranklist.add(rank);
 			}
 
-			// List<Comments> comlist1 =dao.getComment(code, pagecount, cpage, pagesize);
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);

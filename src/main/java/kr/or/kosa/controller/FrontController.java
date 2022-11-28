@@ -308,7 +308,7 @@ public class FrontController extends HttpServlet {
          action = new MarketBoardWriteViewService();
          forward = action.execute(request, response);
          
-      }else if(urlcommand.equals("/databoard_read.do")){ // 자료 게시판 목록보기
+      }else if(urlcommand.equals("/databoard_read.do")){ // 자료 게시판 읽기
          
          action = new Data_Board_Post_Service();
          forward = action.execute(request, response);
@@ -347,8 +347,6 @@ public class FrontController extends HttpServlet {
 			
 			action = new DataBoardEditOkService();
 			forward = action.execute(request, response);
-		}else if(urlcommand.equals("/databoard_list.do")) { //자료 게시판 목록
-			
 		} else if(urlcommand.equals("/checkBoard.do")) { //출석 게시판 이동
           
           action = new CheckBoardService();

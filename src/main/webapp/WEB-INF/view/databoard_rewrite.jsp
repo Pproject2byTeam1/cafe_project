@@ -82,14 +82,19 @@
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 								<div class="col-md-12">
 									<!-- 글 제목 -->
-									<form name="bbs" action="databoard_writeok.do" method="POST" enctype="multipart/form-data">
+									<form name="bbs" action="data_rewriteok.do" method="POST" enctype="multipart/form-data">
 									<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요." name="title" required>
-									<input id="b_code" name="b_code" value="${b_code}" type="hidden" />${b_code}
+									<input id="b_code" name="b_code" value="${b_code}" type="hidden" />
 									<p>
 									<hr>
 									
 										<div>
 											<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" required>
+											<input name="idx" value="${idx}" type="hidden" />
+											<input name="b_code" value="${b_code}" type="hidden" />
+											<input name="refer" value="${refer}" type="hidden" />
+											<input name="depth" value="${depth}" type="hidden" />
+											<input name="step" value="${step}" type="hidden" />
 										</div>
 										<div>
 
