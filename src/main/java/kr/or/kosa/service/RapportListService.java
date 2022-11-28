@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.AdminDao;
+import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
@@ -57,8 +58,8 @@ public class RapportListService implements Action {
 			}
 			
 			
-			List<Board> reportlist = dao.reportlist(cpage, pagesize);
-			List<Board> reportlist2 = dao.reportlist(cpage, pagesize);
+			List<AttendanceBoad> reportlist = dao.reportlist(cpage, pagesize);
+			List<AttendanceBoad> reportlist2 = dao.reportlist(cpage, pagesize);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
@@ -71,7 +72,7 @@ public class RapportListService implements Action {
 		  	forward.setPath("/WEB-INF/view/rapport_list.jsp");
 			
 		  	List boardlist = new ArrayList();
-		for(Board re :reportlist) {
+		for(AttendanceBoad re :reportlist) {
 			int idx=re.getIdx();
 			Board_Info boardnum = dao.getBoardInfo(idx);
 			boardlist.add(boardnum);

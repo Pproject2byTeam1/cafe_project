@@ -16,6 +16,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
+import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.User;
 
@@ -24,7 +25,7 @@ public class InsertAttendanceService implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
-		List<Board> boardlist = null;
+		List<AttendanceBoad> boardlist = null;
 		int row = 0;
 		String uploadpath = request.getSession().getServletContext().getRealPath("upload");
 		int size = 1024 * 1024 * 10;
@@ -72,7 +73,7 @@ public class InsertAttendanceService implements Action {
 			//글쓰기
 			MultipartRequest multi = new MultipartRequest(request, uploadpath, size, "UTF-8", new DefaultFileRenamePolicy());
 			
-			Board board = new Board();
+			AttendanceBoad board = new AttendanceBoad();
 			board.setB_code(2);
 			board.setContent(multi.getParameter("content"));
 			System.out.println("content: " + multi.getParameter("content"));
