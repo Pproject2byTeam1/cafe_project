@@ -85,20 +85,18 @@
 					<br>
 					<ul class="list-group list-group-horizontal list-inline nav">
 					<c:forEach begin="1" end="${days}" step="1" var="day" varStatus="status">
-						<li><a href="#" class="btn btn-default">
 						<c:choose>
 						<c:when test="${status.count == nowday2}">
-						<b>${status.count}</b>
+						<li><a href="#" class="btn btn-default btn-outline-success"><b>${status.count}</b></a></li>
 						</c:when>
 						<c:otherwise>
-						${status.count}
+						<li><a href="checkBoard.do?inputdate=2022-${month}-${status.count}" class="btn btn-default">${status.count}</a></li>
 						</c:otherwise>
 						</c:choose>
-						</a></li>
 					</c:forEach>
 					</ul>
 					<!-- 작성란 -->
-					<c:if test="${userid == '' || sysdate != date5}">
+					<c:if test="${userid != '' && sysdate == date5}"><!-- 로그인 상태와 오늘 날짜여야만 보임 -->
 					  <div class="insertCheckToday">
 			              <div class="quill-editor-default">
 			                <p>출석 체크</p>
