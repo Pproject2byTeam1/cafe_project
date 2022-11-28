@@ -27,29 +27,49 @@ public class CheckBoardService implements Action {
 		int count = 0;
 		
 		//날짜계산 준비
-		Date nowdate= new Date();
+		String inputdate = (String) request.getParameter("inputdate");
+		System.out.println("inputdate: "+inputdate);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String nowday = format.format(nowdate);
+		Date nowdate = null;
+		String nowday = "";
+		if(inputdate == null) {//입력받은 날짜가 없다면
+			nowdate= new Date();
+			nowday = format.format(nowdate);
+		}else {//있으면
+			try {
+				nowdate= format.parse(inputdate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			nowday = format.format(nowdate);
+		}
+		
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd");
-		String nowday2 = sdf2.format(nowdate);
-		request.setAttribute(nowday2, nowday2);
+		int nowday2 = Integer.parseInt(sdf2.format(nowdate));
+		request.setAttribute("nowday2", nowday2); // 일자
 		Date date=null;
 		try {
 			date = format.parse(nowday);
-			request.setAttribute("date5", date);
+			request.setAttribute("date5", date);//입력된 날짜 yyyy-MM-dd
 			
 		} catch (ParseException e2) {
 			e2.printStackTrace();
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
+		
+		//각 월, 일 구하기
+		int month = cal.get(Calendar.MONTH)+1;
+		request.setAttribute("month", month);
+		int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		request.setAttribute("days", days);
+		
 		cal.add(Calendar.DATE, 1); //날짜 +1일
 		Date nexdate = new Date(cal.getTimeInMillis());
 		String nextday = format.format(nexdate);
-		//System.out.println(nowday+", "+nextday);
-		int month = cal.get(Calendar.MONTH)+1;
-		int days = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		request.setAttribute("days", days);
+
+		
+		
 		try {
 			//사이드바 정보
 	        Board_Info_Dao infodao = new Board_Info_Dao();
