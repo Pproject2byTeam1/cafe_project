@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>databoard_write</title>
+<title>marketboard_write</title>
 
 <!-- jQuery -->
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -63,9 +63,13 @@
 		
 		<!-- Page Title -->
 		<div class="pagetitle">
-			<h1>자료 게시판 글쓰기</h1>
+			<h1>거래 게시판 글쓰기</h1>
 			<nav>
-
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="index.html">전체글 : ${totalboardcount}</a></li>
+					<li class="breadcrumb-item active">판매중 : ${soldcount}</li>
+					<li class="breadcrumb-item">판매완료 : ${totalboardcount-soldcount}</li>
+				</ol>
 			</nav>
 		</div>
 		<!-- End Page Title -->
@@ -76,34 +80,62 @@
 
 				<div class="col-md-12">
 					<div class="marketcard">
-						<div class="marketcard-body" id="pageContainer">
+						<div class="marketcard-body">
 
 							<div class="row">
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 								<div class="col-md-12">
 									<!-- 글 제목 -->
-									<form name="bbs" action="databoard_writeok.do" method="POST"
-										enctype="multipart/form-data">
-										<input type="text" class="form-control" id="title"
-											placeholder="제목을 입력하세요." name="title" required> <input
-											id="b_code" name="b_code" value="${b_code}" type="hidden" />
-										<p>
-										<hr>
-
+									<form name="bbs" action="marketboardEditOk.do?b_code=${marketboard.b_code}&idx=${marketboard.idx}" method="POST" enctype="multipart/form-data">
+									<input type="text" class="form-control" id="title" placeholder="제목을 입력하세요." name="title" value="${marketboard.title }" required>
+									<input id="b_code" name="b_code" value="${marketboard.b_code}" type="hidden" />
+									<p>
+									<hr>
+									
 										<div>
-											<input type="file" class="form-control"
-												accept="image/board/*" id="getfile" name="filename1"
-												required>
+											<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" required>
 										</div>
-										<div></div>
-
-
+										<div>
+											<div class="info-body price">
+												가격 : <input type="text" class="form-control" id="price" placeholder="숫자만 입력하세요" name="price" value="${marketboard.price }" required>
+											</div>
+											<div class="info-body">
+												<label class="col-sm-2 col-form-label">카테고리 : </label>
+												<select id="cate" name="cate" class="form-select" aria-label="Default select example">
+												<option value="가전">가전</option>
+												<option value="디지털">디지털</option>
+												<option value="생활">생활</option>
+												<option value="스포츠">스포츠</option>
+												<option value="의류">의류</option>
+												<option value="취미">취미</option>
+												<option value="문화">문화</option>
+												</select>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="m_mode" value="직거래" checked>
+												<label class="form-check-label" for="직거래">직거래</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="m_mode" value="택배거래">
+												<label class="form-check-label" for="택배거래">택배거래</label>
+											</div>
+											<div class="info-body">
+												<label class="col-sm-2 col-form-label">판매상태 : </label>
+												<select id="cate" name="sold" class="form-select" aria-label="Default select example">
+												<option value="판매중">판매중</option>
+												<option value="예약중">예약중</option>
+												<option value="판매완료">판매완료</option>
+												</select>
+											</div>
+										</div>
+									
+									
 										<div class="col-md-12">
 											<hr>
 											<!-- 글 내용 작성 -->
 											<div class="park-card p-4">
 												<div class="park-card-body row">
-													<textarea name="content" placeholder="내용을 입력해주세요."></textarea>
+													<textarea name="content" placeholder="내용을 입력해주세요."> ${marketboard.content }</textarea>
 												</div>
 											</div>
 											<p>
@@ -111,25 +143,25 @@
 										<hr>
 										<div align="right" class="col-md-12">
 											<div>
-												<button type="submit" id="submit"
+												<button type="submit" id="submit" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">등록</button>
-												<button type="button" id="List"
+												<button type="button" id="List" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
-
+									
 											</div>
 										</div>
 									</form>
+									</div>
 								</div>
+								
+								
 							</div>
-
-
 						</div>
 					</div>
+
 				</div>
-
 			</div>
-		</div>
-
+		
 
 		<!-- 보드 페이지 시작 -->
 
@@ -147,7 +179,7 @@
 <script src="assets/vendor/tinymce/tinymce.min.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
 
-<script type="text/javascript">
+<script>
 		tinymce
 				.init({
 					selector : 'textarea',
@@ -163,24 +195,6 @@
 						title : 'Email'
 					}, ]
 				});
-		
-		var file = document.querySelector('#getfile');
-
-		file.onchange = function() {
-			var fileList = file.files;
-
-			// 읽기
-			var reader = new FileReader();
-			reader.readAsDataURL(fileList[0]);
-
-			//로드 한 후
-			reader.onload = function() {
-				
-				$('#pageContainer').css("display", "flex");
-				$('#pageContainer').css("justify-content", "center");
-				document.querySelector('#preview').src = reader.result;
-			};
-		};
 	</script>
 
 <!-- Template Main JS File -->

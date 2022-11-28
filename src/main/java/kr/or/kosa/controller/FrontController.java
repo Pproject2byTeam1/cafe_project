@@ -36,6 +36,8 @@ import kr.or.kosa.service.Login_Service;
 import kr.or.kosa.service.Login_View_Service;
 import kr.or.kosa.service.Logout_Service;
 import kr.or.kosa.service.MarketBoardDeleteService;
+import kr.or.kosa.service.MarketBoardEditOkService;
+import kr.or.kosa.service.MarketBoardEditService;
 import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MarketBoardWriteService;
@@ -308,7 +310,7 @@ public class FrontController extends HttpServlet {
          action = new MarketBoardWriteViewService();
          forward = action.execute(request, response);
          
-      }else if(urlcommand.equals("/databoard_read.do")){ // 자료 게시판 목록보기
+      }else if(urlcommand.equals("/databoard_read.do")){ // 자료 게시판 읽기
          
          action = new Data_Board_Post_Service();
          forward = action.execute(request, response);
@@ -347,8 +349,6 @@ public class FrontController extends HttpServlet {
 			
 			action = new DataBoardEditOkService();
 			forward = action.execute(request, response);
-		}else if(urlcommand.equals("/databoard_list.do")) { //자료 게시판 목록
-			
 		} else if(urlcommand.equals("/checkBoard.do")) { //출석 게시판 이동
           
           action = new CheckBoardService();
@@ -400,6 +400,16 @@ public class FrontController extends HttpServlet {
         	 action = new CafeMain();
              forward = action.execute(request, response);
         	 
+         }else if(urlcommand.equals("/marketboardEdit.do")){ // 거래 게시판 읽기
+             
+             action = new MarketBoardEditService();
+             forward = action.execute(request, response);
+             
+         }else if(urlcommand.equals("/marketboardEditOk.do")){ // 거래 게시판 읽기
+          
+          action = new MarketBoardEditOkService();
+          forward = action.execute(request, response);
+          
          }
    
    

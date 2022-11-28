@@ -31,7 +31,6 @@ public class Data_Board_Post_Service implements Action {
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
-			//int c = Integer.parseInt(request.getParameter("ori_name"));
 			UserDao udao = new UserDao();
 			DataBoardDao dao = new DataBoardDao();
 			Board_Dao bdao = new Board_Dao();
@@ -58,7 +57,6 @@ public class Data_Board_Post_Service implements Action {
 			request.setAttribute("b_code", b_code);
 			request.setAttribute("rank", rank);
 			request.setAttribute("yes", yes);
-			//request.setAttribute("ori_name",ori_name);
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("/WEB-INF/view/data_contentview.jsp");

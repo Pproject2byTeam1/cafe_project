@@ -113,7 +113,7 @@
 		                  <tr class="listrow">
 		                    <th scope="row" class="idx">${list.idx}</th>
 		                    <td>${list.b_name}<span class="d-none">${list.b_code}</span></td>
-		                    <td>${list.title}<span class="badge bg-primary rounded-pill">${list.c_count}</span></td>
+		                    <td>${list.title}</td>
 		                    <td>${list.w_date}</td>
 		                    <td>${list.hits}</td>
 		                    <td>${list.like}</td>
@@ -140,7 +140,7 @@
 		                  <tr class="listrow">
 		                    <th scope="row" class="idx">${list.idx}</th><!-- setEmail_id <= title, setDepth <= c_count -->
 		                    <td scope="row">${list.email_id}<span class="badge bg-primary rounded-pill">${list.depth}</span></td>
-		                    <td>${list.content}</td>
+		                    <td>${list.content}<span class="d-none">${list.refer}</span></td>
 		                    <td>${list.w_date}</td>
 		                  </tr>
 		                </c:forEach>

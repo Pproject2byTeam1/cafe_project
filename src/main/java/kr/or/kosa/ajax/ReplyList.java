@@ -47,9 +47,13 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	    				out.print("<div class='comment-box'>");
 	    					out.print("<div class='row'>");
 	    						out.print("<div class='col'>");
-	    							out.print("<h5 class='card-title' id='replynick'>");
+	    							out.print("<a data-bs-toggle=\"dropdown\"><h5 class='card-title' id='replynick'>");
 	    								out.print("<img src='image/rank_icon/1.gif' alt='Profile' class='rounded-circle'>"+reply.getNick());
-	    							out.print("</h5>");
+	    							out.print("</h5></a>");
+	    							out.print("<ul class=\"dropdown-menu dropdown-menu-end dropdown-menu-arrow\">\r\n"
+	    									+ "		<li class=\"anw_memo\"><a class=\"dropdown-item sendToMemo\" href=\"write_memo.do?sender_id=${board.email_id}\" >답장 보내기</a></li>\r\n"
+	    									+ "		<li class=\"view_user_activity\"><a class=\"dropdown-item viewActivity\" href=\"user_activity.do?email_id=${board.email_id}\" >활동 내역 보기</a></li>\r\n"
+	    									+ "	</ul>");
 	    						out.print("</div>");
 	    						out.print("<div id='replydate' class='col comment-date'>" + reply.getW_date() + "</div>");
 	    					out.print("</div>");

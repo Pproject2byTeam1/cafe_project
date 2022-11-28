@@ -31,11 +31,14 @@ import kr.or.kosa.dto.DataBoard;
 		try {
 			conn = ds.getConnection();
 			String sql = "select * "
+					+ "from (select * "
 						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.ori_name, d.refer, d.depth, d.step "
 							+ "from board b join data_board d "
 							+ "on b.idx = d.idx "
-							+ "where b_code=? "
-							+ "order by b_idx desc, refer desc, step asc) where rn <= ? and rn >= ? ";
+							+ "where b.b_code = ? "
+							+ "order by refer desc, step asc) "
+						+ "where rownum <= ?) "
+					+ "where rn >= ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
@@ -61,6 +64,9 @@ import kr.or.kosa.dto.DataBoard;
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
 				board.setOri_name(rs.getString("ori_name"));
+				board.setRefer(rs.getInt("refer"));
+				board.setDepth(rs.getInt("depth"));
+				board.setStep(rs.getInt("step"));
 				
 				boardlist.add(board);
 			}
@@ -115,11 +121,6 @@ import kr.or.kosa.dto.DataBoard;
             board.setEmail_id(rs.getString("email_id"));
             board.setOri_name(rs.getString("ori_name"));
             board.setSave_name(rs.getString("save_name"));
-            
-            //계층형
-            int refer = rs.getInt("refer");
-            int step =rs.getInt("step");
-        
             
             board.setVolume(rs.getInt("volume"));
             board.setRefer(rs.getInt("refer"));

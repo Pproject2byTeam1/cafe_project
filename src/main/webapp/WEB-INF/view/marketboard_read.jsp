@@ -55,6 +55,8 @@
 				
 			});
 			
+	
+			
 </script>
 
 <!-- Template Main CSS File -->
@@ -71,6 +73,16 @@
 			console.log(idx);
 			console.log(b_code);
  			location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
+			
+		});
+  		
+		//글수정
+		$("#edit").click(function(){
+			
+			let b_code = "<c:out value='${b_code}'/>";
+			let idx = "<c:out value='${list.idx}'/>";
+			console.log("edit 클릭");
+			location.href="marketboardEdit.do?b_code="  + b_code + "&idx=" + ${list.idx};
 			
 		});
 		
@@ -340,8 +352,11 @@
 											</div>
 											<div class="info-body">
 												<img src="image/rank_icon/1.gif" alt="Profile"
-													style="width:15px" class="rounded-circle">
-												<span id="marketB_Text.ns">${list.nick}</span>
+													style="width:15px" class="rounded-circle"><a data-bs-toggle="dropdown">${list.nick}</a>
+												<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+													<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+													<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+												</ul>
 											</div>
 											<div class="info-body">
 												<span id="marketB_Text.ns">${list.w_date}</span>

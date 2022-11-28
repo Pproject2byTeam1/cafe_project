@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -57,9 +57,10 @@
 		let email_id = '<c:out value="${member.email_id}" />';
         let yespark = '<c:out value="${yes}" />';
         let idx = '<c:out value="${board.idx}" />';
-        let b_code = '<c:out value="${board.b_code}" />';
+        let b_code = '<c:out value="${b_code}" />';
         let depth = '<c:out value="${board.depth}" />';
         let step = '<c:out value="${board.step}" />';
+        let refer = '<c:out value="${board.refer}" />';
         
 
 
@@ -128,20 +129,25 @@
 			console.log(idx);
 			console.log(b_code);
 			
- 			location.href="databoard_delete.do?idx=" + ${board.idx}+"&b_code="+${board.b_code};
- 			//	location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
+ 			location.href="databoard_delete.do?idx=" + idx +"&b_code="+ b_code;
+ 			
  			if(idx == ${board.idx}){
  				alert("삭제됩니다!");
  				
  			}
 			
 		});
+        
+        //수정
+        $("#datamodify").click(function(){
+        	location.href="databoard_edit.do?b_code=" + b_code + "&idx=" + idx + "&email_id=" + email_id;
+        });
     	
         /* 답글 작성 */
         
-    	$("#Write").click(function(){
+    	$("#replyWrite").click(function(){
 
-			location.href="databoard_rewrite.do?b_code=" + b_code+"&idx"+idx+"&refer"+refer+"&depth"+depth+"&step"+step;
+			location.href="databoard_rewrite.do?b_code="+b_code+"&idx="+idx+"&refer="+refer+"&depth="+depth+"&step="+step;
 			
 		});
         
@@ -334,7 +340,11 @@
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-5">
-													<p class="card-text"><img src="./image/rank_icon/${rank.rank}.gif">${board.nick}</p>
+													<img src="./image/rank_icon/${rank.rank}.gif"><a data-bs-toggle="dropdown">${board.nick}</a>
+										             	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+									                    	<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+									                    	<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+									                    </ul>
 												</div>
 												<div class="col-md-2">
 													<p class="text-right card-text">조회수:${board.hits}</p>
@@ -390,24 +400,25 @@
 										<div class="row">
 
 											<div  class="col-md-12">
-												<div>
-													<c:if test="${yespark == 'no'}">
-                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
-                                    				</c:if>
-                                    				<c:if test="${yespark != 'no'}">
-                                    					<button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
-                                    				</c:if>
-                                    				<form action="databoard_rewrite.do?b_code= + b_code+'&idx'+idx+'&refer'+refer+'&depth'+depth+'&step'+step" method="post">
-													<input type="submit" id="Write" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정" >
-													</form>
+												<div class="row">
+													<div class="col-6"></div>
+													<div class="col-3">
 														<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
-													<button type="button" id="delete"class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>
-													<form action="databoard_edit.do?b_code=${b_code}&idx=${board.idx}" method="post">
-				                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
-				                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
-	                                      			</form>
+															<button type="button" id="delete"class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>
+					                                        <input id="datamodify" type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
 														</c:if>
-													<button type="button" id="Top"class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
+													</div>
+													<div class="col-3">
+														<c:if test="${yespark == 'no'}">
+	                                    					<button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button>
+	                                    				</c:if>
+	                                    				<c:if test="${yespark != 'no'}">
+	                                    					<button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button>
+	                                    				</c:if>
+	                                    				<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글">
+														<button type="button" id="Top"class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
+													</div>
+													
 												</div>
 											</div>
 

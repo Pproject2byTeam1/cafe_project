@@ -21,6 +21,7 @@ public class ReplyDataWriteViewService implements Action {
 			
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			int idx = Integer.parseInt(request.getParameter("idx"));
+			int refer = Integer.parseInt(request.getParameter("refer"));
 			int depth = Integer.parseInt(request.getParameter("depth"));
 			int step = Integer.parseInt(request.getParameter("step"));
 			
@@ -33,6 +34,7 @@ public class ReplyDataWriteViewService implements Action {
 			request.setAttribute("idx", idx);
 			request.setAttribute("depth", depth);
 			request.setAttribute("step", step);
+			request.setAttribute("refer", refer);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

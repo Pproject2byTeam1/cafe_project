@@ -54,7 +54,7 @@ public class ReplyDataWriteService implements Action {
 						new DefaultFileRenamePolicy());
 				
 				int b_code = Integer.parseInt(multi.getParameter("b_code"));
-				int replyIdx = Integer.parseInt(multi.getParameter("reply_idx"));
+				int refer = Integer.parseInt(multi.getParameter("refer"));
 				int depth = Integer.parseInt(multi.getParameter("depth"));
 				int step = Integer.parseInt(multi.getParameter("step"));
 				String title = multi.getParameter("title");
@@ -69,7 +69,7 @@ public class ReplyDataWriteService implements Action {
 				int size1 = Long.valueOf(length).intValue();
 				
 				DataBoard board = new DataBoard();
-				board.setRefer(replyIdx);
+				board.setRefer(refer);
 				board.setB_code(b_code);
 				board.setTitle(title);
 				board.setNick(user.getNick());

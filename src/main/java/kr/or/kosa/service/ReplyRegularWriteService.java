@@ -50,7 +50,7 @@ public class ReplyRegularWriteService implements Action {
 				int step = Integer.parseInt(request.getParameter("step"));
 				String title = request.getParameter("title");
 				String content = request.getParameter("content");
-				String nick = request.getParameter(user.getNick());
+				String nick = user.getNick();
 				
 				Regular_Board board = new Regular_Board();
 				board.setTitle(title);
@@ -62,15 +62,16 @@ public class ReplyRegularWriteService implements Action {
 				board.setDepth(depth);
 				board.setStep(step);
 				
+				
 				Regular_Board_Dao dao = new Regular_Board_Dao();
 				
 				result = dao.insertRegualr_BoardReply(board);
 				
 				if (result > 0) {
-					msg = "성공";
+					msg = "답글 작성 완료.";
 					url = "/WebCafe_Project/regular_list.do?b_code=" + b_code;
 				} else {
-					msg = "실패";
+					msg = "답글 실패.";
 					url = "/WebCafe_Project/regular_list.do?b_code=" + b_code;
 				}
 				
