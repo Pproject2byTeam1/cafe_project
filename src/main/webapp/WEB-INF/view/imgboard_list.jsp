@@ -123,7 +123,7 @@
 			<!-- 게시판 이름 끌고오기 b_name -->
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
 					<li class="breadcrumb-item active">IMG BOARD</li>
 				</ol>
 			</nav>
