@@ -12,7 +12,21 @@ public abstract class Board {
 	private String notic;
 	private String email_id;
 	private int b_code;
+	private int c_count;
+	private int like;
 	
+	public int getC_count() {
+		return c_count;
+	}
+	public void setC_count(int c_count) {
+		this.c_count = c_count;
+	}
+	public int getLike() {
+		return like;
+	}
+	public void setLike(int like) {
+		this.like = like;
+	}
 	public String getTitle() {
 		return title;
 	}

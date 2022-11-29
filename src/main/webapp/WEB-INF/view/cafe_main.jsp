@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 
@@ -12,8 +13,10 @@
 <meta content="" name="description">
 <meta content="" name="keywords">
 
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     
 <!-- content에 자신의 OAuth2.0 클라이언트ID를 넣습니다. -->
 <meta name ="google-signin-client_id" content="921928889538-s4valdhb19eee3o6h4hgeheq8i8q90qk.apps.googleusercontent.com">
@@ -89,7 +92,7 @@
         <div class="col-lg-12">
           <div class="row">
 
-            <!-- Sales Card -->
+            <!-- Card 1 -->
             <div class="col-lg-6">
               <div class="card info-card sales-card">
 
@@ -107,24 +110,34 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">항목이름 <span>| 소제목</span></h5>
+                  <h5 class="card-title">자유게시판 <span>| 막 글</span></h5>
 
                     <div class="ps-3">
                       <table class="table table-hover table-sm datatable">
                       	<thead>
-                      	<tr><th><span class="text-success pt-1 fw-bold">#</span></th><th><span class="text-success pt-1 fw-bold">항목 1</span></th><th><span class="text-success pt-1 fw-bold">항목 2</span></th><th><span class="text-success pt-1 fw-bold">항목 3</span></th><th><span class="text-success pt-1 fw-bold">항목 4</span></th></tr>
+                      	<tr><th><span class="text-success pt-1 fw-bold">제목</span></th><th><span class="text-success pt-1 fw-bold">작성자</span></th><th><span class="text-success pt-1 fw-bold">작성일자</span></th><th><span class="text-success pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>
                       	<tbody>
-                      	<tr><th><span class="text-success pt-1 fw-bold">1</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-success pt-1 fw-bold">2</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-success pt-1 fw-bold">3</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<c:forEach var="board" items="${regular_list}" varStatus="status">
+                      	<tr class="listrow">
+		                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-success rounded-pill">${board.c_count}</span></td>
+		                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
+		                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+									<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+									<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+								</ul>
+		                      	</td>
+		                      	<td class="w_date">${board.w_date}</td>
+		                      	<td>${board.hits}</td>
+		                </tr>
+                      	</c:forEach>
                       	</tbody>
                       </table>
                     </div>
                 </div>
 
               </div>
-            </div><!-- End Sales Card -->
+            </div><!-- End Card 1 -->
 
             <!-- Revenue Card -->
             <div class="col-lg-6">
@@ -144,17 +157,27 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">항목이름2 <span>| 소제 2</span></h5>
+                  <h5 class="card-title">정보 게시판 <span>| 정보공유</span></h5>
 
                     <div class="ps-3">
                     <table class="table table-hover table-sm datatable">
                       	<thead>
-                      	<tr><th><span class="text-primary pt-1 fw-bold">#</span></th><th><span class="text-primary pt-1 fw-bold">항목 1</span></th><th><span class="text-primary pt-1 fw-bold">항목 2</span></th><th><span class="text-primary pt-1 fw-bold">항목 3</span></th></tr>
+                      	<tr><th><span class="text-primary pt-1 fw-bold">제목</span></th><th><span class="text-primary pt-1 fw-bold">작성자</span></th><th><span class="text-primary pt-1 fw-bold">작성일자</span></th><th><span class="text-primary pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>
                       	<tbody>
-                      	<tr><th><span class="text-primary pt-1 fw-bold">1</span></th><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-primary pt-1 fw-bold">2</span></th><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-primary pt-1 fw-bold">3</span></th><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<c:forEach var="board" items="${data_list}" varStatus="status">
+                      	<tr class="listrow">
+		                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-primary rounded-pill">${board.c_count}</span></td>
+		                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
+		                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+									<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+									<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+								</ul>
+		                      	</td>
+		                      	<td class="w_date">${board.w_date}</td>
+		                      	<td>${board.hits}</td>
+		                </tr>
+                      	</c:forEach>
                       	</tbody>
                       </table>
                     </div>
@@ -191,22 +214,43 @@
                       	</thead>
                       	<tbody>
                       	<tr><th><span class="text-danger pt-1 fw-bold">1</span></th><td>내ㅐㅐㅐㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내ㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">2</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">3</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">4</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">5</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">6</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">7</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">8</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">9</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">10</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">11</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">12</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">13</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">14</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">15</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">16</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">17</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	</tbody>
+                      </table>
+                    </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+            
+            <!-- Customers Card -->
+            <div class="col-xl-12">
+
+              <div class="card info-card customers-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">항목 3 <span>| 소제 3</span></h5>
+
+                    <div class="ps-3">
+                      <table class="table table-hover datatable">
+                      	<thead>
+                      	<tr><th><span class="text-warning  pt-1 fw-bold">#</span></th><th><span class="text-warning pt-1 fw-bold">항목 1</span></th><th><span class="text-warning pt-1 fw-bold">항목 2</span></th><th><span class="text-warning pt-1 fw-bold">항목 3</span></th><th><span class="text-warning pt-1 fw-bold">항목 4</span></th><th><span class="text-warning pt-1 fw-bold">항목 5</span></th><th><span class="text-warning pt-1 fw-bold">항목 6</span></th><th><span class="text-warning pt-1 fw-bold">항목 7</span></th><th><span class="text-warning pt-1 fw-bold">항목 8</span></th><th><span class="text-warning pt-1 fw-bold">항목 9</span></th></tr>
+                      	</thead>
+                      	<tbody>
+                      	<tr><th><span class="text-warning  pt-1 fw-bold">1</span></th><td>내ㅐㅐㅐㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내ㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td></tr>
                       	</tbody>
                       </table>
                     </div>
@@ -253,6 +297,7 @@
 					</ul>
                     </div>
                   </div>
+                  <hr>
                   <div class="d-flex align-items-center sales-card">
 					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="ri-thumb-up-line"></i>
@@ -279,6 +324,76 @@
               </div>
             </div><!-- End Reports -->
 
+			<!-- Top Selling -->
+            <div class="col-12">
+              <div class="card top-selling overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body pb-0">
+                  <h5 class="card-title">거래게시판 <span>| 주간 장터</span></h5>
+
+                  <table class="table table-borderless table-hover">
+                    <thead class="table-warning">
+                      <tr>
+                        <th scope="col">판매여부</th>
+                        <th scope="col">Preview</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">가격</th>
+                        <th scope="col">올린날짜</th>
+                        <th scope="col">올린사람</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="board" items="${market_list}" varStatus="status">
+                      <tr class="listrow">
+                        <th>${board.sold}</th>
+                        <th scope="row"><a href="#"><img src="image/board/upload/${board.img_name}" alt="" onerror="this.onerror=null; this.src='https://via.placeholder.com/300X250?text=No+Image'"></a></th>
+                        <td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}</td>
+                        <td class="fw-bold">${board.price}원</td>
+                        <td class="w_date">${board.w_date}</td>
+                        <td><a data-bs-toggle="dropdown">${board.nick}</a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}"" >답장 보내기</a></li>
+							<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+						</ul>
+                        </td>
+                      </tr>
+                      </c:forEach>
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Top Selling -->
+            
+            <div class="col-lg-6">
+	          <div class="card">
+	            <div class="card-body">
+	              <h5 class="card-title">Column Chart</h5>
+	
+	              <!-- Column Chart -->
+	              <div id="columnChart"></div>
+	
+	              
+	              <!-- End Column Chart -->
+	
+	            </div>
+	          </div>
+	        </div>
+
             <!-- Recent Sales -->
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
@@ -298,6 +413,8 @@
 
           </div>
         </div><!-- End Left side columns -->
+	</div>
+	</div>
 	</div>
 	</section>
 	</main>
@@ -335,6 +452,84 @@
 
 	<!-- Template Main JS File -->
 	<script src="assets/js/main.js"></script>
+	<script type="text/javascript">
+	$(function(){
+  		
+  		$('.pager').click(function(){
+  			clickLocation();
+  		});
+  		$('.dataTable-pagination-list').click(function(){
+  			clickLocation();
+  		});
+  		$('.dataTable-sorter').click(function(){
+  			clickLocation();
+  		});
+  		clickLocation();
+  	});
 	
+	function clickLocation(){
+		$('.listrow').click(function(){
+  			const idx = $(this).children('.td1').children('.idx').text();
+  			const b_code = $(this).children('.td1').children('.b_code').text();
+  			const w_date = $(this).children(".w_date").text();
+  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+  		});
+	}
+	var col1 = [44, 55, 57, 56, 61, 58, 63, 60, 66];
+	var col2 = [76, 85, 101, 98, 87, 105, 91, 114, 94];
+	var col3 = [35, 41, 36, 26, 45, 48, 52, 53, 41];
+	var threechart = {
+        series: [{
+          name: 'Net Profit',
+          data: col1
+        }, {
+          name: 'Revenue',
+          data: col2
+        }, {
+          name: 'Free Cash Flow',
+          data: col3
+        }],
+        chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        },
+        yaxis: {
+          title: {
+            text: '$ (thousands)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function(val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        }
+      }
+    document.addEventListener("DOMContentLoaded", () => {
+      new ApexCharts(document.querySelector("#columnChart"), threechart).render();
+    });
+	</script>
 
 </html>

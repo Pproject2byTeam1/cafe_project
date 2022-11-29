@@ -31,7 +31,7 @@ public class BoardContentService implements Action {
 			}else if(b_code == 5) {//유료 거래
 				url="marketboard_read.do?idx="+idx+"&b_code"+ b_code;
 			}else if(b_code == 6) {//자료 공유
-				url="data_post.do?idx="+idx+"&b_code"+ b_code;
+				url="databoard_read.do?idx="+idx+"&b_code"+ b_code;
 			}
 			System.out.println("url: "+url);
 			
