@@ -228,37 +228,25 @@
   		$('#dataTable3').DataTable();
   		
   		$('.page-link ').click(function(){
-  			$('.listrow').click(function(){
-  	  			const idx = $(this).children('.idx').text();
-  	  			const b_code = $(this).children().children('.d-none').text();
-  	  			const w_date = $(this).children(".w_date").text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-  	  		});
+  			clickLocation();
   		});
   		$('.paginate_button').click(function(){
-  			$('.listrow').click(function(){
-  	  			const idx = $(this).children('.idx').text();
-  	  			const b_code = $(this).children().children('.d-none').text();
-  	  			const w_date = $(this).children(".w_date").text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-  	  		});
+  			clickLocation();
   		});
   		$('.sorting ').click(function(){
-  			$('.listrow').click(function(){
-  	  			const idx = $(this).children('.idx').text();
-  	  			const b_code = $(this).children().children('.d-none').text();
-  	  			const w_date = $(this).children(".w_date").text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-  	  		});
+  			clickLocation();
   		});
+  		clickLocation();
+  		
+  	});
+  	function clickLocation(){
   		$('.listrow').click(function(){
   			const idx = $(this).children('.idx').text();
   			const b_code = $(this).children().children('.d-none').text();
   			const w_date = $(this).children(".w_date").text();
   			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
   		});
-  		
-  	});
+  	}
   </script>
 
 </body>

@@ -10,6 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import javax.swing.border.Border;
 
 import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board;
@@ -121,7 +122,11 @@ public class Board_Dao {
 			while(rs.next()) {
 				Regular_Board board = new Regular_Board();
 				board.setIdx(rs.getInt("idx"));
-				board.setTitle(rs.getString("title"));
+				String title = rs.getString("title");
+				if(title.length() >10) {
+					title = title.substring(0, 9) + "...";
+				}
+				board.setTitle(title);
 				board.setNick(rs.getString("nick"));
 				board.setContent(rs.getString("content"));
 				board.setHits(rs.getInt("hits"));
@@ -686,6 +691,75 @@ public class Board_Dao {
 			}
 			
 			return row;
+		}
+		
+		//입력값에 따른, 보드 종류별 리스트 출력
+		public List<Board> getBoardList(int b_code){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<Board> boardlist = new ArrayList<Board>();
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "select * from\r\n"
+						+ "(select rownum rn, idx, b_code, content, b_name, title, \"c_count\", nick, w_date, email_id, hits, \"like\",report_count,notic from \r\n"
+						+ "(select b.idx,b.b_code, b.content, i.b_name, b.title, nvl(c.\"cnt\",0) as \"c_count\", b.nick,  to_char(b.w_date,'yyyy-MM-dd') as w_date, b.email_id, b.hits, nvl(l.\"cnt\",0) as \"like\" ,b.report_count, b.notic\r\n"
+						+ "from board b left join (select count(email_id)as \"cnt\", idx from yes group by idx) l \r\n"
+						+ "on l.idx = b.idx\r\n"
+						+ "left join (select count(co_idx)as \"cnt\", idx from comments group by idx) c\r\n"
+						+ "on c.idx = b.idx\r\n"
+						+ "left join board_info i \r\n"
+						+ "on b.b_code = i.b_code \r\n"
+						+ "where i.b_code = ? order by b.idx desc))\r\n"
+						+ "where rn BETWEEN 1 and 50";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, b_code);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						
+						AttendanceBoad board = new AttendanceBoad();
+						board.setIdx(rs.getInt("idx"));
+						String title = rs.getString("title");
+						if(title.length() > 10) {
+							title = title.substring(0,10) + "...";
+						}
+						board.setTitle(title);
+						board.setNick(rs.getString("nick"));
+						board.setContent(rs.getString("content"));
+						board.setHits(rs.getInt("hits"));
+						board.setW_date(rs.getString("w_date"));
+						board.setReport_count(rs.getInt("report_count"));
+						board.setEmail_id(rs.getString("email_id"));
+						board.setB_code(rs.getInt("b_code"));
+						board.setC_count(rs.getInt("c_count"));
+						board.setLike(rs.getInt("like"));
+						
+						boardlist.add(board);
+					}while(rs.next());
+				}else {
+					System.out.println("조회 데이터 없음");
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					rs.close();
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+		
+			return boardlist;
 		}
 	
 }
