@@ -121,7 +121,7 @@ public class Board_Info_Dao {
 		int row = 0;
 		
 		try {
-			
+			conn = ds.getConnection();
 			String sql = "update Board_Info set b_name=?, side_idx=?, main_idx=? where b_code=?";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -153,7 +153,7 @@ public class Board_Info_Dao {
 		int row = 0;
 		
 		try {
-			
+			conn = ds.getConnection();
 			String sql = "delete from Board_Info where b_code=?";
 			pstmt = conn.prepareStatement(sql);
 			

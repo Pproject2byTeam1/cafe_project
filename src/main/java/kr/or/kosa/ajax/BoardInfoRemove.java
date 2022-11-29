@@ -2,7 +2,6 @@ package kr.or.kosa.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
-import kr.or.kosa.dao.CafeBannerDao;
+import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dto.User;
 
 @WebServlet("/BoardInfoRemove")
@@ -49,12 +45,14 @@ public class BoardInfoRemove extends HttpServlet {
 		    		
 		    		int b_code = Integer.parseInt(request.getParameter("b_code"));
 		    		
-			    	int row =0;
+		    		Board_Info_Dao infodao = new Board_Info_Dao();
+		    		
+			    	int row = infodao.deleteBoardInfo(b_code);
 					
 					if(row > 0) {
-						msg = "카페 배너가 업로드 되었습니다.";
+						msg = "게시판이 삭제되었습니다.";
 					}else {
-						msg = "배너 이미지 업로드에 실패하였습니다.";
+						msg = "게시판 삭제를 실패하였습니다.";
 					}
 		    	}
 		    }

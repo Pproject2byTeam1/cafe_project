@@ -477,12 +477,44 @@
  		});
  		
  		$(document).on('click', '.trash', function(){
+ 			let divtag = this.closest(".maincard");
+ 			let children1 = $(divtag).children();
+ 			let ch = $(children1).children().eq(0);
  			
+ 			let requestdata1 = {"b_code": $(ch).val()};
+ 			
+ 			cateremove(requestdata1);
  		});
  		
  		/* 게시판 추가 삭제 버튼 끝 */
  		
+ 		/* 게시판 정보 수정 시작 */
  		
+ 		function boardinfobyb_code(requestdata2){
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "BoardInfoByB_code",
+ 				data: requestdata2,
+ 				dataType: "JSON",
+ 				success: function(data){
+ 					console.log(data);
+ 				}
+ 			});
+ 		};
+ 		
+ 		$(document).on('click', '.moreinfo', function(){
+ 			
+ 			let divtag = this.closest(".maincard");
+ 			let children1 = $(divtag).children();
+ 			let ch = $(children1).children().eq(0);
+ 			
+ 			let requestdata2 = {"b_code": $(ch).val()};
+ 			
+ 			
+ 			
+ 		});
+ 		
+ 		/* 게시판 정보 수정 끝 */
  		
  	});
   	
@@ -550,9 +582,7 @@
 							<div class="row">
 								<div align="center" class="col">
 									<button type="button" id="addview_btn"
-										class="btn btn-outline-secondary rounded-pill">게시판 추가</button>
-									<button type="button" id="del"
-										class="btn btn-outline-secondary rounded-pill">휴지통</button>
+										class="btn btn-lg btn-outline-secondary rounded-pill">게시판 추가</button>
 								</div>
 							</div>
 						</div>
@@ -564,6 +594,7 @@
 							<c:forEach var="infolist" items="${infolist}">
 								<div class="maincard row m-2">
 									<div class="col-md-5 pt-1">
+										<input id="b_code" value="${infolist.b_code}" type="hidden" />
 										<br> <h5>${infolist.b_name}</h5>
 									</div>
 									<div align="right" class="col-md-7 pt-2">

@@ -37,6 +37,7 @@ public class BoardInfoLoad extends HttpServlet {
 			for(Board_Info info : infolist) {
 				out.print("<div class='maincard row m-2'>");
 					out.print("<div class='col-md-5 pt-1'>");
+						out.print("<input id='b_code' value='" + info.getB_code() + "' type='hidden' />");
 						out.print("<br> <h5>" + info.getB_name() + "</h5>");
 					out.print("</div>");
 					out.print("<div align='right' class='col-md-7 pt-2'>");
