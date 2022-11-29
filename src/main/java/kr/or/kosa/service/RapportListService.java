@@ -69,7 +69,7 @@ public class RapportListService implements Action {
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalreportcount",totalreportcount);
 			request.setAttribute("reportlist", reportlist);
-			request.setAttribute("reportlist2", reportlist2);
+		
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

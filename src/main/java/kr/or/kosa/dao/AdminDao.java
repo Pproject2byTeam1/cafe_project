@@ -79,57 +79,7 @@ public class AdminDao {
 	}
 	
 	
-	public List<AttendanceBoad> reportlist2(int cpage, int pagesize) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<AttendanceBoad> reportlist = null;
-		try {
-			conn = ds.getConnection();
 
-			String sql = "select * from (select a.b_code, b.b_name a.title,a.nick, a.email_id, a.report_count, a.hits  from board a join board_info b on a.b_code = b.b_code where a.report_count > 0 order by idx)where rn <= ? and rn >= ?";
-		
-			pstmt = conn.prepareStatement(sql);
-			
-			int start = cpage * pagesize - (pagesize - 1); // 1 * 5 - (5 - 1) >> 1
-			int end = cpage * pagesize; // 1 * 5 >> 5
-
-			pstmt.setInt(1, end);
-			pstmt.setInt(2, start);
-		
-			rs = pstmt.executeQuery();
-			reportlist = new ArrayList<AttendanceBoad>();
-			
-			while (rs.next()) {
-				
-				AttendanceBoad report = new AttendanceBoad();
-				Board_Info info = new Board_Info();
-				report.setIdx(rs.getInt("b_code"));
-				info.setB_name(rs.getString("b_name"));
-				report.setTitle(rs.getString("title"));
-				report.setNick(rs.getString("nick"));
-				report.setEmail_id(rs.getString("email_id"));
-				report.setHits(rs.getInt("hits"));
-				report.setReport_count(rs.getInt("report_count"));
-
-				reportlist.add(report);
-			}
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				pstmt.close();
-				rs.close();
-				conn.close();// 반환
-			} catch (Exception e2) {
-
-			}
-
-		}
-
-		return reportlist;
-	}
 	
 	
 	
@@ -242,14 +192,15 @@ public class AdminDao {
 	
 	//신고 갯수 초기화
 	public boolean deleteRapport(int idx) {
-		//update jspboard set readnum = readnum + 1 where idx=?
+	
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		boolean result = false;
+	boolean result = false;
 		try {
 			conn = ds.getConnection();
-			String sql="update BOARD set REPORT_COUNT=0  where idx = ?";
+			String sql="update BOARD set report_count=0  where idx = ?";
 			pstmt = conn.prepareStatement(sql);
+			
 			pstmt.setInt(1, idx);
 			
 			int row = pstmt.executeUpdate();
@@ -261,6 +212,7 @@ public class AdminDao {
 			e.printStackTrace();
 		}finally {
 			try {
+				 conn.setAutoCommit(true);
 				pstmt.close();
 				conn.close();//반환
 			}catch (Exception e) {
@@ -269,8 +221,40 @@ public class AdminDao {
 		}
 		return result;
 	}
+	// 이름으로 검색
+	public User getNick(String nick) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User userdto = new User();
 
-	
+		try {
+			conn = ds.getConnection();
+
+			String sql = "select b_code, idx ,title, nick,email_id ,hits, report_count from board where report_count>3 and nick =?";
+			pstmt.setString(1, "nick");
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+
+				//userdto.setRank(rs.getInt("rank"));;
+
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+
+		return userdto;
+
+	}
 	
 	
 }

@@ -27,10 +27,10 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
     	
     		
     	try {  		
-			//int idx = Integer.parseInt(request.getParameter("idx"));
-    		int idx = Integer.parseInt(request.getParameter("idx"));
+    		int idx = Integer.parseInt(request.getParameter("idx"));	
+    		
 			AdminDao dao = new AdminDao();
-			boolean row = dao.deleteRapport(idx);
+		boolean row = dao.deleteRapport(idx);
 			
 			String msg = "";
 			
@@ -44,7 +44,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 			
     		
     	} catch(Exception e) {
-    		System.out.println(e.getMessage());
+    		System.out.println("신고"+e.getMessage());
     	}
     	
 	}
