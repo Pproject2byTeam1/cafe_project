@@ -214,22 +214,43 @@
                       	</thead>
                       	<tbody>
                       	<tr><th><span class="text-danger pt-1 fw-bold">1</span></th><td>내ㅐㅐㅐㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내ㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">2</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">3</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">4</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">5</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">6</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">7</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">8</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">9</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">10</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">11</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">12</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">13</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">14</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">15</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">16</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">17</span></th><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	</tbody>
+                      </table>
+                    </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Customers Card -->
+            
+            <!-- Customers Card -->
+            <div class="col-xl-12">
+
+              <div class="card info-card customers-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">항목 3 <span>| 소제 3</span></h5>
+
+                    <div class="ps-3">
+                      <table class="table table-hover datatable">
+                      	<thead>
+                      	<tr><th><span class="text-warning  pt-1 fw-bold">#</span></th><th><span class="text-warning pt-1 fw-bold">항목 1</span></th><th><span class="text-warning pt-1 fw-bold">항목 2</span></th><th><span class="text-warning pt-1 fw-bold">항목 3</span></th><th><span class="text-warning pt-1 fw-bold">항목 4</span></th><th><span class="text-warning pt-1 fw-bold">항목 5</span></th><th><span class="text-warning pt-1 fw-bold">항목 6</span></th><th><span class="text-warning pt-1 fw-bold">항목 7</span></th><th><span class="text-warning pt-1 fw-bold">항목 8</span></th><th><span class="text-warning pt-1 fw-bold">항목 9</span></th></tr>
+                      	</thead>
+                      	<tbody>
+                      	<tr><th><span class="text-warning  pt-1 fw-bold">1</span></th><td>내ㅐㅐㅐㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내ㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td></tr>
                       	</tbody>
                       </table>
                     </div>
@@ -321,11 +342,12 @@
                 </div>
 
                 <div class="card-body pb-0">
-                  <h5 class="card-title">거래게시판 <span>| 판매중</span></h5>
+                  <h5 class="card-title">거래게시판 <span>| 주간 장터</span></h5>
 
                   <table class="table table-borderless table-hover">
                     <thead class="table-warning">
                       <tr>
+                        <th scope="col">판매여부</th>
                         <th scope="col">Preview</th>
                         <th scope="col">Product</th>
                         <th scope="col">가격</th>
@@ -334,66 +356,21 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">상품이름1</a></td>
-                        <td>$64</td>
-                        <td class="fw-bold">2022-10-30</td>
-                        <td><a data-bs-toggle="dropdown"><img src="image/rank_icon/2.gif" alt="아이콘">마들랜</a>
+                    <c:forEach var="board" items="${market_list}" varStatus="status">
+                      <tr class="listrow">
+                        <th>${board.sold}</th>
+                        <th scope="row"><a href="#"><img src="image/board/upload/${board.img_name}" alt="" onerror="this.onerror=null; this.src='https://via.placeholder.com/300X250?text=No+Image'"></a></th>
+                        <td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}</td>
+                        <td class="fw-bold">${board.price}원</td>
+                        <td class="w_date">${board.w_date}</td>
+                        <td><a data-bs-toggle="dropdown">${board.nick}</a>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
-							<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
+							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}"" >답장 보내기</a></li>
+							<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
 						</ul>
                         </td>
                       </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">상품이름2</a></td>
-                        <td>$46</td>
-                        <td class="fw-bold">2022-11-02</td>
-                        <td><a data-bs-toggle="dropdown"><img src="image/rank_icon/4.gif" alt="아이콘">비스타</a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
-							<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
-						</ul>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">상품이름3</a></td>
-                        <td>$59</td>
-                        <td class="fw-bold">2022-11-10</td>
-                        <td><a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">스탠드</a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
-							<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
-						</ul>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">상품이름4</a></td>
-                        <td>$32</td>
-                        <td class="fw-bold">2022-11-03</td>
-                        <td><a data-bs-toggle="dropdown"><img src="image/rank_icon/1.gif" alt="아이콘">user01</a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
-							<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
-						</ul>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#"><img src="assets/img/product-5.jpg" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">상품이름5</a></td>
-                        <td>$79</td>
-                        <td class="fw-bold">2022-11-01</td>
-                        <td><a data-bs-toggle="dropdown"><img src="image/rank_icon/2.gif" alt="아이콘">tex</a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
-							<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
-						</ul>
-                        </td>
-                      </tr>
+                      </c:forEach>
                     </tbody>
                   </table>
 
@@ -401,6 +378,21 @@
 
               </div>
             </div><!-- End Top Selling -->
+            
+            <div class="col-lg-6">
+	          <div class="card">
+	            <div class="card-body">
+	              <h5 class="card-title">Column Chart</h5>
+	
+	              <!-- Column Chart -->
+	              <div id="columnChart"></div>
+	
+	              
+	              <!-- End Column Chart -->
+	
+	            </div>
+	          </div>
+	        </div>
 
             <!-- Recent Sales -->
             <div class="col-12">
@@ -483,6 +475,61 @@
   			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
   		});
 	}
+	var col1 = [44, 55, 57, 56, 61, 58, 63, 60, 66];
+	var col2 = [76, 85, 101, 98, 87, 105, 91, 114, 94];
+	var col3 = [35, 41, 36, 26, 45, 48, 52, 53, 41];
+	var threechart = {
+        series: [{
+          name: 'Net Profit',
+          data: col1
+        }, {
+          name: 'Revenue',
+          data: col2
+        }, {
+          name: 'Free Cash Flow',
+          data: col3
+        }],
+        chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        },
+        yaxis: {
+          title: {
+            text: '$ (thousands)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function(val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        }
+      }
+    document.addEventListener("DOMContentLoaded", () => {
+      new ApexCharts(document.querySelector("#columnChart"), threechart).render();
+    });
 	</script>
 
 </html>
