@@ -13,7 +13,11 @@
   <title>Charts / ApexCharts - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+	
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	
+	
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -40,6 +44,71 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  
+  <script type="text/javascript">
+		$(document).ready(function(){
+
+			
+			let splicetResult;
+			let hits = []; 
+			let title = [];
+			
+			$("#number").change(function(){
+				$("#barChart").empty();
+				
+				let num = $('#number').val();
+				const number = {"number": num};
+				
+				$.ajax({
+  					type: "POST",
+  					url: "Chart",
+  					data: number,
+  					dataType: "JSON",
+  					success: function(data){
+  							
+  						splicetResult = hits.splice(0);
+  						splicetResult = title.splice(0);
+  						
+  					
+  						$(data).each(function(){
+							hits.push(this.hits);
+							title.push(this.title);
+  						});
+  						
+  						
+  						
+						new ApexCharts(document.querySelector("#barChart"), {
+		                    series: [{
+		                      data: hits
+		                    }],
+		                    chart: {
+		                      type: 'bar',
+		                      height: 350
+		                    },
+		                    plotOptions: {
+		                      bar: {
+		                        borderRadius: 4,
+		                        horizontal: true,
+		                      }
+		                    },
+		                    dataLabels: {
+		                      enabled: false
+		                    },
+		                    xaxis: {
+		                      categories: title
+		                    ,
+		                    }
+		                  }).render();
+  					}
+ 				});
+				
+			});
+			
+		});
+  
+  </script>
+  
+  
 </head>
 
 <body>
@@ -67,7 +136,14 @@
     </div><!-- End Page Title -->
 
     <p>ApexCharts Examples. You can check the <a href="https://apexcharts.com/javascript-chart-demos/" target="_blank">official website</a> for more examples.</p>
-
+		
+		
+		
+		<select name="number" id="number">
+			<option value=5>5개</option>
+			<option value=10>10개</option>
+		</select>
+		
     <section class="section">
       <div class="row">
 
@@ -584,13 +660,16 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">상위 Top 10 글(Bar Chart)</h5>
+              <h5 class="card-title">상위 Top 10 (Bar Chart)</h5>
 
               <!-- Bar Chart -->
+              <div id="bar">
               <div id="barChart"></div>
-
+			  </div>
               <script>
                 document.addEventListener("DOMContentLoaded", () => {
+          
+                	
                   new ApexCharts(document.querySelector("#barChart"), {
                     series: [{
                       data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]

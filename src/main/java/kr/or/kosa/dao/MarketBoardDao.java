@@ -107,19 +107,19 @@ public class MarketBoardDao {
 			conn = ds.getConnection();
 			String sql = "select * " +
 							"from (select * " +
-						    "from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
+						    "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
 						    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
 						    "b.report_count, b.email_id, b.b_code " +
 						    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
-						    "where b_code=? and rownum <= ?) " +
-						    "where rn >=?";
+						    "where b_code=? and rn >= ?) " +
+						    "where rn <=?";
 			pstmt = conn.prepareStatement(sql);
 
 			int start = cpage * pagesize - (pagesize - 1);
 			int end = cpage * pagesize;
 			pstmt.setInt(1, b_code);
-			pstmt.setInt(2, end);
-			pstmt.setInt(3, start);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			
 			System.out.println("출력 시작번호 : " + start);
 			System.out.println("출력 끝번호 : " + end);
@@ -139,8 +139,8 @@ public class MarketBoardDao {
 				board.setCate(rs.getString("cate"));
 				board.setTitle(rs.getString("title"));
 				//태그제거 정규표현식 + 글자수 제한
-				//board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
-				board.setContent(rs.getString("content"));
+				board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
+				//board.setContent(rs.getString("content"));
 				board.setImg_name(rs.getString("img_name"));
 				board.setPrice(rs.getInt("price"));
 				board.setHits(rs.getInt("hits"));
@@ -182,28 +182,28 @@ public class MarketBoardDao {
 				conn = ds.getConnection();
 				String sql1 = "select * " +
 						"from (select * " +
-					    "from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
+					    "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
 					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
 					    "b.report_count, b.email_id, b.b_code " +
 					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
-					    "where b_code=? and rownum <= ?) " +
-					    "where rn >=? and search=?"; //all, 검색
+					    "where b_code=? and rn >= ?) " +
+					    "where rn <=? and search=?"; //all, 검색
 				String sql2 = "select * " +
 						"from (select * " +
-					    "from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
+					    "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
 					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
 					    "b.report_count, b.email_id, b.b_code " +
 					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
-					    "where b_code=? and rownum <= ?) " +
-					    "where rn >=? and sold=?"; // 판매중
+					    "where b_code=? and rn >= ?) " +
+					    "where rn <=? and sold=?"; // 판매중
 				String sql3 = "select * " +
 						"from (select * " +
-					    "from (select rownum rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
+					    "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
 					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
 					    "b.report_count, b.email_id, b.b_code " +
 					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
-					    "where b_code=? and rownum <= ?) " +
-					    "where rn >=? and sold=? and search=?"; // 판매중 , 검색
+					    "where b_code=? and rn >= ?) " +
+					    "where rn <=? and sold=? and search=?"; // 판매중 , 검색
 
 				if(sold.equals("all")) {
 					pstmt = conn.prepareStatement(sql1);
@@ -220,8 +220,8 @@ public class MarketBoardDao {
 				int end = cpage * pagesize;
 
 				pstmt.setInt(1, b_code);
-				pstmt.setInt(2, end);
-				pstmt.setInt(3, start);
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
 				
 				rs = pstmt.executeQuery();
 				tagRemove tag = new tagRemove();
@@ -239,8 +239,8 @@ public class MarketBoardDao {
 					board.setCate(rs.getString("cate"));
 					board.setTitle(rs.getString("title"));
 					//컨텐츠 태그제거정규표현식 + 글자수 제한
-					//board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
-					board.setContent(rs.getString("content"));
+					board.setContent(tag.htmlTagRemoveString(rs.getString("content")));
+					//board.setContent(rs.getString("content"));
 					board.setImg_name(rs.getString("img_name"));
 					board.setPrice(rs.getInt("price"));
 					board.setHits(rs.getInt("hits"));

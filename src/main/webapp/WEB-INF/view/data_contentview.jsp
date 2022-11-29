@@ -514,7 +514,7 @@
 														id="step" value="${comments.step}" type="hidden" />
 													<button type="button" id='replyreplywrite'
 														class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-													<c:if test='${member.email_id eq comments.email_id }'>
+													<c:if test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
 														<button type="button" id="replydel"
 															class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
 													</c:if>
@@ -539,7 +539,7 @@
 											<h6></h6>
 
 											<div align="right" class="actions">
-											<c:if test='${member.email_id eq comments.email_id }'>
+											<c:if test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
 												<input id="co_idx2" value="${comments.co_idx}" type="hidden" />
 												<button type="button" id="replydel2"
 													class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>

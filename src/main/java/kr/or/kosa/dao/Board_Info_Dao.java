@@ -175,6 +175,58 @@ public class Board_Info_Dao {
 		return row;
 	}
 
-	
+	//메인 위치 번호 업로드
+
+	public int updateMain_Index(int b_code, int main_idx) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
+			String sql = "update board_info set main_idx = -1 where main_idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, main_idx);
+			
+			row = pstmt.executeUpdate();
+			
+			String sql2 = "update board_info set main_idx = ? where b_code = ?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setInt(1, main_idx);
+			pstmt2.setInt(2, b_code);
+			
+			row = pstmt2.executeUpdate();
+			
+			if(row < 0) {
+				throw new Exception("업로드 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				pstmt2.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
 	
 }

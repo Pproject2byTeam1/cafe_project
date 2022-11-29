@@ -338,7 +338,7 @@
 									<hr>
 									<div class="row">
 										<div class="col-lg-9">
-											<img class="marketB_img" src="image/board/5/${list.img_name}">
+											<img class="marketB_img" src="upload/${list.img_name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/500X500?text=No+Image'">
 										</div>
 										<div align="center" class="col-lg-3">
 											<div class="info-body price">
@@ -355,7 +355,7 @@
 													style="width:15px" class="rounded-circle"><a data-bs-toggle="dropdown">${list.nick}</a>
 												<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 													<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
-													<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+													<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${list.email_id}" >활동 내역 보기</a></li>
 												</ul>
 											</div>
 											<div class="info-body">
@@ -364,7 +364,7 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-12">
+										<div class="col-md-12" style="word-break:break-all;">
 											<hr>
 											${list.content}
 											<p>
@@ -428,7 +428,7 @@
 
 																		<div align="right" class="actions">
 																			<br>
-																			<button type="button"
+																			<button type="button" id="replywritebtn"
 																				class="btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>
 																		</div>
 																	</ul>
@@ -465,13 +465,10 @@
 																					type="hidden" />
 																				<button type="button" id='replyreplywrite'
 																					class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-																				<c:if
-																					test='${member.email_id eq comments.email_id }'>
+																				<c:if test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
 																					<button type="button" id="replydel"
 																						class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-																				</c:if>
-
-																			</div>
+																				</c:if>																																							</div>
 																		</div>
 																	</div>
 																</c:if>
@@ -491,7 +488,7 @@
 																		<h6></h6>
 
 																		<div align="right" class="actions">
-																			<c:if test='${member.email_id eq comments.email_id }'>
+																			<c:if test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
 																				<input id="co_idx2" value="${comments.co_idx}"
 																					type="hidden" />
 																				<button type="button" id="replydel2"

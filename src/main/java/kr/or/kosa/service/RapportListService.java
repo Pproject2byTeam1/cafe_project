@@ -33,14 +33,15 @@ public class RapportListService implements Action {
 			HttpSession session = request.getSession();
 	          User user = (User) session.getAttribute("member");
 			String userId = (String) session.getAttribute("userid");
-			
+		
 			AdminDao dao = new AdminDao();
 			int totalreportcount = dao.totalreportCount();
 			String ps = request.getParameter("ps");
 			String cp = request.getParameter("cp");
 			//게시물 총건수 
-
-
+			String url="";
+		
+			
 			//List 페이지 처음 호출 경우
 			if(ps == null || ps.trim().equals("")) {
 				ps = "5"; //5개씩 
@@ -63,31 +64,31 @@ public class RapportListService implements Action {
 			
 			
 			List<AttendanceBoad> reportlist = dao.reportlist(cpage, pagesize);
-			List<AttendanceBoad> reportlist2 = dao.reportlist(cpage, pagesize);
+	
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalreportcount",totalreportcount);
 			request.setAttribute("reportlist", reportlist);
-			request.setAttribute("reportlist2", reportlist2);
 			
+			url="/WEB-INF/view/rapport_list.jsp";
+			
+			
+			
+			
+	
+			
+			//List 페이지 처음 호출 경우
+
+		
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/rapport_list.jsp");
+		  	forward.setPath(url);
 			
-		  	List boardlist = new ArrayList();
-		for(AttendanceBoad re :reportlist) {
-			int idx=re.getIdx();
-			Board_Info boardnum = dao.getBoardInfo(idx);
-			boardlist.add(boardnum);
-		}
 		
 		
-		request.setAttribute("pagesize", pagesize);
-		request.setAttribute("cpage", cpage);
-		request.setAttribute("pagecount", pagecount);
-		request.setAttribute("totalboardcount", totalreportcount);
-		request.setAttribute("boardnum", boardlist);
+
+		
 		} catch (NamingException e) {
 			System.out.println(e.getMessage());
 		}

@@ -59,4 +59,66 @@ public class CafeBannerDao {
 		return cafe;
 	}
 	
+	//카페 배너 이미지 수정
+	public int UploadCafeBanner(String cafe_img) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "update cafe_banner set cafe_img = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cafe_img);
+			
+			row = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
+	//카페 배너 이름 & 아이콘 수정
+	public int UploadCafeInfo(String cafe_name, String cafe_icon) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "update cafe_banner set cafe_name = ?, cafe_icon = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cafe_name);
+			pstmt.setString(2, cafe_icon);
+			
+			row = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+		
+	}
 }

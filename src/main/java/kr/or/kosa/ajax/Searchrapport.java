@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.dao.AdminDao;
 
-@WebServlet("/Deleterapport")
-public class Deleterapport extends HttpServlet {
+@WebServlet("/Searchrapport")
+public class Searchrapport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public Deleterapport() {
+    public Searchrapport() {
         super();
     }
 
@@ -40,7 +40,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 				msg = "확인";
 			}
 			
-		//	out.print("신고수 결과" +msg);
+			out.print("신고수 결과" +msg);
 			
     		
     	} catch(Exception e) {

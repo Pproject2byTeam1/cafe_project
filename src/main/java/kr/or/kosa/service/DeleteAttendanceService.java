@@ -44,10 +44,10 @@ public class DeleteAttendanceService implements Action {
 				
 				if(result > 0) {
 					msg = "성공";
-					url = "/WebCafe_Project/checkBoard.do";
+					url = "/WebCafe_Project/checkBoard.do?b_code=2";
 				}else {
 					msg = "실패";
-					url = "/WebCafe_Project/checkBoard.do";
+					url = "/WebCafe_Project/checkBoard.do?b_code=2";
 				}
 				
 			}

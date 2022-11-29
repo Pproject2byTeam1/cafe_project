@@ -11,10 +11,12 @@ import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.BoardListGetDao;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.CommentsDao;
+import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dto.BoardListGet;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.User;
+import kr.or.kosa.dto.UserDetails;
 
 public class UserActivityService implements Action {
 
@@ -38,8 +40,8 @@ public class UserActivityService implements Action {
 			if (email_id != null) {
 				userId = email_id;
 			}
-			
-			System.out.println(userId);
+			UserDao userdao = new UserDao();
+			UserDetails userdetail = userdao.selectUserById(userId);
 			
 			//쿼리문 실행준비
 			BoardListGetDao dao = new BoardListGetDao();
@@ -56,6 +58,7 @@ public class UserActivityService implements Action {
 			request.setAttribute("writeboardlist", writeboardlist);
 			request.setAttribute("commnetlist", commnetlist);
 			request.setAttribute("likeboardlist", likeboardlist);
+			request.setAttribute("userdetail", userdetail);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);///WEB-INF/view/

@@ -46,7 +46,7 @@ public class tagRemove {
                 result = result.trim();
                 
                 // [문자열 글자수 자르기 실시]
-                result = result.substring(0,30); 
+                //result = result.substring(0,30); 
             }
             catch (Exception e){
                 e.printStackTrace();

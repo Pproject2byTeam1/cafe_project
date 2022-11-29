@@ -33,7 +33,7 @@
   <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="assets/vendor/simple-/style.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -75,7 +75,7 @@
           <div class="card">
             <div class="card-body pt-3">
             <h5 class="card-title">유저 활동 내역</h5>
-            대충 닉네임
+            <img class="pb-2" src="image/rank_icon/${userdetail.rank}.gif" alt="Profile"> ${userdetail.nick } | <span>글 ${userdetail.w_count}개 | 댓글 ${userdetail.re_count}개 </span> | <span>${userdetail.point}&nbsp;POINT</span>
             
               <!-- Bordered Tabs -->
               <ul class="nav nav-tabs nav-tabs-bordered">
@@ -228,37 +228,25 @@
   		$('#dataTable3').DataTable();
   		
   		$('.page-link ').click(function(){
-  			$('.listrow').click(function(){
-  	  			const idx = $(this).children('.idx').text();
-  	  			const b_code = $(this).children().children('.d-none').text();
-  	  			const w_date = $(this).children(".w_date").text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-  	  		});
+  			clickLocation();
   		});
   		$('.paginate_button').click(function(){
-  			$('.listrow').click(function(){
-  	  			const idx = $(this).children('.idx').text();
-  	  			const b_code = $(this).children().children('.d-none').text();
-  	  			const w_date = $(this).children(".w_date").text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-  	  		});
+  			clickLocation();
   		});
   		$('.sorting ').click(function(){
-  			$('.listrow').click(function(){
-  	  			const idx = $(this).children('.idx').text();
-  	  			const b_code = $(this).children().children('.d-none').text();
-  	  			const w_date = $(this).children(".w_date").text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-  	  		});
+  			clickLocation();
   		});
+  		clickLocation();
+  		
+  	});
+  	function clickLocation(){
   		$('.listrow').click(function(){
   			const idx = $(this).children('.idx').text();
   			const b_code = $(this).children().children('.d-none').text();
   			const w_date = $(this).children(".w_date").text();
   			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
   		});
-  		
-  	});
+  	}
   </script>
 
 </body>

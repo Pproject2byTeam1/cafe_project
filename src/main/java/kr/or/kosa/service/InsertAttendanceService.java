@@ -91,7 +91,7 @@ public class InsertAttendanceService implements Action {
 				msg = "실패";
 			}
 			request.setAttribute("board_msg", msg);
-			request.setAttribute("board_url", "checkBoard.do");
+			request.setAttribute("board_url", "checkBoard.do?b_code=2");
 			
 			int b_code = Integer.parseInt(multi.getParameter("b_code"));
 			//작성목록 가져가기

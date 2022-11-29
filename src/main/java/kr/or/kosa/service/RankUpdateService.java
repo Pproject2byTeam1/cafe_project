@@ -1,5 +1,7 @@
 package kr.or.kosa.service;
 
+import java.util.List;
+
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,13 +25,14 @@ public class RankUpdateService implements Action {
 		try {
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			Rank_Dao dao = new Rank_Dao();
+			String msg = "";
 			//session 로그인 한사람
 			HttpSession session = request.getSession();
  	        User user = (User) session.getAttribute("member");
 			String url ="";
 			int row =0;
 			if(user == null) {
-				
+					msg ="로그인 해주세요";
 				  String board_msg = "세션이 만료되었습니다.";
 		          String board_url = "/WebCafe_Project/login_view.do";
 	
@@ -48,7 +51,8 @@ public class RankUpdateService implements Action {
 			
 			
 			
-			
+			List<Rank> list = dao.getRankListAll();
+			request.setAttribute("list", list);
 			
 			
 			

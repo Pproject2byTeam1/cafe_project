@@ -44,7 +44,45 @@
 
 <!-- sweetalert -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
 
+
+	$(function(){
+		
+		
+		function del(data){
+		
+			$.ajax({
+				url:"DeleteUser",
+				data:data,
+				dataType:"html",
+				success:function(responsetxt){
+				
+					 $('#rapportlist').remove();
+					
+				}
+				
+		});
+				
+		};
+		
+		
+		
+		$(document).on('click', '.deletuser', function(){
+		
+			const data ={"email_id" : $('div').children('.id').val()};
+			
+			console.log(data);
+			del(data);
+			alert("강퇴되었습니다");
+	});
+	
+	});
+
+
+
+
+</script>
 </head>
 
 <body>
@@ -121,9 +159,9 @@
 				<div class="card-body">
 					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 					<!-- Table with hoverable rows -->
-					<table class="table table-hover">
+					<table class="table table-hover table-sm datatable">
 	
-						<tr>
+						<tr style="width: 30%; float:none; margin:0 auto">
 							<th scope="col">등급</th>
 							<th scope="col">이메일</th>
 							<th scope="col">닉네임</th>
@@ -142,7 +180,7 @@
 						
 						<c:forEach var="alluser" items="${alluser}">
 						
-							<tr>
+							<tr id="rapportlist">
 								<td scope="col"><img id="profile" class="col-3" src="image/rank_icon/${alluser.rank}.gif" alt="Profile" height="16" width="16" ></td>
 								<td scope="col">${alluser.email_id}</td>
 								<td scope="col">${alluser.nick}</td>
@@ -160,10 +198,10 @@
 										<input type="text" value="${alluser.email_id}" name="email_id" style="display: none;">
 										<input type="submit" class="btn btn-primary btn-sm UserHistory" value="활동내역">
 									</form>
-									<form action="userkick.do" method="post">
-										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
-										<input type="submit" class="btn btn-danger btn-sm Kick" value="강퇴">
-									</form>
+								<!-- 	<form action="userkick.do" method="post"> -->
+										<input type="text" value="${alluser.email_id}"  class ="id" name="id" style="display: none;">
+										<input type="submit" class="btn btn-danger btn-sm Kick  deletuser" value="강퇴">
+									<!-- </form> -->
 								</div>
 								</td>
 							</tr>
@@ -178,7 +216,7 @@
            <div class="col-md-12">
            		<!-- 페이징  -->
 				<nav aria-label="Page navigation example">
-					<ul class="pagination justify-content-center">
+					<ul class="pagination ">
 					
 		                <c:if test="${cpage > 1}">
 		                  <li class="page-item">

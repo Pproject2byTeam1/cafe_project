@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.UserDetails;
-import kr.or.kosa.utils.ConnectionHelper;
 
 //등급
 public class UserDao {
@@ -561,7 +560,7 @@ public class UserDao {
 		}
 		
 		//sns유저 가입
-		public int joinSnsUser(String email_id, String phone, String name, String nick, String birth) {
+		public int joinSnsUser(String email_id, String phone, String password, String name, String nick, String birth) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			int row = 0;
@@ -569,20 +568,21 @@ public class UserDao {
 			try {
 				conn = ds.getConnection();
 				
-				String sql = "insert all into member(EMAIL_ID, NAME, NICK, BIRTH) VALUES (?,?,?,?) into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL";
+				String sql = "insert all into member(EMAIL_ID,PASSWORD, NAME, NICK, BIRTH) VALUES (?,?,?,?,?) into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL";
 				System.out.println(email_id + ", " + phone + ", " + name + ", " + nick + ", " + birth);
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, email_id);
-				pstmt.setString(2, name);
+				pstmt.setString(2, password);
+				pstmt.setString(3, name);
 				if(nick.equals("")) {//초기 닉네임은 받은게 없으면 id와 동일
-					pstmt.setString(3, email_id);
+					pstmt.setString(4, email_id);
 				}else {
-					pstmt.setString(3, nick);
+					pstmt.setString(4, nick);
 				}
-				pstmt.setString(4, birth);
-				pstmt.setString(5, email_id);
-				pstmt.setString(6, birth);
-				pstmt.setString(7, phone);
+				pstmt.setString(5, birth);
+				pstmt.setString(6, email_id);
+				pstmt.setString(7, birth);
+				pstmt.setString(8, phone);
 				row = pstmt.executeUpdate();
 				
 			}catch (Exception e) {
@@ -627,4 +627,61 @@ public class UserDao {
 			}
 			return row;
 		}
+		public int deleteDataBoard(int idx ) {
+		       Connection conn = null;
+		       PreparedStatement pstmt = null;
+		       PreparedStatement pstmt2 = null;
+		       int row = 0;
+		       
+		       try {
+		          
+		          conn = ds.getConnection();
+		          conn.setAutoCommit(false);
+		          
+		          String sql = "delete from board where idx=? ";
+		          pstmt = conn.prepareStatement(sql);
+		          
+		          pstmt.setInt(1, idx);
+		       
+		          
+		          row = pstmt.executeUpdate();
+		          
+		          if(row < 0) {
+		             throw new Exception("Board 삭제 실패");
+		          }
+		          
+		          String sql2 = "delete data_board where idx=?";
+		          pstmt2 = conn.prepareStatement(sql2);
+		          
+		          pstmt2.setInt(1, idx);
+		          
+		         
+		          row = pstmt.executeUpdate();
+		          
+		          if(row < 0) {
+		             throw new Exception("data_baord 수정 실패");
+		          }else {
+		             conn.commit();
+		          }
+		          
+		       } catch (Throwable e) {
+		          if(conn != null) {
+		             try {
+		                conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+		             } catch (Exception e2) {
+		                e2.printStackTrace();
+		             }
+		          }
+		       } finally {
+		          try {
+		             conn.setAutoCommit(true);
+		             pstmt.close();
+		             conn.close();
+		          } catch (Exception e2) {
+		             System.out.println(e2.getMessage());
+		          }
+		       }
+		       
+		       return row;
+		    }
 }
