@@ -1,32 +1,44 @@
-package kr.or.kosa.service;
+package kr.or.kosa.ajax;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import kr.or.kosa.action.Action;
-import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dao.CafeBannerDao;
-import kr.or.kosa.dao.Rank_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.CafeBanner;
-import kr.or.kosa.dto.Rank;
+import kr.or.kosa.dto.User;
 import kr.or.kosa.utils.BoardFactory;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class AdminMainEditService implements Action {
+@WebServlet("/MainBoadLoad")
+public class MainBoadLoad extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
 
-	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+    public MainBoadLoad() {
+        super();
+    }
 
-		ActionForward forward = new ActionForward();
-
-		try { 
-			
-			//게시판 종류 정보 가져오기
+private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+    	PrintWriter out = response.getWriter();
+    	
+    	try {  		
+			HttpSession session = request.getSession();
+		    User user = (User) session.getAttribute("member");
+		    
+		  //게시판 종류 정보 가져오기
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
@@ -54,31 +66,26 @@ public class AdminMainEditService implements Action {
 				}
 			}
 			
-			//등급 정보 가져오기
-			Rank_Dao rankdao = new Rank_Dao();
-			List<Rank> ranklist = rankdao.getRankListAll();
+			JSONArray jsonlist = new JSONArray();
+			jsonlist.add(json1);
+			jsonlist.add(json2);
+			jsonlist.add(json3);
+			jsonlist.add(json4);
 			
-			//카페배너 정보 가져오기
-			CafeBannerDao cafebannerdao = new CafeBannerDao();
-			CafeBanner cafebanner = cafebannerdao.getCafeBanner();
-		
-			request.setAttribute("main1", json1); //게시판 출력 가져오기
-			request.setAttribute("main2", json2); //게시판 출력 가져오기
-			request.setAttribute("main3", json3); //게시판 출력 가져오기
-			request.setAttribute("main4", json4); //게시판 출력 가져오기
-			request.setAttribute("infolist", infolist); //게시판 종류 정보 가져오기
-			request.setAttribute("ranklist", ranklist); //등급 정보 가져오기
-			request.setAttribute("cafebanner", cafebanner); //카페배너 정보 가져오기
-			
-			forward = new ActionForward();
-		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/adminmain_edit.jsp");
+			out.print(jsonlist);
+    		
+    	} catch(Exception e) {
+    		System.out.println(e.getMessage());
+    	}
+    	
+	}
 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request, response);
+	}
 
-		return forward;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request, response);
 	}
 
 }
