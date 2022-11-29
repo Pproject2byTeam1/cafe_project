@@ -80,7 +80,12 @@
           </div>
             <div class="card-img-overlay">
               <h5 class="card-title">대문 이름</h5>
-              <p class="card-text">설명란</p>
+              <p class="card-text">설명란
+            <c:forEach var="chart" items="${chart}" varStatus="status">
+            <input type="text" id = "b_cnt${status.count}" value="${chart.b_code}" hidden="">
+            <input type="text" id = "h_cnt${status.count}" value="${chart.c_count}" hidden="">
+            </c:forEach>
+              </p>
             </div>
           
           </div><!-- End Card with an image overlay -->
@@ -379,10 +384,23 @@
               </div>
             </div><!-- End Top Selling -->
             
+            
             <div class="col-lg-6">
 	          <div class="card">
 	            <div class="card-body">
 	              <h5 class="card-title">Column Chart</h5>
+	              <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
 	
 	              <!-- Column Chart -->
 	              <div id="columnChart"></div>
@@ -475,19 +493,27 @@
   			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
   		});
 	}
-	var col1 = [44, 55, 57, 56, 61, 58, 63, 60, 66];
-	var col2 = [76, 85, 101, 98, 87, 105, 91, 114, 94];
-	var col3 = [35, 41, 36, 26, 45, 48, 52, 53, 41];
+	var col1 = new Array();
+	col1.push($('#b_cnt1').val());
+	col1.push($('#b_cnt2').val());
+	col1.push($('#b_cnt3').val());
+	col1.push($('#b_cnt4').val());
+	col1.push($('#b_cnt5').val());
+	col1.push($('#b_cnt6').val());
+	var col2 = new Array();
+	col2.push($('#h_cnt1').val());
+	col2.push($('#h_cnt2').val());
+	col2.push($('#h_cnt3').val());
+	col2.push($('#h_cnt4').val());
+	col2.push($('#h_cnt5').val());
+	col2.push($('#h_cnt6').val());
 	var threechart = {
         series: [{
-          name: 'Net Profit',
+          name: '총 글수',
           data: col1
         }, {
-          name: 'Revenue',
+          name: '총 조회수',
           data: col2
-        }, {
-          name: 'Free Cash Flow',
-          data: col3
         }],
         chart: {
           type: 'bar',
@@ -509,11 +535,11 @@
           colors: ['transparent']
         },
         xaxis: {
-          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+          categories: ['자유', '출석체크', '전체일정', '사진공유', '유료 거래', '자료 공유'],
         },
         yaxis: {
           title: {
-            text: '$ (thousands)'
+            text: '횟수'
           }
         },
         fill: {
@@ -522,7 +548,7 @@
         tooltip: {
           y: {
             formatter: function(val) {
-              return "$ " + val + " thousands"
+              return  val 
             }
           }
         }

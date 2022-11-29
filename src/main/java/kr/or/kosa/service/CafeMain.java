@@ -1,6 +1,7 @@
 package kr.or.kosa.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,11 +41,13 @@ public class CafeMain implements Action {
 			List<Board> regular_list = dao.getBoardList(1);//자유게시판
 			List<Board> data_list = dao.getBoardList(6);//정보게시판
 			List<MarketBoard> market_list = market_dao.listMarket(5, 1, 7);//거래게시판(7개만..)
-			
+			List<Board> chart = dao.viewchart();
 			
 			request.setAttribute("regular_list", regular_list);
 			request.setAttribute("data_list", data_list);
 			request.setAttribute("market_list", market_list);
+			
+			request.setAttribute("chart", chart);
 			
 			request.setAttribute("infolist", infolist);
 			
