@@ -10,12 +10,14 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.MarketBoardDao;
+import kr.or.kosa.dao.ChartDao;
 import kr.or.kosa.dao.Yes_Dao;
+import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
 
-public class MemberAnalysisService implements Action {
+public class ChartService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -45,10 +47,10 @@ public class MemberAnalysisService implements Action {
 		            url="/WEB-INF/view/redirect.jsp";
 		            
 			} else { 
-				url = "/WEB-INF/view/memberAnalysis.jsp";
+				url = "/WEB-INF/view/chart.jsp";
+				
+				
 			}
-			
-			
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

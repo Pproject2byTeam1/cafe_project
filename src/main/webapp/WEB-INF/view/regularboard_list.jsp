@@ -99,6 +99,22 @@
 	font-size: 13px;
 }
 </style>
+
+<script type="text/javascript">
+	
+	$(function(){
+		/* 글쓰기 */
+		$("#write").click(function(){
+			
+			let b_code = "<c:out value='${b_code}'/>";
+			location.href="regular_write.do?b_code=" + b_code;
+			
+		});
+	});
+	
+	
+</script>
+	
 </head>
 
 <body>
@@ -132,7 +148,10 @@
 		</div>
 		<!-- End Page Title -->
 		<!--글쓰기 버튼  -->
-		<div class="col-md-2 text-right">
+		<div class="row" align="right">
+		<div class="col-md-8"></div>
+		<div class="col-md-2 float-right"><button class="btn btn-secondary float-right" id="write">글쓰기</button></div>
+		<div class="col-md-2 float-right">
 			<form name="list">
 				<input id="b_code" value="${b_code}" name="b_code" type="hidden" />
 				<select class="form-select" name="ps" onchange="submit()">
@@ -149,6 +168,7 @@
 				</select>
 			</form>
 		</div>
+		</div>
 
 		<!--  <div><br></div>-->
 		<!--리스트테이블  -->
@@ -156,7 +176,7 @@
 			<div class="card-body">
 
 				<!-- Table with hoverable rows -->
-				<table class="table table-hover">
+				<table class="table table-hover ">
 					<thead>
 						<tr>
 							<th scope="col"></th>
@@ -180,14 +200,14 @@
 								<div>
 										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}'" style="cursor:pointer">
 										<span class="mt-4 parent">
-										<h3>
+										<h4>
 											<c:if test="${board.depth > 0}">
 												<c:forEach var="index" begin="1" end="${board.depth}">
 													<img src="image/re.gif" width="12" height="15">
 												</c:forEach>
 											</c:if>
 											${board.title}
-										</h3></span><br>
+										</h4></span><br>
 										<span class="son_name"><img src="./image/rank_icon/${rank[status.index]}.gif">${board.nick}</span> <span
 										class="son_date">${board.w_date}</span> <span class="son_time">
 										</span></td>
@@ -202,32 +222,6 @@
 								</div>
 							</tr>
 
-							<%--  </c:forEach> 
-
-
-							<c:if test="${board.depth>0}">
-								<tr>
-									<th scope="row"><input type="checkbox"></th>
-									<td>&nbsp;
-										<h3>
-											<img src="image/re.gif"> [Re]${board.title}
-										</h3>
-
-
-									</td>
-									<td></td>
-
-									<td class="p-5 jdc"><span class="_3Espq6"> <span
-											class="_1R-fi-">${board.hits}</span><br> <span>조회</span>
-									</span></td>
-									<td class="p-5 jdc"><span class="_3Espq6" var="yes"
-										items="11"> <span class="_1R-fi-">11</span><br> <span>댓글</span>
-									</span></td>
-									<td class="p-5 jdc"><span class="_3Espq6" var="comment"
-										items="33"> <span class="_1R-fi-">33</span><br> <span>추천
-										</td>
-								</tr>
-							</c:if>--%>
 						</c:forEach>
 					</tbody>
 				</table>
@@ -239,18 +233,9 @@
 		<!--하단 버튼  -->
 		<div class="col-md-12">
 			<div class="row">
-				<div class="col-md-8"></div>
-				<div class="col-md-2 text-right" >
-					<form action="regular_write.do" method="get">
-					<input type="text" value="${b_code}" name="b_code" style="display: none;">
-					<input type="submit" class="btn btn-secondary float-right" value="글쓰기">
-					</form>
+				<div class="col-md-1 text-right">
 					
-					<button class="btn btn-secondary float-right">글쓰기</button>
 				</div>
-				
-				
-				
 			</div>
 			
 		</div>

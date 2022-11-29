@@ -121,9 +121,9 @@
 				<div class="card-body">
 					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 					<!-- Table with hoverable rows -->
-					<table class="table table-hover">
+					<table class="table table-hover table-sm datatable">
 	
-						<tr>
+						<tr style="width: 30%; float:none; margin:0 auto">
 							<th scope="col">등급</th>
 							<th scope="col">이메일</th>
 							<th scope="col">닉네임</th>
@@ -178,7 +178,7 @@
            <div class="col-md-12">
            		<!-- 페이징  -->
 				<nav aria-label="Page navigation example">
-					<ul class="pagination justify-content-center">
+					<ul class="pagination ">
 					
 		                <c:if test="${cpage > 1}">
 		                  <li class="page-item">
