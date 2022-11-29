@@ -724,7 +724,7 @@ public class Board_Dao {
 				if(rs.next()) {
 					do {
 						
-						AttendanceBoad board = new AttendanceBoad();
+						Board board = new AttendanceBoad();
 						board.setIdx(rs.getInt("idx"));
 						String title = rs.getString("title");
 						if(title.length() > 10) {
@@ -740,6 +740,48 @@ public class Board_Dao {
 						board.setB_code(rs.getInt("b_code"));
 						board.setC_count(rs.getInt("c_count"));
 						board.setLike(rs.getInt("like"));
+						
+						boardlist.add(board);
+					}while(rs.next());
+				}else {
+					System.out.println("조회 데이터 없음");
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					rs.close();
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+		
+			return boardlist;
+		}
+		
+			public List<Board> viewchart(){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<Board> boardlist = new ArrayList<Board>();
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "select count(idx) as b_cnt, sum(hits)as h_cnt from board group by b_code ORDER BY b_code asc";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						
+						Board board = new AttendanceBoad();
+						board.setB_code(rs.getInt("b_cnt"));//글의 수
+						board.setC_count(rs.getInt("h_cnt"));//조회 수
 						
 						boardlist.add(board);
 					}while(rs.next());

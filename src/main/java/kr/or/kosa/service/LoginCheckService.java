@@ -22,12 +22,13 @@ public class LoginCheckService implements Action {
 			String nick = request.getParameter("nick");
 			String date = request.getParameter("date");
 			String phone = request.getParameter("phone");
+			String password = request.getParameter("password");
 			
 			UserDao dao = new UserDao();
 			HttpSession session = request.getSession();
 			
 			if(dao.isCheckById(email_id).equals("false")) {//없는놈이면 만들고
-				row = dao.joinSnsUser(email_id, phone, name, nick, date);
+				row = dao.joinSnsUser(email_id, phone, password, name, nick, date);
 				if(row == 2) {//삽입에 성공시 로그인
 					User user = dao.selectUserById(email_id);
 					session.setAttribute("member", user);

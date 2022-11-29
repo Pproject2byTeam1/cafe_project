@@ -561,7 +561,7 @@ public class UserDao {
 		}
 		
 		//sns유저 가입
-		public int joinSnsUser(String email_id, String phone, String name, String nick, String birth) {
+		public int joinSnsUser(String email_id, String phone, String password, String name, String nick, String birth) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			int row = 0;
@@ -569,20 +569,21 @@ public class UserDao {
 			try {
 				conn = ds.getConnection();
 				
-				String sql = "insert all into member(EMAIL_ID, NAME, NICK, BIRTH) VALUES (?,?,?,?) into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL";
+				String sql = "insert all into member(EMAIL_ID,PASSWORD, NAME, NICK, BIRTH) VALUES (?,?,?,?,?) into user_details(EMAIL_ID, YEAR_BIRTH, PHONE) VALUES (?,?,?) SELECT * FROM DUAL";
 				System.out.println(email_id + ", " + phone + ", " + name + ", " + nick + ", " + birth);
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, email_id);
-				pstmt.setString(2, name);
+				pstmt.setString(2, password);
+				pstmt.setString(3, name);
 				if(nick.equals("")) {//초기 닉네임은 받은게 없으면 id와 동일
-					pstmt.setString(3, email_id);
+					pstmt.setString(4, email_id);
 				}else {
-					pstmt.setString(3, nick);
+					pstmt.setString(4, nick);
 				}
-				pstmt.setString(4, birth);
-				pstmt.setString(5, email_id);
-				pstmt.setString(6, birth);
-				pstmt.setString(7, phone);
+				pstmt.setString(5, birth);
+				pstmt.setString(6, email_id);
+				pstmt.setString(7, birth);
+				pstmt.setString(8, phone);
 				row = pstmt.executeUpdate();
 				
 			}catch (Exception e) {

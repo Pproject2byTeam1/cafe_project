@@ -75,7 +75,7 @@
           <div class="card">
             <div class="card-body pt-3">
             <h5 class="card-title">유저 활동 내역</h5>
-            대충 닉네임
+            <img class="pb-2" src="image/rank_icon/${userdetail.rank}.gif" alt="Profile"> ${userdetail.nick } | <span>글 ${userdetail.w_count}개 | 댓글 ${userdetail.re_count}개 </span> | <span>${userdetail.point}&nbsp;POINT</span>
             
               <!-- Bordered Tabs -->
               <ul class="nav nav-tabs nav-tabs-bordered">
