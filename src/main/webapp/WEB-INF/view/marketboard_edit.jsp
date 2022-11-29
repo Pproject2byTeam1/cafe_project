@@ -102,29 +102,122 @@
 											<div class="info-body">
 												<label class="col-sm-2 col-form-label">카테고리 : </label>
 												<select id="cate" name="cate" class="form-select" aria-label="Default select example">
-												<option value="가전">가전</option>
-												<option value="디지털">디지털</option>
-												<option value="생활">생활</option>
-												<option value="스포츠">스포츠</option>
-												<option value="의류">의류</option>
-												<option value="취미">취미</option>
-												<option value="문화">문화</option>
+												<c:choose>
+													<c:when test="${marketboard.cate eq '가전'}">
+														<option value="가전" selected>가전</option>
+														<option value="디지털">디지털</option>
+														<option value="생활">생활</option>
+														<option value="스포츠">스포츠</option>
+														<option value="의류">의류</option>
+														<option value="취미">취미</option>
+														<option value="문화">문화</option>
+													</c:when>
+													<c:when test="${marketboard.cate eq '디지털'}">
+														<option value="가전">가전</option>
+														<option value="디지털" selected>디지털</option>
+														<option value="생활">생활</option>
+														<option value="스포츠">스포츠</option>
+														<option value="의류">의류</option>
+														<option value="취미">취미</option>
+														<option value="문화">문화</option>
+													</c:when>
+													<c:when test="${marketboard.cate eq '생활'}">
+														<option value="가전" >가전</option>
+														<option value="디지털">디지털</option>
+														<option value="생활" selected>생활</option>
+														<option value="스포츠">스포츠</option>
+														<option value="의류">의류</option>
+														<option value="취미">취미</option>
+														<option value="문화">문화</option>
+													</c:when>
+													<c:when test="${marketboard.cate eq '스포츠'}">
+														<option value="가전" >가전</option>
+														<option value="디지털">디지털</option>
+														<option value="생활">생활</option>
+														<option value="스포츠" selected>스포츠</option>
+														<option value="의류">의류</option>
+														<option value="취미">취미</option>
+														<option value="문화">문화</option>
+													</c:when>
+													<c:when test="${marketboard.cate eq '의류'}">
+														<option value="가전" >가전</option>
+														<option value="디지털">디지털</option>
+														<option value="생활">생활</option>
+														<option value="스포츠">스포츠</option>
+														<option value="의류" selected>의류</option>
+														<option value="취미">취미</option>
+														<option value="문화">문화</option>
+													</c:when>
+													<c:when test="${marketboard.cate eq '취미'}">
+														<option value="가전" >가전</option>
+														<option value="디지털">디지털</option>
+														<option value="생활">생활</option>
+														<option value="스포츠">스포츠</option>
+														<option value="의류">의류</option>
+														<option value="취미" selected>취미</option>
+														<option value="문화">문화</option>
+													</c:when>
+													<c:when test="${marketboard.cate eq '문화'}">
+														<option value="가전" >가전</option>
+														<option value="디지털">디지털</option>
+														<option value="생활">생활</option>
+														<option value="스포츠">스포츠</option>
+														<option value="의류">의류</option>
+														<option value="취미">취미</option>
+														<option value="문화" selected>문화</option>
+													</c:when>		
+												</c:choose>
 												</select>
+												
 											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="m_mode" value="직거래" checked>
-												<label class="form-check-label" for="직거래">직거래</label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="m_mode" value="택배거래">
-												<label class="form-check-label" for="택배거래">택배거래</label>
-											</div>
+											
+											<c:choose>
+												<c:when test="${marketboard.m_mode eq '직거래'}">
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="m_mode" value="직거래" checked>
+														<label class="form-check-label" for="직거래">직거래</label>
+													</div>
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="m_mode" value="택배거래">
+														<label class="form-check-label" for="택배거래">택배거래</label>
+													</div>
+												</c:when>
+												
+												<c:when test="${marketboard.m_mode eq '택배거래'}">
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="m_mode" value="직거래" >
+														<label class="form-check-label" for="직거래">직거래</label>
+													</div>
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="m_mode" value="택배거래" checked>
+														<label class="form-check-label" for="택배거래">택배거래</label>
+													</div>
+												</c:when>
+											</c:choose>
+											
+											
 											<div class="info-body">
 												<label class="col-sm-2 col-form-label">판매상태 : </label>
 												<select id="cate" name="sold" class="form-select" aria-label="Default select example">
-												<option value="판매중">판매중</option>
-												<option value="예약중">예약중</option>
-												<option value="판매완료">판매완료</option>
+												
+											<c:choose>
+												<c:when test="${marketboard.sold eq '판매중'}">
+													<option value="판매중" selected>판매중</option>
+													<option value="예약중">예약중</option>
+													<option value="판매완료">판매완료</option>
+												</c:when>
+												<c:when test="${marketboard.sold eq '예약중'}">
+													<option value="판매중" >판매중</option>
+													<option value="예약중" selected>예약중</option>
+													<option value="판매완료">판매완료</option>
+												</c:when>
+												<c:when test="${marketboard.sold eq '판매완료'}">
+													<option value="판매중" >판매중</option>
+													<option value="예약중">예약중</option>
+													<option value="판매완료" selected>판매완료</option>
+												</c:when>
+											</c:choose>
+											
 												</select>
 											</div>
 										</div>

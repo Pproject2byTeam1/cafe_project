@@ -78,10 +78,10 @@
                 <div class="card-body">
                   <h5 class="card-title">출석부 <span>/ Today</span></h5>
                   <hr>
-					<a href="checkBoard.do?inputdate=${year}-${month-1}-01">
+					<a href="checkBoard.do?b_code=2&inputdate=${year}-${month-1}-01">
 					<button type="button" class="btn btn-outline-info rounded-pill bi bi-caret-left-fill"></button></a>
 					<span>${year} 년 ${month} 월</span>
-					<a href="checkBoard.do?inputdate=${year}-${month+1}-01">
+					<a href="checkBoard.do?b_code=2&inputdate=${year}-${month+1}-01">
 					<button type="button" class="btn btn-outline-info rounded-pill bi bi-caret-right-fill"></button></a>
 					<br>
 					<br>
@@ -92,7 +92,7 @@
 						<li><a href="#" class="btn btn-default btn-outline-success"><b>${status.count}</b></a></li>
 						</c:when>
 						<c:otherwise>
-						<li><a href="checkBoard.do?inputdate=2022-${month}-${status.count}" class="btn btn-default">${status.count}</a></li>
+						<li><a href="checkBoard.do?b_code=2&inputdate=2022-${month}-${status.count}" class="btn btn-default">${status.count}</a></li>
 						</c:otherwise>
 						</c:choose>
 					</c:forEach>

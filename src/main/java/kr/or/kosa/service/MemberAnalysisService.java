@@ -8,47 +8,46 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.MessageDao;
-import kr.or.kosa.dto.Message;
+import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.MarketBoardDao;
+import kr.or.kosa.dao.Yes_Dao;
+import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
 
-public class MessageListService implements Action {
+public class MemberAnalysisService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-
+		
 		ActionForward forward = new ActionForward();
 		
 		try {
 			
+			//사이드 바
+			Board_Info_Dao infodao = new Board_Info_Dao();
+		    List<Board_Info> infolist = infodao.getSideBoardList();
+	        request.setAttribute("infolist", infolist);
+			
 			HttpSession session = request.getSession();
-			MessageDao dao = new MessageDao();
-			User user2 = (User) session.getAttribute("member");
+			User user = (User) session.getAttribute("member");
 			
-			String url="";
-			
-			 if (user2 == null) {
+			String url = "";
+
+			if (user == null) {
 					
 		        	String board_msg = "권한이 없습니다.";
-		            String board_url = "/WebCafe_Project/windowclose.do";
+		            String board_url = "/WebCafe_Project/login_view.do";
 		              
 		            request.setAttribute("board_msg", board_msg);
 		            request.setAttribute("board_url", board_url);
 		              
 		            url="/WEB-INF/view/redirect.jsp";
 		            
-			} else {
-				
-
-				String userId = user2.getEmail_id();
-				
-				List<Message> messagelist = dao.getMessageByReceiveId(userId );//테스트용
-				
-				request.setAttribute("messagelist", messagelist);
-				
-				url="/WEB-INF/view/memo_list.jsp";
-				
+			} else { 
+				url = "/WEB-INF/view/memberAnalysis.jsp";
 			}
+			
 			
 			
 			forward = new ActionForward();
@@ -58,7 +57,7 @@ public class MessageListService implements Action {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
+		
 		return forward;
 	}
 

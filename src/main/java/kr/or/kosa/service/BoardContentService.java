@@ -17,12 +17,13 @@ public class BoardContentService implements Action {
 		try {
 			int b_code = Integer.parseInt((String) request.getParameter("b_code"));
 			String idx= (String) request.getParameter("idx");
-			System.out.println(b_code + ", " + idx);
+			String w_date = (String) request.getParameter("w_date");
+			//System.out.println(b_code + ", " + idx);
 			
 			if(b_code == 1) {//자유게시판
 				url="regular_post.do?idx="+idx+"&b_code"+ b_code;
 			}else if(b_code == 2) {//출석체크
-				//url="img_board_list.do?idx="+idx+"&b_code"+ b_code;
+				url="checkBoard.do?inputdate="+w_date+"&b_code"+ b_code;
 			}else if(b_code == 3) {//전체일정
 				url="calendar_list.do?idx="+idx+"&b_code"+ b_code;
 			}else if(b_code == 4) {//사진공유

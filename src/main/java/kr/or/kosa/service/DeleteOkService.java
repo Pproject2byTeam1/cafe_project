@@ -39,22 +39,25 @@ public class DeleteOkService implements Action {
 	       //  board_delete.do?idx=" + ${board.idx}
 			if(row < 0) {
 				 msg="삭제에 실패하였습니다";
-		            url="databoard_list.do?b_code=6";
+		            url="databoard_list.do?b_code="+ b_code;;
 			}else {
 				msg="성공적으로 삭제되었습니다";
-	            url="databoard_list.do?b_code=6";
+	            url="databoard_list.do?b_code="+b_code;;
 			}
 			forward = new ActionForward();
 			  request.setAttribute("board_msg",msg);
 		         request.setAttribute("board_url",url);
-		 
+					request.setAttribute("b_code", b_code);
+					
+		     	forward = new ActionForward();
+		         forward.setRedirect(false);
+		         forward.setPath("/WEB-INF/view/redirect.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
-	         forward.setRedirect(false);
-	         forward.setPath("/WEB-INF/view/redirect.jsp");
+	       
 		return forward;
 	}
 

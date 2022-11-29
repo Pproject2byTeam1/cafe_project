@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.User;
@@ -27,11 +28,11 @@ public class AdminDao {
 	}
 
 //신고 리스트
-	public List<Board> reportlist(int cpage, int pagesize) {
+	public List<AttendanceBoad> reportlist(int cpage, int pagesize) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Board> reportlist = null;
+		List<AttendanceBoad> reportlist = null;
 		try {
 			conn = ds.getConnection();
 
@@ -46,10 +47,10 @@ public class AdminDao {
 			pstmt.setInt(2, start);
 		
 			rs = pstmt.executeQuery();
-			reportlist = new ArrayList<Board>();
+			reportlist = new ArrayList<AttendanceBoad>();
 			
 			while (rs.next()) {
-				Board report = new Board();
+				AttendanceBoad report = new AttendanceBoad();
 				report.setIdx(rs.getInt("b_code"));
 				report.setIdx(rs.getInt("idx"));
 				report.setTitle(rs.getString("title"));
@@ -78,11 +79,11 @@ public class AdminDao {
 	}
 	
 	
-	public List<Board> reportlist2(int cpage, int pagesize) {
+	public List<AttendanceBoad> reportlist2(int cpage, int pagesize) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Board> reportlist = null;
+		List<AttendanceBoad> reportlist = null;
 		try {
 			conn = ds.getConnection();
 
@@ -97,11 +98,11 @@ public class AdminDao {
 			pstmt.setInt(2, start);
 		
 			rs = pstmt.executeQuery();
-			reportlist = new ArrayList<Board>();
+			reportlist = new ArrayList<AttendanceBoad>();
 			
 			while (rs.next()) {
 				
-				Board report = new Board();
+				AttendanceBoad report = new AttendanceBoad();
 				Board_Info info = new Board_Info();
 				report.setIdx(rs.getInt("b_code"));
 				info.setB_name(rs.getString("b_name"));
