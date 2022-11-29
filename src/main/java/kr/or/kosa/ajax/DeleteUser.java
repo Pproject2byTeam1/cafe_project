@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.dao.AdminDao;
+import kr.or.kosa.dao.UserDao;
 
-@WebServlet("/Deleterapport")
-public class Deleterapport extends HttpServlet {
+@WebServlet("/DeleteUser")
+public class DeleteUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public Deleterapport() {
+    public DeleteUser() {
         super();
     }
 
@@ -27,24 +28,25 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
     	
     		
     	try {  		
-    		int idx = Integer.parseInt(request.getParameter("idx"));	
+    		String id = request.getParameter("email_id");	
     		
-			AdminDao dao = new AdminDao();
-		boolean row = dao.deleteRapport(idx);
+			
+			UserDao dao = new UserDao();
+	int row =dao.deleteUser(id);
 			
 			String msg = "";
 			
-			if(row == false) {
+			if(row <=0) {
 				msg = "실패";
 			}else {
 				msg = "확인";
 			}
 			
-		//	out.print("신고수 결과" +msg);
+		//	out.print("강퇴 결과" +msg);
 			
     		
     	} catch(Exception e) {
-    		System.out.println("신고"+e.getMessage());
+    		System.out.println("강퇴"+e.getMessage());
     	}
     	
 	}

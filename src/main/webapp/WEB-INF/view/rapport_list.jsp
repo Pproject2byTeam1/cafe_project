@@ -27,6 +27,8 @@
 <!-- Vendor CSS Files -->
 <link href="assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
+	  <!-- 테이블 정렬 -->
+<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
 	rel="stylesheet">
 <link href="assets/vendor/boxicons/css/boxicons.min.css"
@@ -39,6 +41,8 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/free.css" rel="stylesheet">
+
+ <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script type="text/javascript">
 
 	$(function(){
@@ -63,21 +67,6 @@
 		};
 			
 
-		function search(data1){
-		
-			$.ajax({
-				url:"Searchapport",
-				data:data,
-				dataType:"html",
-				success:function(responsetxt){
-				
-					 $('.deletebtn').click();
-					
-				}
-				
-		});
-				
-		};
 		
 		
 		
@@ -97,18 +86,9 @@
 		
 	});
 		
-		$(document).on('click','#search',function(){
-			
-			
-			const dat1 ={"nick":$(this).parent().children(".nick").val()};
-			console.log(dat1);
-			search(data1);
-			
-			
-			
-		});
-		
-		
+
+	
+	
 
 	
 	
@@ -180,7 +160,7 @@
 					<div class="search-bar">
 						<form class="search-form d-flex align-items-center" method="POST"
 							action="#">
-							<input type="text"  name="query" placeholder="Search" class="form-control" title="Enter search keyword" >
+							<input type="text" id="searchInput"  name="query" placeholder="Search" class="form-control" title="닉네임을 입력하세요" >
 							<button type="submit" title="" class="btn btn-secondary" id="search">
 								<i class="bi bi-search"></i>
 							</button>
@@ -196,10 +176,12 @@
 		<div class="container-fluid">
 			<div class="card">
 				<div></div>
+				
 				<div class="card-body">
 					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 					<!-- Table with hoverable rows -->
-					<table class="table table-hover">
+
+					<table class="table table-hover" id=dataTable1>
 						<tr>
 						
 							<th scope="col">글/댓글</th>
@@ -269,7 +251,11 @@
 
 					<!-- End Table with hoverable rows -->
 					<!-- 페이징  -->
-					<nav aria-label="Page navigation example">
+					
+					<!-- End Centered Pagination -->
+				</div>
+			</div>
+			<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
 
 							<c:if test="${cpage > 1}">
@@ -296,10 +282,6 @@
 							</c:if>
 						</ul>
 					</nav>
-					<!-- End Centered Pagination -->
-				</div>
-			</div>
-
 		</div>
 
 
@@ -338,7 +320,16 @@
 
 	<!-- Template Main JS File -->
 	<script src="assets/js/main.js"></script>
+<script>
+$(function(){
+		$('#dataTable1').DataTable();
+		$('#dataTable2').DataTable();
+		$('#dataTable3').DataTable();
+}	
 
+
+
+</script>
 </body>
 
 </html>
