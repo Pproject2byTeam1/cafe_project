@@ -491,8 +491,9 @@
  			let ch = $(children1).children().eq(0);
  			
  			let requestdata1 = {"b_code": $(ch).val()};
+ 			console.log(requestdata1);
  			
- 			//cateremove(requestdata1);
+ 			cateremove(requestdata1);
  		});
  		
  		/* 게시판 추가 삭제 버튼 끝 */
