@@ -176,7 +176,7 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th scope="col"></th>
+							
 							<th scope="col"></th>
 							<th scope="col"></th>
 							<th scope="col"></th>
@@ -198,7 +198,7 @@
 								onclick="location.href='databoard_read.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}'"
 								style="cursor: pointer">
 
-								<th scope="row"><input type="checkbox"></th>
+				
 
 								<form action="databoard_read.do?b_code=6&idx=${board.idx}&cp=${cpage}&ps=${pagesize}&depth=${depth}"style="cursor: pointer">
 									<td>

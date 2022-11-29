@@ -150,11 +150,13 @@
 		<!--글쓰기 버튼  -->
 		<div class="row" align="right">
 		<div class="col-md-8"></div>
-		<div class="col-md-2 float-right"><button class="btn btn-secondary float-right" id="write">글쓰기</button></div>
+		<div class="col-md-2 float-right"></div>
 		<div class="col-md-2 float-right">
+
 			<form name="list">
 				<input id="b_code" value="${b_code}" name="b_code" type="hidden" />
-				<select class="form-select" name="ps" onchange="submit()">
+						<button class="btn btn-success" id="write">글쓰기</button>
+				<select class="selectpicker"  data-width="75px" name="ps" onchange="submit()">
 				   <c:forEach var="i" begin="5" end="20" step="5">
 				   		<c:choose>
 				   			<c:when test="${pagesize == i}">

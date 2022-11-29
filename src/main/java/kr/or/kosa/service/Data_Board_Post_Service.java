@@ -59,6 +59,7 @@ public class Data_Board_Post_Service implements Action {
 			request.setAttribute("rank", rank);
 			request.setAttribute("yes", yes);
 			request.setAttribute("ori_name", ori_name);
+			
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("/WEB-INF/view/data_contentview.jsp");

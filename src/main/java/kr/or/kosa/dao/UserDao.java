@@ -627,6 +627,8 @@ public class UserDao {
 			}
 			return row;
 		}
+		
+		
 		public int deleteDataBoard(int idx ) {
 		       Connection conn = null;
 		       PreparedStatement pstmt = null;
