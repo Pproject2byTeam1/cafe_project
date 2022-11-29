@@ -99,21 +99,21 @@ public class Board_Dao {
 			conn = ds.getConnection();
 			String sql = "select * "
 							+ "from (select * "
-								+ "from (select rownum rn, b.idx, b_idx, refer, depth, step, title, nick, content, hits, to_char(w_date, 'yyyy-MM-dd') as w_date, report_count, notic, email_id, b_code "
+								+ "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx, b_idx, refer, depth, step, title, nick, content, hits, to_char(w_date, 'yyyy-MM-dd') as w_date, report_count, notic, email_id, b_code "
 									+ "from board b join regular_board d "
 									+ "on b.idx = d.idx "
 									+ "where b.b_code = ? "
 									+ "order by refer desc, step asc) "
-								+ "where rownum <= ?) "
-							+ "where rn >= ?";
+								+ "where rn >= ?) "
+							+ "where rn <= ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
 			int end = cpage * pagesize;
 			
 			pstmt.setInt(1, b_code);
-			pstmt.setInt(2, end);
-			pstmt.setInt(3, start);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			
 			rs = pstmt.executeQuery();
 			

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<head>
+<head> 
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 

@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 
 import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.UserDetails;
-import kr.or.kosa.utils.ConnectionHelper;
 
 //등급
 public class UserDao {
