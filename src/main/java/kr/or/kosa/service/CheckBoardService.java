@@ -122,13 +122,14 @@ public class CheckBoardService implements Action {
 			//작성목록 가져가기
 			boardlist = dao.getBoardListAttendence(b_code, cpage, nowday, nextday);
 			request.setAttribute("boardlist", boardlist);
+			System.out.println("boardlist: "+boardlist);
 
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("error: "+e.getMessage());
 		}
 		
 		forward = new ActionForward();
