@@ -1,7 +1,9 @@
 package kr.or.kosa.ajax;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,14 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kr.or.kosa.dao.Board_Info_Dao;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dto.User;
 
-@WebServlet("/MainIndexUpload")
-public class MainIndexUpload extends HttpServlet {
+@WebServlet("/CafeInfoUpload")
+public class CafeInfoUpload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public MainIndexUpload() {
+    public CafeInfoUpload() {
         super();
     }
 
@@ -42,20 +47,26 @@ public class MainIndexUpload extends HttpServlet {
 		    		msg = "관리자 권한이 필요한 기능입니다.";
 		    		
 		    	}else {
+		    		String uploadpath = request.getSession().getServletContext().getRealPath("upload");
+		    		int size = 1024 * 1024 * 10;
+
+		    		MultipartRequest multi = new MultipartRequest(request, uploadpath, size, "UTF-8",
+							new DefaultFileRenamePolicy());
+		    		
+			    	String cafe_name = multi.getParameter("cafe_name");
+		    		
+			    	Enumeration filenames = multi.getFileNames();
+			    	String file1 = (String) filenames.nextElement();
+			    	String filename1 = multi.getFilesystemName(file1);
 			    	
-			    	int main_idx = Integer.parseInt(request.getParameter("main_idx"));
-			    	int b_code = Integer.parseInt(request.getParameter("b_code"));
-			    	
-			    	Board_Info_Dao infodao = new Board_Info_Dao();
-			    	
-			    	int result = infodao.updateMain_Index(b_code, main_idx);
-			    	
-			    	if(result > 0) {
-			    		msg = "업로드 되었습니다.";
-			    	}else {
-			    		msg = "다시 시도해 주세요.";
-			    	}
-			    	
+			    	CafeBannerDao cafedao = new CafeBannerDao();
+			    	int row = cafedao.UploadCafeInfo(cafe_name, filename1);
+					
+					if(row > 0) {
+						msg = "카페 배너가 업로드 되었습니다.";
+					}else {
+						msg = "배너 이미지 업로드에 실패하였습니다.";
+					}
 		    	}
 		    }
 			

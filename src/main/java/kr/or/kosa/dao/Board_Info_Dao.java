@@ -176,6 +176,7 @@ public class Board_Info_Dao {
 	}
 
 	//메인 위치 번호 업로드
+
 	public int updateMain_Index(int b_code, int main_idx) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

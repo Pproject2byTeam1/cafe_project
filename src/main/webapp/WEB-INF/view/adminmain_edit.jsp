@@ -143,20 +143,17 @@
 
  		document.addEventListener("dragenter", (event) => {
  		  	event.preventDefault();
- 		  	console.log("dragenter");
  		  	if (event.target.className === "inner") {
  		    	event.target.style.background = "#616161";
  		  	}
  		});
 
  		document.addEventListener("dragover", (event) => {
- 		  	console.log("dragover");
  		  	event.preventDefault();
  		});
 
  		document.addEventListener("dragleave", (event) => {
  		  	event.preventDefault();
- 		  	console.log("dragleave");
  		  	if (event.target.className === "inner") {
  		    	event.target.style.background = "#3a3a3a";
  		  	}
@@ -164,7 +161,7 @@
 
  		document.addEventListener("drop", (event) => {
  		  	event.preventDefault();
- 		  	console.log("drop");
+ 		  	console.log("사진 도착");
  		  	if (event.target.className === "inner") {
  		  		const files = event.dataTransfer?.files;
  		    	event.target.style.background = "#3a3a3a";
@@ -193,17 +190,16 @@
  			    	});
  			 		reader.readAsDataURL(file);
  			 });
- 			  
- 			 bannerUpload(fileList[0].name);
+ 			 const formData = new FormData();
+ 			 formData.append('cafe_img', data[0].files[0]);
+ 			 bannerUpload(formData);
  		};
  		
- 		function bannerUpload(name){
- 			console.log(name);
- 		
+ 		function bannerUpload(formData){
  			$.ajax({
  		    	type: "POST",
  		    	url: "BannerUpload",
- 		    	data: {"name": name },
+ 		    	data: formData,
  		    	dataType: "HTML",
  		    	success: function(data){
  		    		console.log(data);
@@ -249,56 +245,94 @@
  		
  		/* 게시판 출력해주기 시작 */
  		
- 		function boardload(){
- 			let html1 = "";
- 			for(let i=0; i<${main1.main1}.length; i++){
- 				html1 += "<tr>";
- 					html1 += "<td>" + ${main1.main1}[i].title + "</td>";
- 					html1 += "<td>" + ${main1.main1}[i].nick + "</td>";
- 					html1 += "<td>" + ${main1.main1}[i].w_date + "</td>";
- 				html1 += "</tr>";
- 			}	
- 			
- 			$("#boardlist1").empty();
- 			$("#boardlist1").append(html1);
- 			
- 			let html2 = "";
- 			for(let i=0; i<${main2.main2}.length; i++){
- 				html2 += "<tr>";
- 					html2 += "<td>" + ${main2.main2}[i].title + "</td>";
- 					html2 += "<td>" + ${main2.main2}[i].nick + "</td>";
- 					html2 += "<td>" + ${main2.main2}[i].w_date + "</td>";
- 				html2 += "</tr>";
- 			}	
- 			
- 			$("#boardlist2").empty();
- 			$("#boardlist2").append(html2);
- 			
- 			let html3 = "";
- 			for(let i=0; i<${main3.main3}.length; i++){
- 				html3 += "<tr>";
- 					html3 += "<td>" + ${main3.main3}[i].title + "</td>";
- 					html3 += "<td>" + ${main3.main3}[i].nick + "</td>";
- 					html3 += "<td>" + ${main3.main3}[i].w_date + "</td>";
- 				html3 += "</tr>";
- 			}	
- 			
- 			$("#boardlist3").empty();
- 			$("#boardlist3").append(html3);
- 			
- 			let html4 = "";
- 			for(let i=0; i<${main4.main4}.length; i++){
- 				html4 += "<tr>";
- 					html4 += "<td>" + ${main4.main4}[i].title + "</td>";
- 					html4 += "<td>" + ${main4.main4}[i].nick + "</td>";
- 					html4 += "<td>" + ${main4.main4}[i].w_date + "</td>";
- 				html4 += "</tr>";
- 			}	
- 			
- 			$("#boardlist4").empty();
- 			$("#boardlist4").append(html4);
- 			
+ 		function board1load(main1){
+ 			if(main1 != null && main1 != ""){
+ 				let html1 = "";
+	 			for(let i=0; i<main1.length; i++){
+	 				html1 += "<tr>";
+	 					html1 += "<td>" + main1[i].title + "</td>";
+	 					html1 += "<td>" + main1[i].nick + "</td>";
+	 					html1 += "<td>" + main1[i].w_date + "</td>";
+	 				html1 += "</tr>";
+	 			}	
+	 			
+	 			$("#boardlist1").empty();
+	 			$("#boardlist1").append(html1);
+ 			}
  		}
+ 		function board2load(main2){
+ 			if(main2 != null && main2 != ""){
+	 			let html2 = "";
+	 			for(let i=0; i<main2.length; i++){
+	 				html2 += "<tr>";
+	 					html2 += "<td>" + main2[i].title + "</td>";
+	 					html2 += "<td>" + main2[i].nick + "</td>";
+	 					html2 += "<td>" + main2[i].w_date + "</td>";
+	 				html2 += "</tr>";
+	 			}
+	 			$("#boardlist2").empty();
+	 			$("#boardlist2").append(html2);
+ 			}
+ 		}
+ 		function board3load(main3){
+ 			if(main3 != null && main3 != ""){
+	 			let html3 = "";
+	 			for(let i=0; i<main3.length; i++){
+	 				html3 += "<tr>";
+	 					html3 += "<td>" + main3[i].title + "</td>";
+	 					html3 += "<td>" + main3[i].nick + "</td>";
+	 					html3 += "<td>" + main3[i].w_date + "</td>";
+	 				html3 += "</tr>";
+	 			}	
+	 			
+	 			$("#boardlist3").empty();
+	 			$("#boardlist3").append(html3);
+ 			}
+ 		}
+ 		function board4laod(main4){
+ 			if(main4 != null && main4 != ""){
+	 			let html4 = "";
+	 			for(let i=0; i<main4.length; i++){
+	 				html4 += "<tr>";
+	 					html4 += "<td>" + main4[i].title + "</td>";
+	 					html4 += "<td>" + main4[i].nick + "</td>";
+	 					html4 += "<td>" + main4[i].w_date + "</td>";
+	 				html4 += "</tr>";
+	 			}	
+	 			
+	 			$("#boardlist4").empty();
+	 			$("#boardlist4").append(html4);
+ 			}
+ 		}
+ 		
+ 		function boardload(){
+ 			
+ 			$.ajax({
+ 				type: "POST",
+ 		    	url: "MainBoadLoad",
+ 		    	dataType: "JSON",
+ 		    	success: function(data){
+ 		    		
+ 		    		board1load(data[0].main1);
+ 		    		board2load(data[1].main2);
+ 		    		board3load(data[2].main3);
+ 		    		board4laod(data[3].main4);
+ 		    	}
+ 			});
+ 		}
+ 		
+ 		function mainindexupload(selectedvalue, index){
+			$.ajax({
+				type: "POST",
+ 		    	url: "MainIndexUpload",
+ 		    	data: {"main_idx": index, "b_code": selectedvalue},
+ 		    	dataType: "HTML",
+ 		    	success: function(data){
+ 		    		swal(data);
+ 		 			boardload();
+ 		    	}
+			});
+		}
  		
  		boardload();
  		
@@ -329,21 +363,42 @@
  			let index = 4;
  			mainindexupload(selectedvalue, index);
 		});
-		
-		function mainindexupload(selectedvalue, index){
-			$.ajax(function(){
-				type: "POST",
- 		    	url: "MainIndexUpload",
- 		    	data: {"main_idx": index, "b_code": selectedvalue},
- 		    	dataType: "HTML",
- 		    	success: function(data){
- 		    		console.log(data);
- 		    		swal(data);
- 		    	}
-			});
-		}
  		
- 		/* 게시판 출력해주기 시작 */
+ 		/* 게시판 출력해주기 끝 */
+ 		
+ 		/* top 시작 */
+ 		
+ 		$("#topreset").click(function(){
+ 			$("#inputname").val("");
+ 			$("#iconfile").val("");
+ 		});
+ 		
+ 		$("#topedit").click(function(){
+ 			let cafename = $("#inputname").val();
+ 			let cafeicon = $("#iconfile").val().substr(12, );
+ 			
+ 			
+ 			const formData = new FormData();
+ 			const data = $("#iconfile");
+ 				
+ 			formData.append('cafe_icon', data[0].files[0]);
+ 			formData.append('cafe_name', cafename);
+ 			
+ 			$.ajax({
+ 				type: "POST",
+ 	 		   	url: "CafeInfoUpload",
+ 	 		   	data: formData,
+ 	 		   	dataType: "HTML",
+ 	 		   	contentType:false,
+ 	 		   	processData:false,
+ 	 		   	success: function(data){
+ 	 		   		swal(data);
+ 	 		   	}
+ 			});
+ 			
+ 		});
+ 		
+ 		/* top 끝 */
  		
  	});
   	
@@ -369,186 +424,187 @@
 
 
 		<div class="row">
-			<div class="col-md-12">
-				<div align="right" class="col-md-12">
-					<button type="submit" id="edit"
-						class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
-					<button type="button" id="cancel"
-						class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>
-					<hr>
-					<!-- 본인확인 -->
+			<div class="container-fluid">
+				<div class="wrap1">
+					<div class="col-lg-12">
+						<div class="maincard">
+							<div class="row">
+								<div class="col-md-5">
+									<div class="ms-5 ps-5 pt-4">
+										<a class="logo d-flex align-items-center"> 
+											<img src="assets/img/logo.png" alt="">
+											<input type="text" class="form-control" id="inputname" value="${cafebanner.cafe_name}"></input>
+										</a> 
+										<span id="size"></span>
+									</div>
+								</div>
 
+								<div class="col-md-7">
+									<div class="row">
+										<label for="form-control" class="col"> 
+											<strong>아이콘 : ${cafebanner.cafe_icon}</strong> 
+											<input type="file" class="form-control" accept="image/*" id="iconfile" required>
+										</label>
+									</div>
+								</div>
+							</div>
+							<hr />
+							<div align="center" class="col-md-12 mt-2">
+								<button type="submit" id="topedit" 
+									class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
+								<button type="button" id="topreset" 
+									class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
-			<form name="bbs" action=".do" method="POST"
-				enctype="multipart/form-data">
-				<div class="container-fluid">
-					<div class="wrap1">
-						<div class="col-lg-12">
-							<div class="maincard">
-								<div class="row">
-									<div class="col-md-5">
-										<div>
-											<a class="logo d-flex align-items-center"> <img
-												src="assets/img/logo.png" alt=""> <span id="cafename"
-												class=""><input type="text" name="cafe_name"
-													id="inputname" value="${cafebanner.cafe_name}" rows="1"
-													cols="10"></input></span>
-											</a> <span id="size"></span>
-										</div>
-									</div>
 
-									<div class="col-md-7">
-										<div class="row">
-											<label for="form-control" class="col">아이콘 :
-												${cafebanner.cafe_icon} <input type="file" name="cafe_icon"
-												class="form-control" placeholder="카페 아이콘" accept="image/*"
-												id="getfile" onchange="seticon(event)" required>
-											</label> <label for="form-control" class="col">메인 배너 :
-												${cafebanner.cafe_img} <input type="file" name="cafe_img"
-												class="form-control" placeholder="카페 메인 배너" accept="image/*"
-												id="getfile" onchange="setBanner(event)" required>
-											</label>
-										</div>
-									</div>
+				<!-- 게시판 리스트 기능 -->
+				<div class="row">
+					<div class="col-md-4">
+						<div class="maincard">
+							<div class="row">
+								<div align="center" class="col">
+									<button type="button" id="add_btn"
+										class="btn btn-outline-secondary  rounded-pill">게시판
+										추가</button>
+									<button type="button" id="del"
+										class="btn btn-outline-secondary  rounded-pill">휴지통</button>
+								</div>
+							</div>
+						</div>
+						<div class="maincard">
+							<c:forEach var="infolist" items="${infolist}">
+								<div class="maincard">${infolist.b_name}</div>
+							</c:forEach>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="maincard">
+							<div class="col-md-12">
+								<!-- 배너 이미지 미리보기 -->
+								<label class="label" id="label" for="input">
+									<div class="inner" id="inner">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+										&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; 드래그하거나 클릭해서 업로드</div>
+								</label> <input id="input" class="input" accept="image/*" type="file"
+									required="true" hidden="true">
+							</div>
+							<div class="col-md-12">
+								<p class="preview-title"></p>
+								<div class="preview" id="preview">
+									<img width="200" src="upload/${cafebanner.cafe_img}">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<hr>
+								<textarea rows="" cols=""></textarea>
+							</div>
+
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="maincard">
+									<select id="boardselect1" class="form-select"
+										aria-label="Default select example">
+										<option selected>게시판 선택</option>
+										<c:forEach var="infoname" items="${infolist}">
+											<c:if test="${infoname.main_idx == -1}">
+												<option value="${infoname.b_code}">${infoname.b_name}</option>
+											</c:if>
+										</c:forEach>
+									</select>
+									<table class="table table-striped" style="text-align: center;">
+										<thead>
+											<tr>
+												<th scope="col">제목</th>
+												<th scope="col">작성자</th>
+												<th scope="col">작성일</th>
+											</tr>
+										</thead>
+										<tbody id="boardlist1">
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="maincard">
+									<select id="boardselect2" class="form-select"
+										aria-label="Default select example">
+										<option selected>게시판 선택</option>
+										<c:forEach var="infoname" items="${infolist}">
+											<c:if test="${infoname.main_idx == -1}">
+												<option value="${infoname.b_code}">${infoname.b_name}</option>
+											</c:if>
+										</c:forEach>
+									</select>
+									<table class="table table-striped" style="text-align: center;">
+										<thead>
+											<tr>
+												<th scope="col">제목</th>
+												<th scope="col">작성자</th>
+												<th scope="col">작성일</th>
+											</tr>
+										</thead>
+										<tbody id="boardlist2">
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="maincard">
+									<select id="boardselect3" class="form-select"
+										aria-label="Default select example">
+										<option selected>게시판 선택</option>
+										<c:forEach var="infoname" items="${infolist}">
+											<c:if test="${infoname.main_idx == -1}">
+												<option value="${infoname.b_code}">${infoname.b_name}</option>
+											</c:if>
+										</c:forEach>
+									</select>
+									<table class="table table-striped" style="text-align: center;">
+										<thead>
+											<tr>
+												<th scope="col">제목</th>
+												<th scope="col">작성자</th>
+												<th scope="col">작성일</th>
+											</tr>
+										</thead>
+										<tbody id="boardlist3">
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="maincard">
+									<select id="boardselect4" class="form-select"
+										aria-label="Default select example">
+										<option selected>게시판 선택</option>
+										<c:forEach var="infoname" items="${infolist}">
+											<c:if test="${infoname.main_idx == -1}">
+												<option value="${infoname.b_code}">${infoname.b_name}</option>
+											</c:if>
+										</c:forEach>
+									</select>
+									<table class="table table-striped" style="text-align: center;">
+										<thead>
+											<tr>
+												<th scope="col">제목</th>
+												<th scope="col">작성자</th>
+												<th scope="col">작성일</th>
+											</tr>
+										</thead>
+										<tbody id="boardlist4">
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<!-- 게시판 리스트 기능 -->
-					<div class="row">
-						<div class="col-md-4">
-							<div class="maincard">
-								<div class="row">
-									<div align="center" class="col">
-										<button type="button" id="add_btn"
-											class="btn btn-outline-secondary  rounded-pill">게시판
-											추가</button>
-										<button type="button" id="del"
-											class="btn btn-outline-secondary  rounded-pill">휴지통</button>
-									</div>
-								</div>
-							</div>
-							<div class="maincard">
-								<c:forEach var="infolist" items="${infolist}">
-									<div class="maincard">${infolist.b_name}</div>
-								</c:forEach>
-							</div>
-						</div>
-						<div class="col-md-8">
-							<div class="maincard">
-								<div class="col-md-12">
-									<!-- 배너 이미지 미리보기 -->
-									<label class="label" id="label" for="input">
-										<div class="inner" id="inner">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-											&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; 드래그하거나 클릭해서 업로드</div>
-									</label> <input id="input" class="input" accept="image/*" type="file"
-										required="true" hidden="true">
-								</div>
-								<div class="col-md-12">
-									<p class="preview-title"></p>
-									<div class="preview" id="preview">
-										<img width="200" src="upload/${cafebanner.cafe_img}">
-									</div>
-								</div>
-								<div class="col-md-12">
-									<hr>
-									<textarea rows="" cols=""></textarea>
-								</div>
-
-							</div>
-
-							<div class="row">
-								<div class="col-md-6">
-									<div class="maincard">
-										<select id="boardselect1" class="form-select" aria-label="Default select example">
-											<option selected>게시판 선택</option>
-											<c:forEach var="infoname" items="${infolist}">
-												<option value="${infoname.b_code}">${infoname.b_name}</option>
-											</c:forEach>
-										</select>
-										<table class="table table-striped" style="text-align: center;">
-											<thead>
-												<tr>
-													<th scope="col">제목</th>
-													<th scope="col">작성자</th>
-													<th scope="col">작성일</th>
-												</tr>
-											</thead>
-											<tbody id="boardlist1">
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="maincard">
-										<select id="boardselect2" class="form-select" aria-label="Default select example">
-											<option selected>게시판 선택</option>
-											<c:forEach var="infoname" items="${infolist}">
-												<option value="${infoname.b_code}">${infoname.b_name}</option>
-											</c:forEach>
-										</select>
-										<table class="table table-striped" style="text-align: center;">
-											<thead>
-												<tr>
-													<th scope="col">제목</th>
-													<th scope="col">작성자</th>
-													<th scope="col">작성일</th>
-												</tr>
-											</thead>
-											<tbody id="boardlist2">
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<div class="maincard">
-										<select id="boardselect3" class="form-select" aria-label="Default select example">
-											<option selected>게시판 선택</option>
-											<c:forEach var="infoname" items="${infolist}">
-												<option value="${infoname.b_code}">${infoname.b_name}</option>
-											</c:forEach>
-										</select>
-										<table class="table table-striped" style="text-align: center;">
-											<thead>
-												<tr>
-													<th scope="col">제목</th>
-													<th scope="col">작성자</th>
-													<th scope="col">작성일</th>
-												</tr>
-											</thead>
-											<tbody id="boardlist3">
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="maincard">
-										<select id="boardselect4" class="form-select" aria-label="Default select example">
-											<option selected>게시판 선택</option>
-											<c:forEach var="infoname" items="${infolist}">
-												<option value="${infoname.b_code}">${infoname.b_name}</option>
-											</c:forEach>
-										</select>
-										<table class="table table-striped" style="text-align: center;">
-											<thead>
-												<tr>
-													<th scope="col">제목</th>
-													<th scope="col">작성자</th>
-													<th scope="col">작성일</th>
-												</tr>
-											</thead>
-											<tbody id="boardlist4">
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-			</form>
+				</div>
+			</div>
 		</div>
 
 

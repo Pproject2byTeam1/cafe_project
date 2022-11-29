@@ -48,11 +48,19 @@ public class BannerUpload extends HttpServlet {
 		    		msg = "관리자 권한이 필요한 기능입니다.";
 		    		
 		    	}else {
+		    		
+		    		String uploadpath = request.getSession().getServletContext().getRealPath("upload");
+		    		int size = 1024 * 1024 * 10;
+
+		    		MultipartRequest multi = new MultipartRequest(request, uploadpath, size, "UTF-8",
+							new DefaultFileRenamePolicy());
 			    	
-			    	String cafe_img = request.getParameter("name");
+		    		Enumeration filenames = multi.getFileNames();
+			    	String file1 = (String) filenames.nextElement();
+			    	String filename1 = multi.getFilesystemName(file1);
 			    	
 			    	CafeBannerDao cafedao = new CafeBannerDao();
-			    	int row = cafedao.UploadCafeBanner(cafe_img);
+			    	int row = cafedao.UploadCafeBanner(filename1);
 					
 					if(row > 0) {
 						msg = "카페 배너가 업로드 되었습니다.";
