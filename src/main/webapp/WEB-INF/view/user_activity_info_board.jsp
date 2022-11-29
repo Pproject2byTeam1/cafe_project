@@ -114,7 +114,7 @@
 		                    <th scope="row" class="idx">${list.idx}</th>
 		                    <td>${list.b_name}<span class="d-none">${list.b_code}</span></td>
 		                    <td>${list.title}</td>
-		                    <td>${list.w_date}</td>
+		                    <td class="w_date">${list.w_date}</td>
 		                    <td>${list.hits}</td>
 		                    <td>${list.like}</td>
 		                  </tr>
@@ -141,7 +141,7 @@
 		                    <th scope="row" class="idx">${list.idx}</th><!-- setEmail_id <= title, setDepth <= c_count -->
 		                    <td scope="row">${list.email_id}<span class="badge bg-primary rounded-pill">${list.depth}</span></td>
 		                    <td>${list.content}<span class="d-none">${list.refer}</span></td>
-		                    <td>${list.w_date}</td>
+		                    <td class="w_date">${list.w_date}</td>
 		                  </tr>
 		                </c:forEach>
 		                </tbody>
@@ -168,7 +168,7 @@
 		                    <td>${list.b_name}<span class="d-none">${list.b_code}</span></td>
 		                    <td scope="row">${list.title}<span class="badge bg-primary rounded-pill">${list.c_count}</span></td>
 		                    <td scope="row">${list.nick}</td>
-		                    <td>${list.w_date}</td>
+		                    <td class="w_date">${list.w_date}</td>
 		                  </tr>
 		                </c:forEach>
 		                </tbody>
@@ -231,27 +231,31 @@
   			$('.listrow').click(function(){
   	  			const idx = $(this).children('.idx').text();
   	  			const b_code = $(this).children().children('.d-none').text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
+  	  			const w_date = $(this).children(".w_date").text();
+  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
   	  		});
   		});
   		$('.paginate_button').click(function(){
   			$('.listrow').click(function(){
   	  			const idx = $(this).children('.idx').text();
   	  			const b_code = $(this).children().children('.d-none').text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
+  	  			const w_date = $(this).children(".w_date").text();
+  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
   	  		});
   		});
   		$('.sorting ').click(function(){
   			$('.listrow').click(function(){
   	  			const idx = $(this).children('.idx').text();
   	  			const b_code = $(this).children().children('.d-none').text();
-  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
+  	  			const w_date = $(this).children(".w_date").text();
+  	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
   	  		});
   		});
   		$('.listrow').click(function(){
   			const idx = $(this).children('.idx').text();
   			const b_code = $(this).children().children('.d-none').text();
-  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code;
+  			const w_date = $(this).children(".w_date").text();
+  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
   		});
   		
   	});
