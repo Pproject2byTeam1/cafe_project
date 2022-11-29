@@ -15,6 +15,7 @@ import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Rank;
 import kr.or.kosa.utils.BoardFactory;
+import net.sf.json.JSONObject;
 
 public class AdminMainEditService implements Action {
 
@@ -29,15 +30,27 @@ public class AdminMainEditService implements Action {
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
+			JSONObject json1 = new JSONObject();
+			JSONObject json2 = new JSONObject();
+			JSONObject json3 = new JSONObject();
+			JSONObject json4 = new JSONObject();
+			
 			for(Board_Info info : infolist) {
 				String b_type = info.getB_type();
 				int b_code = info.getB_code();
 				
-				if(info.getMain_idx() == 1 || info.getMain_idx() == 2 || info.getMain_idx() == 3 || info.getMain_idx() == 4) {
-					
+				if(info.getMain_idx() == 1) {
 					List<? extends Board> board = BoardFactory.createBoard(b_type, b_code); //b_type에 따라 다른 게시판 출력 가져오는 심플 팩토리 패턴
-					
-					request.setAttribute(b_type, board);
+					json1.put("main1", board);
+				} else if(info.getMain_idx() == 2) {
+					List<? extends Board> board = BoardFactory.createBoard(b_type, b_code); //b_type에 따라 다른 게시판 출력 가져오는 심플 팩토리 패턴
+					json2.put("main2", board);
+				} else if(info.getMain_idx() == 3) {
+					List<? extends Board> board = BoardFactory.createBoard(b_type, b_code); //b_type에 따라 다른 게시판 출력 가져오는 심플 팩토리 패턴
+					json3.put("main3", board);
+				} else if(info.getMain_idx() == 4) {
+					List<? extends Board> board = BoardFactory.createBoard(b_type, b_code); //b_type에 따라 다른 게시판 출력 가져오는 심플 팩토리 패턴
+					json4.put("main4", board);
 				}
 			}
 			
@@ -48,7 +61,11 @@ public class AdminMainEditService implements Action {
 			//카페배너 정보 가져오기
 			CafeBannerDao cafebannerdao = new CafeBannerDao();
 			CafeBanner cafebanner = cafebannerdao.getCafeBanner();
-			
+		
+			request.setAttribute("main1", json1); //게시판 출력 가져오기
+			request.setAttribute("main2", json2); //게시판 출력 가져오기
+			request.setAttribute("main3", json3); //게시판 출력 가져오기
+			request.setAttribute("main4", json4); //게시판 출력 가져오기
 			request.setAttribute("infolist", infolist); //게시판 종류 정보 가져오기
 			request.setAttribute("ranklist", ranklist); //등급 정보 가져오기
 			request.setAttribute("cafebanner", cafebanner); //카페배너 정보 가져오기
