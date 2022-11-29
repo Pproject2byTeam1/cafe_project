@@ -43,31 +43,73 @@
 
 	$(function(){
 		
-		const data1 = {"idx":${idx}};
-		$.ajax({
+		
+
+		
+		function del(data){
+		
+			$.ajax({
 				url:"Deleterapport",
-				data:data1,
+				data:data,
 				dataType:"html",
 				success:function(responsetxt){
-					 console.log(responstext);
-					 $('#')
-					
+				
+					 $('#rapportlist').remove();
 					
 				}
 				
-		})
+		});
+				
+		};
+			
+
+		function search(data1){
+		
+			$.ajax({
+				url:"Searchapport",
+				data:data,
+				dataType:"html",
+				success:function(responsetxt){
+				
+					 $('.deletebtn').click();
+					
+				}
+				
+		});
+				
+		};
 		
 		
 		
 		
-		
-		
+		$(document).on('click', '.deletebtn', function(){
+
+			const data = {"idx": $(this).parent().parent().children('.idx').val()};
+			
+			console.log(data);
+
+			del(data);
+
+
+		});
+	
+	
 		
 	});
 		
+		$(document).on('click','#search',function(){
+			
+			
+			const dat1 ={"nick":$(this).parent().children(".nick").val()};
+			console.log(dat1);
+			search(data1);
+			
+			
+			
+		});
+		
 		
 
-	
 	
 	
 	
@@ -123,9 +165,12 @@
 						<div class="col-md-1"></div>
 						<div class="col-md-5">
 							<select class="form-select">
-								<option>전체조회</option>
-								<option>OO조회</option>
-								<option>OO조회</option>
+								<option>자유게시판</option>
+								<option>출석게시판</option>
+								<option>전체일정</option>
+								<option>사진공유</option>
+								<option>유로거래</option>
+								<option>자료공유</option>
 							</select>
 						</div>
 					</div>
@@ -135,9 +180,8 @@
 					<div class="search-bar">
 						<form class="search-form d-flex align-items-center" method="POST"
 							action="#">
-							<input type="text" name="query" placeholder="Search"
-								class="form-control" title="Enter search keyword">
-							<button type="submit" title="Search" class="btn btn-secondary">
+							<input type="text"  name="query" placeholder="Search" class="form-control" title="Enter search keyword" >
+							<button type="submit" title="" class="btn btn-secondary" id="search">
 								<i class="bi bi-search"></i>
 							</button>
 						</form>
@@ -156,9 +200,8 @@
 					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 					<!-- Table with hoverable rows -->
 					<table class="table table-hover">
-
 						<tr>
-							<th scope="col"><input type="checkbox" name="allCheck"></th>
+						
 							<th scope="col">글/댓글</th>
 							<th scope="col">게시판 종류</th>
 							<th scope="col">글제목</th>
@@ -170,19 +213,16 @@
 
 						</tr>
 
-						<script type="text/javascript">
-					
-						</script>
+				
 						<c:if test="${reportlist== null}">
 							<tr>
 								<td>데이터가 없습니다</td>
 							</tr>
 						</c:if>
-						<c:forEach var="reportlist" items="${reportlist}"
-							varStatus="status">
-							<tr>
-								<th scope="col"><input type="checkbox" name="RowCheck"
-									class="rowChk" value="${reportlist.idx}"></th><input type="hidden" idx="idx" value="${reportlist.idx}" />
+						<c:forEach var="reportlist" items="${reportlist}" varStatus="status">
+							<tr id="rapportlist">
+								
+							<input class="idx" name="idx" id="idx" value="${reportlist.idx}" type="hidden"/>
 								<c:choose>
 									<c:when test="${request.b_code eq'null'} ">
 										<th scope="col">댓글</th>
@@ -217,18 +257,15 @@
 								<th scope="col">${reportlist.email_id}</th>
 								<th scope="col">${reportlist.hits}</th>
 								<th scope="col">${reportlist.report_count}</th>
-								<th scope="col"><button type="button"
-										class="btn btn-danger"
-										onclick="window.open('data_post.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
-										<button type="button" class="btn btn-danger" id="deletebtn">신고취소</button>
-										</th>
+								<th scope="col">
+									<button type="button" class="btn btn-danger"onclick="window.open('databoard_read.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+									<button type="button" class="btn btn-danger deletebtn">신고취소</button>
+								</th>
 							</tr>
 						</c:forEach>
 
 					</table>
-					<div align="right">
-						<button type="button" class="btn btn-danger" id="deletebtn">신고취소</button>
-					</div>
+					
 
 					<!-- End Table with hoverable rows -->
 					<!-- 페이징  -->
@@ -237,7 +274,7 @@
 
 							<c:if test="${cpage > 1}">
 								<li class="page-item"><a class="page-link"
-									href="user_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1"
+									href="rapport_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1"
 									aria-disabled="true"><<</a></li>
 							</c:if>
 
@@ -248,14 +285,14 @@
 									</c:when>
 									<c:otherwise>
 										<li class="page-item"><a class="page-link"
-											href="user_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+											href="rapport_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 
 							<c:if test="${cpage < pagecount}">
 								<li class="page-item"><a class="page-link"
-									href="user_list.do?cp=${cpage+1}&ps=${pagesize}">>></a></li>
+									href="rapport_list.do?cp=${cpage+1}&ps=${pagesize}">>></a></li>
 							</c:if>
 						</ul>
 					</nav>

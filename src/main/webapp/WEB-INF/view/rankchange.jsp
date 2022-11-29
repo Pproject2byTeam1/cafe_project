@@ -31,10 +31,7 @@
  <script type="text/javascript">
 
  $(function)(){
-	 let rank=<c:out value="${list.rank}"/>';
-	 let r_name=<c:out value="${list.r_name}"/>';
-	 let r_point=<c:out value="${list.r_point}"/>';
-	 
+
 	 
 	 function insert(data){
 		 
@@ -47,7 +44,7 @@
 			success : function(data){
 	
 				list();
-				swal(data);
+					
 	
 			}
 			 
@@ -69,7 +66,8 @@
 				dataType :"html",
 				success : function(responseText){
 					
-					
+					$("#ranklist").empty();
+					$("#ranklist").append(responseText.trim());
 					
 				}
 							
@@ -212,7 +210,7 @@
 			                     </tr>
 			                        </c:if>
 			                      </c:forEach>
-			                
+			          
 			                 
 			                     <tr>
 			                        <td>
