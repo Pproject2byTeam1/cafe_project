@@ -16,7 +16,7 @@ import kr.or.kosa.dto.Rank;
 import kr.or.kosa.dto.User;
 
 
-@WebServlet("/ReplyReplyOk")
+@WebServlet("/RankOk")
 public class RankOk extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
