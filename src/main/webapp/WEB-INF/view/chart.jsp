@@ -53,6 +53,9 @@
 			let hits = []; 
 			let title = [];
 			
+			
+			
+			/*  */
 			$("#number").change(function(){
 				$("#barChart").empty();
 				
@@ -139,10 +142,7 @@
 		
 		
 		
-		<select name="number" id="number">
-			<option value=5>5개</option>
-			<option value=10>10개</option>
-		</select>
+		
 		
     <section class="section">
       <div class="row">
@@ -660,8 +660,20 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">상위 Top 10 (Bar Chart)</h5>
-
+            	<div class="row">
+            		<div class="col-md-6">
+            			<h5 class="card-title">상위 Top 10 (Bar Chart)</h5>
+            		</div>
+            		<div class="col-md-6 d-flex justify-content-end align-items-center">
+            			<select name="number" id="number" class="">
+							<option value=5>5개</option>
+							<option value=10>10개</option>
+						</select>
+            		</div>
+            		
+            	</div>
+              
+				
               <!-- Bar Chart -->
               <div id="bar">
               <div id="barChart"></div>
