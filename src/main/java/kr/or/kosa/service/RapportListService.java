@@ -33,14 +33,15 @@ public class RapportListService implements Action {
 			HttpSession session = request.getSession();
 	          User user = (User) session.getAttribute("member");
 			String userId = (String) session.getAttribute("userid");
-			
+		
 			AdminDao dao = new AdminDao();
 			int totalreportcount = dao.totalreportCount();
 			String ps = request.getParameter("ps");
 			String cp = request.getParameter("cp");
 			//게시물 총건수 
-
-
+			String url="";
+		if(user.getIsAdmin().equals("M") ) {
+			
 			//List 페이지 처음 호출 경우
 			if(ps == null || ps.trim().equals("")) {
 				ps = "5"; //5개씩 
@@ -63,31 +64,38 @@ public class RapportListService implements Action {
 			
 			
 			List<AttendanceBoad> reportlist = dao.reportlist(cpage, pagesize);
-			List<AttendanceBoad> reportlist2 = dao.reportlist(cpage, pagesize);
+	
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalreportcount",totalreportcount);
 			request.setAttribute("reportlist", reportlist);
-		
 			
+			url="/WEB-INF/view/rapport_list.jsp";
+			
+			
+			
+			
+		}else {
+			
+			//List 페이지 처음 호출 경우
+			String board_msg ="권한이 없습니다.";
+			String board_url ="/WebCafe_Project/login_view.do";
+			
+			   request.setAttribute("board_msg", board_msg);
+	            request.setAttribute("board_url", board_url);
+	              
+	            url="/WEB-INF/view/redirect.jsp";
+		
+		}
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/rapport_list.jsp");
+		  	forward.setPath(url);
 			
-		  	List boardlist = new ArrayList();
-		for(AttendanceBoad re :reportlist) {
-			int idx=re.getIdx();
-			Board_Info boardnum = dao.getBoardInfo(idx);
-			boardlist.add(boardnum);
-		}
 		
 		
-		request.setAttribute("pagesize", pagesize);
-		request.setAttribute("cpage", cpage);
-		request.setAttribute("pagecount", pagecount);
-		request.setAttribute("totalboardcount", totalreportcount);
-		request.setAttribute("boardnum", boardlist);
+
+		
 		} catch (NamingException e) {
 			System.out.println(e.getMessage());
 		}

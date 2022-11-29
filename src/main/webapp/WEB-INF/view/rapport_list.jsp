@@ -62,7 +62,22 @@
 				
 		};
 			
+
+		function search(data1){
 		
+			$.ajax({
+				url:"Searchapport",
+				data:data,
+				dataType:"html",
+				success:function(responsetxt){
+				
+					 $('.deletebtn').click();
+					
+				}
+				
+		});
+				
+		};
 		
 		
 		
@@ -72,19 +87,26 @@
 			const data = {"idx": $(this).parent().parent().children('.idx').val()};
 			
 			console.log(data);
-			
+
 			del(data);
 
 
 		});
 	
-		
-		
-		
-		
-		
+	
 		
 	});
+		
+		$(document).on('click','#search',function(){
+			
+			
+			const dat1 ={"nick":$(this).parent().children(".nick").val()};
+			console.log(dat1);
+			search(data1);
+			
+			
+			
+		});
 		
 		
 
@@ -143,9 +165,12 @@
 						<div class="col-md-1"></div>
 						<div class="col-md-5">
 							<select class="form-select">
-								<option>전체조회</option>
-								<option>OO조회</option>
-								<option>OO조회</option>
+								<option>자유게시판</option>
+								<option>출석게시판</option>
+								<option>전체일정</option>
+								<option>사진공유</option>
+								<option>유로거래</option>
+								<option>자료공유</option>
 							</select>
 						</div>
 					</div>
@@ -155,9 +180,8 @@
 					<div class="search-bar">
 						<form class="search-form d-flex align-items-center" method="POST"
 							action="#">
-							<input type="text" name="query" placeholder="Search"
-								class="form-control" title="Enter search keyword">
-							<button type="submit" title="Search" class="btn btn-secondary">
+							<input type="text"  name="query" placeholder="Search" class="form-control" title="Enter search keyword" >
+							<button type="submit" title="" class="btn btn-secondary" id="search">
 								<i class="bi bi-search"></i>
 							</button>
 						</form>
@@ -198,7 +222,7 @@
 						<c:forEach var="reportlist" items="${reportlist}" varStatus="status">
 							<tr id="rapportlist">
 								
-							<input type="text" class="idx" name="idx" idx="idx" value="${reportlist.idx}" hidden=""/>
+							<input class="idx" name="idx" id="idx" value="${reportlist.idx}" type="hidden"/>
 								<c:choose>
 									<c:when test="${request.b_code eq'null'} ">
 										<th scope="col">댓글</th>
