@@ -338,7 +338,7 @@
 									<hr>
 									<div class="row">
 										<div class="col-lg-9">
-											<img class="marketB_img" src="image/board/5/${list.img_name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/500X500?text=No+Image'">
+											<img class="marketB_img" src="upload/${list.img_name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/500X500?text=No+Image'">
 										</div>
 										<div align="center" class="col-lg-3">
 											<div class="info-body price">

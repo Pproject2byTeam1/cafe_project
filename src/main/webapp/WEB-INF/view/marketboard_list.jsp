@@ -78,16 +78,16 @@
 
 								html = '<div class="mcard" onclick="location.href=' + "'marketboard_read.do?b_code=" + data.list[index].b_code + '&idx=' + data.list[index].idx + "'" + ';">';
 								html += '<div class="mimg">'
-								html += '<img src="image/board/upload/' + data.list[index].img_name + '" id="mimg"/>';
+								html += '<img src="upload/' + data.list[index].img_name + '" id="mimg"/>';
 								html += '</div>'
-								html += '<span id="marketB_Text.ns">' + data.list[index].m_mode + '|' + data.list[index].sold + '|' + data.list[index].cate + '</span>';
+								html += '<span id="marketB_Text.ns">' + data.list[index].idx + ' | ' + data.list[index].m_mode + ' | ' + data.list[index].sold + ' | ' + data.list[index].cate + '</span>';
 								html += '<p>';
 								html += '<span id="marketB_Title">' + data.list[index].title + '</span>';
 								html += '<br>';
 								html += '<span id="marketB_Text">' + data.list[index].content + '</span>';
-								html += '<br>';
+								html += '<p>';
 								html += '<span id="marketB_Price">' + data.list[index].price + ' 원</span>';
-								html += '<br>'
+								html += '<p>'
 								html += '<span id="marketB_info">조회수 : ' + data.list[index].hits + '| 댓글 : ' + data.commentcountlist[index] + '| 찜 : ' + data.yescountlist[index]  + '</span>';
 								html += '<br>';
 									html += '<span id="marketB_Text.ns"><img src="image/rank_icon/' + data.ranklist[index]  + '.gif" alt="Profile"'
@@ -198,11 +198,11 @@
 						<c:forEach var="list" items="${list}" varStatus="status">
 						<div class="mcard" onclick="location.href='marketboard_read.do?b_code=${list.b_code}&idx=${list.idx}';">
 							<div class="mimg">
-							<img src="image/board/upload/${list.img_name}" id="mimg" onerror="this.onerror=null; this.src='https://via.placeholder.com/500X500?text=No+Image'">
+							<img src="upload/${list.img_name}" id="mimg" onerror="this.onerror=null; this.src='https://via.placeholder.com/500X500?text=No+Image'">
 							</div>
-							<span id="marketB_Text.ns">${list.m_mode} | ${list.sold} | ${list.cate}</span>
+							<span id="marketB_Text.ns">${list.idx} | ${list.m_mode} | ${list.sold} | ${list.cate}</span>
 							<p>
-							<span id="marketB_Title">${list.idx}${list.title}</span>
+							<span id="marketB_Title">${list.title}</span>
 							<br>
 							<span id="marketB_Text">
 							<c:choose>
@@ -214,9 +214,9 @@
 									</c:otherwise>
 							</c:choose>
 							</span>
-							<br>
+							<p>
 							<span id="marketB_Price">${list.price} 원</span>
-							<br>
+							<p>
 							<span id="marketB_info">조회수 : ${list.hits} | 댓글 : ${comment[status.index]} | 찜 : ${yes[status.index]}</span>
 							<br>
 								<span id="marketB_Text.ns"><img src="image/rank_icon/${rank[status.index]}.gif" alt="Profile"
@@ -225,6 +225,7 @@
 						</c:forEach>					
 					</div>
 					<!-- 보드 페이지 시작 -->
+	<div class="page">					
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
 			
@@ -254,6 +255,7 @@
 			</ul>
 		</nav>
 		</div>
+	</div>
 		</div>
 		</div>
 		</section>
