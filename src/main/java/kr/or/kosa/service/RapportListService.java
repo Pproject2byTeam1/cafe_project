@@ -40,7 +40,7 @@ public class RapportListService implements Action {
 			String cp = request.getParameter("cp");
 			//게시물 총건수 
 			String url="";
-		if(user.getIsAdmin().equals("M") ) {
+		
 			
 			//List 페이지 처음 호출 경우
 			if(ps == null || ps.trim().equals("")) {
@@ -76,18 +76,11 @@ public class RapportListService implements Action {
 			
 			
 			
-		}else {
+	
 			
 			//List 페이지 처음 호출 경우
-			String board_msg ="권한이 없습니다.";
-			String board_url ="/WebCafe_Project/login_view.do";
-			
-			   request.setAttribute("board_msg", board_msg);
-	            request.setAttribute("board_url", board_url);
-	              
-	            url="/WEB-INF/view/redirect.jsp";
+
 		
-		}
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
 		  	forward.setPath(url);
