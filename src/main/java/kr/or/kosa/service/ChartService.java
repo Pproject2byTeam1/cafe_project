@@ -16,6 +16,7 @@ import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
+import net.sf.json.JSONArray;
 
 public class ChartService implements Action {
 
@@ -47,6 +48,15 @@ public class ChartService implements Action {
 		            url="/WEB-INF/view/redirect.jsp";
 		            
 			} else { 
+				
+				
+				ChartDao cdao = new ChartDao();
+				
+				List<AttendanceBoad> list = cdao.getTopViews(10);
+				JSONArray jsonlist = JSONArray.fromObject(list);
+				
+				request.setAttribute("list", list);
+				request.setAttribute("jsonlist", jsonlist);
 				url = "/WEB-INF/view/chart.jsp";
 				
 				

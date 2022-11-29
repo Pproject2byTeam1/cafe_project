@@ -54,7 +54,7 @@
                		<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>통계</a>
                		<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                    		<li><a class="dropdown-item" href="#!">활동 분석</a></li>
-                   		<li><a class="dropdown-item" href="memberAnalysis.do">회원 분석</a></li>
+                   		<li><a class="dropdown-item" href="chart.do">회원 분석</a></li>
                		</ul>
            		</li>
        		</ul>
