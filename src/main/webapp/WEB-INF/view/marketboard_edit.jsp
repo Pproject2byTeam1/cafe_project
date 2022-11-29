@@ -93,7 +93,8 @@
 									<hr>
 									
 										<div>
-											<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" required>
+											<img class="marketB_img" src="upload/${marketboard.img_name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/500X500?text=No+Image'"><p>
+											첨부된 이미지 : ${marketboard.img_name}<p>
 										</div>
 										<div>
 											<div class="info-body price">

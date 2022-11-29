@@ -47,7 +47,9 @@
 
 	$(document).ready(function(){
 		let b_code = "<c:out value='${b_code}'/>";
-			
+		let cp = "<c:out value='${cpage}'/>";
+		let ps = "<c:out value='${pagesize}'/>";	
+		
 			//글쓰기
 			$("#Write").click(function(){
 				console.log("write 클릭");
@@ -55,7 +57,8 @@
 				
 			});
 			
-	
+			
+	});
 			
 </script>
 
@@ -87,7 +90,7 @@
 		});
 		
 		let email_id = '<c:out value="${member.email_id}" />';
-        let yes = '<c:out value="${yes}" />';
+        let yes = '<c:out value="${yes2}" />';
         let idx = '<c:out value="${list.idx}" />'
         
         /* 게시물 좋아요 비동기 처리 */
@@ -333,7 +336,7 @@
 							<div class="row">
 								<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 								<div class="col-md-8">
-									<span id="marketB_Title">${list.idx}${list.title}</span>
+									<span id="marketB_Title">${list.idx}) ${list.title}</span>
 									<p>
 									<hr>
 									<div class="row">
@@ -348,7 +351,7 @@
 												<span id="marketB_Text.ns">${list.m_mode}|${list.sold}|${list.cate}</span>
 											</div>
 											<div class="info-body">
-												<span id="marketB_Text.ns">조회수:${list.hits} 댓글:3 찜:3</span>
+												<span id="marketB_Text.ns">조회수:${list.hits} 댓글:${commentscount} 찜:${yes}</span>
 											</div>
 											<div class="info-body">
 												<img src="image/rank_icon/1.gif" alt="Profile"
@@ -383,12 +386,12 @@
 												</c:if>
 												<!-- 본인확인 -->
 												<button type="button" id="List" 
-													class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
+													class="btn btn-outline-secondary btn-sm rounded-pill" onclick="history.go(-1)">목록</button>
 												<c:if test="${member != null}">
-													<c:if test="${yes == 'no'}">
+													<c:if test="${yes2 == 'no'}">
 	                                    				<button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
 	                                    			</c:if>
-	                                    			<c:if test="${yes != 'no'}">
+	                                    			<c:if test="${yes2 != 'no'}">
 	                                    				<button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
 	                                    			</c:if>	
 												</c:if>
@@ -524,26 +527,7 @@
 
 		<!-- 보드 페이지 시작 -->
 
-		<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-				</a></li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">4</a></li>
-				<li class="page-item"><a class="page-link" href="#">5</a></li>
-				<li class="page-item"><a class="page-link" href="#">6</a></li>
-				<li class="page-item"><a class="page-link" href="#">7</a></li>
-				<li class="page-item"><a class="page-link" href="#">8</a></li>
-				<li class="page-item"><a class="page-link" href="#">9</a></li>
-				<li class="page-item"><a class="page-link" href="#">10</a></li>
-				<li class="page-item"><a class="page-link" href="#"
-					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-				</a></li>
-			</ul>
-		</nav>
+	
 
 		<!-- 보드 페이지 끝 -->
 	</main>
