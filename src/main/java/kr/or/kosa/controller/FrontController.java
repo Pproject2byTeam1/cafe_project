@@ -43,7 +43,7 @@ import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MarketBoardWriteService;
 import kr.or.kosa.service.MarketBoardWriteViewService;
-import kr.or.kosa.service.MemberAnalysisService;
+import kr.or.kosa.service.ChartService;
 import kr.or.kosa.service.MessageDeleteService;
 import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
@@ -419,7 +419,7 @@ public class FrontController extends HttpServlet {
 
 		} else if (urlcommand.equals("/memberAnalysis.do")) { // 관리자 메인 관리 페이지
 
-			action = new MemberAnalysisService();
+			action = new ChartService();
 			forward = action.execute(request, response);
 
 		}  

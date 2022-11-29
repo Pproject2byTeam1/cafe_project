@@ -377,16 +377,8 @@
                               </div>
                               <br>
                               <hr>
-                              <div class="row">
-
-                                 <div class="col-md-12">
-                                    <div class="row">
-                                    
-                                    	<!-- 비어있는거 -->
-                                    	<div class="col-md-4"></div>
-                                    	
-                                    	<!-- 좋아요 -->
-                                    	<div class="col-md-4 text-center">
+                                    <div class="d-flex justify-content-end">
+                                    	<div>
                                     		<c:if test="${member != null}">
 	                                          <c:if test="${yespark == 'no'}">
 	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
@@ -394,46 +386,37 @@
 	                                          <c:if test="${yespark != 'no'}">
 	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
 	                                          </c:if>
-	                                        </c:if>
-                                    	</div>
+	                                        </c:if>	
+                                        </div>
+                                    	
 	                                   	
 	                                   	<!-- 답글 수정 목록 -->
 	                                   	
-	                                   	
-	                                   	<c:if test="${member.isAdmin == 'S' || member.isAdmin =='M'}">
-	                                   	<div class="col-md-1">
-	                                   		<form action="regulardelete.do?" method="get">
-	                                          <input type="text" value="${board.b_code}" name="b_code" style="display: none;">
-	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
-	                                          
-	                                          <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill" value="삭제">
-	                                       </form>
-	                                   	</div>
-	                                   	</c:if>
 	                                   	<c:if test="${member.email_id == board.email_id}">
-                                   		<div class="col-md-1">
+                                   		
                                 			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
 	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
 	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
 	                                          
 	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
 	                                       </form>
-	                                   	</div>
+	                                   	 &nbsp;
 	                                   	</c:if>
-	                                   	
-	                                   	<div class="col-md-1">
-	                                   		<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글">
-	                                   	</div>
-	                                   	
-                                   		<div class="col-md-1">
-                                   			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록">
-	                                   	</div>
+	                                   		<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글"> &nbsp;
+                                   			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록"> &nbsp;
+                                   			
+                                   		<c:if test="${member.isAdmin == 'S' || member.isAdmin =='M'}">
+	                                   		<form action="regulardelete.do?" method="get">
+	                                          <input type="text" value="${board.b_code}" name="b_code" style="display: none;">
+	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
+	                                          
+	                                          <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill" value="삭제">
+	                                       </form>
+	                                     &nbsp;
+	                                   	</c:if>
 		                                       
                                     </div>
-                                 </div>
-
                               </div>
-                           </div>
 
 
 
