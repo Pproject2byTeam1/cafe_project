@@ -65,7 +65,7 @@
     <p><a href="regular_list.do?b_code=1">자유 게시판</a></p>
     <p><a href="marketboard_list.do?b_code=5">거래 게시판</a></p>
     <p><a href="databoard_list.do?b_code=6">자료 게시판</a></p>
-    <p><a href="checkBoard.do">출석 게시판</a></p>
+    <p><a href="checkBoard.do?b_code=2">출석 게시판</a></p>
 	<br>
     <p><a href="user_list.do">회원목록</a></p>
     <button onclick="new_window()"> 쪽지 리스트</button>
@@ -79,6 +79,7 @@
     <br>
   	<p><a href="cafemain.do">유저 메인 화면 가기</a></p>
 	<p><a href="adminmain_edit.jsp">관리자메인페이지관리</a></p>
+	<p><a href="adminmaineditservice.do">관리자 메인 페이지 관리 db 연결 버전</a></p>
 
     <section class="section dashboard">
       <div class="row">

@@ -52,6 +52,10 @@ public class AdminMainEditService implements Action {
 			request.setAttribute("infolist", infolist); //게시판 종류 정보 가져오기
 			request.setAttribute("ranklist", ranklist); //등급 정보 가져오기
 			request.setAttribute("cafebanner", cafebanner); //카페배너 정보 가져오기
+			
+			forward = new ActionForward();
+		  	forward.setRedirect(false);
+		  	forward.setPath("/WEB-INF/view/adminmain_edit.jsp");
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
