@@ -47,15 +47,17 @@
   
   <script type="text/javascript">
 		$(document).ready(function(){
+
+			
+			let splicetResult;
+			let hits = []; 
+			let title = [];
 			
 			$("#number").change(function(){
+				$("#barChart").empty();
 				
-				let a = $('#number').val();
-				
-				const number = {"number": a};
-				
-				let hits = []; 
-				let title = [];
+				let num = $('#number').val();
+				const number = {"number": num};
 				
 				$.ajax({
   					type: "POST",
@@ -63,6 +65,9 @@
   					data: number,
   					dataType: "JSON",
   					success: function(data){
+  							
+  						splicetResult = hits.splice(0);
+  						splicetResult = title.splice(0);
   						
   					
   						$(data).each(function(){
@@ -70,47 +75,35 @@
 							title.push(this.title);
   						});
   						
-  						let hit = JSON.stringify(hits);
-  						let ti = JSON.stringify(title);
-  						console.log(hit);
-  						console.log(ti);
-  						
-  						$("#barChart").empty();
   						
   						
-  						
-  						new ApexCharts(document.querySelector("#barChart"), {
-  		                    series: [{
-  		                      data: [304]
-  		                    }],
-  		                    chart: {
-  		                      type: 'bar',
-  		                      height: 350
-  		                    },
-  		                    plotOptions: {
-  		                      bar: {
-  		                        borderRadius: 4,
-  		                        horizontal: true,
-  		                      }
-  		                    },
-  		                    dataLabels: {
-  		                      enabled: false
-  		                    },
-  		                    xaxis: {
-  		                      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-  		                        'United States', 'China', 'Germany'
-  		                      ],
-  		                    }
-  		                  }).render();
-  						
-  						
-  						
-  						
-  						
+						new ApexCharts(document.querySelector("#barChart"), {
+		                    series: [{
+		                      data: hits
+		                    }],
+		                    chart: {
+		                      type: 'bar',
+		                      height: 350
+		                    },
+		                    plotOptions: {
+		                      bar: {
+		                        borderRadius: 4,
+		                        horizontal: true,
+		                      }
+		                    },
+		                    dataLabels: {
+		                      enabled: false
+		                    },
+		                    xaxis: {
+		                      categories: title
+		                    ,
+		                    }
+		                  }).render();
   					}
  				});
-			});
 				
+			});
+			
 		});
   
   </script>
@@ -670,8 +663,9 @@
               <h5 class="card-title">상위 Top 10 (Bar Chart)</h5>
 
               <!-- Bar Chart -->
+              <div id="bar">
               <div id="barChart"></div>
-
+			  </div>
               <script>
                 document.addEventListener("DOMContentLoaded", () => {
           
