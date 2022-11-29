@@ -23,6 +23,7 @@ public class UserActivityService implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
+		
 		try {
 			//사이드바 정보
 	        Board_Info_Dao infodao = new Board_Info_Dao();
