@@ -176,7 +176,8 @@
 
  		function handleUpdate(fileList){
  			  const preview = document.getElementById("preview");
-
+			  const formData = new FormData();
+			  
  			  fileList.forEach((file) => {
  			    	const reader = new FileReader();
  			    	reader.addEventListener("load", (event) => {
@@ -189,9 +190,10 @@
  			      		preview.append(imgContainer);
  			    	});
  			 		reader.readAsDataURL(file);
+ 			 		formData.append('cafe_img', file);
  			 });
- 			 const formData = new FormData();
- 			 formData.append('cafe_img', data[0].files[0]);
+ 			 
+ 			 
  			 bannerUpload(formData);
  		};
  		
@@ -200,6 +202,8 @@
  		    	type: "POST",
  		    	url: "BannerUpload",
  		    	data: formData,
+ 		    	contentType:false,
+ 		    	processData:false,
  		    	dataType: "HTML",
  		    	success: function(data){
  		    		console.log(data);
@@ -400,6 +404,86 @@
  		
  		/* top 끝 */
  		
+ 		/* 게시판 추가 삭제 버튼 시작 */
+ 		
+ 		function cateload(){
+ 			
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "BoardInfoLoad",
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					$("#infoboard").empty();
+ 					$("#infoboard").append(data);
+ 					$("#cateinsertview").empty();
+ 				}
+ 			});
+ 		}
+ 		
+ 		function catesave(requestdata) {
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "BoardInfoInsert",
+ 				data: requestdata,
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					swal(data);
+ 					cateload();
+ 				}
+ 			});
+ 		}
+ 		
+ 		function cateremove(requestdata1){
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "BoardInfoRemove",
+ 				data: requestdata1,
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					swal(data);
+ 					cateload();
+ 				}
+ 			});
+ 		}
+ 		
+ 		$("#addview_btn").click(function(){
+ 			let html2 = '<div class="maincard">';
+ 			html2 += '<input type="text" class="form-control" id="catename" placeholder="카테고리 이름을 입력해 주세요" required></input><br>';
+ 			html2 += '<select class="form-select" aria-label="Default select example" id="btypeselected">';
+ 				html2 += '<option value="b1">자유게시판</option>';
+ 				html2 += '<option value="b2">출석게시판</option>';
+ 				html2 += '<option value="b3">사진게시판</option>';
+ 				html2 += '<option value="b4">자료게시판</option>';
+ 				html2 += '<option value="b5">거래게시판</option>';
+ 				html2 += '<option value="b6">일정관리게시판</option>';
+ 			html2 += '</select><br>';
+ 			html2 += '<textarea class="form-control" placeholder="게시글 작성 견본을 작성해보세요" id="addform" style="height: 100px"></textarea>';
+ 			html2 += '<div align="center" class="col-md-12 mt-2"><button type="submit" id="addviewsave" class="btn btn-outline-secondary btn-sm rounded-pill">저장</button>';
+ 			html2 += '<button type="button" id="addviewreset" class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>';
+ 			html2 += '</div></div>';
+ 			
+ 			$("#cateinsertview").append(html2);
+ 		});
+ 		
+ 		$(document).on('click', '#addviewreset', function(){
+ 			$("#cateinsertview").empty();
+ 		});
+ 		
+ 		$(document).on('click', '#addviewsave', function(){
+ 			
+ 			let check = $("#btypeselected option:selected").val();
+ 			let requestdata = {"b_name": $("#catename").val(), "form": $("#addform").val(), "b_type": check};
+ 			catesave(requestdata);
+ 		});
+ 		
+ 		$(document).on('click', '.trash', function(){
+ 			
+ 		});
+ 		
+ 		/* 게시판 추가 삭제 버튼 끝 */
+ 		
+ 		
+ 		
  	});
   	
   	
@@ -465,17 +549,28 @@
 						<div class="maincard">
 							<div class="row">
 								<div align="center" class="col">
-									<button type="button" id="add_btn"
-										class="btn btn-outline-secondary  rounded-pill">게시판
-										추가</button>
+									<button type="button" id="addview_btn"
+										class="btn btn-outline-secondary rounded-pill">게시판 추가</button>
 									<button type="button" id="del"
-										class="btn btn-outline-secondary  rounded-pill">휴지통</button>
+										class="btn btn-outline-secondary rounded-pill">휴지통</button>
 								</div>
 							</div>
 						</div>
-						<div class="maincard">
+						<div id="cateinsertview">
+						
+						</div>
+						
+						<div id="infoboard" class="maincard">
 							<c:forEach var="infolist" items="${infolist}">
-								<div class="maincard">${infolist.b_name}</div>
+								<div class="maincard row m-2">
+									<div class="col-md-5 pt-1">
+										<br> <h5>${infolist.b_name}</h5>
+									</div>
+									<div align="right" class="col-md-7 pt-2">
+										<h4><i class="bi bi-trash3 trash"></i></h4>
+										<h4><i class="bi bi-arrow-down-square moreinfo"></i></h4>
+									</div>
+								</div>
 							</c:forEach>
 						</div>
 					</div>
@@ -494,10 +589,6 @@
 								<div class="preview" id="preview">
 									<img width="200" src="upload/${cafebanner.cafe_img}">
 								</div>
-							</div>
-							<div class="col-md-12">
-								<hr>
-								<textarea rows="" cols=""></textarea>
 							</div>
 
 						</div>
@@ -679,7 +770,7 @@
 
 	  </script>
 
-
+<!-- 
 	<script>
 		tinymce
 				.init({
@@ -697,7 +788,7 @@
 					}, ]
 				});
 	</script>
-
+ -->
 </body>
 
 </html>

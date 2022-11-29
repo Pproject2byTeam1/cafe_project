@@ -229,4 +229,36 @@ public class Board_Info_Dao {
 		return row;
 	}
 	
+	//게시판 추가
+	public int insertBoard(Board_Info info) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row=0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "insert into board_info(b_code, b_name, side_idx, b_type, form) "
+						+ "values(boardinfo_idx_seq.nextval, ?, boardinfo_idx_seq.currval, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, info.getB_name());
+			pstmt.setString(2, info.getB_type());
+			pstmt.setString(3, info.getForm());
+			
+			row = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
 }
