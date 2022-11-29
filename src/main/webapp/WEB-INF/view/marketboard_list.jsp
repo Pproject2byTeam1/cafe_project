@@ -198,7 +198,7 @@
 						<c:forEach var="list" items="${list}" varStatus="status">
 						<div class="mcard" onclick="location.href='marketboard_read.do?b_code=${list.b_code}&idx=${list.idx}';">
 							<div class="mimg">
-							<img src="image/board/upload/${list.img_name}" id="mimg"/>
+							<img src="image/board/upload/${list.img_name}" id="mimg" onerror="this.onerror=null; this.src='https://via.placeholder.com/500X500?text=No+Image'">
 							</div>
 							<span id="marketB_Text.ns">${list.m_mode} | ${list.sold} | ${list.cate}</span>
 							<p>
@@ -230,7 +230,7 @@
 			
 	               <c:if test="${cpage > 1}">
 	                 <li class="page-item">
-	                   <a class="page-link1" href="marketboard_list.do?b_code=${b_code}&cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+	                   <a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
 	                 </li>
 	                  </c:if>
 	                  	
@@ -240,14 +240,14 @@
 								<li class="page-item"><a class="page-link active" >${i}</a></li>
 						</c:when>
 						<c:otherwise>
-	                 			<li class="page-item"><a class="page-link2" href="marketboard_list.do?b_code=${b_code}&cp=${i}&ps=${pagesize}">${i}</a></li>
+	                 			<li class="page-item"><a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${i}&ps=${pagesize}">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
 	                  </c:forEach>
 	                  
 	                  <c:if test="${cpage < pagecount}">
 	                  	<li class="page-item">
-					<a class="page-link3" href="marketboard_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}">>></a>
+					<a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}">>></a>
 					</li>
 
 				</c:if>

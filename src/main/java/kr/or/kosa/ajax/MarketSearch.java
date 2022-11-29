@@ -19,7 +19,6 @@ import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @WebServlet("/MarketSearch")

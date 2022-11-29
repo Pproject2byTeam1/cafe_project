@@ -33,21 +33,21 @@ import kr.or.kosa.dto.DataBoard;
 			conn = ds.getConnection();
 			String sql = "select * "
 					+ "from (select * "
-						+ "from (select rownum rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.ori_name, d.refer, d.depth, d.step "
+						+ "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, d.ori_name, d.refer, d.depth, d.step "
 							+ "from board b join data_board d "
 							+ "on b.idx = d.idx "
 							+ "where b.b_code = ? "
 							+ "order by refer desc, step asc) "
-						+ "where rownum <= ?) "
-					+ "where rn >= ?";
+						+ "where rn >= ?) "
+					+ "where rn <= ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			int start = cpage * pagesize - (pagesize -1);
 			int end = cpage * pagesize;
 			
 			pstmt.setInt(1, b_code);
-			pstmt.setInt(2, end);
-			pstmt.setInt(3, start);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			
 			rs = pstmt.executeQuery();
 			

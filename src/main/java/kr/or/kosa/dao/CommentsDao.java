@@ -3,6 +3,7 @@ package kr.or.kosa.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,7 +144,7 @@ public class CommentsDao {
 	}
 	
 	//댓글 삭제
-	public int deleteCommentByCo_idx(int co_idx, String email_id) {
+	public int userdeleteCommentByCo_idx(int co_idx, String email_id) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -201,6 +202,68 @@ public class CommentsDao {
 		
 		return row;
 	}
+	
+	
+	//관리자, 스태프 댓글 삭제(댓글수 카운트 안됨)
+	public int deleteCommentByCo_idx(int co_idx, String email_id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int row = 0;
+
+		try {
+
+			String checkadmin = "select isadmin from member where email_id=?";
+			String delAdminComment = "update comments set content = '관리자가 삭제한 댓글입니다.' where co_idx=?";
+			String delStaffComment = "update comments set content = '스탭이 삭제한 댓글입니다.' where co_idx=?";
+
+			conn = ds.getConnection();
+
+			pstmt = conn.prepareStatement(checkadmin);
+			pstmt.setString(1, email_id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				String isadmin = rs.getString("isadmin");
+				System.out.println(isadmin);
+				if (isadmin.equals("M")) {
+					pstmt.close();
+					pstmt = conn.prepareStatement(delAdminComment);
+					pstmt.setInt(1, co_idx);
+					row = pstmt.executeUpdate();
+					System.out.println("관리자 삭제 쿼리");
+				} else if (isadmin.equals("S")) {
+					pstmt.close();
+					pstmt = conn.prepareStatement(delStaffComment);
+					pstmt.setInt(1, co_idx);
+					row = pstmt.executeUpdate();
+					System.out.println("스태프 삭제 쿼리");
+				} else {
+					row = userdeleteCommentByCo_idx(co_idx, email_id);
+					System.out.println("유저본인 삭제 쿼리");
+				}
+			} else { // 삭제하는 글이 존재하지 않는 경우
+				row = -1;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();// 반환
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return row;
+	}
+	
 	
 	
 	//대댓글 삽입
