@@ -584,7 +584,7 @@ public class Board_Dao {
 				}
 				
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println("e: "+e.getMessage());
 			} finally {
 				try {
 					rs.close();

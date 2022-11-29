@@ -412,7 +412,7 @@ public class FrontController extends HttpServlet {
 			action = new MarketBoardEditOkService();
 			forward = action.execute(request, response);
 
-		} else if (urlcommand.equals("/marketboardEditOk.do")) { // 관리자 메인 관리 페이지
+		} else if (urlcommand.equals("/adminmaineditservice.do")) { // 관리자 메인 관리 페이지
 
 			action = new AdminMainEditService();
 			forward = action.execute(request, response);
