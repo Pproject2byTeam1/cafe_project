@@ -102,6 +102,14 @@
 		flex-direction: column;
 	}
 }
+
+.draggable{
+	cursor: move;
+}
+
+.draggable.dragging {
+ 	opacity: 0.5;
+}
 </style>
 
 <script
@@ -161,13 +169,14 @@
 
  		document.addEventListener("drop", (event) => {
  		  	event.preventDefault();
- 		  	console.log("사진 도착");
- 		  	if (event.target.className === "inner") {
+ 		  	
+ 		  	if (event.target.className === "inner") { //배너 이미지
  		  		const files = event.dataTransfer?.files;
  		    	event.target.style.background = "#3a3a3a";
  		    	handleUpdate([...files]);
  		  	}
  		});
+ 		
 
  		function changeEvent(event){
  		  	const { target } = event;
@@ -483,14 +492,19 @@
  			
  			let requestdata1 = {"b_code": $(ch).val()};
  			
- 			cateremove(requestdata1);
+ 			//cateremove(requestdata1);
  		});
  		
  		/* 게시판 추가 삭제 버튼 끝 */
  		
  		/* 게시판 정보 수정 시작 */
  		
- 		function boardinfobyb_code(requestdata2){
+ 		function boardinfobyb_code(divtag){
+ 			
+ 			let children1 = $(divtag).children();
+ 			let ch = $(children1).children().eq(0);
+ 			let requestdata2 = {"b_code": $(ch).val()};
+ 			
  			$.ajax({
  				type: "POST",
  				url: "BoardInfoByB_code",
@@ -498,24 +512,154 @@
  				dataType: "JSON",
  				success: function(data){
  					console.log(data);
+ 					
+ 					let html3 = '<div id="mytag" class="maincard">';
+ 					html3 += '<input type="text" class="form-control" id="catename2" value="' + data.b_name + '" required></input><input id="parkb_code" value="' + data.b_code + '" type="hidden" /><br>';
+ 					if(data.form == "" || data.form == null){
+ 						html3 += '<textarea class="form-control" placeholder="게시글 작성 견본을 작성해보세요" id="addform2" style="height: 100px"></textarea>';
+ 					}else{
+ 						html3 += '<textarea class="form-control" id="addform2" style="height: 100px">' + data.form + '</textarea>';
+ 					}
+ 					
+ 					html3 += '<div align="center" class="col-md-12 mt-2"><button type="submit" id="addviewsave2" class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>';
+ 					html3 += '<button type="button" id="addviewreset2" class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>';
+ 					html3 += '</div></div>';
+ 					
+ 					$(divtag).after(html3);
  				}
  			});
  		};
  		
+ 		function boardinfoupdatebyb_code(requestdata3){
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "UpdateInfoByB_code",
+ 				data: requestdata3,
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					swal(data);
+ 					cateload();
+ 				}
+ 			});
+ 		}
+ 		
  		$(document).on('click', '.moreinfo', function(){
  			
  			let divtag = this.closest(".maincard");
- 			let children1 = $(divtag).children();
- 			let ch = $(children1).children().eq(0);
+ 			boardinfobyb_code(divtag);
  			
- 			let requestdata2 = {"b_code": $(ch).val()};
+ 		});
+ 		
+ 		$(document).on('click', '#addviewreset2', function(){
+ 			$("#mytag").remove();
+ 		});
+ 		
+ 		$(document).on('click', '#addviewsave2', function(){
  			
- 			
+ 			requestdata3 = {"b_name": $("#catename2").val(), "form": $("#addform2").val(), "b_code": $("#parkb_code").val()};
+ 			console.log(requestdata3);
+ 			boardinfoupdatebyb_code(requestdata3)
  			
  		});
  		
  		/* 게시판 정보 수정 끝 */
  		
+ 		/* side_idx 수정 시작 */
+ 		
+ 		const draggables = document.querySelectorAll(".draggable");
+ 		const containers = document.querySelectorAll(".con");
+ 		
+ 		draggables.forEach(draggable => {
+ 			draggable.addEventListener("dragstart", () => {
+ 				draggable.classList.add("dragging");
+ 			});
+
+ 			draggable.addEventListener("dragend", () => {
+ 				draggable.classList.remove("dragging");
+ 			});
+ 		});
+
+ 		containers.forEach(container => {
+ 			container.addEventListener("dragover", e => {
+ 				e.preventDefault();
+ 			    const afterElement = getDragAfterElement(container, e.clientY);
+ 			    const draggable = document.querySelector(".dragging");
+ 			    if (afterElement === undefined) {
+ 			    	container.appendChild(draggable);
+ 			    } else {
+ 			    	container.insertBefore(draggable, afterElement);
+ 			    }
+ 			});
+ 		});
+
+ 		function getDragAfterElement(container, y) {
+ 			const draggableElements = [
+ 				...container.querySelectorAll(".draggable:not(.dragging)"),
+ 			];
+
+ 			return draggableElements.reduce(
+ 				(closest, child) => {
+ 				const box = child.getBoundingClientRect();
+ 			    const offset = y - box.top - box.bottom / 2;
+ 			    
+ 			    if (offset < 0 && offset > closest.offset) {
+ 			    	return { offset: offset, element: child };
+ 			    } else {
+ 			    	return closest;
+ 			    }
+ 			}, { offset: Number.NEGATIVE_INFINITY }, ).element;
+ 		}
+ 		
+ 		function sideuplaod(requestdata4){
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "SideUpload",
+ 				data: requestdata4,
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					swal(data);
+ 					cateload();
+ 				}
+ 			});
+ 		}
+ 		
+ 		document.addEventListener("dragend", (event) => {
+ 		  	event.preventDefault();
+ 		  	
+ 		  	if(event.target.className === "maincard row m-2 draggable"){ //사이드 바
+ 		  		let target = $(event.target);
+ 		  		let children1 = $(target).children();
+ 	 			let ch = $(children1).children().eq(0);
+ 		  		
+ 		  		let supertag = target.closest("#infoboard");
+ 		  		let childtag = $(supertag).children();
+ 		  		
+ 		  		let arr = [];
+ 		  		let num = 0;
+ 		  		$(childtag).each(function(){
+ 		  			
+ 		  			let parkfor = $(this).children();
+ 		  			
+ 		  			$(parkfor).each(function(){
+ 		  				let ch2 = $(this).children().eq(0);
+ 		  				let ch3 = $(ch2).children().eq(0);
+ 		  				let ch4 = $(ch3)[0];
+ 		  				
+ 		  				arr.push($(ch4).val());
+ 		  				
+ 		  				num += 1;
+ 		  				
+ 		  			});
+ 		  			
+ 		  		});
+ 		  		
+ 		  		let requestdata4 = { ...arr, "max": num };
+ 		  		console.log(requestdata4);
+				sideuplaod(requestdata4);
+ 		  	}
+ 		});
+ 		
+ 		/* side_idx 수정 끝 */
  	});
   	
   	
@@ -592,14 +736,16 @@
 						
 						<div id="infoboard" class="maincard">
 							<c:forEach var="infolist" items="${infolist}">
-								<div class="maincard row m-2">
-									<div class="col-md-5 pt-1">
-										<input id="b_code" value="${infolist.b_code}" type="hidden" />
-										<br> <h5>${infolist.b_name}</h5>
-									</div>
-									<div align="right" class="col-md-7 pt-2">
-										<h4><i class="bi bi-trash3 trash"></i></h4>
-										<h4><i class="bi bi-arrow-down-square moreinfo"></i></h4>
+								<div class="con">
+									<div class="maincard row m-2 draggable" draggable="true">
+										<div class="col-md-10 pt-1">
+											<input id="b_code" value="${infolist.b_code}" type="hidden" />
+											<br> <h5>${infolist.b_name}</h5>
+										</div>
+										<div align="right" class="col-md-2 pt-2">
+											<h4><i class="bi bi-trash3 trash"></i></h4>
+											<h4><i class="bi bi-arrow-down-square moreinfo"></i></h4>
+										</div>
 									</div>
 								</div>
 							</c:forEach>
