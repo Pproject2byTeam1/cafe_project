@@ -29,11 +29,7 @@ public class MessageDeleteService implements Action {
 
 			//진짜 삭제처리
 			int row = dao.deleteMessageByIdx(idx); 
-			if(row>0) {
-				System.out.println("삭제 성공"); 
-			}else { 
-				System.out.println("삭제 실패"); 
-			}
+			
 			
 			//다시 리스트 뽑기
 			User user2 = (User) session.getAttribute("member");

@@ -20,7 +20,6 @@ public class BoardContentService implements Action {
 			int b_code = Integer.parseInt((String) request.getParameter("b_code"));
 			String idx= (String) request.getParameter("idx");
 			String w_date = (String) request.getParameter("w_date");
-			//System.out.println(b_code + ", " + idx);
 			
 			Board_Info_Dao binfodao = new Board_Info_Dao();
 			Board_Info board_info = binfodao.getBoardInfo(b_code);
@@ -44,7 +43,6 @@ public class BoardContentService implements Action {
 				url="cafemain.do";
 			}
 			
-			System.out.println("url: "+url);
 			
 		}catch (Exception e) {
 			e.getMessage();

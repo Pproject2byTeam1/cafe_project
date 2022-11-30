@@ -88,7 +88,7 @@ public class RankEditListService implements Action {
 
 		} catch (NamingException e) {
 		
-			System.out.println("Rank 변환1: "+e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	
 		return forward;

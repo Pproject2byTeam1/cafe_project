@@ -40,8 +40,6 @@ public class RegularBoardEditService implements Action {
  			String email_idx = request.getParameter("id");
 
  	
- 			System.out.println(user);
- 			
  			// 로그인 안할경우 로그인 페이지로
 			if (user == null ) {
 

@@ -45,7 +45,6 @@ public class RegularBoardWriteOkService implements Action {
  			String content = request.getParameter("content");
  			
  			
- 			System.out.println(content + "아무말");
  			// 로그인 안하거나 풀렸으면 로그인 페이지로
 			if (user == null) {
 
