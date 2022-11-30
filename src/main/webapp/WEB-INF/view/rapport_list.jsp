@@ -153,13 +153,13 @@
 
 				<div class="col-md-3">
 					<div class="search-bar">
-						<form class="search-form d-flex align-items-center" method="POST"
+						<!-- <form class="search-form d-flex align-items-center" method="POST"
 							action="#">
 							<input type="text" id="searchInput"  name="query" placeholder="Search" class="form-control" title="닉네임을 입력하세요" >
 							<button type="submit" title="" class="btn btn-secondary" id="search">
 								<i class="bi bi-search"></i>
 							</button>
-						</form>
+						</form> -->
 					</div>
 				</div>
 
@@ -176,7 +176,7 @@
 					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 					<!-- Table with hoverable rows -->
 
-					<table class="table table-hover table-sm datatable" id=dataTable1>
+					<table class="table table-hover " id=dataTable1>
 						<tr>
 						
 							<th scope="col">글/댓글</th>
@@ -316,11 +316,6 @@
 	<!-- Template Main JS File -->
 	<script src="assets/js/main.js"></script>
 <script>
-$(function(){
-		$('#dataTable1').DataTable();
-		$('#dataTable2').DataTable();
-		$('#dataTable3').DataTable();
-}	
 
 
 
