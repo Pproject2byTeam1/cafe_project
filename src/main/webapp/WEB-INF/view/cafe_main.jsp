@@ -81,15 +81,10 @@
           <div class="embed-responsive">
             <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X350?text=No+Image'">
           </div>
-            <div class="card-img-overlay">
-              <h5 class="card-title">${banner.cafe_name}</h5>
-              <p class="card-text">
             <c:forEach var="chart" items="${chart}" varStatus="status">
             <input type="text" id = "b_cnt${status.count}" value="${chart.b_code}" hidden="">
             <input type="text" id = "h_cnt${status.count}" value="${chart.c_count}" hidden="">
             </c:forEach>
-              </p>
-            </div>
           
           </div><!-- End Card with an image overlay -->
           
@@ -101,6 +96,7 @@
           <div class="row">
 
             <!-- Card 1 -->
+            <c:if test="${board1 != null}">
             <div class="col-lg-6">
               <div class="card info-card sales-card">
 
@@ -110,23 +106,27 @@
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                    <li><a class="dropdown-item">Today</a><span class="d-none">${board1info.b_code}</span></li>
+                    <li><a class="dropdown-item">This Month</a><span class="d-none">${board1info.b_code}</span></li>
+                    <li><a class="dropdown-item">This Year</a><span class="d-none">${board1info.b_code}</span></li>
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">자유게시판 <span>| 막 글</span></h5>
+                  <h5 class="card-title">${board1info.b_name}<span>| ${board1info.b_type}</span></h5>
 
                     <div class="ps-3">
                       <table class="table table-hover">
                       	<thead>
                       	<tr><th><span class="text-success pt-1 fw-bold">제목</span></th><th><span class="text-success pt-1 fw-bold">작성자</span></th><th><span class="text-success pt-1 fw-bold">작성일자</span></th><th><span class="text-success pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>
-                      	<tbody>
-                      	<c:forEach var="board" items="${regular_list}" varStatus="status">
+                      	<tbody class = board>
+                      	<c:if test="${fn:length(board1) == 0}">
+                      	<tr>
+                      	<td colspan = 4>데이터가 없습니다.</td>
+                      	</tr>
+                      	</c:if>
+                      	<c:forEach var="board" items="${board1}" varStatus="status">
                       	<tr class="listrow">
 		                      	<td class="td1">
 			                      	<span class="d-none b_code">${board.b_code}</span>
@@ -150,11 +150,14 @@
                 </div>
 
               </div>
-            </div><!-- End Card 1 -->
+            </div>
+            </c:if>
+            <!-- End Card 1 -->
 
-            <!-- Revenue Card -->
+            <!-- Card2 -->
+            <c:if test="${board2 != null}">
             <div class="col-lg-6">
-              <div class="card info-card revenue-card">
+              <div class="card info-card sales-card">
 
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -162,23 +165,25 @@
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                    <li><a class="dropdown-item">Today</a><span class="d-none b_code">${board2info.b_code}</span><span class="d-none date">${Beforeday}</span></li>
+                    <li><a class="dropdown-item">This Month</a><span class="d-none b_code">${board2info.b_code}</span><span class="d-none date">${BeforeMonth}</span></li>
+                    <li><a class="dropdown-item">This Year</a><span class="d-none b_code">${board2info.b_code}</span><span class="d-none date">${BeforeYear}</span></li>
                   </ul>
                 </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">정보 게시판 <span>| 정보공유</span></h5>
-
+                  <h5 class="card-title">${board2info.b_name}<span>| ${board2info.b_type}</span></h5>
                     <div class="ps-3">
-                    <table class="table table-hover table-sm">
+                    <table class="table table-hover">
                       	<thead>
                       	<tr><th><span class="text-primary pt-1 fw-bold">제목</span></th><th><span class="text-primary pt-1 fw-bold">작성자</span></th><th><span class="text-primary pt-1 fw-bold">작성일자</span></th><th><span class="text-primary pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>	
-                      	<tbody>
-                      	<c:forEach var="board" items="${data_list}" varStatus="status">
+                      	<tbody class = board>
+                      	<c:if test="${fn:length(board2) == 0}">
+                      	<tr>
+                      	<td colspan = 4>데이터가 없습니다.</td>
+                      	</tr>
+                      	</c:if>
+                      	<c:forEach var="board" items="${board2}" varStatus="status">
                       	<tr class="listrow">
 	                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-primary rounded-pill">${board.c_count}</span></td>
 	                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
@@ -195,83 +200,112 @@
                       </table>
                     </div>
                 </div>
-
               </div>
-            </div><!-- End Revenue Card -->
+            </div>
+            </c:if>
+            <!-- End Card2 -->
 
-            <!-- Customers Card -->
-            <div class="col-xl-12">
-
+            <!-- Card3 -->
+            <c:if test="${board3 != null}">
+            <div class="col-lg-6">
               <div class="card info-card customers-card">
-
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                    <li><a class="dropdown-item">Today</a><span class="d-none">${board3info.b_code}</span></li>
+                    <li><a class="dropdown-item">This Month</a><span class="d-none">${board3info.b_code}</span></li>
+                    <li><a class="dropdown-item">This Year</a><span class="d-none">${board3info.b_code}</span></li>
                   </ul>
                 </div>
-
                 <div class="card-body">
-                  <h5 class="card-title">항목 3 <span>| 소제 3</span></h5>
-
+                  <h5 class="card-title">${board3info.b_name}<span>| ${board3info.b_type}</span></h5>
                     <div class="ps-3">
-                      <table class="table table-hover datatable">
+                      <table class="table table-hover">
                       	<thead>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">#</span></th><th><span class="text-danger pt-1 fw-bold">항목 1</span></th><th><span class="text-danger pt-1 fw-bold">항목 2</span></th><th><span class="text-danger pt-1 fw-bold">항목 3</span></th><th><span class="text-danger pt-1 fw-bold">항목 4</span></th><th><span class="text-danger pt-1 fw-bold">항목 5</span></th><th><span class="text-danger pt-1 fw-bold">항목 6</span></th><th><span class="text-danger pt-1 fw-bold">항목 7</span></th><th><span class="text-danger pt-1 fw-bold">항목 8</span></th><th><span class="text-danger pt-1 fw-bold">항목 9</span></th></tr>
+                      	<tr><th><span class="text-danger pt-1 fw-bold">제목</span></th><th><span class="text-danger pt-1 fw-bold">작성자</span></th><th><span class="text-danger pt-1 fw-bold">작성일자</span></th><th><span class="text-danger pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>
-                      	<tbody>
-                      	<tr><th><span class="text-danger pt-1 fw-bold">1</span></th><td>내ㅐㅐㅐㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내ㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tbody class = board>
+                      	<c:if test="${fn:length(board3) == 0}">
+                      	<tr>
+                      	<td colspan = 4>데이터가 없습니다.</td>
+                      	</tr>
+                      	</c:if>
+                      	<c:forEach var="board" items="${board3}" varStatus="status">
+                      	<tr class="listrow">
+	                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-danger rounded-pill">${board.c_count}</span></td>
+	                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
+	                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+								<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+							</ul>
+	                      	</td>
+	                      	<td class="w_date">${board.w_date}</td>
+	                      	<td>${board.hits}</td>
+		                </tr>
+                      	</c:forEach>
                       	</tbody>
                       </table>
                     </div>
-
                 </div>
               </div>
-
-            </div><!-- End Customers Card -->
+            </div>
+            </c:if>
+            <!-- End Card3 -->
             
-            <!-- Customers Card -->
-            <div class="col-xl-12">
-
+            <!-- Card4 -->
+            <c:if test="${board4 != null}">
+            <div class="col-lg-6">
               <div class="card info-card customers-card">
-
                 <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                    <li><a class="dropdown-item">Today</a><span class="d-none">${board4info.b_code}</span></li>
+                    <li><a class="dropdown-item">This Month</a><span class="d-none">${board4info.b_code}</span></li>
+                    <li><a class="dropdown-item">This Year</a><span class="d-none">${board4info.b_code}</span></li>
                   </ul>
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">항목 3 <span>| 소제 3</span></h5>
+                  <h5 class="card-title">${board4info.b_name}<span>| ${board4info.b_type}</span></h5>
 
                     <div class="ps-3">
-                      <table class="table table-hover datatable">
+                      <table class="table table-hover">
                       	<thead>
-                      	<tr><th><span class="text-warning  pt-1 fw-bold">#</span></th><th><span class="text-warning pt-1 fw-bold">항목 1</span></th><th><span class="text-warning pt-1 fw-bold">항목 2</span></th><th><span class="text-warning pt-1 fw-bold">항목 3</span></th><th><span class="text-warning pt-1 fw-bold">항목 4</span></th><th><span class="text-warning pt-1 fw-bold">항목 5</span></th><th><span class="text-warning pt-1 fw-bold">항목 6</span></th><th><span class="text-warning pt-1 fw-bold">항목 7</span></th><th><span class="text-warning pt-1 fw-bold">항목 8</span></th><th><span class="text-warning pt-1 fw-bold">항목 9</span></th></tr>
+                      	<tr><th><span class="text-warning pt-1 fw-bold">제목</span></th><th><span class="text-warning pt-1 fw-bold">작성자</span></th><th><span class="text-warning pt-1 fw-bold">작성일자</span></th><th><span class="text-warning pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>
-                      	<tbody>
-                      	<tr><th><span class="text-warning  pt-1 fw-bold">1</span></th><td>내ㅐㅐㅐㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td><td>내용</td><td>내ㅐㅐ용</td><td>내용</td><td>내용</td><td>내용</td></tr>
+                      	<tbody class = board>
+                      	<c:if test="${fn:length(board4) == 0}">
+                      	<tr>
+                      	<td colspan = 4>데이터가 없습니다.</td>
+                      	</tr>
+                      	</c:if>
+                      	<c:forEach var="board" items="${board4}" varStatus="status">
+                      	<tr class="listrow">
+	                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-warning rounded-pill">${board.c_count}</span></td>
+	                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
+	                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+								<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+							</ul>
+	                      	</td>
+	                      	<td class="w_date">${board.w_date}</td>
+	                      	<td>${board.hits}</td>
+		                </tr>
+                      	</c:forEach>
                       	</tbody>
                       </table>
                     </div>
-
                 </div>
               </div>
-
-            </div><!-- End Customers Card -->
+            </div>
+            </c:if>
+            <!-- End Card4 -->
 
             <!-- Reports -->
             <div class="col-12">
@@ -291,6 +325,9 @@
                 </div> -->
                 <div class="card-body">
                   <h5 class="card-title">Text Rank <span>/This Month</span></h5>
+                  <c:if test="${fn:length(rankchart) == null}">
+                  데이터가 없습니다
+                  </c:if>
                   <c:forEach var="chart" items="${rankchart}" varStatus="status">
                   <hr>
                   <div class="d-flex align-items-center  revenue-card">
@@ -385,6 +422,11 @@
                       </tr>
                     </thead>
                     <tbody>
+                    <c:if test="${fn:length(market_list)==0}">
+                    <tr>
+                    <td colspan="7">데이터가 없습니다.</td>
+                    </tr>
+                    </c:if>
                     <c:forEach var="board" items="${market_list}" varStatus="status">
                       <tr class="listrow">
                         <th>${board.sold}</th>
@@ -492,6 +534,23 @@
 					  event.preventDefault();
 				  }
 			  },true);
+	  		$('.dropdown-item').click(function(){
+	  			const b_code = $(this).parents().children('.b_code').text();
+	  			const date = $(this).parents().children('.date').text();
+	  			$.ajax({
+	  				url:"getBoardList",
+	  				data:{
+	  					"b_code": b_code,
+	  					"date":date},
+	  				type: "POST",
+	  				dataType:"json",
+	  				success: function(responseText){
+	  					console.log(responseText);
+	  					
+	  					//$(this).parents().parents().parents().children('.card-body').children('.ps-3').children('.table').children('.board').append(html);
+	  				}
+	  			})
+	  		});
   	});
 	</script>
 

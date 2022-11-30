@@ -213,12 +213,7 @@
 				loginForm.password.focus();
 			     return false;
 			 }
-			Swal.fire({
-				title:"성공!",
-				text: "로그인 완료",
-				type:"success"}).then(function(){
-				document.loginForm.submit();
-			});
+			document.loginForm.submit();
 			
 		}
 </script>
