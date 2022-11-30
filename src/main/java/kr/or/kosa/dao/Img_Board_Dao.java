@@ -232,11 +232,6 @@ public class Img_Board_Dao {
 			pstmt2.setString(1, img_board.getEmail_id());
 			row = pstmt2.executeUpdate();
 			
-			String sql3 = "update member set point = nvl(point + 10, 0) where email_id=?";
-			pstmt3 = conn.prepareStatement(sql3);
-			pstmt3.setString(1, img_board.getEmail_id());
-			row = pstmt3.executeUpdate();
-			
 			//해당 유저의 포인트 조회
 			String sql4 = "select point from member where email_id = ?";
 			pstmt4 = conn.prepareStatement(sql4);
@@ -248,6 +243,14 @@ public class Img_Board_Dao {
 			if(rs.next()) {
 				point = rs.getInt("point");
 			}
+			
+			point += 10;
+			
+			//해당 유저 포인트 적립
+			String sql3 = "update member set point = nvl(point + 10, 0) where email_id=?";
+			pstmt3 = conn.prepareStatement(sql3);
+			pstmt3.setString(1, img_board.getEmail_id());
+			row = pstmt3.executeUpdate();
 			
 			//포인트 정보 가져오기
 			String sql5 = "select r_point from rank where rank >= 1";
@@ -271,6 +274,7 @@ public class Img_Board_Dao {
 				}
 			}
 			
+			//해당 회원의 rank 수정
 			String sql6 = "update member set rank = ? where email_id = ?";
 			pstmt6 = conn.prepareStatement(sql6);
 			pstmt6.setInt(1, rank);
