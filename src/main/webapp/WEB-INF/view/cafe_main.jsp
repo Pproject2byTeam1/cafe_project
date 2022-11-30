@@ -285,8 +285,8 @@
                   <h5 class="card-title">Reports <span>/Today</span></h5>
                   
                   <div class="d-flex align-items-center  revenue-card">
-					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="ri-thumb-up-line"></i>
+					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color: #ffbd1b; background: #ffe8ba">
+                      <i class="ri-trophy-line"></i>
                     </div>
                     <div class="ps-3">
                     <h3 class="pt-1 fw-bold">Best Text</h3>
@@ -303,9 +303,10 @@
                     </div>
                   </div>
                   <hr>
+                  
                   <div class="d-flex align-items-center sales-card">
-					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="ri-thumb-up-line"></i>
+					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center"style="color: #c0c0c0">
+                      <i class="ri-trophy-line"></i>
                     </div>
                     <div class="ps-3">
                     <h3 class="pt-1 fw-bold">Another Text</h3>
@@ -315,6 +316,26 @@
                     </div>
                     <div class="ps-3">
                     <a data-bs-toggle="dropdown"><img src="image/rank_icon/4.gif" alt="아이콘">dddr2</a><span> | 2021-09-27</span>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
+						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
+					</ul>
+                    </div>
+                  </div>
+                  <hr>
+                  
+                  <div class="d-flex align-items-center  revenue-card">
+					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color: #cd7f32; background: #f5d3b9">
+                      <i class="ri-trophy-line"></i>
+                    </div>
+                    <div class="ps-3">
+                    <h3 class="pt-1 fw-bold">Best Text</h3>
+                    </div>
+                    <div class="ps-3">
+                    <h5 class="card-title">글 제목</h5>
+                    </div>
+                    <div class="ps-3">
+                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">ddd</a><span> | 2022-03-25</span>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
 						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
@@ -535,7 +556,7 @@
           colors: ['transparent']
         },
         xaxis: {
-          categories: ['자유', '출석체크', '전체일정', '사진공유', '유료 거래', '자료 공유'],
+          categories: ['자유', '출석체크', '사진', '자료', '유료 거래', '일정관리'],
         },
         yaxis: {
           title: {
