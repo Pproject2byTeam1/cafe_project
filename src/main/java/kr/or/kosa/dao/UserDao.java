@@ -37,8 +37,8 @@ public class UserDao {
 					+ "(select rownum rn, m.rank, m.email_id, m.nick, m.name, u.phone, to_char(u.year_birth, 'yyMMdd') as year_birth, m.isadmin "
 					+ "from member m join user_details u "
 					+ "on m.email_id = u.email_id "
-					+ "where not m.email_id ='admin@admin' "
-					+ "order by email_id) where rn <= ? and rn >= ?";
+					+ "where not m.isadmin ='M' "
+					+ "order by isadmin) where rn <= ? and rn >= ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
