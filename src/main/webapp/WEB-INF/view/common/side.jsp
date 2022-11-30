@@ -24,9 +24,20 @@
 							<span>글 ${member.w_count}개 | 댓글 ${member.re_count}개 </span><br>
 							<span>&ensp;&ensp;&ensp; ${member.point}&nbsp;POINT</span><br> 
 							<a href="user_activity.do">활동 내역</a> | 
-							<a href="memo_list.do">쪽지함</a>
+							<a href="memo_list.do">쪽지함</a>	<br>
+							
 						</div>
 					</div>
+					<c:if test="${member.isAdmin == 'M'}">
+						<div class="card justify-content-center">
+							<div class="card-body mt-4 ms-3 ps-4">
+								
+								
+								<a href="adminmaineditservice.do">카페 관리</a> | 
+								<a href="chart.do">통계</a>
+							</div>
+						</div>
+					 </c:if>
 				</div>
 			</div>
 		</c:if>
@@ -50,14 +61,14 @@
 
 			<!-- 프로필 시작-->
 		
-		<a class="card-title">카페 정보</a>
-			<div class="card-body ms-3">
+			<a class="card-title">카페 정보</a>
+				<div class="card-body ms-3">
 				<a class="card-title">관리자 
 					<span>| <img src="image/rank_icon/${member.rank}.gif" alt="Profile"> 관리자 </span>
 				</a><br> 
 				<a class="card-title">회원수<span> | 00 명 | <a href="user-grade.html">등급안내</a></span></a><br>
 				<c:if test="${member.isAdmin == 'M'}">
-				<a href="adminmain_edit.jsp" class="card-title">카페 관리<span></span></a>
+				<a href="adminmaineditservice.do" class="card-title">카페 관리<span></span></a>
 				</c:if>
 			</div>
 		

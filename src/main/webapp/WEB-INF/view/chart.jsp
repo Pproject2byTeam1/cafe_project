@@ -47,7 +47,6 @@
   <script type="text/javascript">
 		$(document).ready(function(){
 			allBoardTopView();
-			selectBoard();
 			boardUtilizationRate();
 			boardCount();
 			monthBoardWrite();
@@ -59,7 +58,7 @@
 			
 			
 			
-			/* 기간별 게시판 조회수 */
+			/* 게시판별 조회수 */
 			
 			let BC_bname = []; 
 			let BC_hitcount = [];
@@ -106,7 +105,7 @@
   					}
  				});
 			}
-			/* 기간별 게시판 조회수 종료 */
+			/* 게시판별 조회수 종료 */
 			
 			
 			
@@ -117,6 +116,7 @@
 			let Bname = [];
 			
 			$("#BURstartDate").change(boardUtilizationRate);
+			$("#BURendDate").change(boardUtilizationRate);
 			
 						/* 함수시작 */
 			function boardUtilizationRate(){
@@ -172,93 +172,6 @@
 			/* 기간별 게시판 조회수 종료 */
 			
 			
-			
-			
-			/* 기간별 글 종류별 글 생성, 조회수  */
-			let RPrankpoint = []; 
-			let RPtitle = [];
-			
-			$("#RankPointSelect").change(selectBoard);
-			
-			function selectBoard(){
-				$("#columnChart").empty();
-				
-				let startDate = $("#startDate").val();
-				let endDate = $("#endDate").val();
-				let RPnum = $('#RankPointSelect').val();
-				
-				
-				const RPnumber = {"startDate": startDate, "endDate": endDate, "number": RPnum, "chart": "rankpointselect"};
-				
-				$.ajax({
-  					type: "POST",	
-  					url: "ChartList",
-  					data: RPnumber,
-  					dataType: "JSON",
-  					success: function(data){
-  							
-  						splicetResult = RPrankpoint.splice(0);
-  						splicetResult = RPtitle.splice(0);
-  						
-  						$(data).each(function(){
-  							RPrankpoint.push(this.rankpoint);
-							RPtitle.push(this.title);
-  						});
-  					
-  						
-  						new ApexCharts(document.querySelector("#columnChart"), {
-  		                    series: [{
-  		                      name: 'Net Profit',
-  		                      data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-  		                    }, {
-  		                      name: 'Revenue',
-  		                      data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-  		                    }, {
-  		                      name: 'Free Cash Flow',
-  		                      data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-  		                    }],
-  		                    chart: {
-  		                      type: 'bar',
-  		                      height: 350
-  		                    },
-  		                    plotOptions: {
-  		                      bar: {
-  		                        horizontal: false,
-  		                        columnWidth: '55%',
-  		                        endingShape: 'rounded'
-  		                      },
-  		                    },
-  		                    dataLabels: {
-  		                      enabled: false
-  		                    },
-  		                    stroke: {
-  		                      show: true,
-  		                      width: 2,
-  		                      colors: ['transparent']
-  		                    },
-  		                    xaxis: {
-  		                      categories: ['ㅁㅁㅁㅁㅁㅁㅁㅁㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-  		                    },
-  		                    yaxis: {
-  		                      title: {
-  		                        text: 'rankpoint'
-  		                      }
-  		                    },
-  		                    fill: {
-  		                      opacity: 1
-  		                    },
-  		                    tooltip: {
-  		                      y: {
-  		                        formatter: function(val) {
-  		                          return " " + val + " point"
-  		                        }
-  		                      }
-  		                    }
-  		                  }).render();
-					}
- 				});
-			}
-				
 				
 		
 			/* 게시판별 월별 글수 TOP */
@@ -441,37 +354,7 @@
     <section class="section">
       <div class="row">
 
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="col-md-12">
-         			<h5 class="card-title">RankPoint TOP</h5>
-         		</div>
-         			<div class="row">
-         				<div class="col-md-5 d-flex justify-content-end align-items-center">
-         					<input type="date" id="startDate" class="form-control" value="2022-11-01" />
-         				</div>
-         				<div class="col-md-5 d-flex justify-content-end align-items-center">
-         					<input type="date" id="endDate" class="form-control" value="2022-12-01" />
-         				</div>
-	            		<div class="col-md-2 d-flex justify-content-end align-items-center">
-	            			<select name="number" id="RankPointSelect" class="form-select">
-								<option value=5>5개</option>
-								<option value=10>10개</option>
-								<option value=15>15개</option>
-								<option value=20>20개</option>
-							</select>
-	            		</div>
-            		
-            		</div>
-
-              <!-- Column Chart -->
-              <div id="columnChart"></div>
-              <!-- End Column Chart -->
-
-            </div>
-          </div>
-        </div>
+        
 
         <div class="col-lg-12">
           <div class="card">
@@ -500,6 +383,33 @@
           </div>
         </div>
 
+      
+      	<div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+            		<div class="col-md-7">
+            			<h5 class="card-title">게시판별 월별 글수</h5>
+            		</div>
+            		<div class="col-md-5 d-flex justify-content-end align-items-center">
+            			<select id="MBWmonth" class="form-select">
+            				<c:forEach var="boardlist" items="${boardlist}">
+            					<option value="${boardlist.b_code}">${boardlist.b_name}</option>
+            				</c:forEach>
+						</select>
+            		</div>
+            		
+            	</div>
+
+              <!-- Line Chart -->
+              <div id="monthBoardWrite"></div>
+              <!-- End Line Chart -->
+
+            </div>
+          </div>
+        </div>
+      
+      
       
 
         <div class="col-lg-6">
@@ -544,32 +454,7 @@
         </div>
         
         
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-            		<div class="col-md-7">
-            			<h5 class="card-title">게시판별 월별 글수</h5>
-            		</div>
-            		<div class="col-md-5 d-flex justify-content-end align-items-center">
-            			<select id="MBWmonth" class="form-select">
-            				<c:forEach var="boardlist" items="${boardlist}">
-            					<option value="${boardlist.b_code}">${boardlist.b_name}</option>
-            				</c:forEach>
-						</select>
-            		</div>
-            		
-            	</div>
-
-              <!-- Line Chart -->
-              <div id="monthBoardWrite"></div>
-
-              
-              <!-- End Line Chart -->
-
-            </div>
-          </div>
-        </div>
+        
 
        
        
