@@ -512,10 +512,27 @@
  				data: requestdata2,
  				dataType: "JSON",
  				success: function(data){
- 					console.log(data);
  					
  					let html3 = '<div id="mytag" class="maincard">';
  					html3 += '<input type="text" class="form-control" id="catename2" value="' + data.b_name + '" required></input><input id="parkb_code" value="' + data.b_code + '" type="hidden" /><br>';
+ 					html3 += '쓰기 등급 제한 선택<select id="addviewswriteselect" class="form-select" aria-label="Default select example">';
+ 						for(let j=0; j<data.ranklist.length; j++){
+ 							if(data.rank.w_rank == data.ranklist[j].rank){
+ 								html3 += '<option value="' + data.ranklist[j].rank + '" selected>' + data.ranklist[j].rank + '. ' + data.ranklist[j].r_name + '</option>';
+ 							}else{
+ 								html3 += '<option value="' + data.ranklist[j].rank + '">' + data.ranklist[j].rank + '. ' + data.ranklist[j].r_name + '</option>';
+ 							}
+ 						}
+ 					html3 += '</select><br>';
+ 					html3 += '읽기 등급 제한 선택<select id="addviewsreadselect" class="form-select" aria-label="Default select example">';
+						for(let k=0; k<data.ranklist.length; k++){
+							if(data.rank.re_rank == data.ranklist[k].rank){
+								html3 += '<option value="' + data.ranklist[k].rank + '" selected>' + data.ranklist[k].rank + '. ' + data.ranklist[k].r_name + '</option>';
+							}else{
+								html3 += '<option value="' + data.ranklist[k].rank + '">' + data.ranklist[k].rank + '. ' + data.ranklist[k].r_name + '</option>';
+							}
+ 						}
+					html3 += '</select><br>';
  					if(data.form == "" || data.form == null){
  						html3 += '<textarea class="form-control" placeholder="게시글 작성 견본을 작성해보세요" id="addform2" style="height: 100px"></textarea>';
  					}else{
@@ -557,7 +574,13 @@
  		
  		$(document).on('click', '#addviewsave2', function(){
  			
- 			requestdata3 = {"b_name": $("#catename2").val(), "form": $("#addform2").val(), "b_code": $("#parkb_code").val()};
+ 			requestdata3 = {
+ 					"b_name": $("#catename2").val(), 
+ 					"form": $("#addform2").val(), 
+ 					"b_code": $("#parkb_code").val(),
+ 					"w_rank": $("#addviewswriteselect option:selected").val(),
+ 					"re_rank": $("#addviewsreadselect option:selected").val()
+ 			};
  			console.log(requestdata3);
  			boardinfoupdatebyb_code(requestdata3)
  			

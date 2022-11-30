@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Board_Rank;
 
 //게시판 종류
 public class Board_Info_Dao {
@@ -114,44 +115,75 @@ public class Board_Info_Dao {
 		return board_info;
 	}
 	
-	//게시판 종류 수정
-	public int updateBoardInfo(Board_Info info) {
+	// 게시판 종류 수정 
+	public int updateBoardInfo(Board_Info info, Board_Rank rank) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		int row = 0;
-		
+
 		try {
-			
+
 			conn = ds.getConnection();
-			
-			if(info.getForm() == null) {
+			conn.setAutoCommit(false); //커밋 꺼줌
+
+			if (info.getForm() == null || info.getForm() == "!") {
 				String sql = "update board_info set b_name=? where b_code=?";
 				pstmt = conn.prepareStatement(sql);
-				
+
 				pstmt.setString(1, info.getB_name());
 				pstmt.setInt(2, info.getB_code());
-			}else {
+				
+				row = pstmt.executeUpdate();
+			} else {
 				String sql = "update board_info set b_name=?, form=? where b_code=?";
 				pstmt = conn.prepareStatement(sql);
-				
+
 				pstmt.setString(1, info.getB_name());
 				pstmt.setString(2, info.getForm());
 				pstmt.setInt(3, info.getB_code());
+				
+				row = pstmt.executeUpdate();
 			}
 			
-			row = pstmt.executeUpdate();
+			if(row < 0) {
+	             throw new Exception("수정 실패");
+	        }
 			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			String sql2 = "update board_rank set w_rank=?, re_rank=? where b_code=?";
+			pstmt2 = conn.prepareStatement(sql2);
+
+			pstmt2.setInt(1, rank.getW_rank());
+			pstmt2.setInt(2, rank.getRe_rank());
+			pstmt2.setInt(3, rank.getB_code());
+
+			row = pstmt2.executeUpdate();
+			
+			if(row < 0) {
+	             throw new Exception("유저 글 업데이트 실패");
+	        } else {
+	        	conn.commit();
+	        }
+
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
 				pstmt.close();
+				pstmt2.close();
 				conn.close();
 			} catch (Exception e2) {
 				System.out.println(e2.getMessage());
 			}
 		}
-		
+
 		return row;
 	}
 	
@@ -313,8 +345,12 @@ public class Board_Info_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "insert into board_info(b_code, b_name, side_idx, b_type, form) "
-						+ "values(boardinfo_idx_seq.nextval, ?, boardinfo_idx_seq.currval, ?, ?)";
+			String sql  = "INSERT ALL "
+							+ "into board_info(b_code, b_name, side_idx, b_type, form) "
+							+ "values(boardinfo_idx_seq.nextval, ?, boardinfo_idx_seq.currval, ?, ?) "
+							+ "into board_rank(b_code, w_rank, re_rank) "
+							+ "values (boardinfo_idx_seq.currval, 1, 1) "
+							+ "SELECT * FROM DUAL";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, info.getB_name());
 			pstmt.setString(2, info.getB_type());
