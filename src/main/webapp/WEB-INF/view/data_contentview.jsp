@@ -67,11 +67,9 @@
 
         /* 게시물 좋아요 비동기 처리 */
          $("#yesbtn").click(function(){
-              
+        	 
             
-              console.log("hahaha");
-              console.log(email_id);
-              console.log("sdfs" + yespark);
+            
               
               if(yespark == "no"){
                  
@@ -416,22 +414,19 @@
 												value="${fn:toLowerCase(originalfilename)}" />
 											<c:forTokens var="file" items="${lowerfilename}" delims="."
 												varStatus="status">
-												<c:if test="${status.last}">
+												<c:if test="${status.last && members!=null}">    	
 													<c:choose>
 														<c:when
 															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
-															<button type="button" onclick="location.href='image/board/${originalfilename}'" target="_blank"
+															<button type="button" onclick="location.href='upload/${originalfilename}'" target="_blank"
 																class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
-															<button type="button" onclick="location.href='filedownload.board?file_name=${originalfilename}'" id="download"
-																class="btn btn-secondary rounded-pill" id="preview">다운로드</button>
-															<a
-																href="filedownload.board?file_name=${originalfilename}"
-																id="download">다운로드</a>
+															<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
+																class="btn btn-secondary rounded-pill" >다운로드</button>
+															
 														</c:when>
 														<c:otherwise>
-															<a
-																href="filedownload.board?file_name=${originalfilename}"
-																id="download">${originalfilename}</a>
+														<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
+																class="btn btn-secondary rounded-pill" >${board.ori_name} 다운로드</button>
 														</c:otherwise>
 													</c:choose>
 												</c:if>
@@ -451,8 +446,10 @@
 										<hr>
 								
 									    <div class="d-flex justify-content-end">
-									    <div align="left"> <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
-	                                 
+									    <div align="left"> 
+										<c:if test="${member != null}">
+									    <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
+	                                  	</c:if>
                                     	<div>
                                     			
                                     		<c:if test="${member != null}">

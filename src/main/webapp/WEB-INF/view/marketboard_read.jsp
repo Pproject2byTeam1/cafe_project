@@ -403,7 +403,9 @@
 										<hr>
 										<div align="right" class="col-md-12">
 											<div>
-											<input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> 
+										<c:if test="${member != null}">
+									    <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
+	                                  	</c:if>
 												<button type="button" id="Write" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">글쓰기</button>
 												<!-- 본인확인 -->

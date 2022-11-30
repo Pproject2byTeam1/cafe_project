@@ -119,12 +119,12 @@
 		</header>
 
 		<div class="pagetitle">
-			<h1>IMG BOARD</h1>
+			<h1>이미지 게시판</h1>
 			<!-- 게시판 이름 끌고오기 b_name -->
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
-					<li class="breadcrumb-item active">IMG BOARD</li>
+					<li class="breadcrumb-item active">이미지 게시판</li>
 				</ol>
 			</nav>
 		</div>

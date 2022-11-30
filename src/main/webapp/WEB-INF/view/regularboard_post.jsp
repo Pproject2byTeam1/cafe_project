@@ -406,7 +406,11 @@
                               <br>
                               <hr>
                                     <div class="d-flex justify-content-end">
-                                      <div align="left"> <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
+                                      <div align="left">
+                                      <c:if test="${member != null}">
+									    <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
+	                                  	</c:if> 
+	                                  	</div>&nbsp;
                                     	<div>
                                     		<c:if test="${member != null}">
 	                                          <c:if test="${yespark == 'no'}">

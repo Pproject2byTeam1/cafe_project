@@ -54,7 +54,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Admin</h1>
+      <h1>${user.nick}님 마이페이지</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -79,9 +79,7 @@
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#bordered-profile">수정하기</button>
                 </li>
-                <li class="nav-item">
-                  <button class="nav-link"data-bs-toggle="tab" data-bs-target="#bordered-contact">?</button>
-                </li>
+                
               </ul>
               
               <div class="tab-content pt-2" id="borderedTabContent">

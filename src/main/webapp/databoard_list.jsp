@@ -99,7 +99,7 @@ text-align: center;
 	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
    <!-- ======= Header ======= -->
    <header id="header" class="header fixed-top d-flex align-items-center">
-		<jsp:include page="/common/side2.jsp"></jsp:include>
+		<%-- <jsp:include page="/common/side2.jsp"></jsp:include> --%>
       <jsp:include page="/common/top.jsp"></jsp:include>
 
    </header>

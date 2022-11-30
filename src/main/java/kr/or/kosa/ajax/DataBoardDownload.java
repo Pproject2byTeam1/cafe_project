@@ -2,7 +2,6 @@ package kr.or.kosa.ajax;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -11,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.or.kosa.dao.Calender_Dao;
-import kr.or.kosa.dto.Calender;
+import kr.or.kosa.dao.DataBoardDao;
 
 @WebServlet("/filedownload.board")
 public class DataBoardDownload extends HttpServlet {
@@ -25,13 +23,14 @@ public class DataBoardDownload extends HttpServlet {
 private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
 	
+
 	//다운로드할 파일명 얻기
     String filename = request.getParameter("ori_name");
     
-    //System.out.println(filename);
+    System.out.println(filename);
     
     //물리적 경로 얻기
-    String savepath = "image/board/";
+    String savepath = "upload/";
 	String downloadpath = request.getSession().getServletContext().getRealPath(savepath);
     String FilePath = downloadpath + "\\" + filename;
     
