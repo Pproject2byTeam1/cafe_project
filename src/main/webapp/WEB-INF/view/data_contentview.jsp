@@ -56,7 +56,7 @@
 	$(function(){
 		
 		let email_id = '<c:out value="${member.email_id}" />';
-        let yespark = '<c:out value="${yesark}" />';
+        let yespark = '<c:out value="${yespark}" />';
         let idx = '<c:out value="${board.idx}" />';
         let b_code = '<c:out value="${b_code}" />';
         let depth = '<c:out value="${board.depth}" />';
