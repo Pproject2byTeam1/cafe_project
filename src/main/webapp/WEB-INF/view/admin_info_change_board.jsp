@@ -35,6 +35,10 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- 경고창 이쁜거 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -54,7 +58,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Admin</h1>
+      <h1>${user.nick}님 마이페이지</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -79,9 +83,7 @@
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#bordered-profile">수정하기</button>
                 </li>
-                <li class="nav-item">
-                  <button class="nav-link"data-bs-toggle="tab" data-bs-target="#bordered-contact">?</button>
-                </li>
+                
               </ul>
               
               <div class="tab-content pt-2" id="borderedTabContent">
@@ -132,7 +134,7 @@
               </div>
               
               <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
-	            <form action="adminUpdate.do" method="post">
+	            <form action="adminUpdate.do" method="post" name="adminchange">
 	                <div class="row mb-3">
 	                  <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
 	                  <div class="col-sm-9">
@@ -194,7 +196,7 @@
                     </div>
                     
 		              <div  class="text-lg-end">
-		              	<button type="submit" class="btn btn btn-primary" id="updateinfo" disabled>등록</button>
+		              	<button type="button" class="btn btn btn-primary" id="updateinfo">등록</button>
 		              	<button type="reset" class="btn btn btn-danger">취소</button>
 		              </div>
 	              </form><!-- End Profile Edit Form -->
@@ -292,7 +294,63 @@
 				$("#updateinfo").removeAttr("disabled");
 			}
 		})
+		function check() {
+			if (!bbs.content.value || bbs.content.value == "") {
+				Swal.fire("경고","내용을 입력하세요","warning");
+				loginForm.email_id.focus();
+				return false;
+			}
+			document.bbs.submit();
+		}
 		
+		$("#updateinfo").click(function(){
+	 		  check();
+	 	  });
+     
+		function check() {
+			if (!adminchange.name.value) {
+				Swal.fire("경고","이름을 입력하세요","warning");
+				loginForm.name.focus();
+				return false;
+			}
+			if(!adminchange.password.value){
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
+				loginForm.password.focus();
+			     return false;
+			 }
+			if(!adminchange.newpassword.value){
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
+				loginForm.newpassword.focus();
+			     return false;
+			 }
+			if(!adminchange.renewpassword.value){
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
+				loginForm.renewpassword.focus();
+			     return false;
+			 }
+			if(!adminchange.nickname.value){
+				Swal.fire("경고","닉네임을 입력하세요","warning");
+				loginForm.nickname.focus();
+			     return false;
+			 }
+			if(!adminchange.date.value){
+				Swal.fire("경고","생년월일을 입력하세요","warning");
+				loginForm.date.focus();
+			     return false;
+			 }
+			if(!adminchange.tel.value){
+				Swal.fire("경고","전화번호를 입력하세요","warning");
+				loginForm.tel.focus();
+			     return false;
+			 }
+			Swal.fire({
+				title:"성공!",
+				text: "수정 성공",
+				type:"success"}).then(function(){
+				document.loginForm.submit();
+			});
+			
+		}
 	});
   </script>
 

@@ -30,14 +30,15 @@ public class BoardContentService implements Action {
 					url="regular_post.do?idx="+idx+"&b_code"+ b_code;
 				}else if(b_type.equals("b2")) {//출석체크
 					url="checkBoard.do?inputdate="+w_date+"&b_code"+ b_code;
-				}else if(b_type.equals("b3")) {//전체일정
-					url="calendar_list.do?idx="+idx+"&b_code"+ b_code;
-				}else if(b_type.equals("b4")) {//사진공유
+				}else if(b_type.equals("b3")) {//사진공유
 					url="img_board_read.do?idx="+idx+"&b_code"+ b_code;
+				}else if(b_type.equals("b4")) {//자료 공유
+					url="databoard_read.do?idx="+idx+"&b_code"+ b_code+"&cp=1&ps=5";
 				}else if(b_type.equals("b5")) {//유료 거래
 					url="marketboard_read.do?idx="+idx+"&b_code"+ b_code+"&cp=1";
-				}else if(b_type.equals("b6")) {//자료 공유
-					url="databoard_read.do?idx="+idx+"&b_code"+ b_code+"&cp=1&ps=5";
+				}else if(b_type.equals("b6")) {//전체일정
+					url="calendar_list.do?idx="+idx+"&b_code"+ b_code;
+					
 				}
 			}else {
 				url="cafemain.do";

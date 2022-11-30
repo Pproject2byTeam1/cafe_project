@@ -51,6 +51,7 @@ public class MessageWriteService implements Action {
 				url = "/WEB-INF/view/memo_write.jsp";
 				
 				request.setAttribute("userId", userId);
+				request.setAttribute("member", user2);
 				request.setAttribute("responde_Id", responde_Id);
 			}
 			

@@ -49,11 +49,13 @@ public class ChartService implements Action {
 		            url="/WEB-INF/view/redirect.jsp";
 		            
 			} else { 
+	
+				Board_Info_Dao dao = new Board_Info_Dao();
 				
+				List<Board_Info> boardlist = dao.getSideBoardList();
+				request.setAttribute("boardlist", boardlist);
 				
 				url = "/WEB-INF/view/chart.jsp";
-				
-				
 			}
 			
 			forward = new ActionForward();

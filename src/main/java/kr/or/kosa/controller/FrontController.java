@@ -15,6 +15,7 @@ import kr.or.kosa.service.AdminMainEditService;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.CafeMain;
 import kr.or.kosa.service.Calender_Board_List_Service;
+import kr.or.kosa.service.ChartService;
 import kr.or.kosa.service.CheckBoardService;
 import kr.or.kosa.service.DataBoardEditOkService;
 import kr.or.kosa.service.DataBoardEditService;
@@ -43,13 +44,11 @@ import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MarketBoardWriteService;
 import kr.or.kosa.service.MarketBoardWriteViewService;
-import kr.or.kosa.service.ChartService;
 import kr.or.kosa.service.MessageDeleteService;
 import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
-import kr.or.kosa.service.RankChangeService;
-import kr.or.kosa.service.RankUpdateService;
+import kr.or.kosa.service.RankEditListService;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.RegularBoardDeleteService;
 import kr.or.kosa.service.RegularBoardEditOkService;
@@ -63,6 +62,7 @@ import kr.or.kosa.service.ReplyDataWriteViewService;
 import kr.or.kosa.service.ReplyRegularWriteService;
 import kr.or.kosa.service.ReplyRegularWriteViewService;
 import kr.or.kosa.service.SnsCheckService;
+import kr.or.kosa.service.UpdatePwdService;
 import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserDeleteService;
 import kr.or.kosa.service.UserInfoService;
@@ -73,6 +73,7 @@ import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
 import kr.or.kosa.service.adminInfoService;
 import kr.or.kosa.service.adminUpdateService;
+import kr.or.kosa.service.idVerification;
 import kr.or.kosa.service.nickVerification;
 import kr.or.kosa.service.userVerification;
 
@@ -345,6 +346,7 @@ public class FrontController extends HttpServlet {
 		} else if (urlcommand.equals("/databoard_edit.do")) { // 자료 게시판 수정
 
 			action = new DataBoardEditService();
+			
 			forward = action.execute(request, response);
 
 		} else if (urlcommand.equals("/databoard_editok.do")) { // 자료 게시판 수정
@@ -389,12 +391,7 @@ public class FrontController extends HttpServlet {
 
 		} else if (urlcommand.equals("/rankedit.do")) { // 랭크변환리스트
 
-			action = new RankChangeService();
-			forward = action.execute(request, response);
-
-		} else if (urlcommand.equals("/rankupdate.do")) { // 랭크추가하기
-
-			action = new RankUpdateService();
+			action = new RankEditListService();
 			forward = action.execute(request, response);
 
 		} else if (urlcommand.equals("/cafemain.do")) { // 카페 메인 화면
@@ -422,8 +419,18 @@ public class FrontController extends HttpServlet {
 			action = new ChartService();
 			forward = action.execute(request, response);
 
-		}  
+		}  else if (urlcommand.equals("/userUpdatePwd.do")) { // 사용자 비밀번호 변경
 
+			action = new UpdatePwdService();
+			forward = action.execute(request, response);
+
+		}  else if (urlcommand.equals("/idVerification.do")) { // 아이디 검증
+
+			action = new idVerification();
+			forward = action.execute(request, response);
+
+		}  
+		
 		if (forward != null) {
 			if (forward.isRedirect()) { // true 페이지 재 요청 (location.href="페이지"
 				response.sendRedirect(forward.getPath());

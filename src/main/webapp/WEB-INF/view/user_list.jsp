@@ -50,18 +50,14 @@
 <body>
 
    <!-- ======= Header ======= -->
-   <header id="header" class="header fixed-top d-flex align-items-center">
+     <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
+     
+     <!-- ======= Sidebar ======= -->
+     <c:import url="/WEB-INF/view/common/side.jsp" />
+     <!-- End Sidebar -->
 
-      <jsp:include page="/common/top.jsp"></jsp:include>
-
-   </header>
-   <!-- End Header -->
-
-   <!-- ======= Sidebar ======= -->
-
-   <jsp:include page="/common/side2.jsp"></jsp:include>
-
-   <!-- End Sidebar -->
 
 	<main id="main" class="main">
 		<div class="pagetitle">

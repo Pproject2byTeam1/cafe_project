@@ -37,6 +37,10 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- 경고창 이쁜거 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -54,7 +58,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>User</h1>
+      <h1>${user.nick}님 마이페이지</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -173,7 +177,7 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form action="userupdate.do" method="post">
+                  <form action="userupdate.do" method="post" name="userform">
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">닉네임</label>
@@ -192,7 +196,7 @@
                     </div>
                     
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary" id="chageInfo" disabled>변경사항 저장</button>
+                      <button type="button" class="btn btn-primary" id="chageInfo">변경사항 저장</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -200,7 +204,7 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form action="userUpdatePwd.do" method="post">
+                  <form action="userUpdatePwd.do" method="post" name="pwdform">
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
@@ -227,7 +231,7 @@
  					
  
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary" id="changepwd" disabled>비밀번호 변경하기</button>
+                      <button type="button" class="btn btn-primary" id="changepwd">비밀번호 변경하기</button>
                     </div>
                    
                   </form><!-- End Change Password Form -->
@@ -330,6 +334,64 @@
   				$("#chageInfo").removeAttr("disabled");
   			}
   		})
+  		window,addEventListener("keydown",function(event){
+  		  if(event.defaultPrevented){
+  			  return;
+  		  }
+  		  var handled = false;
+  		  if(event.keyCode == 123)
+  			  handled = true;
+  		  if(handled){
+  			Swal.fire("경고","F12키를 누르지 마십시오",'error');
+  			  event.preventDefault();
+  		  }
+  	  },true);
+  		$("#changepwd").click(function(){
+	   		  pwdcheck();
+	   	  });
+         
+         function pwdcheck() {
+  			if (!pwdform.renewpassword.value) {
+  				Swal.fire("경고","새로운 비밀번호를 입력하세요","warning");
+  				loginForm.renewpassword.focus();
+  				return false;
+  			}
+  			if(!pwdform.password.value){            
+  				Swal.fire("경고","비밀번호를 입력하세요","warning");
+  				loginForm.password.focus();
+  			     return false;
+  			 }
+  			Swal.fire({
+				title:"성공!",
+				text: "비밀번호가 변경되었습니다",
+				type:"success"}).then(function(){
+					document.pwdform.submit();
+			});
+  		}
+         
+         $("#chageInfo").click(function(){
+	   		  infocheck();
+	   	  });
+        
+        function infocheck() {
+ 			if (!userform.nickname.value) {
+ 				Swal.fire("경고","새로운 닉네임을 입력하세요","warning");
+ 				loginForm.nickname.focus();
+ 				return false;
+ 			}
+ 			if(!userform.tel.value){            
+ 				Swal.fire("경고","새로운 전화번호를 입력하세요","warning");
+ 				loginForm.tel.focus();
+ 			     return false;
+ 			 }
+ 			
+ 			Swal.fire({
+				title:"성공!",
+				text: "입력한 값으로 변경되었습니다.",
+				type:"success"}).then(function(){
+				document.userform.submit();
+			});
+ 		}
   	});
   </script>
 

@@ -2,6 +2,7 @@ package kr.or.kosa.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.dao.ChartDao;
-import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Chart;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @WebServlet("/ChartList")
 public class ChartList extends HttpServlet {
@@ -32,9 +33,33 @@ public class ChartList extends HttpServlet {
     	
     	String chart = request.getParameter("chart");
     	
-    	JSONArray jsonlist = null;
+    	JSONArray jsonlist = new JSONArray();
+    	JSONArray realjsonlist = new JSONArray();
     	
     	try {  		
+    		
+    		if (chart.equals("monthBoardWrite")) {
+    			
+    			int month = Integer.parseInt(request.getParameter("MBWmonth"));
+    			
+    			System.out.println(month);
+				ChartDao cdao = new ChartDao();
+				List <Chart> monthBoardWrite = cdao.getMonth(month);
+				
+				System.out.println(monthBoardWrite);
+				realjsonlist = JSONArray.fromObject(monthBoardWrite);
+				
+				
+			}
+    		
+    		if (chart.equals("boardCount")) {
+    			
+				ChartDao cdao = new ChartDao();
+				List <Chart> BCboard = cdao.getBoardCount();
+				
+				realjsonlist = JSONArray.fromObject(BCboard);
+				
+			}
     		
     		if (chart.equals("boardUtilizationRate")) {
     			String startDate = request.getParameter("BURstartDate");
@@ -43,7 +68,7 @@ public class ChartList extends HttpServlet {
 				ChartDao cdao = new ChartDao();
 				List <Chart> BURboard = cdao.getBoardUtilizationRate(startDate, endDate);
 				
-				jsonlist = JSONArray.fromObject(BURboard);
+				realjsonlist = JSONArray.fromObject(BURboard);
 			}
     		
     		if (chart.equals("rankpointselect")) {
@@ -55,7 +80,7 @@ public class ChartList extends HttpServlet {
 				ChartDao cdao = new ChartDao();
 				List <Chart> rankpoint = cdao.getTopRankpoint(startDate, endDate, number);
 				
-				jsonlist = JSONArray.fromObject(rankpoint);
+				realjsonlist = JSONArray.fromObject(rankpoint);
 				
 			}
     		
@@ -63,15 +88,33 @@ public class ChartList extends HttpServlet {
     			int number = Integer.parseInt(request.getParameter("number"));
 
         		ChartDao cdao = new ChartDao();
-        		List<AttendanceBoad> topview = cdao.getTopViews(number);
+        		List<Chart> topview = cdao.getTopViews(number);
     			
-    			jsonlist = JSONArray.fromObject(topview);
-    			
+        		for(Chart parkchart : topview) {
+        			
+        			JSONObject json = new JSONObject();
+        			json.put("name", parkchart.getB_name());
+        			
+        			List<Integer> datalist = new ArrayList<Integer>();
+        			datalist.add(parkchart.getHits());
+        			
+        			json.put("data", datalist);
+        			
+        			
+        			
+        			jsonlist.add(json);
+        		}
+        		
+        		JSONArray json1 = JSONArray.fromObject(topview);
+        	
+        		realjsonlist.add(json1);
+        		realjsonlist.add(jsonlist);
 			}
     		
-    		
     			//JSON으로 보내기
-    			out.print(jsonlist);
+    			out.print(realjsonlist);
+    			
+    			
     	} catch(Exception e) {
     		System.out.println(e.getMessage());
     	}

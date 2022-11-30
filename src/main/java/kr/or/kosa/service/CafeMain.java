@@ -44,6 +44,7 @@ public class CafeMain implements Action {
 			//사이드 바
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
+			
 			MarketBoardDao market_dao = new MarketBoardDao(); 
 			
 			//각종 보드리스트들 가져오기 (한 최근 것 50개?)
@@ -55,21 +56,9 @@ public class CafeMain implements Action {
 			List<Board> chart = dao.viewchart();
 			
 			//날짜계산 준비
-			String inputdate = (String) request.getParameter("inputdate");
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Date nowdate = null;
-			String nowday = "";
-			if(inputdate == null) {//입력받은 날짜가 없다면
-				nowdate= new Date();
-				nowday = format.format(nowdate);
-			}else {//있으면
-				try {
-					nowdate= format.parse(inputdate);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				nowday = format.format(nowdate);
-			}
+			Date nowdate =  new Date();
+			String nowday = format.format(nowdate);
 			Date date=null;
 			try {
 				date = format.parse(nowday);

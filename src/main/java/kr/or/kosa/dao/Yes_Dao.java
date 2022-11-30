@@ -180,14 +180,19 @@ public class Yes_Dao {
 
    
    public int boardYesCount(int idx) {
+	   
       Connection conn = null;
       PreparedStatement pstmt = null;
       ResultSet rs = null;
       int totalcount = 0;
+      
       try {
          conn = ds.getConnection(); //dbcp 연결객체 얻기
          String sql="select count(*) cnt from yes where idx = ?";
          pstmt = conn.prepareStatement(sql);
+         
+         pstmt.setInt(1, idx);
+         
          rs = pstmt.executeQuery();
          if(rs.next()) {
             totalcount = rs.getInt("cnt");

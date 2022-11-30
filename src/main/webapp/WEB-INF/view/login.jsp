@@ -43,6 +43,10 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 
+<!-- 경고창 이쁜거 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <body>
@@ -100,7 +104,7 @@
 											name="password" id="inputPassword5">
 									</div>
 									<div class="text-lg-end">
-										<button type="submit" class="btn btn btn-primary">로그인</button>
+										<button type="button" class="btn btn btn-primary" id="loginbtn">로그인</button>
 									</div>
 								</form>
 								
@@ -180,7 +184,44 @@
            var naverLogin = document.getElementById("naver_id_login").firstChild;
            naver_id_login_anchor.click();
        });
-    </script>
+       
+       window,addEventListener("keydown",function(event){
+ 		  if(event.defaultPrevented){
+ 			  return;
+ 		  }
+ 		  var handled = false;
+ 		  if(event.keyCode == 123)
+ 			  handled = true;
+ 		  if(handled){
+ 			 Swal.fire("특정 행위를 감지","F12키를 누르지 마십시오",'error');
+ 			  event.preventDefault();
+ 		  }
+ 	  },true);
+       
+       $("#loginbtn").click(function(){
+	 		  check();
+	 	  });
+       
+       function check() {
+			if (!loginForm.email_id.value) {
+				Swal.fire("경고","아이디를 입력하세요","warning");
+				loginForm.email_id.focus();
+				return false;
+			}
+			if(!loginForm.password.value){            
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
+				loginForm.password.focus();
+			     return false;
+			 }
+			Swal.fire({
+				title:"성공!",
+				text: "로그인 완료",
+				type:"success"}).then(function(){
+				document.loginForm.submit();
+			});
+			
+		}
+</script>
 </body>
 
 </html>
