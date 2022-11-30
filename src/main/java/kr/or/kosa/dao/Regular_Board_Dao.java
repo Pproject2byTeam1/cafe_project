@@ -3,6 +3,8 @@ package kr.or.kosa.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -84,11 +86,20 @@ public class Regular_Board_Dao {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
+		PreparedStatement pstmt5 = null;
+		PreparedStatement pstmt6 = null;
+		ResultSet rs = null;
+		ResultSet rs1 = null;
 		int row = 0;
 		
 		try {
 			
 			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
 			String sql = "INSERT ALL "
 					+ "INTO board (idx, title, nick, content, email_id, b_code) "
 					+ "VALUES (IDX_SEQ.nextval, ?, ?, ?, ?, ?) "
@@ -109,10 +120,83 @@ public class Regular_Board_Dao {
 			
 			row = pstmt.executeUpdate();
 			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			String sql2 = "UPDATE user_details SET re_count = nvl(re_count + 1, 0) WHERE email_id=?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setString(1, regualr_board.getEmail_id());
+			row = pstmt2.executeUpdate();
+			
+			//해당 유저의 포인트 조회
+			String sql4 = "select point from member where email_id = ?";
+			pstmt4 = conn.prepareStatement(sql4);
+			pstmt4.setString(1, regualr_board.getEmail_id());
+			rs = pstmt4.executeQuery();
+			
+			int point = 0;
+			
+			if(rs.next()) {
+				point = rs.getInt("point");
+			}
+			
+			point += 10;
+			
+			//해당 유저 포인트 적립
+			String sql3 = "update member set point = nvl(point + 10, 0) where email_id=?";
+			pstmt3 = conn.prepareStatement(sql3);
+			pstmt3.setString(1, regualr_board.getEmail_id());
+			row = pstmt3.executeUpdate();
+			
+			//포인트 정보 가져오기
+			String sql5 = "select r_point from rank where rank >= 1";
+			pstmt5 = conn.prepareStatement(sql5);
+			rs1 = pstmt5.executeQuery();
+			
+			List<Integer> pointlist = new ArrayList<Integer>();
+		
+			if(rs.next()) {
+				do {
+					pointlist.add(rs.getInt("r_point"));
+				}while(rs.next());
+			}
+			int rank = 1;
+			for(int i=0; i<pointlist.size()-1; i++) {
+				int min = pointlist.get(i);
+				int max = pointlist.get(i+1);
+				
+				if(point < max && point >= min) {
+					rank = i+1;
+				}
+			}
+			
+			//해당 회원의 rank 수정
+			String sql6 = "update member set rank = ? where email_id = ?";
+			pstmt6 = conn.prepareStatement(sql6);
+			pstmt6.setInt(1, rank);
+			pstmt6.setString(2, regualr_board.getEmail_id());
+			row = pstmt6.executeUpdate();
+			
+			if(row <= 0) {
+				throw new Exception("img_board 삽입 실패");
+			}else {
+				conn.commit();
+			}
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
+				rs1.close();
+				rs.close();
+				pstmt5.close();
+				pstmt4.close();
+				pstmt3.close();
+				pstmt2.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
@@ -130,6 +214,12 @@ public class Regular_Board_Dao {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			PreparedStatement pstmt2 = null;
+			PreparedStatement pstmt3 = null;
+			PreparedStatement pstmt4 = null;
+			PreparedStatement pstmt5 = null;
+			PreparedStatement pstmt6 = null;
+			ResultSet rs = null;
+			ResultSet rs1 = null;
 			int row = 0;
 			
 			try {
@@ -167,6 +257,55 @@ public class Regular_Board_Dao {
 				
 				row = pstmt2.executeUpdate();
 				
+				//해당 유저의 포인트 조회
+				String sql4 = "select point from member where email_id = ?";
+				pstmt4 = conn.prepareStatement(sql4);
+				pstmt4.setString(1, regualr_board.getEmail_id());
+				rs = pstmt4.executeQuery();
+				
+				int point = 0;
+				
+				if(rs.next()) {
+					point = rs.getInt("point");
+				}
+				
+				point += 10;
+				
+				//해당 유저 포인트 적립
+				String sql3 = "update member set point = nvl(point + 10, 0) where email_id=?";
+				pstmt3 = conn.prepareStatement(sql3);
+				pstmt3.setString(1, regualr_board.getEmail_id());
+				row = pstmt3.executeUpdate();
+				
+				//포인트 정보 가져오기
+				String sql5 = "select r_point from rank where rank >= 1";
+				pstmt5 = conn.prepareStatement(sql5);
+				rs1 = pstmt5.executeQuery();
+				
+				List<Integer> pointlist = new ArrayList<Integer>();
+			
+				if(rs.next()) {
+					do {
+						pointlist.add(rs.getInt("r_point"));
+					}while(rs.next());
+				}
+				int rank = 1;
+				for(int i=0; i<pointlist.size()-1; i++) {
+					int min = pointlist.get(i);
+					int max = pointlist.get(i+1);
+					
+					if(point < max && point >= min) {
+						rank = i+1;
+					}
+				}
+				
+				//해당 회원의 rank 수정
+				String sql6 = "update member set rank = ? where email_id = ?";
+				pstmt6 = conn.prepareStatement(sql6);
+				pstmt6.setInt(1, rank);
+				pstmt6.setString(2, regualr_board.getEmail_id());
+				row = pstmt6.executeUpdate();
+				
 				if(row < 0) {
 		             throw new Exception("유저 글 업데이트 실패");
 		        } else {
@@ -185,8 +324,13 @@ public class Regular_Board_Dao {
 			} finally {
 				try {
 					conn.setAutoCommit(true);
-					pstmt.close();
+					rs1.close();
+					rs.close();
+					pstmt5.close();
+					pstmt4.close();
+					pstmt3.close();
 					pstmt2.close();
+					pstmt.close();
 					conn.close();
 				} catch (Exception e2) {
 					System.out.println(e2.getMessage());
