@@ -76,7 +76,7 @@
 		<!-- Card with an image overlay -->
           <div class="card">
           <div class="embed-responsive">
-            <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X500?text=No+Image'">
+            <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X500?text=Title+Image'">
           </div>
             <div class="card-img-overlay">
               <h5 class="card-title">${banner.cafe_name}</h5>
@@ -125,7 +125,12 @@
                       	<tbody>
                       	<c:forEach var="board" items="${regular_list}" varStatus="status">
                       	<tr class="listrow">
-		                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-success rounded-pill">${board.c_count}</span></td>
+		                      	<td class="td1">
+			                      	<span class="d-none b_code">${board.b_code}</span>
+			                      	${board.title}
+			                      	<span class="d-none idx">${board.idx}</span>
+			                      	<span class="badge bg-success rounded-pill">${board.c_count}</span>
+		                      	</td>
 		                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
 		                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 									<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
@@ -165,7 +170,7 @@
                   <h5 class="card-title">정보 게시판 <span>| 정보공유</span></h5>
 
                     <div class="ps-3">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-sm datatable">
                       	<thead>
                       	<tr><th><span class="text-primary pt-1 fw-bold">제목</span></th><th><span class="text-primary pt-1 fw-bold">작성자</span></th><th><span class="text-primary pt-1 fw-bold">작성일자</span></th><th><span class="text-primary pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>	
@@ -321,9 +326,14 @@
                     </c:otherwise>
                   </c:choose>
                     <div class="ps-3">
-                    <h5 class="card-title">${chart.title}</h5>
+                    <h5 class="card-title clickrank">
+	                    <span class="d-none b_code">${chart.b_code}</span>
+	                    <span class="d-none idx">${chart.idx}</span>
+	                    <span class="d-none w_date">${chart.w_date}</span>
+	                    ${chart.title}
+                    </h5>
                     </div>
-                    <div class="ps-3">${chart.email_id}
+                    <div class="ps-3">
                     <a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">${chart.nick}</a><span> | ${chart.w_date}</span>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${chart.email_id}" >답장 보내기</a></li>
@@ -483,27 +493,22 @@
 	<script src="assets/js/main.js"></script>
 	<script type="text/javascript">
 	$(function(){
-  		
-  		$('.pager').click(function(){
-  			clickLocation();
-  		});
-  		$('.dataTable-pagination-list').click(function(){
-  			clickLocation();
-  		});
-  		$('.dataTable-sorter').click(function(){
-  			clickLocation();
-  		});
-  		clickLocation();
+			$('.clickrank').click(function(){
+	  			const idx = $(this).children('.idx').text();
+	  			const b_code = $(this).children('.b_code').text();
+	  			const w_date = $(this).children(".w_date").text();
+	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+	  		});
+	  		$('.listrow').click(function(){
+	  			const idx = $(this).children('.td1').children('.idx').text();
+	  			const b_code = $(this).children('.td1').children('.b_code').text();
+	  			const w_date = $(this).children(".w_date").text();
+	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+	  		});
   	});
 	
-	function clickLocation(){
-		$('.listrow').click(function(){
-  			const idx = $(this).children('.td1').children('.idx').text();
-  			const b_code = $(this).children('.td1').children('.b_code').text();
-  			const w_date = $(this).children(".w_date").text();
-  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-  		});
-	}
+
+
 	var col1 = new Array();
 	col1.push($('#b_cnt1').val());
 	col1.push($('#b_cnt2').val());
