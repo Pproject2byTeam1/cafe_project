@@ -123,9 +123,9 @@ public class Board_Dao {
 				Regular_Board board = new Regular_Board();
 				board.setIdx(rs.getInt("idx"));
 				String title = rs.getString("title");
-				if(title.length() >10) {
-					title = title.substring(0, 9) + "...";
-				}
+//				if(title.length() >10) {
+//					title = title.substring(0, 9) + "...";
+//				}
 				board.setTitle(title);
 				board.setNick(rs.getString("nick"));
 				board.setContent(rs.getString("content"));
