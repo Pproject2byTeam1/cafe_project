@@ -198,10 +198,10 @@
 										<input type="text" value="${alluser.email_id}" name="email_id" style="display: none;">
 										<input type="submit" class="btn btn-primary btn-sm UserHistory" value="활동내역">
 									</form>
-								<!-- 	<form action="userkick.do" method="post"> -->
+								<form action="userkick.do" method="post"> 
 										<input type="text" value="${alluser.email_id}"  class ="id" name="id" style="display: none;">
-										<input type="submit" class="btn btn-danger btn-sm Kick  deletuser" value="강퇴">
-									<!-- </form> -->
+										<input type="submit" class="btn btn-danger btn-sm Kick" value="강퇴">
+								 </form> 
 								</div>
 								</td>
 							</tr>
