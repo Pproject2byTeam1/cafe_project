@@ -387,7 +387,7 @@ public class FrontController extends HttpServlet {
 			action = new DeleteAttendanceService();
 			forward = action.execute(request, response);
 
-		} else if (urlcommand.equals("/rankeditboard.do")) { // 랭크변환리스트
+		} else if (urlcommand.equals("/rankedit.do")) { // 랭크변환리스트
 
 			action = new RankChangeService();
 			forward = action.execute(request, response);

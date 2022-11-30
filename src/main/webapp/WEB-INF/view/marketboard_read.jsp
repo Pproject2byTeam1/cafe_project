@@ -56,7 +56,7 @@
 				location.href="marketboard_write.do?b_code=" + b_code;
 				
 			});
-			
+		
 			
 	});
 			
@@ -69,13 +69,17 @@
   	
   	$(document).ready(function(){
 		
+  		let email_id = '<c:out value="${member.email_id}" />';
+        let yes = '<c:out value="${yes2}" />';
+        let idx = '<c:out value="${list.idx}" />'
+  		
   		/* 글삭제 */
 		$("#delete").click(function(){
 			let idx = "<c:out value='${list.idx}'/>";
 			let b_code = "<c:out value='${b_code}'/>";
 			console.log(idx);
 			console.log(b_code);
- 			location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
+ 			location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + idx;
 			
 		});
   		
@@ -85,13 +89,11 @@
 			let b_code = "<c:out value='${b_code}'/>";
 			let idx = "<c:out value='${list.idx}'/>";
 			console.log("edit 클릭");
-			location.href="marketboardEdit.do?b_code="  + b_code + "&idx=" + ${list.idx};
+			location.href="marketboardEdit.do?b_code="  + b_code + "&idx=" + idx;
 			
 		});
 		
-		let email_id = '<c:out value="${member.email_id}" />';
-        let yes = '<c:out value="${yes2}" />';
-        let idx = '<c:out value="${list.idx}" />'
+	
         
         /* 게시물 좋아요 비동기 처리 */
         $("#yesbtn").click(function(){

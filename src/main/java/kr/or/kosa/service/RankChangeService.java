@@ -1,6 +1,5 @@
 package kr.or.kosa.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -25,7 +24,6 @@ public class RankChangeService implements Action {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("member");
 		String userId = (String) session.getAttribute("userid");
-		String email_idx = request.getParameter("id");
 		
 		try {
 			Rank_Dao dao = new Rank_Dao();
