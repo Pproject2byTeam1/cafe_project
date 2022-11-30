@@ -130,13 +130,6 @@
 	<!-- ======= Sidebar ======= -->
 	<c:import url="/WEB-INF/view/common/side.jsp" />
 	<!-- End Sidebar -->
-	<!-- ======= Header ======= -->
-
-	<!-- ======= Sidebar ======= -->
-
-	<jsp:include page="/common/side2.jsp"></jsp:include>
-
-	<!-- End Sidebar -->
 
 	<main id="main" class="main">
 		<div class="pagetitle">

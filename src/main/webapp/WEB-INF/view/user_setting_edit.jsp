@@ -29,11 +29,6 @@
   
 </head>
 <body>
-
-<script type="text/javascript">
-	console.log();
-
-</script>
   
   
    <main id="main" class="main" style="background-color: #f6f9ff; border-radius: 25px;">
@@ -253,7 +248,7 @@
     
     
      document.getElementById("change").onclick = () =>{
-        alert("정보가 변경되었습니다.");
+    	swal("완료","정보가 변경되었습니다.",'success');
         //window.close();
         
      } 

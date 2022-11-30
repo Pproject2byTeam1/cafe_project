@@ -46,8 +46,8 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
   
-  <!-- 무한 스크롤 -->
-  <script src="https://unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
+  <!-- 경고창 이쁜거 -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 </head>
@@ -67,6 +67,7 @@
 	              <div class="filter">
 	                  <a class="icon" href="#" id = "close"><i class="bi bi-x-lg"></i></a>
                 </div>
+                <span>30일이 지나면 자동으로 삭제합니다.</span>
                 <hr>
                 <div class="row" ><!-- 쪽지 페이지 1면 -->
                 <div id="memolist">
@@ -76,7 +77,9 @@
   				<c:forEach var="list" items="${messagelist}" varStatus="status">
 	        		<div class="col-sm-12">
                 	  <div class="form-check">
+                	      <c:if test="${list.send_rank != -1}">
                 	      <input class="form-check-input" type="checkbox" value="${list.m_idx}">
+                	      </c:if>
 			              <table>
 				             <tr>
 					             <td><img src="image/rank_icon/${list.send_rank}.gif"></td>
@@ -97,17 +100,18 @@
 		            <hr>
   				</c:forEach>
   				</div>
-		            <!-- 기능버튼들 나중에 작성 -->
 		            <div class="col-sm-9 ">
-		            	 <a href="write_memo.do"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#disablebackdrop" id="writememo">
+		            	 <a href="write_memo.do"><button type="button" class="btn btn-success" id="writememo">
 			               쪽지 작성하기
 			              </button></a>
 		            </div>
 		            <div  class="col-sm-3 text-lg-end">
 	              		<!-- Disabled Backdrop Modal -->
+	              		
 			              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
 			                삭제
 			              </button>
+			              
 			              <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
 			                <div class="modal-dialog">
 			                  <div class="modal-content">
@@ -177,6 +181,20 @@
                 $('#memolist').append(responsedata);
              });
 	  	 });
+	  
+	  window,addEventListener("keydown",function(event){
+		  if(event.defaultPrevented){
+			  return;
+		  }
+		  var handled = false;
+		  if(event.keyCode == 123)
+			  handled = true;
+		  if(handled){
+			  swal("경고","F12키를 누르지 마십시오",'error');
+			  event.preventDefault();
+		  }
+	  },true);
+	  
 	});
   </script>
 

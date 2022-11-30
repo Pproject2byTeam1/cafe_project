@@ -35,6 +35,9 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- 경고창 이쁜거 -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -132,7 +135,7 @@
               </div>
               
               <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
-	            <form action="adminUpdate.do" method="post">
+	            <form action="adminUpdate.do" method="post" name="adminchange">
 	                <div class="row mb-3">
 	                  <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
 	                  <div class="col-sm-9">
@@ -194,7 +197,7 @@
                     </div>
                     
 		              <div  class="text-lg-end">
-		              	<button type="submit" class="btn btn btn-primary" id="updateinfo" disabled>등록</button>
+		              	<button type="button" class="btn btn btn-primary" id="updateinfo">등록</button>
 		              	<button type="reset" class="btn btn btn-danger">취소</button>
 		              </div>
 	              </form><!-- End Profile Edit Form -->
@@ -292,7 +295,57 @@
 				$("#updateinfo").removeAttr("disabled");
 			}
 		})
+		function check() {
+			if (!bbs.content.value || bbs.content.value == "") {
+				swal("경고","내용을 입력하세요","warning");
+				loginForm.email_id.focus();
+				return false;
+			}
+			document.bbs.submit();
+		}
 		
+		$("#updateinfo").click(function(){
+	 		  check();
+	 	  });
+     
+		function check() {
+			if (!adminchange.name.value) {
+				swal("경고","이름을 입력하세요","warning");
+				loginForm.name.focus();
+				return false;
+			}
+			if(!adminchange.password.value){
+				swal("경고","비밀번호를 입력하세요","warning");
+				loginForm.password.focus();
+			     return false;
+			 }
+			if(!adminchange.newpassword.value){
+				swal("경고","비밀번호를 입력하세요","warning");
+				loginForm.newpassword.focus();
+			     return false;
+			 }
+			if(!adminchange.renewpassword.value){
+				swal("경고","비밀번호를 입력하세요","warning");
+				loginForm.renewpassword.focus();
+			     return false;
+			 }
+			if(!adminchange.nickname.value){
+				swal("경고","닉네임을 입력하세요","warning");
+				loginForm.nickname.focus();
+			     return false;
+			 }
+			if(!adminchange.date.value){
+				swal("경고","생년월일을 입력하세요","warning");
+				loginForm.date.focus();
+			     return false;
+			 }
+			if(!adminchange.tel.value){
+				swal("경고","전화번호를 입력하세요","warning");
+				loginForm.tel.focus();
+			     return false;
+			 }
+			document.loginForm.submit();
+		}
 	});
   </script>
 

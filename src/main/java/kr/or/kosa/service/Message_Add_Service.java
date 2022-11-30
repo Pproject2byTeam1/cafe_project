@@ -26,7 +26,12 @@ public class Message_Add_Service implements Action {
 			String content = request.getParameter("content");
 			UserDao user_Dao = new UserDao();
 			String writerNick = user_Dao.selectUserById(writer).getNick();
-			String readerNick = user_Dao.selectUserById(reader).getNick();
+			String readerNick = null;
+			if(!reader.equals("ALL")) {
+				readerNick = user_Dao.selectUserById(reader).getNick();
+			}else {//운영자의 전체 보내기일 경우
+				readerNick=reader;
+			}
 			
 			//삽입
 			MessageDao dao = new MessageDao();

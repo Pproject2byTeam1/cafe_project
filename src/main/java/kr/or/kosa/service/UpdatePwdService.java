@@ -32,7 +32,7 @@ public class UpdatePwdService implements Action {
 			
 			//update 실행
 			if(!password.equals(newpassword)) {
-				row = dao.updateUserPwd(userId, password);
+				row = dao.updateUserPwd(userId, newpassword);
 			}
 			
 			if(row<0) {

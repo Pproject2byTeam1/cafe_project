@@ -15,6 +15,7 @@ import kr.or.kosa.service.AdminMainEditService;
 import kr.or.kosa.service.BoardContentService;
 import kr.or.kosa.service.CafeMain;
 import kr.or.kosa.service.Calender_Board_List_Service;
+import kr.or.kosa.service.ChartService;
 import kr.or.kosa.service.CheckBoardService;
 import kr.or.kosa.service.DataBoardEditOkService;
 import kr.or.kosa.service.DataBoardEditService;
@@ -43,7 +44,6 @@ import kr.or.kosa.service.MarketBoardListService;
 import kr.or.kosa.service.MarketBoardReadService;
 import kr.or.kosa.service.MarketBoardWriteService;
 import kr.or.kosa.service.MarketBoardWriteViewService;
-import kr.or.kosa.service.ChartService;
 import kr.or.kosa.service.MessageDeleteService;
 import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
@@ -63,6 +63,7 @@ import kr.or.kosa.service.ReplyDataWriteViewService;
 import kr.or.kosa.service.ReplyRegularWriteService;
 import kr.or.kosa.service.ReplyRegularWriteViewService;
 import kr.or.kosa.service.SnsCheckService;
+import kr.or.kosa.service.UpdatePwdService;
 import kr.or.kosa.service.UserActivityService;
 import kr.or.kosa.service.UserDeleteService;
 import kr.or.kosa.service.UserInfoService;
@@ -420,6 +421,11 @@ public class FrontController extends HttpServlet {
 		} else if (urlcommand.equals("/chart.do")) { // 관리자 메인 관리 페이지
 
 			action = new ChartService();
+			forward = action.execute(request, response);
+
+		}  else if (urlcommand.equals("/userUpdatePwd.do")) { // 사용자 비밀번호 변경
+
+			action = new UpdatePwdService();
 			forward = action.execute(request, response);
 
 		}  
