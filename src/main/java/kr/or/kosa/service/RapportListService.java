@@ -1,6 +1,5 @@
 package kr.or.kosa.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -12,9 +11,10 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.AdminDao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dto.AttendanceBoad;
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.User;
 
 public class RapportListService implements Action {
@@ -27,6 +27,11 @@ public class RapportListService implements Action {
 		
 		
 		try {
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
+			
 			Board_Info_Dao infodao = new Board_Info_Dao();
 	        List<Board_Info> infolist = infodao.getSideBoardList();
 			

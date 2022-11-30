@@ -76,11 +76,11 @@
 		<!-- Card with an image overlay -->
           <div class="card">
           <div class="embed-responsive">
-            <img src="image/sample/bulb.jpg" class="card-img-top" alt="...">
+            <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X500?text=No+Image'">
           </div>
             <div class="card-img-overlay">
-              <h5 class="card-title">대문 이름</h5>
-              <p class="card-text">설명란
+              <h5 class="card-title">${banner.cafe_name}</h5>
+              <p class="card-text">
             <c:forEach var="chart" items="${chart}" varStatus="status">
             <input type="text" id = "b_cnt${status.count}" value="${chart.b_code}" hidden="">
             <input type="text" id = "h_cnt${status.count}" value="${chart.c_count}" hidden="">

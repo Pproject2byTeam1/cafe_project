@@ -15,6 +15,7 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.ChartDao;
 import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.MarketBoardDao;
@@ -22,6 +23,7 @@ import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Chart;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.Regular_Board;
@@ -35,6 +37,9 @@ public class CafeMain implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
 			
 			//사이드 바
 			Board_Info_Dao infodao = new Board_Info_Dao();
@@ -94,6 +99,7 @@ public class CafeMain implements Action {
 			request.setAttribute("chart", chart);
 			request.setAttribute("rankchart", rankchart);
 			
+			request.setAttribute("banner", banner);//top
 			request.setAttribute("infolist", infolist);
 			
 			forward = new ActionForward();

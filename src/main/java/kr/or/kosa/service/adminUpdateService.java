@@ -6,7 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.UserDao;
+import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.User;
 
 public class adminUpdateService implements Action {
@@ -18,6 +20,11 @@ public class adminUpdateService implements Action {
 		int row2 = 0;
 		
 		try {
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
+			
 	        //유저정보 가져오기
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("member");

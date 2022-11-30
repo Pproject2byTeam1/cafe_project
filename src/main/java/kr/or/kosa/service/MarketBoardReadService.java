@@ -10,11 +10,13 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.MarketBoardDao;
 import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
@@ -27,6 +29,10 @@ public class MarketBoardReadService implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
 			
 			//사이드 바
 			Board_Info_Dao infodao = new Board_Info_Dao();
