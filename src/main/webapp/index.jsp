@@ -32,6 +32,10 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- 경고창 이쁜거 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -762,7 +766,20 @@
 			      "width=500, height=600, top=100, left=300"
 			    );
 		  });
+		  window,addEventListener("keydown",function(event){
+			  if(event.defaultPrevented){
+				  return;
+			  }
+			  var handled = false;
+			  if(event.keyCode == 123)
+				  handled = true;
+			  if(handled){
+				  swal("경고","F12키를 누르지 마십시오",'error');
+				  event.preventDefault();
+			  }
+		  },true);
 	  });
+	  
   </script>
 
 </body>

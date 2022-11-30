@@ -26,7 +26,12 @@ public class Message_Add_Service implements Action {
 			String content = request.getParameter("content");
 			UserDao user_Dao = new UserDao();
 			String writerNick = user_Dao.selectUserById(writer).getNick();
-			String readerNick = user_Dao.selectUserById(reader).getNick();
+			String readerNick = null;
+			if(!reader.equals("ALL")) {
+				readerNick = user_Dao.selectUserById(reader).getNick();
+			}else {//운영자의 전체 보내기일 경우
+				readerNick=reader;
+			}
 			
 			//삽입
 			MessageDao dao = new MessageDao();
@@ -40,11 +45,11 @@ public class Message_Add_Service implements Action {
 			row = dao.insertMessage(message);
 			
 		} catch (Exception e) {
-			if(row > 0) {
-				System.out.println("삽입 성공");
-			}else {
-				System.out.println("삽입 실패");
-			}
+//			if(row > 0) {
+//				System.out.println("삽입 성공");
+//			}else {
+//				System.out.println("삽입 실패");
+//			}
 			System.out.println(e.getMessage());
 		}
 		

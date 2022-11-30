@@ -41,6 +41,8 @@
   <!-- 테이블 정렬 -->
 <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+<!-- 경고창 이쁜거 -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -237,7 +239,18 @@
   			clickLocation();
   		});
   		clickLocation();
-  		
+  		window,addEventListener("keydown",function(event){
+			  if(event.defaultPrevented){
+				  return;
+			  }
+			  var handled = false;
+			  if(event.keyCode == 123)
+				  handled = true;
+			  if(handled){
+				  swal("경고","F12키를 누르지 마십시오",'error');
+				  event.preventDefault();
+			  }
+		  },true);
   	});
   	function clickLocation(){
   		$('.listrow').click(function(){

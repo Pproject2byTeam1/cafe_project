@@ -44,7 +44,10 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-	
+<!-- 경고창 이쁜거 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <body>
@@ -71,6 +74,7 @@
                 	<input class="form-check-input" type="checkbox" id="sendtoMe">
                   <label class="form-check-label" for="gridCheck">내게쓰기</label>
                 </div>
+                
                 <div class="col-md-9">
                 <c:choose>
 	                <c:when test="${responde_Id != null}">
@@ -81,6 +85,13 @@
 	                </c:otherwise>
                 </c:choose>
                 </div>
+                <c:if test="${member.rank == -1}">
+                <div class="col-md-3">
+                	<input class="form-check-input" type="checkbox" id="allSend">
+                  <label class="form-check-label" for="allSend">모두에게 보내기</label>
+                </div>
+                <div class="col-md-9"></div>
+                </c:if>
                 <div class="col-md-3">
                   <button type="button" class="btn btn-success" id="sendMemo">보내기</button>
                 </div>
@@ -127,27 +138,49 @@
 			  $('#respond_Id').attr('value', "");
 		  }
 	  })
+	  
+	  $("#allSend").click(function(){
+		  if($(this).is (':checked')){
+			  $('#respond_Id').attr('value','ALL');
+			  $('#respond_Id').attr('readonly',true);
+		  }else {
+			  $('#respond_Id').attr('value', "");
+		  }
+	  })
 
 	  $("#sendMemo").click(function(){//쪽지 보내기(글 작성)
 		  check();
-	  
 	  });
+	  window,addEventListener("keydown",function(event){
+		  if(event.defaultPrevented){
+			  return;
+		  }
+		  var handled = false;
+		  if(event.keyCode == 123)
+			  handled = true;
+		  if(handled){
+			  swal("특정 행위를 감지","F12키를 누르지 마십시오",'error');
+			  event.preventDefault();
+		  }
+	  },true);
 	  
-	  
-	 
 		function check() {
 			if (!memoboard.writer.value) {
-				alert("보내는 사람을 입력하세요");
+				Swal.fire("경고","보내는 사람을 입력하세요","warning");
 				memoboard.writer.focus();
 				return false;
 			}
 			if(!memoboard.content.value){            
-			     alert("글 내용을 입력하세요");
+				Swal.fire("경고","글 내용을 입력하세요","warning");
 			     memoboard.content.focus();
 			     return false;
 			 }
-			document.memoboard.submit();
-
+			Swal.fire({
+				title:"성공!",
+				text: "전송 성공",
+				type:"success"}).then(function(){
+				document.memoboard.submit();
+			});
 		}
 	
   });

@@ -37,6 +37,9 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- 경고창 이쁜거 -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -114,11 +117,11 @@
 						<div class="park-card p-4">
 							<div class="park-card-body row">
 								<textarea name="content" required> 
-        			 				글을 작성해주세요.
+        			 				출석체크
         						</textarea>
 							</div>
 							<div class="col-2">
-								<button type="submit" id="btn" class="btn btn-primary">출석하기</button>
+								<button type="button" id="btn" class="btn btn-primary">출석하기</button>
 							</div>
 						</div>
 					</div>
@@ -255,6 +258,32 @@
 				console.log(idx);
 				location.href="deleteAttendance.do?idx="+idx;
 			});
+			
+			window,addEventListener("keydown",function(event){
+				  if(event.defaultPrevented){
+					  return;
+				  }
+				  var handled = false;
+				  if(event.keyCode == 123)
+					  handled = true;
+				  if(handled){
+					  swal("경고","F12키를 누르지 마십시오",'error');
+					  event.preventDefault();
+				  }
+			  },true);
+			
+			$("#btn").click(function(){
+		 		  check();
+		 	  });
+		       
+		       function check() {
+					if (!bbs.content.value || bbs.content.value == "") {
+						swal("경고","내용을 입력하세요","warning");
+						loginForm.email_id.focus();
+						return false;
+					}
+					document.bbs.submit();
+				}
 		});
 	</script>
 </body>

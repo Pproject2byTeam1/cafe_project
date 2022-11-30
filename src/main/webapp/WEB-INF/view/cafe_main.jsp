@@ -46,6 +46,9 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 
+<!-- 경고창 이쁜거 -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>
@@ -170,22 +173,22 @@
                   <h5 class="card-title">정보 게시판 <span>| 정보공유</span></h5>
 
                     <div class="ps-3">
-                    <table class="table table-hover table-sm datatable">
+                    <table class="table table-hover table-sm">
                       	<thead>
                       	<tr><th><span class="text-primary pt-1 fw-bold">제목</span></th><th><span class="text-primary pt-1 fw-bold">작성자</span></th><th><span class="text-primary pt-1 fw-bold">작성일자</span></th><th><span class="text-primary pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>	
                       	<tbody>
                       	<c:forEach var="board" items="${data_list}" varStatus="status">
                       	<tr class="listrow">
-		                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-primary rounded-pill">${board.c_count}</span></td>
-		                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
-		                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-									<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
-									<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
-								</ul>
-		                      	</td>
-		                      	<td class="w_date">${board.w_date}</td>
-		                      	<td>${board.hits}</td>
+	                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-primary rounded-pill">${board.c_count}</span></td>
+	                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
+	                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+								<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
+							</ul>
+	                      	</td>
+	                      	<td class="w_date">${board.w_date}</td>
+	                      	<td>${board.hits}</td>
 		                </tr>
                       	</c:forEach>
                       	</tbody>
@@ -385,7 +388,7 @@
                     <c:forEach var="board" items="${market_list}" varStatus="status">
                       <tr class="listrow">
                         <th>${board.sold}</th>
-                        <th scope="row"><a href="#"><img src="image/board/upload/${board.img_name}" alt="" onerror="this.onerror=null; this.src='https://via.placeholder.com/300X250?text=No+Image'"></a></th>
+                        <th scope="row"><a href="#"><img src="upload/${board.img_name}" alt="" onerror="this.onerror=null; this.src='https://via.placeholder.com/300X250?text=No+Image'"></a></th>
                         <td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}</td>
                         <td class="fw-bold">${board.price}원</td>
                         <td class="w_date">${board.w_date}</td>
@@ -404,34 +407,6 @@
 
               </div>
             </div><!-- End Top Selling -->
-            
-            
-            <div class="col-lg-6">
-	          <div class="card">
-	            <div class="card-body">
-	              <h5 class="card-title">Column Chart</h5>
-	              <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-	
-	              <!-- Column Chart -->
-	              <div id="columnChart"></div>
-	
-	              
-	              <!-- End Column Chart -->
-	
-	            </div>
-	          </div>
-	        </div>
 
             <!-- Recent Sales -->
             <div class="col-12">
@@ -505,73 +480,19 @@
 	  			const w_date = $(this).children(".w_date").text();
 	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
 	  		});
+	  		window,addEventListener("keydown",function(event){
+				  if(event.defaultPrevented){
+					  return;
+				  }
+				  var handled = false;
+				  if(event.keyCode == 123)
+					  handled = true;
+				  if(handled){
+					  swal("경고","F12키를 누르지 마십시오",'error');
+					  event.preventDefault();
+				  }
+			  },true);
   	});
-	
-
-
-	var col1 = new Array();
-	col1.push($('#b_cnt1').val());
-	col1.push($('#b_cnt2').val());
-	col1.push($('#b_cnt3').val());
-	col1.push($('#b_cnt4').val());
-	col1.push($('#b_cnt5').val());
-	col1.push($('#b_cnt6').val());
-	var col2 = new Array();
-	col2.push($('#h_cnt1').val());
-	col2.push($('#h_cnt2').val());
-	col2.push($('#h_cnt3').val());
-	col2.push($('#h_cnt4').val());
-	col2.push($('#h_cnt5').val());
-	col2.push($('#h_cnt6').val());
-	var threechart = {
-        series: [{
-          name: '총 글수',
-          data: col1
-        }, {
-          name: '총 조회수',
-          data: col2
-        }],
-        chart: {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded'
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
-        },
-        xaxis: {
-          categories: ['자유', '출석체크', '사진', '자료', '유료 거래', '일정관리'],
-        },
-        yaxis: {
-          title: {
-            text: '횟수'
-          }
-        },
-        fill: {
-          opacity: 1
-        },
-        tooltip: {
-          y: {
-            formatter: function(val) {
-              return  val 
-            }
-          }
-        }
-      }
-    document.addEventListener("DOMContentLoaded", () => {
-      new ApexCharts(document.querySelector("#columnChart"), threechart).render();
-    });
 	</script>
 
 </html>

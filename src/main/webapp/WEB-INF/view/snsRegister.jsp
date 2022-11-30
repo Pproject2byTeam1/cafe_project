@@ -45,6 +45,10 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 
+<!-- 경고창 이쁜거 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <body>
@@ -89,6 +93,7 @@
 										</span> 
 										<input type="email" class="form-control" name="email_id" id="email_id" >
 									</div>
+									<div id = "wwww"></div>
 									<div class="input-group mb-3">
 										<span class="input-group-text">이름</span>
 										<input type="text" class="form-control" name="name" id="name">
@@ -121,7 +126,7 @@
 											name="phone" id="phone">
 									</div>
 									<div class="text-lg-end">
-										<button type="submit" class="btn btn btn-primary" id="registerbtn">등록</button>
+										<button type="button" class="btn btn btn-primary" id="registerbtn">등록</button>
 									</div>
 								</form>
 							</div>
@@ -219,33 +224,97 @@
 					var text = responseText;
 					if(text.toString().replace(/\s/gi, "") == "true"){
 						$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
-						$("#registerbtn").attr("disabled",true);
 					}else{
 						$("#qqqq").html("<p class='text-success'>사용 가능합니다.</p>");
-						$("#registerbtn").removeAttr("disabled");
 					}
 				}
 			});
 		});
+	  $('#email_id').keyup(function(){
+	  //서버처리결과받기
+			$.ajax({
+				url:"idVerification.do",
+				data:{email_id: $('#email_id').val()},
+				type: "POST",
+				dataType:"json",
+				success: function(responseText){
+					var text = responseText;
+					if(text.toString().replace(/\s/gi, "") == "true"){
+						$("#wwww").html("<p class='text-danger'>사용이 불가합니다.</p>");
+					}else{
+						$("#wwww").html("<p class='text-success'>사용 가능합니다.</p>");
+					}
+				}
+			});
+	  });
 		$("#rePassword").keyup(function () {
-			//console.log("pwd: "+$('#rePassword').val());
 			if ($("#Password").val() != $("#rePassword").val() || $("#rePassword").val().length < 10) {
               $("#aaaa").html("<p class='text-danger' >비밀번호가 일치하지 않거나 10자 미만입니다.</p>");
-           	  $("#registerbtn").attr("disabled",true);
             } else {
               $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
-              $("#registerbtn").removeAttr("disabled");
             }
         });
 		$('#tel').keyup(function(){
-			//console.log("tel: "+$('#tel').val());
-			//console.log("length: "+$('#tel').val().length);
 			if($('#tel').val().length != 11 || $('#tel').val() == null){
-				$("#registerbtn").attr("disabled",true);
-			}else{
-				$("#registerbtn").removeAttr("disabled");
 			}
 		});
+		$("#loginbtn").click(function(){
+	 		  check();
+	 	  });
+		window,addEventListener("keydown",function(event){
+	 		  if(event.defaultPrevented){
+	 			  return;
+	 		  }
+	 		  var handled = false;
+	 		  if(event.keyCode == 123)
+	 			  handled = true;
+	 		  if(handled){
+	 			  swal("특정 행위를 감지","F12키를 누르지 마십시오",'error');
+	 			  event.preventDefault();
+	 		  }
+	 	  },true);
+	       $("#registerbtn").click(function(){
+	 		  check();
+	 	  });  
+       function check() {
+			if (!registerForm.email_id.value) {
+				Swal.fire("경고","아이디를 입력하세요","warning");
+				registerForm.email_id.focus();
+				return false;
+			}
+			if (!registerForm.name.value) {
+				Swal.fire("경고","이름을 입력하세요","warning");
+				registerForm.name.focus();
+				return false;
+			}
+			if (!registerForm.nick.value) {
+				Swal.fire("경고","닉네임을 입력하세요","warning");
+				registerForm.nick.focus();
+				return false;
+			}
+			if(!registerForm.password.value){            
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
+				registerForm.password.focus();
+			     return false;
+			 }
+			if(!registerForm.date.value){            
+				Swal.fire("경고","생년월일를 입력하세요","warning");
+				registerForm.date.focus();
+			     return false;
+			 }
+			if(!registerForm.phone.value){            
+				Swal.fire("경고","전화번호를 입력하세요","warning");
+				registerForm.phone.focus();
+			     return false;
+			 }
+			Swal.fire({
+				title:"성공!",
+				text: "회원가입 성공",
+				type:"success"}).then(function(){
+				document.registerForm.submit();
+			});
+			
+		}
   });
 </script>
 </body>
