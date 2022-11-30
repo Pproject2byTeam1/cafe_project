@@ -148,7 +148,7 @@ public List<Chart> getTopRankpoint(String startDate, String endDate, int number)
 
 
 
-public List<Chart> getBoardBoardUtilizationRate(String startDate, String endDate){
+public List<Chart> getBoardUtilizationRate(String startDate, String endDate){
 	
 		Connection conn = null;
 		PreparedStatement pstmt = null;
