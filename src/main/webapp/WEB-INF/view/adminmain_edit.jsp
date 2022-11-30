@@ -700,7 +700,7 @@
 
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
-		<c:import url="/WEB-INF/view/common/admintop.jsp" />
+		<c:import url="/WEB-INF/view/common/top.jsp" />
 	</header>
 	<!-- End Header -->
 
@@ -785,18 +785,13 @@
 							<div class="col-md-12">
 								<!-- 배너 이미지 미리보기 -->
 								<label class="label" id="label" for="input">
-									<div class="inner" id="inner">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-										&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; 드래그하거나 클릭해서 업로드</div>
+									<div class="preview" id="preview">
+									<img width="100%" height="350px" src="upload/${cafebanner.cafe_img}">
+									</div>
+									<div align="center"><span class="inner" id="inner">이미지를 드래그 또는 클릭하여 추가</span></div>
 								</label> <input id="input" class="input" accept="image/*" type="file"
 									required="true" hidden="true">
 							</div>
-							<div class="col-md-12">
-								<p class="preview-title"></p>
-								<div class="preview" id="preview">
-									<img width="200" src="upload/${cafebanner.cafe_img}">
-								</div>
-							</div>
-
 						</div>
 
 						<div class="row">

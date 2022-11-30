@@ -107,7 +107,7 @@ public class MarketBoardDao {
 			String sql = "select * " +
 							"from (select * " +
 						    "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
-						    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
+						    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, to_char(b.w_date, 'YYYY-MM-DD hh:mm') w_date, " +  
 						    "b.report_count, b.email_id, b.b_code " +
 						    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
 						    "where b_code=? and rn >= ?) " +
@@ -184,7 +184,7 @@ public class MarketBoardDao {
 				String sql1 = "select * " +
 						"from (select * " +
 					    "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
-					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
+					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, to_char(b.w_date, 'YYYY-MM-DD hh:mm') w_date, " +  
 					    "b.report_count, b.email_id, b.b_code " +
 					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
 					    "where b_code=? and rn >= ?) " +
@@ -192,7 +192,7 @@ public class MarketBoardDao {
 				String sql2 = "select * " +
 						"from (select * " +
 					    "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
-					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
+					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, to_char(b.w_date, 'YYYY-MM-DD hh:mm') w_date, " +  
 					    "b.report_count, b.email_id, b.b_code " +
 					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
 					    "where b_code=? and rn >= ?) " +
@@ -200,7 +200,7 @@ public class MarketBoardDao {
 				String sql3 = "select * " +
 						"from (select * " +
 					    "from (select ROW_NUMBER() OVER(ORDER BY b_idx desc) AS rn, b.idx , m.b_idx , m.sold, m.m_mode, m.cate, " +
-					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, " +  
+					    "b.title, b.content, m.img_name, m.price, b.hits, b.nick, to_char(b.w_date, 'YYYY-MM-DD hh:mm') w_date, " +  
 					    "b.report_count, b.email_id, b.b_code " +
 					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
 					    "where b_code=? and rn >= ?) " +
@@ -345,7 +345,7 @@ public class MarketBoardDao {
 		try {
 			conn = ds.getConnection();
 			String sql = "select * "
-					+ "from (select m.idx, m.sold, m.m_mode, m.cate, b.b_code, b.title, b.content, m.img_name, m.price, b.hits, b.nick, b.w_date, b.report_count, b.email_id"
+					+ "from (select m.idx, m.sold, m.m_mode, m.cate, b.b_code, b.title, b.content, m.img_name, m.price, b.hits, b.nick, to_char(b.w_date, 'YYYY-MM-DD hh:mm') w_date, b.report_count, b.email_id"
 					+ " from board b join market_board m on b.idx = m.idx) where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
