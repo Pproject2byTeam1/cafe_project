@@ -61,8 +61,266 @@
            let step = '<c:out value="${board.step}" />';
            let refer = '<c:out value="${board.refer}" />';
            
-          
-     </script>
+           
+           /* 사진 크기 자동 정렬 jQuery */
+			$("#text p img").removeAttr("width");
+		   	$("#text p img").removeAttr("height");
+		   	$("#text p img").attr("style","display: block; margin-left: auto; margin-right: auto; max-width:100%; height:auto;");
+           
+           /* 게시물 좋아요 비동기 처리 */
+           $("#yesbtn").click(function(){
+              
+        	   list();
+              
+        
+           
+        
+              
+              if(yespark == "no"){
+                 
+                 requestdata = {"idx": idx, "email_id": email_id};
+                 
+              
+                 $.ajax({
+                    type: "POST",
+                    url: "Yes",
+                  data: requestdata,
+                    dataType: "HTML",
+                    success: function(data){
+                       
+                       yespark = email_id;
+                       
+                       $("#yesbtn").empty();
+                       $("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
+                       swal(data);
+                    },
+                    beforeSend: function(){
+                     $('.wrap-load').removeClass('display-none');
+                  },
+                  complete: function(){
+                     $('.wrap-loading').addClass('display-none');
+                  }
+                 });
+                 
+              }else{
+                 
+                 requestdata = {"idx": idx, "email_id": email_id};
+                 
+                 $.ajax({
+                    type: "POST",
+                    url: "YesRemove",
+                  data: requestdata,
+                    dataType: "HTML",
+                    success: function(data){
+                       yespark = "no";
+                       
+                       $("#yesbtn").empty();
+                       $("#yesbtn").append('<i class="bi bi-heart"></i>');
+                       swal(data);
+                    },
+                    beforeSend: function(){
+                     $('.wrap-load').removeClass('display-none');
+                  },
+                  complete: function(){
+                     $('.wrap-loading').addClass('display-none');
+                  }
+                 });
+                 
+              }
+              
+              
+           });
+           
+           //신고
+       	function rep(data7){
+
+			$.ajax({
+				url:"RepCount",
+				data:data7,
+				dataType:"html",
+				success:function(responsetxt){
+				
+					swal("신고","신고되었습니다","success");
+				}
+				
+		});
+				
+		};
+		
+		
+		
+		$(document).on('click', '#report', function(){
+		
+			const data7 ={"idx":idx};
+			
+		
+			rep(data7);
+			
+	});
+   		
+   		
+   		
+   	
+           
+           /* 답글 작성 */
+           $("#replyWrite").click(function(){
+            
+                let link = "/WebCafe_Project/regular_reWriteView.do?refer="+refer+"&b_code="+b_code+"&depth="+depth+"&step="+step+"&idx="+idx;
+                
+              
+              location.href=link;
+              
+           });
+           
+           
+           
+           
+           
+           /* 댓글 */
+		   		function inser(data){
+		   			$.ajax({
+		   			url : "ReplyOk",
+		   			data : data,
+		   			dataType : "html",
+		   			success : function(data) {
+		   				
+		   				list();
+		   				swal(data);
+		   			}
+		   		});
+		   		}
+		   		
+		   		function del(data2){
+		   		$.ajax(
+		   				{
+		   					url: "ReplyDeleteOk",
+		   					data: data2,
+		   					dataType: "html",
+		   					success: function(data){
+		   					
+		   						list();
+		   						swal(data);
+		   				}
+		   			}
+		   		);
+		   	}
+		   		
+		   		function list(){
+		   		const req2 = {"idx": idx};
+		   		
+		   			$.ajax(
+		   					{
+		   						url: "ReplyList",
+		   						data: req2,
+		   						dataType: "html",
+		   						success: function(responseText){
+		   						
+		   							$("#reply").empty();
+		   							$("#reply").append(responseText.trim());
+		   								
+		   					}
+		   				}
+		   			);
+		   	}
+		   		
+		   		function replyinser(data){
+		   			
+		   			$.ajax({
+		   			url : "ReplyReplyOk",
+		   			data : data,
+		   			dataType : "html",
+		   			success : function(data) {
+		   				
+		   				list();
+		   				swal(data);
+		   			}
+		   		});
+		   		}
+		   	
+		   		/* 댓글 작성 버튼 클릭 */
+		   	$("#replywritebtn").click(function(){
+		   		const data = {"idx": idx, "content": $("#replycontent").val() };
+		   		
+		   		inser(data);
+		   		
+		   		$("#replycontent").val("");
+		   		
+		   	});
+		   	
+		   	/* 댓글 삭제 버튼 클릭 */
+		   	$(document).on('click', '#replydel', function(){
+		   		const tag = this.closest("div");
+		   		
+		   		const data2 = {"idx": $(tag).children("#co_idx").val()};
+		   		
+		   	
+		   		
+		   		del(data2);
+		   		
+		   	});
+		   	$(document).on('click', '#replydel2', function(){
+		   		const tag2 = this.closest("div");
+		   		
+		   		const data2 = {"idx": $(tag2).children("#co_idx2").val()};
+		   		
+		   	
+		   		
+		   		del(data2);
+		   		
+		   	});
+		   	
+		   	let replyreplytag = "";
+		   	
+		   	/* 대댓글 버튼 클릭 */
+		   	$(document).on('click', '#replyreplywrite', function(){
+		   		let tag = this.closest("div");
+		   		replyreplytag = tag;
+		   		
+		   		html = '<div id="replyreplyreset" class="comment-write mb-2"><h5 class="card-title">대댓글</h5>';
+		   		html += '<div class="form-floating">';
+		   		html += '<textarea id="replyreplycontent" class="form-control"></textarea>';
+		   		html += '<label for="floatingTextarea">댓글을 작성해 주세요</label> <input value="${board.idx}" type="hidden" />';
+		   		html += '</div>';
+		   		html += '<nav aria-label="Page navigation example">';
+		   		html += '<ul class="pagination justify-content-end"><div><br>';
+		   		html += '<button type="button" id="replyreplywritebtn" class="col btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>'
+		   		html += '<button type="button" id="replyreset" class="col btn btn-outline-secondary btn-sm rounded-pill">작성취소</button>';
+		   		html += '</div></ul></nav></div>';
+		   		
+		   		$(html).insertAfter(this.closest(".comment-card"));
+		   		
+		   	});
+		   	
+		   	/* 대댓글 작성 취소 */
+		   	$(document).on('click', '#replyreset', function(){
+		   		$("#replyreplyreset").remove();
+		   	});
+		   	
+		   	/* 대댓글 작성 */
+		   	$(document).on('click', '#replyreplywritebtn', function(){
+		   		
+		   		const data3 = {
+		   				"co_idx": $(replyreplytag).children("#co_idx").val(), 
+		   				"idx": $(replyreplytag).children("#idx").val(), 
+		   				"content": $("#replyreplycontent").val(),
+		   				"depth": $(replyreplytag).children("#depth").val(),
+		   				"step":  $(replyreplytag).children("#step").val()
+		   			};
+		   		
+		   		replyinser(data3);
+		   		
+		   	});
+		   	
+		   	/* 댓글 끝 */
+			
+			
+			
+			
+           
+        });
+        
+        
+</script>
 
 
 </head>
@@ -364,278 +622,6 @@
    <!-- Template Main JS File -->
    <script src="assets/js/main.js"></script>
    
-<script type="text/javascript">
-     
-        $(function(){
-           
-           let email_id = '<c:out value="${member.email_id}" />';
-           let yespark = '<c:out value="${yespark}" />';
-           let idx = '<c:out value="${board.idx}" />';
-           let b_code = '<c:out value="${board.b_code}" />';
-           let depth = '<c:out value="${board.depth}" />';
-           let step = '<c:out value="${board.step}" />';
-           let refer = '<c:out value="${board.refer}" />';
-           
-           
-           /* 사진 크기 자동 정렬 jQuery */
-			$("#text p img").removeAttr("width");
-		   	$("#text p img").removeAttr("height");
-		   	$("#text p img").attr("style","display: block; margin-left: auto; margin-right: auto; max-width:100%; height:auto;");
-           
-           /* 게시물 좋아요 비동기 처리 */
-           $("#yesbtn").click(function(){
-              
-        	   list();
-              
-        
-           
-        
-              
-              if(yespark == "no"){
-                 
-                 requestdata = {"idx": idx, "email_id": email_id};
-                 
-              
-                 $.ajax({
-                    type: "POST",
-                    url: "Yes",
-                  data: requestdata,
-                    dataType: "HTML",
-                    success: function(data){
-                       
-                       yespark = email_id;
-                       
-                       $("#yesbtn").empty();
-                       $("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
-                       swal(data);
-                    },
-                    beforeSend: function(){
-                     $('.wrap-load').removeClass('display-none');
-                  },
-                  complete: function(){
-                     $('.wrap-loading').addClass('display-none');
-                  }
-                 });
-                 
-              }else{
-                 
-                 requestdata = {"idx": idx, "email_id": email_id};
-                 
-                 $.ajax({
-                    type: "POST",
-                    url: "YesRemove",
-                  data: requestdata,
-                    dataType: "HTML",
-                    success: function(data){
-                       yespark = "no";
-                       
-                       $("#yesbtn").empty();
-                       $("#yesbtn").append('<i class="bi bi-heart"></i>');
-                       swal(data);
-                    },
-                    beforeSend: function(){
-                     $('.wrap-load').removeClass('display-none');
-                  },
-                  complete: function(){
-                     $('.wrap-loading').addClass('display-none');
-                  }
-                 });
-                 
-              }
-              
-              
-           });
-           
-           //신고
-       	function rep(data7){
-
-			$.ajax({
-				url:"RepCount",
-				data:data7,
-				dataType:"html",
-				success:function(responsetxt){
-				
-					swal("신고","신고되었습니다","success");
-				}
-				
-		});
-				
-		};
-		
-		
-		
-		$(document).on('click', '#report', function(){
-		
-			const data7 ={"idx":idx};
-			
-		
-			rep(data7);
-			
-	});
-   		
-   		
-   		
-   	
-           
-           /* 답글 작성 */
-           $("#replyWrite").click(function(){
-            
-                let link = "/WebCafe_Project/regular_reWriteView.do?refer="+refer+"&b_code="+b_code+"&depth="+depth+"&step="+step+"&idx="+idx;
-                
-              
-              location.href=link;
-              
-           });
-           
-           
-           
-           
-           
-           /* 댓글 */
-		   		function inser(data){
-		   			$.ajax({
-		   			url : "ReplyOk",
-		   			data : data,
-		   			dataType : "html",
-		   			success : function(data) {
-		   				
-		   				list();
-		   				swal(data);
-		   			}
-		   		});
-		   		}
-		   		
-		   		function del(data2){
-		   		$.ajax(
-		   				{
-		   					url: "ReplyDeleteOk",
-		   					data: data2,
-		   					dataType: "html",
-		   					success: function(data){
-		   					
-		   						list();
-		   						swal(data);
-		   				}
-		   			}
-		   		);
-		   	}
-		   		
-		   		function list(){
-		   		const req2 = {"idx": idx};
-		   		
-		   			$.ajax(
-		   					{
-		   						url: "ReplyList",
-		   						data: req2,
-		   						dataType: "html",
-		   						success: function(responseText){
-		   						
-		   							$("#reply").empty();
-		   							$("#reply").append(responseText.trim());
-		   								
-		   					}
-		   				}
-		   			);
-		   	}
-		   		
-		   		function replyinser(data){
-		   			
-		   			$.ajax({
-		   			url : "ReplyReplyOk",
-		   			data : data,
-		   			dataType : "html",
-		   			success : function(data) {
-		   				
-		   				list();
-		   				swal(data);
-		   			}
-		   		});
-		   		}
-		   	
-		   		/* 댓글 작성 버튼 클릭 */
-		   	$("#replywritebtn").click(function(){
-		   		const data = {"idx": idx, "content": $("#replycontent").val() };
-		   		
-		   		inser(data);
-		   		
-		   		$("#replycontent").val("");
-		   		
-		   	});
-		   	
-		   	/* 댓글 삭제 버튼 클릭 */
-		   	$(document).on('click', '#replydel', function(){
-		   		const tag = this.closest("div");
-		   		
-		   		const data2 = {"idx": $(tag).children("#co_idx").val()};
-		   		
-		   	
-		   		
-		   		del(data2);
-		   		
-		   	});
-		   	$(document).on('click', '#replydel2', function(){
-		   		const tag2 = this.closest("div");
-		   		
-		   		const data2 = {"idx": $(tag2).children("#co_idx2").val()};
-		   		
-		   	
-		   		
-		   		del(data2);
-		   		
-		   	});
-		   	
-		   	let replyreplytag = "";
-		   	
-		   	/* 대댓글 버튼 클릭 */
-		   	$(document).on('click', '#replyreplywrite', function(){
-		   		let tag = this.closest("div");
-		   		replyreplytag = tag;
-		   		
-		   		html = '<div id="replyreplyreset" class="comment-write mb-2"><h5 class="card-title">대댓글</h5>';
-		   		html += '<div class="form-floating">';
-		   		html += '<textarea id="replyreplycontent" class="form-control"></textarea>';
-		   		html += '<label for="floatingTextarea">댓글을 작성해 주세요</label> <input value="${board.idx}" type="hidden" />';
-		   		html += '</div>';
-		   		html += '<nav aria-label="Page navigation example">';
-		   		html += '<ul class="pagination justify-content-end"><div><br>';
-		   		html += '<button type="button" id="replyreplywritebtn" class="col btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>'
-		   		html += '<button type="button" id="replyreset" class="col btn btn-outline-secondary btn-sm rounded-pill">작성취소</button>';
-		   		html += '</div></ul></nav></div>';
-		   		
-		   		$(html).insertAfter(this.closest(".comment-card"));
-		   		
-		   	});
-		   	
-		   	/* 대댓글 작성 취소 */
-		   	$(document).on('click', '#replyreset', function(){
-		   		$("#replyreplyreset").remove();
-		   	});
-		   	
-		   	/* 대댓글 작성 */
-		   	$(document).on('click', '#replyreplywritebtn', function(){
-		   		
-		   		const data3 = {
-		   				"co_idx": $(replyreplytag).children("#co_idx").val(), 
-		   				"idx": $(replyreplytag).children("#idx").val(), 
-		   				"content": $("#replyreplycontent").val(),
-		   				"depth": $(replyreplytag).children("#depth").val(),
-		   				"step":  $(replyreplytag).children("#step").val()
-		   			};
-		   		
-		   		replyinser(data3);
-		   		
-		   	});
-		   	
-		   	/* 댓글 끝 */
-			
-			
-			
-			
-           
-        });
-        
-        
-     </script>
 
 </body>
 

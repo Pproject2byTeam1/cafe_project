@@ -168,12 +168,7 @@
 
 		<div class="container-fluid">
 			<div class="card">
-				<div></div>
-
 				<div class="card-body">
-					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
-					<!-- Table with hoverable rows -->
-
 					<table class="table table-hover " id=dataTable1>
 						<tr>
 
@@ -192,15 +187,12 @@
 						<c:if test="${reportlist.size() == 0}">
 							<tr>
 								<th  colspan="8"> 조회된 데이터가 없습니다</th>
-							
-								
 							</tr>
 						</c:if>
 						<c:forEach var="reportlist" items="${reportlist}"
 							varStatus="status">
 							<tr id="rapportlist">
-
-								<input class="idx" name="idx" id="idx" value="${reportlist.idx}"type="hidden" />${reportlist.b_code}
+								<input class="idx" name="idx" id="idx" value="${reportlist.idx}"type="hidden" />
 									<input class="b_code" name="b_code" id="b_code" value="${reportlist.b_code}"type="hidden" />
 								<c:choose>
 									<c:when test="${request.b_code eq'null'} ">
@@ -212,31 +204,31 @@
 								</c:choose>
 								<c:choose>
 									<c:when test="${reportlist.b_code eq'1'}">
-										<th scope="col">자유게시판</th>
+										<td scope="col">자유게시판</td>
 									</c:when>
 									<c:when test="${reportlist.b_code eq'2'}">
-										<th scope="col">출석게시판</th>
+										<td scope="col">출석게시판</td>
 									</c:when>
 									<c:when test="${reportlist.b_code eq'3'}">
-										<th scope="col">전체일정</th>
+										<td scope="col">전체일정</td>
 									</c:when>
 									<c:when test="${reportlist.b_code eq'4'}">
-										<th scope="col">사진공유</th>
+										<td scope="col">사진공유</td>
 									</c:when>
 									<c:when test="${reportlist.b_code eq'5'}">
-										<th scope="col">유로거래</th>
+										<td scope="col">유로거래</td>
 									</c:when>
 									<c:otherwise>
-										<th scope="col">자료게시판</th>
+										<td scope="col">자료게시판</td>
 									</c:otherwise>
 								</c:choose>
 
-								<th scope="col">${reportlist.title}</th>
-								<th scope="col">${reportlist.nick}</th>
-								<th scope="col">${reportlist.email_id}</th>
-								<th scope="col">${reportlist.hits}</th>
-								<th scope="col">${reportlist.report_count}</th>
-								<th scope="col">
+								<td scope="col">${reportlist.title}</td>
+								<td scope="col">${reportlist.nick}</td>
+								<td scope="col">${reportlist.email_id}</td>
+								<td scope="col">${reportlist.hits}</td>
+								<td scope="col">${reportlist.report_count}</td>
+								<td scope="col">
 									<c:choose>
 									<c:when test="${reportlist.b_code eq'1'}">
 										<button type="button" class="btn btn-danger"
