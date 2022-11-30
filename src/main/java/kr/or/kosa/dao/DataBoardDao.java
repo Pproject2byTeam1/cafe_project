@@ -586,10 +586,10 @@ public class DataBoardDao {
 
 			List<Integer> pointlist = new ArrayList<Integer>();
 
-			if (rs.next()) {
+			if (rs1.next()) {
 				do {
-					pointlist.add(rs.getInt("r_point"));
-				} while (rs.next());
+					pointlist.add(rs1.getInt("r_point"));
+				} while (rs1.next());
 			}
 			int rank = 1;
 			for (int i = 0; i < pointlist.size() - 1; i++) {
@@ -686,11 +686,12 @@ public class DataBoardDao {
 			
 			List<Integer> pointlist = new ArrayList<Integer>();
 		
-			if(rs.next()) {
+			if(rs1.next()) {
 				do {
-					pointlist.add(rs.getInt("r_point"));
-				}while(rs.next());
+					pointlist.add(rs1.getInt("r_point"));
+				}while(rs1.next());
 			}
+			
 			int rank = 1;
 			for(int i=0; i<pointlist.size()-1; i++) {
 				int min = pointlist.get(i);
