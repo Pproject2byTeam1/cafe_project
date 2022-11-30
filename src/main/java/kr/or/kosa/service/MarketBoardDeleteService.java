@@ -39,7 +39,6 @@ public class MarketBoardDeleteService implements Action {
 		int b_code = Integer.parseInt(request.getParameter("b_code"));
 		String idx1 = request.getParameter("idx");
 		
-		System.out.println("idx1 : " + idx1);
 		if(idx1 == null || idx1.trim().equals("")){
 			msg ="글번호가 넘어오지 않았습니다";
 			url = "marketboard_read.do?b_code=" + b_code + "&idx=" + idx;
@@ -51,16 +50,12 @@ public class MarketBoardDeleteService implements Action {
 			forward.setPath("/WEB-INF/view/redirect.jsp");
 						
 		} else {
-			System.out.println("여기까지 1");
 			//삭제 로직
 			MarketBoardDao dao = new MarketBoardDao();
 			int result = dao.delMarket(idx, email_id);
 			DataBoardDao databoard = new DataBoardDao();
-			System.out.println("여기까지 2");
-			System.out.println(result);
 			
 			if(result > 0 ) {
-				System.out.println("여기까지 3");
 				msg ="삭제 되었습니다.";
 				url = "marketboard_list.do?b_code=" + b_code;
 				

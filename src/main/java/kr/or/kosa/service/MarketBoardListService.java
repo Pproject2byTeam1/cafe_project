@@ -83,10 +83,6 @@ public class MarketBoardListService implements Action {
 				pagecount = (totalboardcount / pagesize) + 1; 
 			}
 			
-			System.out.println("몇번페이지 : " + cpage);
-			System.out.println("pagesize : " + pagesize);
-			System.out.println("search : " + search);
-			System.out.println("sold : " + sold);
 			List<MarketBoard> list = market_dao.searchMarket(b_code, cpage, pagesize, sold, search);
 			
 			//yes, 댓글수

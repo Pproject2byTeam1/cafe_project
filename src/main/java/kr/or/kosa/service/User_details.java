@@ -22,7 +22,6 @@ public class User_details implements Action {
 		
 		String todo = request.getParameter("todo");
 		String url = "";
-		System.out.println(todo + "투두잉");
 		
 		try {
 			//top

@@ -23,7 +23,6 @@ public class nickVerification implements Action {
 			
 			//검증 실행
 			row = dao.verificationUser1(nickname);
-			System.out.println(row);
 			if(row>0) {
 				request.setAttribute("verification", true);
 			}else {

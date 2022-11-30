@@ -24,15 +24,12 @@ public class userVerification implements Action {
 			 
 			UserDao dao = new UserDao();
 			String password = (String) request.getParameter("password");
-			System.out.println(password);
 			//검증 실행
 			row = dao.verificationUser2(userId, password);
 			
 			if(row>0) {
-				System.out.println("검증성공");
 				request.setAttribute("verification", true);
 			}else {
-				System.out.println("검증실패");
 				request.setAttribute("verification", false);
 			}
 			

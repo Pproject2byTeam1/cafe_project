@@ -30,7 +30,6 @@ public class CheckBoardService implements Action {
 		
 		//날짜계산 준비
 		String inputdate = (String) request.getParameter("inputdate");
-		System.out.println("inputdate: "+inputdate);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date nowdate = null;
 		String nowday = "";
@@ -93,7 +92,6 @@ public class CheckBoardService implements Action {
 			if(user != null) {
 				userId = user.getEmail_id();
 			}
-			System.out.println(userId);
 			request.setAttribute("userId", userId);
 
 			Board_Dao dao = new Board_Dao();

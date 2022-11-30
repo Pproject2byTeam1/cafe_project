@@ -35,11 +35,6 @@ public class UpdatePwdService implements Action {
 				row = dao.updateUserPwd(userId, newpassword);
 			}
 			
-			if(row<0) {
-				System.out.println("row 변경안됨");
-			}else {
-				System.out.println("성공");
-			}
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

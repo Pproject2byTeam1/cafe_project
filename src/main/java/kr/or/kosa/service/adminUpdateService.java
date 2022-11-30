@@ -36,7 +36,6 @@ public class adminUpdateService implements Action {
 			String newpassword = (String) request.getParameter("newpassword");
 			String date = (String) request.getParameter("date");
 			String tel = (String) request.getParameter("tel");
-			System.out.println(tel);
 			
 			String orinick = (String) request.getParameter("orinick");
 			String oriphone = (String) request.getParameter("oriphone");
@@ -54,17 +53,10 @@ public class adminUpdateService implements Action {
 				row2 = dao.updateUserTelnum(oriphone, userId);
 			}
 			
-			if(row<0) {
-				System.out.println("row 변경안됨");
-			}else if(row2<0) {
-				System.out.println("row2 변경안됨");
-			}else {
-				System.out.println("성공");
-			}
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("index.jsp");
+		  	forward.setPath("cafemain.do");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
