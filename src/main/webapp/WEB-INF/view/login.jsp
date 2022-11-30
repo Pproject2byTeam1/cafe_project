@@ -56,6 +56,12 @@
 	<!-- ======= Sidebar ======= -->
 	<c:import url="/WEB-INF/view/common/side.jsp" />
 	<!-- End Sidebar -->
+	
+	<c:if test="${member != null}">
+	<script type="text/javascript">
+	   location.href="cafemain.do";
+	</script>
+	</c:if>
 
 	<main id="main" class="main">
 
