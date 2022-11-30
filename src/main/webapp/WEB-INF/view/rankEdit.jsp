@@ -36,10 +36,10 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <script type="text/javascript">
 	$(document).ready(function(){
-		var size = "<c:out value='${list}'/>";
-		var rank = "<c:out value='${list[3].rank}'/>";
-		var rname = "<c:out value='${list[3].r_name}'/>";
-		var rpoint = "<c:out value='${list[3].r_point}'/>";
+
+		var size = Number("<c:out value='${size}'/>");
+		var list = "<c:out value='${list}'/>";
+		var max = Number("<c:out value='${maxpoint}'/>");
 		
 		$('#newRank').click(function addRank() {
 			
@@ -54,14 +54,57 @@
 			const newCell2 = newRow.insertCell(1);
 			const newCell3 = newRow.insertCell(2);
 			const newCell4 = newRow.insertCell(3);
+			size += 1;
+			max += 1;
+			console.log(list);
+			
 			// Cell에 텍스트 추가
-			newCell1.innerHTML = rank;
-			newCell2.innerHTML = rname;//'<input type="text" class="form-control" id="기입하세용" placeholder="" value="" id="r_rank">';
-			newCell3.innerHTML = rpoint;//'<input type="text" class="form-control" id="기입하세용" placeholder="0 점 이상" id="r_point">';
+			newRow.setAttribute("class" , size);
+			newCell1.innerHTML = size;
+			
+			newCell2.innerHTML = '<input type="text" class="form-control" placeholder="${rank.r_name}" value="${rank.r_name}" id="' + size + 'name"></td>';
+			newCell3.innerHTML = '<input type="text" class="form-control" placeholder="' + max + '점 이상" id="' + size + 'point">';
+			newCell4.innerHTML = '<button type="button" class="editRank btn btn btn-secondary" value="edit" style="float: right">수정하기</button>';
+			
 			
 		});
 		
+		
+		$('#delRank').click(function delRank() {
+			
+				  // table element 찾기
+				  const table = document.getElementById('ranklist');
+				  
+				  // 행(Row) 삭제
+				  const newRow = table.deleteRow(-1);
+				  size -= 1;
+				  max -= 1;
+			
+		});
+		
+		$('.editRank').click(function(){
+			  
+/* 			 var td = $(this).closest('tr').find('td');
+			 console.log(td.eq(1));
+			 var td2 = $(td).children().eq(2);
+			 console.log(td2);
+			 var td3 = $(td2).children('input');
+			 console.log(td3); */
+			
+		    var _td = $(this).closest('tr').find('td');
+			 console.log(_td[0]);
+			 _td[0].find('td').
+			 if($(_td[0]) == "1"){
+				 
+			 }else {
+				 _td[2].innerHTML = '<input type="text" class="form-control" id="point" placeholder="${rank.r_point}">';
+			 }
+		    
+		    _td[3].innerHTML = '<button type="button" class="saveRank btn btn btn-secondary" value="save" style="float: right">저장하기</button>';
 
+		});
+					
+		
 	});
 </script>
 </head>
@@ -74,7 +117,6 @@
 	<!-- ======= Sidebar ======= -->
 	<jsp:include page="/common/side.jsp"></jsp:include>
 	<!-- End Sidebar -->
-
 
 
 	<main id="main" class="main">
@@ -120,16 +162,16 @@
 							</tr>
 						</thead>
 						<tbody>
-
+						${list}
 							<c:forEach var="rank" items="${list}" varStatus="status">
 							
 								<c:if test="${rank.rank>0}">
 									<tr class="${rank.rank}">
 
 										<td class="${rank.rank}">${rank.rank}</td>
-										<td><input type="text" class="form-control" id="기입하세용"
-											placeholder="${rank.r_name}" value="${rank.r_name}"
-											id="r_rank"></td>
+										<td><input type="text" class="form-control" id="name"
+											placeholder="${rank.r_name}" value="${rank.r_name}" readonly></td>
+											<input type="hidden" class="isReg" value="false">
 										<td>
 											<c:choose>
 												<c:when test="${rank.rank == 1}">
@@ -137,14 +179,15 @@
 												      </c:when>
 
 												<c:otherwise>
-													<input type="text" class="form-control" id="기입하세용"
-														placeholder="${rank.r_point}점 이상" id="r_point">
+													<input type="text" class="form-control" id="point"
+														placeholder="${rank.r_point}" readonly>
+														<input type="hidden" class="isReg" value="false">
 												</c:otherwise>
 											</c:choose>
 										</td>
 										<td>				
-										<button type="button" class="btn btn btn-secondary"
-											id="editRank" value="edit" style="float: right">수정하기</button>
+										<input type="button" class="editRank btn btn btn-secondary"
+											value="수정하기" style="float: right">
 										</td>
 
 									</tr>
