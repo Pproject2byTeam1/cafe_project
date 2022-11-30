@@ -92,7 +92,7 @@
   				data: requestdata3,
   				dataType: "HTML",
   				success: function(data) {
-  					console.log(data);
+  					
   					swal(data);
 
   					document.getElementById("add").className += " d-none";
@@ -182,7 +182,7 @@
 				dataType: "JSON",
 				success: function(data) {
 					
-					console.log(data);
+					
 
 					let datelist = new Array();
 
@@ -338,7 +338,7 @@
 				
 				const data2 = {"idx": $(tag).children("#co_idx").val()};
 				
-				console.log(data2);
+			
 				
 				del(data2);
 				
@@ -349,7 +349,7 @@
 				
 				const data2 = {"idx": $(tag2).children("#co_idx2").val()};
 				
-				console.log(data2);
+				
 				
 				del(data2);
 				
@@ -471,7 +471,7 @@
   				success: function(data) {
 
   					if(data == null){
-  						console.log("데이터 없음");
+  					
   					}else{
   						$(data).each(function() {
   							html = '<div class="row mb-5">';
@@ -503,7 +503,7 @@
   			
   			const requestdata1 = { "email_id": member, "idx": idx };
   			
-  			console.log(requestdata1);
+  		
   			
   			$(document).on('click', '#gridCheck2', function(){
   				if ($('#gridCheck2').is(':checked')) {

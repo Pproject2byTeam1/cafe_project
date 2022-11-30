@@ -46,7 +46,7 @@
 			
 			//글쓰기
 			$("#Write").click(function(){
-				console.log("write 클릭");
+			
 				location.href="marketboard_write.do?b_code=" + b_code;
 				
 			});

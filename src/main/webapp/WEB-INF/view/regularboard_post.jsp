@@ -72,16 +72,15 @@
               
         	   list();
               
-              console.log("hahaha");
-              console.log(email_id);
-              console.log("sdfs" + yespark);
+        
+           
+        
               
               if(yespark == "no"){
                  
                  requestdata = {"idx": idx, "email_id": email_id};
                  
-                 console.log(requestdata);
-                 
+              
                  $.ajax({
                     type: "POST",
                     url: "Yes",
@@ -153,7 +152,7 @@
 		
 			const data7 ={"idx":idx};
 			
-			console.log(data7);
+		
 			rep(data7);
 			
 	});
@@ -166,7 +165,7 @@
            $("#replyWrite").click(function(){
             
                 let link = "/WebCafe_Project/regular_reWriteView.do?refer="+refer+"&b_code="+b_code+"&depth="+depth+"&step="+step+"&idx="+idx;
-                 console.log(link);
+                
               
               location.href=link;
               
@@ -253,7 +252,7 @@
 		   		
 		   		const data2 = {"idx": $(tag).children("#co_idx").val()};
 		   		
-		   		console.log(data2);
+		   	
 		   		
 		   		del(data2);
 		   		
@@ -263,7 +262,7 @@
 		   		
 		   		const data2 = {"idx": $(tag2).children("#co_idx2").val()};
 		   		
-		   		console.log(data2);
+		   	
 		   		
 		   		del(data2);
 		   		

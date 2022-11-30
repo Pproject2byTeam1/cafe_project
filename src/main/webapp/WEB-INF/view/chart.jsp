@@ -198,7 +198,7 @@
   					dataType: "JSON",
   					success: function(data){
 						
-  						console.log(data);
+  				
   						
   						splicetResult = MBWmonth.splice(0);
   						splicetResult = MBWcount.splice(0);
@@ -208,7 +208,7 @@
 							MBWcount.push(this.count);
   						});
   						
-  						console.log(data);
+  						
   						
   						
   						new ApexCharts(document.querySelector("#monthBoardWrite"), {

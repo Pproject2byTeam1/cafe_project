@@ -171,11 +171,11 @@
 			  "idxarr" : chk_arr,
 			  "delCheckNo": chk_arr.length
 			  } 
-		  console.log(chk_arr);
-		  /*console.log(chk_arr.length); */
+		
+	
 		  $.post("delete_memo.do", data, function(responsedata){
                 //응답이 왔고 정상 건 이라면
-                console.log(responsedata);
+          
 			  	
                 $('#memolist').empty();
                 $('#memolist').append(responsedata);

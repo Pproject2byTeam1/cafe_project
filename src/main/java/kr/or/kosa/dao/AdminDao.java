@@ -36,7 +36,7 @@ public class AdminDao {
 		try {
 			conn = ds.getConnection();
 
-			String sql = "select * from (select rownum rn,b_code, idx ,title, nick,email_id ,hits, report_count from board where report_count>3)where rn <= ? and rn >= ?";
+			String sql = "select * from (select rownum rn,b_code, idx ,title, nick,email_id ,hits, report_count from board where report_count>=3)where rn <= ? and rn >= ?";
 		
 			pstmt = conn.prepareStatement(sql);
 			

@@ -207,10 +207,7 @@
 		  birthyear = "2000";
 		  $('#date').val(birthyear + "-" + birthday);
 	  }
-	  //console.log(birthyear + "-" + birthday);
-   // alert(naver_id_login.getProfileData('name'));
-   // alert(naver_id_login.getProfileData('birthday'));
-   	  //alert(naver_id_login.getProfileData('birthyear'));
+	 
   }
   $(function(){
 	  $('#nick').keyup(function(){

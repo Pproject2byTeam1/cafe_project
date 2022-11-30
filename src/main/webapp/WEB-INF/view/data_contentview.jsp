@@ -415,13 +415,16 @@
 															<button type="button" onclick="location.href='upload/${originalfilename}'" target="_blank"
 																class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
 															<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
+															
 																class="btn btn-secondary rounded-pill" >다운로드</button>
+																<hr>
 														</c:if>	
 														</c:when>
 														<c:otherwise>
 														<c:if test="${member != null}">
 														<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
 																class="btn btn-secondary rounded-pill" >${board.ori_name} 다운로드</button>
+																<hr>
 														</c:if>	
 														</c:otherwise>
 													</c:choose>
@@ -429,7 +432,7 @@
 											</c:forTokens>
 
 										</div>
-										<hr>
+										
 										<div class="row">
 											<div class="col-lg-12">
 
