@@ -76,7 +76,7 @@
 		<!-- Card with an image overlay -->
           <div class="card">
           <div class="embed-responsive">
-            <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X500?text=No+Image'">
+            <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X500?text=Title+Image'">
           </div>
             <div class="card-img-overlay">
               <h5 class="card-title">${banner.cafe_name}</h5>
@@ -125,7 +125,12 @@
                       	<tbody>
                       	<c:forEach var="board" items="${regular_list}" varStatus="status">
                       	<tr class="listrow">
-		                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-success rounded-pill">${board.c_count}</span></td>
+		                      	<td class="td1">
+			                      	<span class="d-none b_code">${board.b_code}</span>
+			                      	${board.title}
+			                      	<span class="d-none idx">${board.idx}</span>
+			                      	<span class="badge bg-success rounded-pill">${board.c_count}</span>
+		                      	</td>
 		                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
 		                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 									<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
@@ -492,13 +497,13 @@
 	  			const idx = $(this).children('.idx').text();
 	  			const b_code = $(this).children('.b_code').text();
 	  			const w_date = $(this).children(".w_date").text();
-	  			//window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
 	  		});
 	  		$('.listrow').click(function(){
-	  			const idx = $(this).children('.idx').text();
-	  			const b_code = $(this).children().children('.d-none').text();
+	  			const idx = $(this).children('.td1').children('.idx').text();
+	  			const b_code = $(this).children('.td1').children('.b_code').text();
 	  			const w_date = $(this).children(".w_date").text();
-	  			//window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
 	  		});
   	});
 	

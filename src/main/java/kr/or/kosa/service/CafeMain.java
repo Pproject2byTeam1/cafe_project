@@ -56,7 +56,6 @@ public class CafeMain implements Action {
 			
 			//날짜계산 준비
 			String inputdate = (String) request.getParameter("inputdate");
-			System.out.println("inputdate: "+inputdate);
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date nowdate = null;
 			String nowday = "";
