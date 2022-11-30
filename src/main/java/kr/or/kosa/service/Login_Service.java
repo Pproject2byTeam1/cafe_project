@@ -48,7 +48,7 @@ public class Login_Service implements Action {
 			}else {
 				if(user.getPassword().equals(password)) {
 					session.setAttribute("member", user);
-					url = "/WEB-INF/view/cafe_main.jsp";
+					url = "cafemain.do";
 				}else {
 					url = "/WEB-INF/view/login.jsp";
 				}

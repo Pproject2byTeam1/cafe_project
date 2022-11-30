@@ -32,6 +32,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
     		
 			
 			Board_Dao dao =new Board_Dao();
+			
 			int row = dao.upReport(idx);
 	
 			String msg = "";

@@ -44,14 +44,6 @@ public class UserUpdateService implements Action {
 				row = dao.updateUserTelnum(tel, userId);
 			}
 			
-			if(row<0) {
-				System.out.println("row 변경안됨");
-			}else if(row2<0) {
-				System.out.println("row2 변경안됨");
-			}else {
-				System.out.println("성공");
-			}
-			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
 		  	forward.setPath("userinfo.do");

@@ -130,6 +130,7 @@
               
               
            });
+           
            //신고
        	function rep(data7){
 
@@ -319,7 +320,7 @@
         });
         
         
-     </script>
+</script>
 
 
 </head>
@@ -405,6 +406,20 @@
                               <br>
                               <hr>
                                     <div class="d-flex justify-content-end">
+                                    
+                                    <!-- 수정 삭제 -->
+	                                   	<c:if test="${member.email_id == board.email_id}">
+                                   		
+                                			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
+	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
+	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
+	                                          
+	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
+	                                       </form>
+	                                   	 &nbsp;
+	                                   	 <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill" value="삭제">
+	                                   	 &nbsp;
+	                                   	</c:if>
 
                                     	<div>
                                     		<c:if test="${member != null}">
@@ -418,19 +433,6 @@
 	                                        </c:if>	
                                         </div>
                                     	
-	                                   	
-	                                   	<!-- 답글 수정 목록 -->
-	                                   	
-	                                   	<c:if test="${member.email_id == board.email_id}">
-                                   		
-                                			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
-	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
-	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
-	                                          
-	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
-	                                       </form>
-	                                   	 &nbsp;
-	                                   	</c:if>
 	                                   		<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글"> &nbsp;
                                    			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록"> &nbsp;
                                    			
@@ -439,7 +441,7 @@
 	                                          <input type="text" value="${board.b_code}" name="b_code" style="display: none;">
 	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
 	                                          
-	                                          <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill" value="삭제">
+	                                          
 	                                       </form>
 	                                     &nbsp;
 	                                   	</c:if>
@@ -620,15 +622,6 @@
    <!-- Template Main JS File -->
    <script src="assets/js/main.js"></script>
    
-   <script type="text/javascript">
-   
-  
-   
-
-   
-   
-   </script>
-
 
 </body>
 

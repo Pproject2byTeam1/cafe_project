@@ -34,7 +34,6 @@ public class SnsCheckService implements Action {
 	        request.setAttribute("infolist", infolist);
 			
 			String email = request.getParameter("email");
-			System.out.println(email);
 			UserDao dao = new UserDao();
 			User user = dao.selectUserById(email);
 			if(user != null) {//이미 가입된 경우 로그인 처리 후 메인화면 ㄱㄱ

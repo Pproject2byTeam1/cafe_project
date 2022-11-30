@@ -32,7 +32,6 @@ public class DataBoardEditService implements Action {
  			int b_code = Integer.parseInt(request.getParameter("b_code"));
  			int idx = Integer.parseInt(request.getParameter("idx"));
  			String email_idx = request.getParameter("id");
- 	System.out.println(email_idx);
  
  			
  			// 로그인 안할경우 로그인 페이지로

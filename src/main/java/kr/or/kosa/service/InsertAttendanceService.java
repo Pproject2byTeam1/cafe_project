@@ -32,7 +32,6 @@ public class InsertAttendanceService implements Action {
 		
 		//날짜계산 준비
 				String inputdate = (String) request.getParameter("inputdate");
-				System.out.println("inputdate: "+inputdate);
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				Date nowdate = new Date();
 				String nowday = format.format(nowdate);
@@ -76,7 +75,6 @@ public class InsertAttendanceService implements Action {
 			AttendanceBoad board = new AttendanceBoad();
 			board.setB_code(2);
 			board.setContent(multi.getParameter("content"));
-			System.out.println("content: " + multi.getParameter("content"));
 			board.setEmail_id(user.getEmail_id());
 			board.setNick(user.getNick());
 			board.setTitle(multi.getParameter("content"));
@@ -84,10 +82,8 @@ public class InsertAttendanceService implements Action {
 			row = dao.insertBoard(board);
 			String msg = "";
 			if(row > 0) {
-				System.out.println("작성 성공");
 				msg = "성공";
 			}else {
-				System.out.println("작성 실패");
 				msg = "실패";
 			}
 			request.setAttribute("board_msg", msg);

@@ -75,8 +75,6 @@
                  
                  requestdata = {"idx": idx, "email_id": email_id};
                  
-                 console.log(requestdata);
-                 
                  $.ajax({
                     type: "POST",
                     url: "Yes",
@@ -127,6 +125,7 @@
               
            });
         
+        
         //신고
     	function rep(data7){
 
@@ -147,7 +146,6 @@
 		
 			const data7 ={"idx":idx};
 			
-			console.log(data7);
 			rep(data7);
 			
 	});
@@ -155,8 +153,6 @@
         //삭제
         $("#delete").click(function(){
 	
-			console.log(idx);
-			console.log(b_code);
 			
  			location.href="data_delete.do?idx=" + idx +"&b_code="+ b_code;
  			
@@ -255,8 +251,6 @@
 			
 			const data2 = {"idx": $(tag).children("#co_idx").val()};
 			
-			console.log(data2);
-			
 			del(data2);
 			
 		});
@@ -265,7 +259,6 @@
 			
 			const data2 = {"idx": $(tag2).children("#co_idx2").val()};
 			
-			console.log(data2);
 			
 			del(data2);
 			

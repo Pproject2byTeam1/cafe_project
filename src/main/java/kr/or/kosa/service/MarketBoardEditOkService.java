@@ -43,7 +43,6 @@ public class MarketBoardEditOkService implements Action {
  			
  	        String url = "";
  	        
- 	        System.out.println("여기 타는거에요?");
  			
  			// 로그인 안할경우 로그인 페이지로
 			if (user == null) {

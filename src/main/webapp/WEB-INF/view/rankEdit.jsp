@@ -84,15 +84,8 @@
 		
 		$('.editRank').click(function(){
 			  
-/* 			 var td = $(this).closest('tr').find('td');
-			 console.log(td.eq(1));
-			 var td2 = $(td).children().eq(2);
-			 console.log(td2);
-			 var td3 = $(td2).children('input');
-			 console.log(td3); */
 			
 		    var _td = $(this).closest('tr').find('td');
-			 console.log(_td[0]);
 			 _td[0].find('td').
 			 if($(_td[0]) == "1"){
 				 

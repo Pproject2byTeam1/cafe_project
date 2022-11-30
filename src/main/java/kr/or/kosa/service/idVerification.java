@@ -24,10 +24,8 @@ ActionForward forward = new ActionForward();
 			
 			if(!fn.equals("false")) {
 				request.setAttribute("verification", true);
-				System.out.println("true");
 			}else {
 				request.setAttribute("verification", false);
-				System.out.println("false");
 			}
 			
 			

@@ -58,6 +58,7 @@ public class AdminDao {
 				report.setEmail_id(rs.getString("email_id"));
 				report.setHits(rs.getInt("hits"));
 				report.setReport_count(rs.getInt("report_count"));
+				report.setB_code(rs.getInt("b_code"));
 
 				reportlist.add(report);
 			}
@@ -189,6 +190,7 @@ public class AdminDao {
 		}
 		return totalcount;
 	}
+	
 	
 	//신고 갯수 초기화
 	public boolean deleteRapport(int idx) {
