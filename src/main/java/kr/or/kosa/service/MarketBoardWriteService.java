@@ -58,8 +58,13 @@ public class MarketBoardWriteService implements Action {
 			System.out.println(b_code + title + content + m_mode + cate + price + user);
 			
 			if(user == null) {
-		    	msg = "실패";
-				url = "/WebCafe_Project/login_view.do";
+				 String board_msg = "세션이 만료되었습니다.";
+		            String board_url = "/WebCafe_Project/login_view.do";
+		              
+		            request.setAttribute("board_msg", board_msg);
+		            request.setAttribute("board_url", board_url);
+		              
+		            url="/WEB-INF/view/redirect.jsp";
 		    }else {
 		    	Enumeration filenames = multi.getFileNames();
 				
