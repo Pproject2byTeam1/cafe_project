@@ -1,4 +1,4 @@
-package kr.or.kosa.dao;
+	package kr.or.kosa.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -124,6 +124,57 @@ public List<Chart> getTopRankpoint(String startDate, String endDate, int number)
 					board.setNick(rs.getString("nick"));
 					board.setTitle(rs.getString("title"));
 					board.setW_date(rs.getString("w_date"));
+					
+					boardlist.add(board);
+				}while(rs.next());
+			}else {
+				System.out.println("조회 데이터 없음");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+	
+		return boardlist;
+	}
+
+
+
+public List<Chart> getBoardBoardUtilizationRate(String startDate, String endDate){
+	
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Chart> boardlist = new ArrayList<Chart>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select sum(hits) as hit_count, B_CODE, b_name from( "
+					+ "select idx, hits, b.b_code, b_name from board b left join board_info i on b.B_CODE = i.B_CODE "
+					+ "where w_date BETWEEN TO_DATE(?, 'YYYY-MM-DD') and TO_DATE(?, 'YYYY-MM-DD')) group by B_CODE, b_name "
+					+ "ORDER BY b_code asc ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, startDate);
+			pstmt.setString(2, endDate);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					
+					Chart board = new Chart();
+					board.setHit_count(rs.getInt("hit_count"));
+					board.setB_name(rs.getString("b_name"));
 					
 					boardlist.add(board);
 				}while(rs.next());
