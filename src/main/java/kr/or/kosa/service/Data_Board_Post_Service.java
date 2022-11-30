@@ -41,10 +41,7 @@ public class Data_Board_Post_Service implements Action {
 			DataBoardDao dao = new DataBoardDao();
 			Board_Dao bdao = new Board_Dao();
 			Yes_Dao ydao = new Yes_Dao();
-			
-			//top
-			CafeBannerDao bannerdao = new CafeBannerDao();
-			CafeBanner banner = bannerdao.getCafeBanner();
+
 			
 			
 			List<Board_Info> infolist = infodao.getSideBoardList();
