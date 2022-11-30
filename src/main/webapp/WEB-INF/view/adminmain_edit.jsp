@@ -102,6 +102,14 @@
 		flex-direction: column;
 	}
 }
+
+.draggable{
+	cursor: move;
+}
+
+.draggable.dragging {
+ 	opacity: 0.5;
+}
 </style>
 
 <script
@@ -161,13 +169,14 @@
 
  		document.addEventListener("drop", (event) => {
  		  	event.preventDefault();
- 		  	console.log("사진 도착");
- 		  	if (event.target.className === "inner") {
+ 		  	
+ 		  	if (event.target.className === "inner") { //배너 이미지
  		  		const files = event.dataTransfer?.files;
  		    	event.target.style.background = "#3a3a3a";
  		    	handleUpdate([...files]);
  		  	}
  		});
+ 		
 
  		function changeEvent(event){
  		  	const { target } = event;
@@ -176,7 +185,8 @@
 
  		function handleUpdate(fileList){
  			  const preview = document.getElementById("preview");
-
+			  const formData = new FormData();
+			  
  			  fileList.forEach((file) => {
  			    	const reader = new FileReader();
  			    	reader.addEventListener("load", (event) => {
@@ -189,9 +199,10 @@
  			      		preview.append(imgContainer);
  			    	});
  			 		reader.readAsDataURL(file);
+ 			 		formData.append('cafe_img', file);
  			 });
- 			 const formData = new FormData();
- 			 formData.append('cafe_img', data[0].files[0]);
+ 			 
+ 			 
  			 bannerUpload(formData);
  		};
  		
@@ -200,6 +211,8 @@
  		    	type: "POST",
  		    	url: "BannerUpload",
  		    	data: formData,
+ 		    	contentType:false,
+ 		    	processData:false,
  		    	dataType: "HTML",
  		    	success: function(data){
  		    		console.log(data);
@@ -400,6 +413,254 @@
  		
  		/* top 끝 */
  		
+ 		/* 게시판 추가 삭제 버튼 시작 */
+ 		
+ 		function cateload(){
+ 			
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "BoardInfoLoad",
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					$("#infoboard").empty();
+ 					$("#infoboard").append(data);
+ 					$("#cateinsertview").empty();
+ 				}
+ 			});
+ 		}
+ 		
+ 		function catesave(requestdata) {
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "BoardInfoInsert",
+ 				data: requestdata,
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					swal(data);
+ 					cateload();
+ 				}
+ 			});
+ 		}
+ 		
+ 		function cateremove(requestdata1){
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "BoardInfoRemove",
+ 				data: requestdata1,
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					swal(data);
+ 					cateload();
+ 				}
+ 			});
+ 		}
+ 		
+ 		$("#addview_btn").click(function(){
+ 			let html2 = '<div class="maincard">';
+ 			html2 += '<input type="text" class="form-control" id="catename" placeholder="카테고리 이름을 입력해 주세요" required></input><br>';
+ 			html2 += '<select class="form-select" aria-label="Default select example" id="btypeselected">';
+ 				html2 += '<option value="b1">자유게시판</option>';
+ 				html2 += '<option value="b2">출석게시판</option>';
+ 				html2 += '<option value="b3">사진게시판</option>';
+ 				html2 += '<option value="b4">자료게시판</option>';
+ 				html2 += '<option value="b5">거래게시판</option>';
+ 				html2 += '<option value="b6">일정관리게시판</option>';
+ 			html2 += '</select><br>';
+ 			html2 += '<textarea class="form-control" placeholder="게시글 작성 견본을 작성해보세요" id="addform" style="height: 100px"></textarea>';
+ 			html2 += '<div align="center" class="col-md-12 mt-2"><button type="submit" id="addviewsave" class="btn btn-outline-secondary btn-sm rounded-pill">저장</button>';
+ 			html2 += '<button type="button" id="addviewreset" class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>';
+ 			html2 += '</div></div>';
+ 			
+ 			$("#cateinsertview").append(html2);
+ 		});
+ 		
+ 		$(document).on('click', '#addviewreset', function(){
+ 			$("#cateinsertview").empty();
+ 		});
+ 		
+ 		$(document).on('click', '#addviewsave', function(){
+ 			
+ 			let check = $("#btypeselected option:selected").val();
+ 			let requestdata = {"b_name": $("#catename").val(), "form": $("#addform").val(), "b_type": check};
+ 			catesave(requestdata);
+ 		});
+ 		
+ 		$(document).on('click', '.trash', function(){
+ 			let divtag = this.closest(".maincard");
+ 			let children1 = $(divtag).children();
+ 			let ch = $(children1).children().eq(0);
+ 			
+ 			let requestdata1 = {"b_code": $(ch).val()};
+ 			console.log(requestdata1);
+ 			
+ 			cateremove(requestdata1);
+ 		});
+ 		
+ 		/* 게시판 추가 삭제 버튼 끝 */
+ 		
+ 		/* 게시판 정보 수정 시작 */
+ 		
+ 		function boardinfobyb_code(divtag){
+ 			
+ 			let children1 = $(divtag).children();
+ 			let ch = $(children1).children().eq(0);
+ 			let requestdata2 = {"b_code": $(ch).val()};
+ 			
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "BoardInfoByB_code",
+ 				data: requestdata2,
+ 				dataType: "JSON",
+ 				success: function(data){
+ 					console.log(data);
+ 					
+ 					let html3 = '<div id="mytag" class="maincard">';
+ 					html3 += '<input type="text" class="form-control" id="catename2" value="' + data.b_name + '" required></input><input id="parkb_code" value="' + data.b_code + '" type="hidden" /><br>';
+ 					if(data.form == "" || data.form == null){
+ 						html3 += '<textarea class="form-control" placeholder="게시글 작성 견본을 작성해보세요" id="addform2" style="height: 100px"></textarea>';
+ 					}else{
+ 						html3 += '<textarea class="form-control" id="addform2" style="height: 100px">' + data.form + '</textarea>';
+ 					}
+ 					
+ 					html3 += '<div align="center" class="col-md-12 mt-2"><button type="submit" id="addviewsave2" class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>';
+ 					html3 += '<button type="button" id="addviewreset2" class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>';
+ 					html3 += '</div></div>';
+ 					
+ 					$(divtag).after(html3);
+ 				}
+ 			});
+ 		};
+ 		
+ 		function boardinfoupdatebyb_code(requestdata3){
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "UpdateInfoByB_code",
+ 				data: requestdata3,
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					swal(data);
+ 					cateload();
+ 				}
+ 			});
+ 		}
+ 		
+ 		$(document).on('click', '.moreinfo', function(){
+ 			
+ 			let divtag = this.closest(".maincard");
+ 			boardinfobyb_code(divtag);
+ 			
+ 		});
+ 		
+ 		$(document).on('click', '#addviewreset2', function(){
+ 			$("#mytag").remove();
+ 		});
+ 		
+ 		$(document).on('click', '#addviewsave2', function(){
+ 			
+ 			requestdata3 = {"b_name": $("#catename2").val(), "form": $("#addform2").val(), "b_code": $("#parkb_code").val()};
+ 			console.log(requestdata3);
+ 			boardinfoupdatebyb_code(requestdata3)
+ 			
+ 		});
+ 		
+ 		/* 게시판 정보 수정 끝 */
+ 		
+ 		/* side_idx 수정 시작 */
+ 		
+ 		const draggables = document.querySelectorAll(".draggable");
+ 		const containers = document.querySelectorAll(".con");
+ 		
+ 		draggables.forEach(draggable => {
+ 			draggable.addEventListener("dragstart", () => {
+ 				draggable.classList.add("dragging");
+ 			});
+
+ 			draggable.addEventListener("dragend", () => {
+ 				draggable.classList.remove("dragging");
+ 			});
+ 		});
+
+ 		containers.forEach(container => {
+ 			container.addEventListener("dragover", e => {
+ 				e.preventDefault();
+ 			    const afterElement = getDragAfterElement(container, e.clientY);
+ 			    const draggable = document.querySelector(".dragging");
+ 			    if (afterElement === undefined) {
+ 			    	container.appendChild(draggable);
+ 			    } else {
+ 			    	container.insertBefore(draggable, afterElement);
+ 			    }
+ 			});
+ 		});
+
+ 		function getDragAfterElement(container, y) {
+ 			const draggableElements = [
+ 				...container.querySelectorAll(".draggable:not(.dragging)"),
+ 			];
+
+ 			return draggableElements.reduce(
+ 				(closest, child) => {
+ 				const box = child.getBoundingClientRect();
+ 			    const offset = y - box.top - box.bottom / 2;
+ 			    
+ 			    if (offset < 0 && offset > closest.offset) {
+ 			    	return { offset: offset, element: child };
+ 			    } else {
+ 			    	return closest;
+ 			    }
+ 			}, { offset: Number.NEGATIVE_INFINITY }, ).element;
+ 		}
+ 		
+ 		function sideuplaod(requestdata4){
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "SideUpload",
+ 				data: requestdata4,
+ 				dataType: "HTML",
+ 				success: function(data){
+ 					swal(data);
+ 					cateload();
+ 				}
+ 			});
+ 		}
+ 		
+ 		document.addEventListener("dragend", (event) => {
+ 		  	event.preventDefault();
+ 		  	
+ 		  	if(event.target.className === "maincard row m-2 draggable"){ //사이드 바
+ 		  		let target = $(event.target);
+ 		  		let children1 = $(target).children();
+ 	 			let ch = $(children1).children().eq(0);
+ 		  		
+ 		  		let supertag = target.closest("#infoboard");
+ 		  		let childtag = $(supertag).children();
+ 		  		
+ 		  		let arr = [];
+ 		  		let num = 0;
+ 		  		$(childtag).each(function(){
+ 		  			
+ 		  			let parkfor = $(this).children();
+ 		  			
+ 		  			$(parkfor).each(function(){
+ 		  				let ch2 = $(this).children().eq(0);
+ 		  				let ch3 = $(ch2).children().eq(0);
+ 		  				let ch4 = $(ch3)[0];
+ 		  				
+ 		  				arr.push($(ch4).val());
+ 		  				
+ 		  				num += 1;
+ 		  				
+ 		  			});
+ 		  			
+ 		  		});
+ 		  		
+ 		  		let requestdata4 = { ...arr, "max": num };
+ 		  		console.log(requestdata4);
+				sideuplaod(requestdata4);
+ 		  	}
+ 		});
+ 		
+ 		/* side_idx 수정 끝 */
  	});
   	
   	
@@ -465,17 +726,29 @@
 						<div class="maincard">
 							<div class="row">
 								<div align="center" class="col">
-									<button type="button" id="add_btn"
-										class="btn btn-outline-secondary  rounded-pill">게시판
-										추가</button>
-									<button type="button" id="del"
-										class="btn btn-outline-secondary  rounded-pill">휴지통</button>
+									<button type="button" id="addview_btn"
+										class="btn btn-lg btn-outline-secondary rounded-pill">게시판 추가</button>
 								</div>
 							</div>
 						</div>
-						<div class="maincard">
+						<div id="cateinsertview">
+						
+						</div>
+						
+						<div id="infoboard" class="maincard">
 							<c:forEach var="infolist" items="${infolist}">
-								<div class="maincard">${infolist.b_name}</div>
+								<div class="con">
+									<div class="maincard row m-2 draggable" draggable="true">
+										<div class="col-md-10 pt-1">
+											<input id="b_code" value="${infolist.b_code}" type="hidden" />
+											<br> <h5>${infolist.b_name}</h5>
+										</div>
+										<div align="right" class="col-md-2 pt-2">
+											<h4><i class="bi bi-trash3 trash"></i></h4>
+											<h4><i class="bi bi-arrow-down-square moreinfo"></i></h4>
+										</div>
+									</div>
+								</div>
 							</c:forEach>
 						</div>
 					</div>
@@ -494,10 +767,6 @@
 								<div class="preview" id="preview">
 									<img width="200" src="upload/${cafebanner.cafe_img}">
 								</div>
-							</div>
-							<div class="col-md-12">
-								<hr>
-								<textarea rows="" cols=""></textarea>
 							</div>
 
 						</div>
@@ -679,7 +948,7 @@
 
 	  </script>
 
-
+<!-- 
 	<script>
 		tinymce
 				.init({
@@ -697,7 +966,7 @@
 					}, ]
 				});
 	</script>
-
+ -->
 </body>
 
 </html>

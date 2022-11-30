@@ -3,7 +3,7 @@
    
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.jsp" class="logo d-flex align-items-center">
-        <div id="image-icon"><img src="upload/${cafebanner.cafe_img}" alt="" style="width=50px; height=50px;"></div>
+        <div id="image-icon"><img src="upload/${cafebanner.cafe_icon}" alt="" style="width=50px; height=50px;"></div>
         <span id="cafename" class="d-none d-lg-block">${cafebanner.cafe_name}</span>
       </a>
     </div><!-- End Logo -->

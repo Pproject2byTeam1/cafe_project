@@ -6,6 +6,7 @@ public class Board_Info {
 	private int side_idx;
 	private int main_idx;
 	private String b_type;
+	private String form;
 	
 	public int getB_code() {
 		return b_code;
@@ -38,11 +39,18 @@ public class Board_Info {
 		this.b_type = b_type;
 	}
 	
+	public String getForm() {
+		return form;
+	}
+	public void setForm(String form) {
+		this.form = form;
+	}
 	@Override
 	public String toString() {
 		return "Board_Info [b_code=" + b_code + ", b_name=" + b_name + ", side_idx=" + side_idx + ", main_idx="
-				+ main_idx + ", b_type=" + b_type + "]";
+				+ main_idx + ", b_type=" + b_type + ", form=" + form + "]";
 	}
+	
 	
 	
 	
