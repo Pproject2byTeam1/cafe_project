@@ -88,7 +88,6 @@
          
          let b_code = "<c:out value='${b_code}'/>";
          let idx = "<c:out value='${list.idx}'/>";
-         console.log("edit 클릭");
          location.href="marketboardEdit.do?b_code="  + b_code + "&idx=" + idx;
          
       });
@@ -98,15 +97,10 @@
         /* 게시물 좋아요 비동기 처리 */
         $("#yesbtn").click(function(){
            
-           console.log("hahaha");
-           console.log(email_id);
-           console.log("sdfs" + yes);
-           
            if(yes == "no"){
               
               requestdata = {"idx": idx, "email_id": email_id};
               
-              console.log(requestdata);
               
               $.ajax({
                  type: "POST",
@@ -235,7 +229,7 @@
          
          const data2 = {"idx": $(tag).children("#co_idx").val()};
          
-         console.log(data2);
+        
          
          del(data2);
          
@@ -245,7 +239,6 @@
          
          const data2 = {"idx": $(tag2).children("#co_idx2").val()};
          
-         console.log(data2);
          
          del(data2);
          
@@ -317,7 +310,6 @@
       
          const data7 ={"idx":idx};
          
-         console.log(data7);
          rep(data7);
          
    });
