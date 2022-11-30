@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
@@ -17,7 +16,6 @@ import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
-import kr.or.kosa.utils.ThePager;
 
 public class MarketBoardListService implements Action {
 
@@ -37,13 +35,16 @@ public class MarketBoardListService implements Action {
 			CommentsDao cdao = new CommentsDao();
 			UserDao udao = new UserDao();
 			
+			String search = request.getParameter("search");
+	        String sold = request.getParameter("sold");
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
-			//게시물 총 건수
-			int totalboardcount = market_dao.countMarket(b_code);			
-			
-			//판매중 개수
-			int soldcount = market_dao.countSoldF(b_code);
+			if (search == null || search.trim().equals("")) {
+	            search = "no";
+	         }
+	         if (sold == null || sold.trim().equals("")) {
+	            sold = "all";
+	         }
 			
 			//상세보기 >> 다시  LIST 넘어올때  >> 현재 페이지 설정
 			String ps = request.getParameter("ps");
@@ -60,6 +61,15 @@ public class MarketBoardListService implements Action {
 			int pagesize = Integer.parseInt(ps);
 			int cpage = Integer.parseInt(cp);
 			int pagecount = 0;
+			int soldcount = market_dao.countSoldF(b_code);
+			int totalboardcount = 0;
+			
+	         // 게시물 총 건수
+	         if (sold.equals("판매중")) {
+	            totalboardcount = soldcount;
+	         } else {
+	            totalboardcount = market_dao.countMarket(b_code);
+	         }
 			
 			if(totalboardcount % pagesize == 0) {
 				pagecount = totalboardcount / pagesize;
@@ -69,7 +79,9 @@ public class MarketBoardListService implements Action {
 			
 			System.out.println("몇번페이지 : " + cpage);
 			System.out.println("pagesize : " + pagesize);
-			List<MarketBoard> list = market_dao.listMarket(b_code, cpage, pagesize);
+			System.out.println("search : " + search);
+			System.out.println("sold : " + sold);
+			List<MarketBoard> list = market_dao.searchMarket(b_code, cpage, pagesize, sold, search);
 			
 			//yes, 댓글수
 			List yescountlist = new ArrayList();
@@ -94,6 +106,8 @@ public class MarketBoardListService implements Action {
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalboardcount", totalboardcount);
+			request.setAttribute("sold", sold);
+			request.setAttribute("search", search);
 			request.setAttribute("list", list);
 			request.setAttribute("b_code", b_code);
 			request.setAttribute("soldcount", soldcount);

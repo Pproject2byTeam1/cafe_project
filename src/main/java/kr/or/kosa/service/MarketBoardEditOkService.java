@@ -12,14 +12,9 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
-import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dao.MarketBoardDao;
-import kr.or.kosa.dao.Regular_Board_Dao;
-import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
 
@@ -101,7 +96,7 @@ public class MarketBoardEditOkService implements Action {
 				if (result > 0) {
 
 					String board_msg = "완료되었습니다.";
-		            String board_url = "/WebCafe_Project/marketboard_read.do?b_code="+ b_code +"&idx="+ idx;
+		            String board_url = "/WEB_INF/marketboard_read.do?b_code="+ b_code +"&idx="+ idx;
 		              
 		            request.setAttribute("board_msg", board_msg);
 		            request.setAttribute("board_url", board_url);

@@ -39,9 +39,11 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		let b_code = "<c:out value='${b_code}'/>";
-		let sold = "all";
-		let search = "no";
-		
+		let cp = "<c:out value='${cpage}'/>";
+		let ps = "<c:out value='${pagesize}'/>";
+		let sold = "";
+			
+			
 			//글쓰기
 			$("#Write").click(function(){
 				console.log("write 클릭");
@@ -49,19 +51,18 @@
 				
 			});
 			
-			$('.search').click(function(){
-				var search = $(this).val();
-				
-				var requestdata = {"b_code": b_code, "search": search};	
-				
-			});
 			
-			$('.sold').click(function(){
-					
-			    var sold = $(this).val();
+			//목록 건수 변경
+			
+						
+			$("#listselectbtn").click(function(){				
 			    
-			    var requestdata = {"b_code": b_code, "sold": sold};	
-
+			    var sold = $("#sold option:selected").val();
+			    var ps = $("#listselect option:selected").val();
+			    var search = $("#searchInput").val();
+			    var requestdata = {"b_code": b_code, "sold": sold, "search" : search, "ps" : ps};	
+			  
+			    
 				/* 검색 비동기 */					
 					$.ajax({
 						type: "POST",
@@ -71,12 +72,14 @@
 						success: function(data){
 														
 							$(".list").empty();
+							$(".page").empty();
+						
 							
-							console.log(data);
 							
 							for(let index in data.list){
-
-								html = '<div class="mcard" onclick="location.href=' + "'marketboard_read.do?b_code=" + data.list[index].b_code + '&idx=' + data.list[index].idx + "'" + ';">';
+								var str = data.list[index].content;
+								var result = str.substr(0, 20) + "...";
+								html = '<div class="mcard" onclick="location.href=' + "'marketboard_read.do?b_code=" + data.list[index].b_code + '&idx=' + data.list[index].idx + '&cp=' + cp + "'" + ';">';
 								html += '<div class="mimg">'
 								html += '<img src="upload/' + data.list[index].img_name + '" id="mimg"/>';
 								html += '</div>'
@@ -84,14 +87,13 @@
 								html += '<p>';
 								html += '<span id="marketB_Title">' + data.list[index].title + '</span>';
 								html += '<br>';
-								html += '<span id="marketB_Text">' + data.list[index].content + '</span>';
-								html += '<p>';
-								html += '<span id="marketB_Price">' + data.list[index].price + ' 원</span>';
-								html += '<p>'
-								html += '<span id="marketB_info">조회수 : ' + data.list[index].hits + '| 댓글 : ' + data.commentcountlist[index] + '| 찜 : ' + data.yescountlist[index]  + '</span>';
+								html += '<span id="marketB_Text">' + result + '</span>';
+								html += '<div id="marketB_Price">' + data.list[index].price + ' 원</div>';
+								html += '<p><p>'
+								html += '<span id="marketB_info">조회수 : ' + data.list[index].hits + ' | 댓글 : ' + data.commentcountlist[index] + ' | 찜 : ' + data.yescountlist[index]  + '</span>';
 								html += '<br>';
 									html += '<span id="marketB_Text.ns"><img src="image/rank_icon/' + data.ranklist[index]  + '.gif" alt="Profile"'
-										html += 'class="rounded-circle">' + data.list[index].nick + '|' + data.list[index].w_date + '</span>';
+										html += 'class="rounded-circle"> ' + data.list[index].nick + ' | ' + data.list[index].w_date + '</span>';
 								html += '</div>';
 								
 								$('.list').append(html);
@@ -99,13 +101,15 @@
 								
 							}; 
 							
-							//$('.list .mcard').last().remove();
+							
+							
 							
 						}
 					});
 				});
-				
-			});
+		
+			
+		});
 
 	
 </script>
@@ -116,11 +120,7 @@
 </script>
 </head>
 <body>
-	<c:set var="pagesize" value='<%=request.getAttribute("pagesize")%>' />
-	<c:set var="cpage" value='<%=request.getAttribute("cpage")%>' />
-	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
-	<c:set var="search" value='<%=request.getAttribute("search")%>' />
-	<c:set var="sold" value='<%=request.getAttribute("sold")%>' />
+	
      <!-- ======= Header ======= -->
      <header id="header" class="header fixed-top d-flex align-items-center">
         <c:import url="/WEB-INF/view/common/top.jsp" />
@@ -158,26 +158,34 @@
 					</div>
 					
 					<!-- Bordered Tabs -->
-					
+					<div class="seach">
 					<ul class="nav nav-tabs nav-tabs-bordered" id="searchTab"
 						role="tablist">
 						<li class="nav-item" role="presentation">
-							<button class="sold nav-link active" value="all" id="sold"
-								data-bs-toggle="tab" data-bs-target="#bordered-home"
-								type="button" role="tab" aria-controls="home"
-								aria-selected="true">전체보기</button>
+							<select id="sold" class="form-select" aria-label="Default select example">
+								<option value="all" selected>전체조회</option>
+								<option value="판매중">판매중</option>
+							</select>
 						</li>
 						<li class="nav-item" role="presentation">
-							<button class="sold nav-link" value="판매중" id="sold" data-bs-toggle="tab"
-								data-bs-target="#bordered-profile" type="button" role="tab"
-								aria-controls="profile" aria-selected="false">판매중</button>
+							<select id="listselect" class="form-select" aria-label="Default select example">
+								<option value="8" selected>게시물 건수</option>
+								<option value="10">최근 10건</option>
+								<option value="20">최근 20건</option>
+								<option value="30">최근 30건</option>
+								<option value="50">최근 50건</option>
+								<option value="100">최근 100건</option>
+							</select>
 						</li>
 						<li class="nav-item" role="presentation">
-							<button class="sold nav-link" value="찜" id="yes" data-bs-toggle="tab"
-								data-bs-target="#bordered-contact" type="button" role="tab"
-								aria-controls="contact" aria-selected="false">나의 찜</button>
+							<input class="flex-fill" type="text" id="searchInput" placeholder="Search" title="Enter search keyword">
+						</li>
+						<li class="nav-item" role="presentation">
+						  &nbsp&nbsp<button type="button" id="listselectbtn" 
+							class="btn btn-outline-secondary btn-sm rounded-pill">검색</button>
 						</li>
 					</ul>
+					</div>
 				
 					<div class="tab-content pt-2" id="borderedTabContent">
 						<div class="tab-pane fade show active" id="bordered-home"
@@ -196,7 +204,7 @@
 					<!-- 보드	리스트 출력 시작 -->
 					<div class="list container container__content--flow">
 						<c:forEach var="list" items="${list}" varStatus="status">
-						<div class="mcard" onclick="location.href='marketboard_read.do?b_code=${list.b_code}&idx=${list.idx}';">
+						<div class="mcard" onclick="location.href='marketboard_read.do?b_code=${list.b_code}&idx=${list.idx}&cp=${cpage}';">
 							<div class="mimg">
 							<img src="upload/${list.img_name}" id="mimg" onerror="this.onerror=null; this.src='https://via.placeholder.com/500X500?text=No+Image'">
 							</div>
@@ -214,10 +222,9 @@
 									</c:otherwise>
 							</c:choose>
 							</span>
-							<p>
-							<span id="marketB_Price">${list.price} 원</span>
-							<p>
-							<span id="marketB_info">조회수 : ${list.hits} | 댓글 : ${comment[status.index]} | 찜 : ${yes[status.index]}</span>
+							<div id="marketB_Price">${list.price} 원</div>
+							<p><p>
+							<span id="marketB_info">조회수 : ${list.hits} | 댓글 : ${comments[status.index]} | 찜 : ${yes[status.index]}</span>
 							<br>
 								<span id="marketB_Text.ns"><img src="image/rank_icon/${rank[status.index]}.gif" alt="Profile"
 									class="rounded-circle"> ${list.nick} | ${list.w_date}</span>
@@ -231,7 +238,9 @@
 			
 	               <c:if test="${cpage > 1}">
 	                 <li class="page-item">
+	                 <div class="1">
 	                   <a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${cpage-1}&ps=${pagesize}" tabindex="-1" aria-disabled="true"><<</a>
+	                 </div>
 	                 </li>
 	                  </c:if>
 	                  	
@@ -241,14 +250,18 @@
 								<li class="page-item"><a class="page-link active" >${i}</a></li>
 						</c:when>
 						<c:otherwise>
+								<div class="2">
 	                 			<li class="page-item"><a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${i}&ps=${pagesize}">${i}</a></li>
+	                 			</div>
 						</c:otherwise>
 					</c:choose>
 	                  </c:forEach>
 	                  
 	                  <c:if test="${cpage < pagecount}">
 	                  	<li class="page-item">
-					<a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}">>></a>
+	                  	<div class="3">
+							<a class="page-link" href="marketboard_list.do?b_code=${b_code}&cp=${cpage+1}&ps=${pagesize}">>></a>
+						</div>
 					</li>
 
 				</c:if>
