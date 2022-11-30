@@ -36,22 +36,28 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <script type="text/javascript">
 	$(document).ready(function(){
-			
+		var size = "<c:out value='${list}'/>";
+		var rank = "<c:out value='${list[3].rank}'/>";
+		var rname = "<c:out value='${list[3].r_name}'/>";
+		var rpoint = "<c:out value='${list[3].r_point}'/>";
+		
 		$('#newRank').click(function addRank() {
+			
+			
 			// table element 찾기
 			const table = document.getElementById('ranklist');
 			// 새 행(Row) 추가
 			const newRow = table.insertRow();
-
+		
 			// 새 행(Row)에 Cell 추가
 			const newCell1 = newRow.insertCell(0);
 			const newCell2 = newRow.insertCell(1);
 			const newCell3 = newRow.insertCell(2);
-
+			const newCell4 = newRow.insertCell(3);
 			// Cell에 텍스트 추가
-			newCell1.innerHTML = '5';
-			newCell2.innerHTML = '등급';//'<input type="text" class="form-control" id="기입하세용" placeholder="" value="" id="r_rank">';
-			newCell3.innerHTML = '100점';//'<input type="text" class="form-control" id="기입하세용" placeholder="0 점 이상" id="r_point">';
+			newCell1.innerHTML = rank;
+			newCell2.innerHTML = rname;//'<input type="text" class="form-control" id="기입하세용" placeholder="" value="" id="r_rank">';
+			newCell3.innerHTML = rpoint;//'<input type="text" class="form-control" id="기입하세용" placeholder="0 점 이상" id="r_point">';
 			
 		});
 		
@@ -90,16 +96,18 @@
 			<div class="container-fluid">
 				<div class="card">
 				<div class="card-body">
-				<form onclick="location.href='rankeditboard.do?b_code=6&rank=${rank}&cp=${cpage}&ps=${pagesize}'" style="cursor: pointer">
+				<form onclick="" style="cursor: pointer">
 					
 					<table class="table text-center" id="ranklist">
 						<thead class="thead-light">
 							<tr>
 								<th></th>
 								<th></th>
+								<th>	
+								</th>
 								<th>
-									<button type="button" class="btn float-right btn-success"
-										id="saveRank" value="save" style="float: right">저장하기</button>		
+								<button type="button" class="btn float-right btn-success"
+										id="saveRank" value="save" style="float: right">저장하기</button>	
 								</th>
 							</tr>
 
@@ -107,20 +115,23 @@
 								<th>등급레벨</th>
 								<th>등급 이름</th>
 								<th>등급 포인트 기준</th>
+								<th>수정/삭제</th>
 
 							</tr>
 						</thead>
 						<tbody>
 
 							<c:forEach var="rank" items="${list}" varStatus="status">
+							
 								<c:if test="${rank.rank>0}">
 									<tr class="${rank.rank}">
 
-										<td>${rank.rank}</td>
+										<td class="${rank.rank}">${rank.rank}</td>
 										<td><input type="text" class="form-control" id="기입하세용"
 											placeholder="${rank.r_name}" value="${rank.r_name}"
 											id="r_rank"></td>
-										<td><c:choose>
+										<td>
+											<c:choose>
 												<c:when test="${rank.rank == 1}">
 														0 점 이상
 												      </c:when>
@@ -129,7 +140,12 @@
 													<input type="text" class="form-control" id="기입하세용"
 														placeholder="${rank.r_point}점 이상" id="r_point">
 												</c:otherwise>
-											</c:choose></td>
+											</c:choose>
+										</td>
+										<td>				
+										<button type="button" class="btn btn btn-secondary"
+											id="editRank" value="edit" style="float: right">수정하기</button>
+										</td>
 
 									</tr>
 								</c:if>
@@ -137,11 +153,12 @@
 									
 						</tbody>
 					</table>
-					<button type="button" class="btn btn-danger"
-										id="delRank" value="del" style="float: right">삭제하기</button>
-									
-									<button type="button" class="btn btn btn-secondary"
-										id="newRank" value="new" style="float: right">추가하기</button>
+					<div style="display: inline-block; margin: 0 5px;  float: right;">
+					<button type="button" class="btn btn btn-secondary"
+										id="newRank" value="new">추가하기</button>
+					<button type="button" class="btn btn btn-danger"
+										id="delRank" value="new">삭제하기</button>
+					</div>		
 				</form>
 				</div>
 				</div>
