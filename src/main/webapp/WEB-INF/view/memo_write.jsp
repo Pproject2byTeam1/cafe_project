@@ -45,8 +45,9 @@
   <link href="assets/css/style.css" rel="stylesheet">
 
 <!-- 경고창 이쁜거 -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <body>
@@ -165,18 +166,21 @@
 	  
 		function check() {
 			if (!memoboard.writer.value) {
-				swal("경고","보내는 사람을 입력하세요","warning");
+				Swal.fire("경고","보내는 사람을 입력하세요","warning");
 				memoboard.writer.focus();
 				return false;
 			}
 			if(!memoboard.content.value){            
-				swal("경고","글 내용을 입력하세요","warning");
+				Swal.fire("경고","글 내용을 입력하세요","warning");
 			     memoboard.content.focus();
 			     return false;
 			 }
-			swal("성공!","전송 성공","success");
-			document.memoboard.submit();
-
+			Swal.fire({
+				title:"성공!",
+				text: "전송 성공",
+				type:"success"}).then(function(){
+				document.memoboard.submit();
+			});
 		}
 	
   });

@@ -45,11 +45,11 @@ public class Message_Add_Service implements Action {
 			row = dao.insertMessage(message);
 			
 		} catch (Exception e) {
-			if(row > 0) {
-				System.out.println("삽입 성공");
-			}else {
-				System.out.println("삽입 실패");
-			}
+//			if(row > 0) {
+//				System.out.println("삽입 성공");
+//			}else {
+//				System.out.println("삽입 실패");
+//			}
 			System.out.println(e.getMessage());
 		}
 		

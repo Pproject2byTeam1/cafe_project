@@ -37,7 +37,8 @@
   <link href="assets/css/style.css" rel="stylesheet">
   
   <!-- 경고창 이쁜거 -->
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -297,7 +298,7 @@
 		})
 		function check() {
 			if (!bbs.content.value || bbs.content.value == "") {
-				swal("경고","내용을 입력하세요","warning");
+				Swal.fire("경고","내용을 입력하세요","warning");
 				loginForm.email_id.focus();
 				return false;
 			}
@@ -310,41 +311,47 @@
      
 		function check() {
 			if (!adminchange.name.value) {
-				swal("경고","이름을 입력하세요","warning");
+				Swal.fire("경고","이름을 입력하세요","warning");
 				loginForm.name.focus();
 				return false;
 			}
 			if(!adminchange.password.value){
-				swal("경고","비밀번호를 입력하세요","warning");
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
 				loginForm.password.focus();
 			     return false;
 			 }
 			if(!adminchange.newpassword.value){
-				swal("경고","비밀번호를 입력하세요","warning");
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
 				loginForm.newpassword.focus();
 			     return false;
 			 }
 			if(!adminchange.renewpassword.value){
-				swal("경고","비밀번호를 입력하세요","warning");
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
 				loginForm.renewpassword.focus();
 			     return false;
 			 }
 			if(!adminchange.nickname.value){
-				swal("경고","닉네임을 입력하세요","warning");
+				Swal.fire("경고","닉네임을 입력하세요","warning");
 				loginForm.nickname.focus();
 			     return false;
 			 }
 			if(!adminchange.date.value){
-				swal("경고","생년월일을 입력하세요","warning");
+				Swal.fire("경고","생년월일을 입력하세요","warning");
 				loginForm.date.focus();
 			     return false;
 			 }
 			if(!adminchange.tel.value){
-				swal("경고","전화번호를 입력하세요","warning");
+				Swal.fire("경고","전화번호를 입력하세요","warning");
 				loginForm.tel.focus();
 			     return false;
 			 }
-			document.loginForm.submit();
+			Swal.fire({
+				title:"성공!",
+				text: "수정 성공",
+				type:"success"}).then(function(){
+				document.loginForm.submit();
+			});
+			
 		}
 	});
   </script>

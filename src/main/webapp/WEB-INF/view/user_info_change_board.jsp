@@ -39,7 +39,8 @@
   <link href="assets/css/style.css" rel="stylesheet">
   
   <!-- 경고창 이쁜거 -->
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -341,7 +342,7 @@
   		  if(event.keyCode == 123)
   			  handled = true;
   		  if(handled){
-  			  swal("경고","F12키를 누르지 마십시오",'error');
+  			Swal.fire("경고","F12키를 누르지 마십시오",'error');
   			  event.preventDefault();
   		  }
   	  },true);
@@ -351,17 +352,21 @@
          
          function pwdcheck() {
   			if (!pwdform.renewpassword.value) {
-  				swal("경고","새로운 비밀번호를 입력하세요","warning");
+  				Swal.fire("경고","새로운 비밀번호를 입력하세요","warning");
   				loginForm.renewpassword.focus();
   				return false;
   			}
   			if(!pwdform.password.value){            
-  				swal("경고","비밀번호를 입력하세요","warning");
+  				Swal.fire("경고","비밀번호를 입력하세요","warning");
   				loginForm.password.focus();
   			     return false;
   			 }
-  			document.pwdform.submit();
-  			swal("성공!","비밀번호가 변경되었습니다.","success");
+  			Swal.fire({
+				title:"성공!",
+				text: "비밀번호가 변경되었습니다",
+				type:"success"}).then(function(){
+					document.pwdform.submit();
+			});
   		}
          
          $("#chageInfo").click(function(){
@@ -370,17 +375,22 @@
         
         function infocheck() {
  			if (!userform.nickname.value) {
- 				swal("경고","새로운 닉네임을 입력하세요","warning");
+ 				Swal.fire("경고","새로운 닉네임을 입력하세요","warning");
  				loginForm.nickname.focus();
  				return false;
  			}
  			if(!userform.tel.value){            
- 				swal("경고","새로운 전화번호를 입력하세요","warning");
+ 				Swal.fire("경고","새로운 전화번호를 입력하세요","warning");
  				loginForm.tel.focus();
  			     return false;
  			 }
- 			document.userform.submit();
- 			swal("성공!","입력한 값으로 변경되었습니다.","success");
+ 			
+ 			Swal.fire({
+				title:"성공!",
+				text: "입력한 값으로 변경되었습니다.",
+				type:"success"}).then(function(){
+				document.userform.submit();
+			});
  		}
   	});
   </script>

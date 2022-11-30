@@ -74,6 +74,7 @@ import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
 import kr.or.kosa.service.adminInfoService;
 import kr.or.kosa.service.adminUpdateService;
+import kr.or.kosa.service.idVerification;
 import kr.or.kosa.service.nickVerification;
 import kr.or.kosa.service.userVerification;
 
@@ -428,8 +429,13 @@ public class FrontController extends HttpServlet {
 			action = new UpdatePwdService();
 			forward = action.execute(request, response);
 
-		}  
+		}  else if (urlcommand.equals("/idVerification.do")) { // 아이디 검증
 
+			action = new idVerification();
+			forward = action.execute(request, response);
+
+		}  
+		
 		if (forward != null) {
 			if (forward.isRedirect()) { // true 페이지 재 요청 (location.href="페이지"
 				response.sendRedirect(forward.getPath());

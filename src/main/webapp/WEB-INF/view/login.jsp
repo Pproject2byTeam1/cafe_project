@@ -44,7 +44,8 @@
 <link href="assets/css/style.css" rel="stylesheet">
 
 <!-- 경고창 이쁜거 -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -192,7 +193,7 @@
  		  if(event.keyCode == 123)
  			  handled = true;
  		  if(handled){
- 			  swal("특정 행위를 감지","F12키를 누르지 마십시오",'error');
+ 			 Swal.fire("특정 행위를 감지","F12키를 누르지 마십시오",'error');
  			  event.preventDefault();
  		  }
  	  },true);
@@ -203,16 +204,22 @@
        
        function check() {
 			if (!loginForm.email_id.value) {
-				swal("경고","아이디를 입력하세요","warning");
+				Swal.fire("경고","아이디를 입력하세요","warning");
 				loginForm.email_id.focus();
 				return false;
 			}
 			if(!loginForm.password.value){            
-				swal("경고","비밀번호를 입력하세요","warning");
+				Swal.fire("경고","비밀번호를 입력하세요","warning");
 				loginForm.password.focus();
 			     return false;
 			 }
-			document.loginForm.submit();
+			Swal.fire({
+				title:"성공!",
+				text: "로그인 완료",
+				type:"success"}).then(function(){
+				document.loginForm.submit();
+			});
+			
 		}
 </script>
 </body>
