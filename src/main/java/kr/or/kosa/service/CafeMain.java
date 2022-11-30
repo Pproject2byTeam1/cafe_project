@@ -90,6 +90,9 @@ public class CafeMain implements Action {
 			request.setAttribute("banner", banner);//top
 			request.setAttribute("infolist", infolist);
 			
+			
+			
+			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
 		  	forward.setPath("/WEB-INF/view/cafe_main.jsp");

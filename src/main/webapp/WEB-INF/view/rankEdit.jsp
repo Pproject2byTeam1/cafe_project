@@ -56,7 +56,7 @@
 			const newCell4 = newRow.insertCell(3);
 			size += 1;
 			max += 1;
-			console.log(list);
+		
 			
 			// Cell에 텍스트 추가
 			newRow.setAttribute("class" , size);

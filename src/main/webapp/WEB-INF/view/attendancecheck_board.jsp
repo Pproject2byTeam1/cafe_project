@@ -137,6 +137,9 @@
 	          <div class="card">
 	            <h5 class="card-title">&nbsp;&nbsp;&nbsp;출석명단</h5>
 	            <div id = "boardlist">
+	            <c:if test="${boardlist.size() == 0}">
+							<div> 아직 출석한 회원이 없습니다</div>
+						</c:if>
 	            <c:forEach var="list" items="${boardlist}" varStatus="status">
 	            <!-- 1round -->
 	            <div class="card-body row">
@@ -237,17 +240,8 @@
 		tinymce
 				.init({
 					selector : 'textarea',
-					plugins : 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
-					toolbar : 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-					tinycomments_mode : 'embedded',
-					tinycomments_author : 'Author name',
-					mergetags_list : [ {
-						value : 'First.Name',
-						title : 'First Name'
-					}, {
-						value : 'Email',
-						title : 'Email'
-					}, ]
+					menubar:false,
+				    statusbar: false
 				});
 	</script>
 	<script type="text/javascript">
@@ -255,7 +249,7 @@
 			//삭제
 			$('#attendanceDelete').click(function(){
 				const idx = $(this).parent().parent().parent().parent().parent().children('.idx').val();
-				console.log(idx);
+				
 				location.href="deleteAttendance.do?idx="+idx;
 			});
 			

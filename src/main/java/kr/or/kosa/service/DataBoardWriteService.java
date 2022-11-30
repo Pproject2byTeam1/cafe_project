@@ -49,9 +49,6 @@ public class DataBoardWriteService implements Action {
 			int b_code = Integer.parseInt(multi.getParameter("b_code"));
 			String title = multi.getParameter("title");
 			String content = multi.getParameter("content");
-		
-			//데이터게시판 추가 가져오기 (oriname/savenamevolume)
-			
 			
 			//유저정보 가져오기
 			HttpSession session = request.getSession();
@@ -80,13 +77,6 @@ public class DataBoardWriteService implements Action {
 				DataBoardDao datadao = new DataBoardDao();
 				//게시판 형태 가져오기
 				DataBoard data = new DataBoard();
-				
-				System.out.println(savename);
-				System.out.println(oriname);
-				System.out.println(user);
-				System.out.println(b_code);
-				System.out.println(title);
-				System.out.println(content);
 				
 				//게시판 write DAO에 넣어줄 값들.
 				data.setB_code(b_code);

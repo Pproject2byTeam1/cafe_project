@@ -46,7 +46,7 @@
 			
 			//글쓰기
 			$("#Write").click(function(){
-				console.log("write 클릭");
+			
 				location.href="marketboard_write.do?b_code=" + b_code;
 				
 			});
@@ -178,7 +178,7 @@
 							</select>
 						</li>
 						<li class="nav-item" role="presentation">
-							<input class="flex-fill" type="text" id="searchInput" placeholder="Search" title="Enter search keyword">
+							<input class="flex-fill form-control" type="text" id="searchInput" placeholder="Search" title="Enter search keyword">
 						</li>
 						<li class="nav-item" role="presentation">
 						  &nbsp&nbsp<button type="button" id="listselectbtn" 

@@ -69,7 +69,7 @@
 			<h1>로그인</h1>
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
 					<li class="breadcrumb-item active">회원가입</li>
 				</ol>
 			</nav>
@@ -207,10 +207,7 @@
 		  birthyear = "2000";
 		  $('#date').val(birthyear + "-" + birthday);
 	  }
-	  //console.log(birthyear + "-" + birthday);
-   // alert(naver_id_login.getProfileData('name'));
-   // alert(naver_id_login.getProfileData('birthday'));
-   	  //alert(naver_id_login.getProfileData('birthyear'));
+	 
   }
   $(function(){
 	  $('#nick').keyup(function(){

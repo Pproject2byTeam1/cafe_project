@@ -75,30 +75,14 @@
 				"idx" : $(this).parent().parent().children('.idx').val()
 			};
 
-			console.log(data);
-
+		
 			del(data);
 
 		});
 
 	});
 
-	/* 
-	 $("#search").click(function(){
-	 var requestdata ={nick: "nick"};
-	
-	
-	 $.ajax({
-	 type="POST",
-	 url:"rapportList",
-	 data:requestdata
-	
-	
-	 });
-	
-	 });
-	 */
-	/* 검색  */
+
 </script>
 
 </head>
@@ -203,11 +187,13 @@
 							<th scope="col">신고페이지</th>
 
 						</tr>
+		
 
-
-						<c:if test="${reportlist== null}">
+						<c:if test="${reportlist.size() == 0}">
 							<tr>
-								<td>데이터가 없습니다</td>
+								<th  colspan="8"> 조회된 데이터가 없습니다</th>
+							
+								
 							</tr>
 						</c:if>
 						<c:forEach var="reportlist" items="${reportlist}"

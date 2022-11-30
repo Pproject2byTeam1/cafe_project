@@ -129,7 +129,7 @@ public class CheckBoardService implements Action {
 			//작성목록 가져가기
 			boardlist = dao.getBoardListAttendence(b_code, cpage, nowday, nextday);
 			request.setAttribute("boardlist", boardlist);
-			System.out.println("boardlist: "+boardlist);
+		
 
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);

@@ -303,7 +303,7 @@
   			});
   		});
   		$("#renewPassword").keyup(function () {
-  			console.log("pwd: "+$('#currentPassword').val());
+  		
   			$.ajax({
   				url:"userVerification.do",
   				data:{password: $('#currentPassword').val()},
@@ -326,8 +326,7 @@
   			})
           });
   		$('#tel').keyup(function(){
-  			console.log("tel: "+$('#tel').val());
-  			console.log("length: "+$('#tel').val().length);
+  			
   			if($('#tel').val().length != 11 || $('#tel').val() == null){
   				$("#chageInfo").attr("disabled",true);
   			}else{

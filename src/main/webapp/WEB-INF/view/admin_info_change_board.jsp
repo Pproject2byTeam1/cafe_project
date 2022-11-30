@@ -265,7 +265,7 @@
 			});
 		});
 		$("#renewPassword").keyup(function () {
-			console.log("pwd: "+$('#currentPassword').val());
+			
 			$.ajax({
 				url:"userVerification.do",
 				data:{password: $('#currentPassword').val()},

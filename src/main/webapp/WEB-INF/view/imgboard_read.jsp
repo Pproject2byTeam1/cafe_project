@@ -58,16 +58,14 @@
 	  		/* 게시물 좋아요 비동기 처리 */
 	  		$("#yesbtn").click(function(){
 	  			
-	  			console.log("hahaha");
-	  			console.log(email_id);
-	  			console.log("sdfs" + yes);
+	  		
+	  	
 	  			
 	  			if(yes == "no"){
 	  				
 	  				requestdata = {"idx": idx, "email_id": email_id};
 	  				
-	  				console.log(requestdata);
-	  				
+	  			  				
 	  				$.ajax({
 			  			type: "POST",
 			        	url: "Yes",
@@ -195,7 +193,7 @@
 				
 				const data2 = {"idx": $(tag).children("#co_idx").val()};
 				
-				console.log(data2);
+			
 				
 				del(data2);
 				
@@ -205,8 +203,7 @@
 				
 				const data2 = {"idx": $(tag2).children("#co_idx2").val()};
 				
-				console.log(data2);
-				
+		
 				del(data2);
 				
 			});

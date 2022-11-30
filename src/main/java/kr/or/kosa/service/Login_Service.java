@@ -54,6 +54,12 @@ public class Login_Service implements Action {
 				}
 			}
 			
+			//총 유저 명수 구하기
+			UserDao udao = new UserDao();
+			int totalUser = udao.totalUserCount();
+			
+			request.setAttribute("totalUser", totalUser);
+			
 			request.setAttribute("banner", banner);//top
 			request.setAttribute("infolist", infolist);
 			

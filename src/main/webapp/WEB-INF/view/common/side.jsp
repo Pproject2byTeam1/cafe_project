@@ -8,8 +8,8 @@
 	<ul class="sidebar-nav" id="sidebar-nav">
 
 		<!-- 카페 정보 시작-->
-			<div class="pagetitle">
-				<c:if test="${member != null }">
+	<div class="pagetitle">
+		<c:if test="${member != null }">
 			<div class="pagetitle card mt-2 pt-4">
 				<div class="card-body">
 					<div class="card d-flex justify-content-center pb-2">
@@ -25,16 +25,14 @@
 							<span>&ensp;&ensp;&ensp; ${member.point}&nbsp;POINT</span><br> 
 							<a href="user_activity.do">활동 내역</a> | 
 							<a href="memo_list.do">쪽지함</a>	<br>
-							
 						</div>
 					</div>
 					<c:if test="${member.isAdmin == 'M'}">
 						<div class="card justify-content-center">
 							<div class="card-body mt-4 ms-3 ps-4">
-								
-								
 								<a href="adminmaineditservice.do">카페 관리</a> | 
-								<a href="chart.do">통계</a>
+								<a href="chart.do">통계</a> <br>
+								<a class="card-title">회원수<span> | ${totalUser} 명 
 							</div>
 						</div>
 					 </c:if>
@@ -61,16 +59,6 @@
 
 			<!-- 프로필 시작-->
 		
-			<a class="card-title">카페 정보</a>
-				<div class="card-body ms-3">
-				<a class="card-title">관리자 
-					<span>| <img src="image/rank_icon/${member.rank}.gif" alt="Profile"> 관리자 </span>
-				</a><br> 
-				<a class="card-title">회원수<span> | 00 명 | <a href="user-grade.html">등급안내</a></span></a><br>
-				<c:if test="${member.isAdmin == 'M'}">
-				<a href="adminmaineditservice.do" class="card-title">카페 관리<span></span></a>
-				</c:if>
-			</div>
 		
 		<!-- 프로필 끝 -->
 		<c:forEach var="infolist" items="${infolist}">

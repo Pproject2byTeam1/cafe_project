@@ -215,7 +215,7 @@
  		    	processData:false,
  		    	dataType: "HTML",
  		    	success: function(data){
- 		    		console.log(data);
+ 		    		
  		    		swal(data);
  		    	}
  		    });
@@ -492,7 +492,7 @@
  			let ch = $(children1).children().eq(0);
  			
  			let requestdata1 = {"b_code": $(ch).val()};
- 			console.log(requestdata1);
+ 			
  			
  			cateremove(requestdata1);
  		});
@@ -582,7 +582,7 @@
  					"w_rank": $("#addviewswriteselect option:selected").val(),
  					"re_rank": $("#addviewsreadselect option:selected").val()
  			};
- 			console.log(requestdata3);
+ 
  			boardinfoupdatebyb_code(requestdata3)
  			
  		});
@@ -649,7 +649,7 @@
 	 		  		});
 	 		  		
 	 		  		let requestdata4 = { ...arr, "max": num };
-	 		  		console.log(requestdata4);
+	 		  	
 					sideuplaod(requestdata4);
 	 		  	}
 	 		});
@@ -700,7 +700,7 @@
 
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
-		<c:import url="/WEB-INF/view/common/admintop.jsp" />
+		<c:import url="/WEB-INF/view/common/top.jsp" />
 	</header>
 	<!-- End Header -->
 
