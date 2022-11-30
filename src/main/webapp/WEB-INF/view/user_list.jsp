@@ -44,24 +44,24 @@
 
 <!-- sweetalert -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
 
-
-
-
-</script>
 </head>
 
 <body>
 
    <!-- ======= Header ======= -->
-     <header id="header" class="header fixed-top d-flex align-items-center">
-        <c:import url="/WEB-INF/view/common/top.jsp" />
-     </header><!-- End Header -->
-     
-     <!-- ======= Sidebar ======= -->
-     <c:import url="/WEB-INF/view/common/side.jsp" />
-     <!-- End Sidebar -->
+   <header id="header" class="header fixed-top d-flex align-items-center">
+
+      <jsp:include page="/common/top.jsp"></jsp:include>
+
+   </header>
+   <!-- End Header -->
+
+   <!-- ======= Sidebar ======= -->
+
+   <jsp:include page="/common/side2.jsp"></jsp:include>
+
+   <!-- End Sidebar -->
 
 	<main id="main" class="main">
 		<div class="pagetitle">
@@ -76,8 +76,7 @@
 		
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-1">
-				<div>
+				<div class="col-md-1" >
 					<form name="list">
 						<select class="form-select" name="ps" onchange="submit()">
 						   <c:forEach var="i" begin="5" end="20" step="5">
@@ -92,7 +91,6 @@
 						   </c:forEach>
 	   					</select>
 					</form>
-					
 				</div>
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
@@ -100,16 +98,23 @@
 						<div class="col-md-5"></div>
 						<div class="col-md-1"></div>
 						<div class="col-md-5">
-							
+							<!-- <select class="form-select">
+								<option>전체조회</option>
+								<option>OO조회</option>
+								<option>OO조회</option>
+							</select> -->
 						</div>
 					</div>
 				</div>
 	
-				<div class="col-md-3">
+			<!-- 	<div class="col-md-3">
 					<div class="search-bar">
-						
+						<form class="search-form d-flex align-items-center" method="POST" action="#">
+							<input type="text" name="query" placeholder="Search" class="form-control" title="Enter search keyword">
+							<button type="submit" title="Search" class="btn btn-secondary"> <i class="bi bi-search"></i></button>
+						</form>
 					</div>
-				</div>
+				</div> -->
 				
 			</div>
 		</div>
@@ -121,9 +126,9 @@
 				<div class="card-body">
 					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 					<!-- Table with hoverable rows -->
-					<table class="table table-hover table-sm datatable">
+					<table class="table table-hover">
 	
-						<tr style="width: 30%; float:none; margin:0 auto">
+						<tr>
 							<th scope="col">등급</th>
 							<th scope="col">이메일</th>
 							<th scope="col">닉네임</th>
@@ -142,7 +147,7 @@
 						
 						<c:forEach var="alluser" items="${alluser}">
 						
-							<tr id="rapportlist">
+							<tr>
 								<td scope="col"><img id="profile" class="col-3" src="image/rank_icon/${alluser.rank}.gif" alt="Profile" height="16" width="16" ></td>
 								<td scope="col">${alluser.email_id}</td>
 								<td scope="col">${alluser.nick}</td>
@@ -160,10 +165,10 @@
 										<input type="text" value="${alluser.email_id}" name="email_id" style="display: none;">
 										<input type="submit" class="btn btn-primary btn-sm UserHistory" value="활동내역">
 									</form>
-								<form action="userkick.do" method="post"> 
-										<input type="text" value="${alluser.email_id}"  class ="id" name="id" style="display: none;">
+									<form action="userkick.do" method="post">
+										<input type="text" value="${alluser.email_id}" name="id" style="display: none;">
 										<input type="submit" class="btn btn-danger btn-sm Kick" value="강퇴">
-								 </form> 
+									</form>
 								</div>
 								</td>
 							</tr>
@@ -178,7 +183,7 @@
            <div class="col-md-12">
            		<!-- 페이징  -->
 				<nav aria-label="Page navigation example">
-					<ul class="pagination ">
+					<ul class="pagination justify-content-center">
 					
 		                <c:if test="${cpage > 1}">
 		                  <li class="page-item">
