@@ -25,21 +25,85 @@ public class ChartDao {
 		ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
 	}
 	
+	//--b_code로 조회하는 게시판별 월별 글수
+	//-- where의 b_code = 을 물음표로하세요
+		/**
+		 * @param number
+		 * @return
+		 */
+		public List<Chart> getMonth(int month){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<Chart> boardlist = new ArrayList<Chart>();
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "select substr(w_date, 4, 2) as \"month\", b_name, count(substr(w_date, 4, 2)) as \"count\" "
+						+ "from ( "
+						+ "    select b.idx, b.nick, b.hits, b.w_date, substr(b.w_date, 4,2) as \"month\", i.b_code, i.b_name, b.title "
+						+ "    from board b left join board_info i "
+						+ "    on b.b_code = i.b_code "
+						+ "    where i.b_code = ? "
+						+ ") "
+						+ "group by substr(w_date, 4,2), b_name "
+						+ "order by substr(w_date, 4, 2) ";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				System.out.println(month);
+				pstmt.setInt(1, month);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						
+						Chart board = new Chart();
+						
+						board.setMonth(rs.getString("month"));
+						board.setB_name(rs.getString("b_name"));
+						board.setCount(rs.getInt("count"));
+						
+						boardlist.add(board);
+					}while(rs.next());
+				}else {
+					System.out.println("조회 데이터 없음");
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					rs.close();
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+		
+			return boardlist;
+		}
+	
+	
 	
 	//모든 게시판 조회수 상위 TOP
-	public List<AttendanceBoad> getTopViews(int number){
+	public List<Chart> getTopViews(int number){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<AttendanceBoad> boardlist = new ArrayList<AttendanceBoad>();
+		List<Chart> boardlist = new ArrayList<Chart>();
 		
 		try {
 			
 			conn = ds.getConnection();
 			String sql = "select * "
-					+ "from (select idx, title, nick, content, hits, w_date, report_count, notic, email_id, b_code "
-					+ "from board "
+					+ "from ( "
+					+ "select i.b_name, b.idx, b.hits, b.title "
+					+ "from board b left join board_info i on b.B_CODE = i.B_CODE "
 					+ "order by hits desc) "
 					+ "where rownum <= ? ";
 			
@@ -51,17 +115,12 @@ public class ChartDao {
 			if(rs.next()) {
 				do {
 					
-					AttendanceBoad board = new AttendanceBoad();
+					Chart board = new Chart();
+					
+					board.setB_name(rs.getString("b_name"));
 					board.setIdx(rs.getInt("idx"));
-					board.setTitle(rs.getString("title"));
-					board.setNick(rs.getString("nick"));
-					board.setContent(rs.getString("content"));
 					board.setHits(rs.getInt("hits"));
-					board.setW_date(rs.getString("w_date"));
-					board.setReport_count(rs.getInt("report_count"));
-					board.setNotic(rs.getString("notic"));
-					board.setEmail_id(rs.getString("email_id"));
-					board.setB_code(rs.getInt("b_code"));
+					board.setTitle(rs.getString("title"));
 					
 					boardlist.add(board);
 				}while(rs.next());
@@ -83,6 +142,58 @@ public class ChartDao {
 	
 		return boardlist;
 	}
+	
+	//--> 게시판 별 count 수
+		public List<Chart> getBoardCount(){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<Chart> boardlist = new ArrayList<Chart>();
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "select b_name, count(idx) hit_count "
+						+ "from ( "
+						+ "    select i.b_name, b.idx, b.hits, b.title "
+						+ "    from board b left join board_info i "
+						+ "    on b.b_code = i.b_code "
+						+ "    order by hits "
+						+ ")group by b_name "
+						+ "order by hit_count desc ";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					do {
+						Chart board = new Chart();
+						
+						board.setB_name(rs.getString("b_name"));
+						board.setHit_count(rs.getInt("hit_count"));
+						
+						boardlist.add(board);
+					}while(rs.next());
+				}else {
+					System.out.println("조회 데이터 없음");
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					rs.close();
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+		
+			return boardlist;
+		}
 	
 	
 public List<Chart> getTopRankpoint(String startDate, String endDate, int number){
