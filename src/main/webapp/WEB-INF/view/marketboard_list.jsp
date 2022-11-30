@@ -136,7 +136,7 @@
 			<h1>거래 게시판</h1>
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="index.html">전체글 : ${totalboardcount}</a></li>
+					<li class="breadcrumb-item"><a href="cafemain.do">전체글 : ${totalboardcount}</a></li>
 					<li class="breadcrumb-item active">판매중 : ${soldcount}</li>
 					<li class="breadcrumb-item">판매완료 : ${totalboardcount-soldcount}</li>
 				</ol>

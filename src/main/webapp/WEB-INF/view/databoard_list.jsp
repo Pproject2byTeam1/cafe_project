@@ -138,7 +138,7 @@
          <h1>자료 게시판</h1>
          <nav>
             <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+               <li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
                <li class="breadcrumb-item active">자료게시판</li>
             </ol>
          </nav>

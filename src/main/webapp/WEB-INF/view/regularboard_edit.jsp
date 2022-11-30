@@ -61,7 +61,7 @@
          <!-- 게시판 이름 끌고오기 b_name -->
          <nav>
             <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+               <li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
                <li class="breadcrumb-item"><a
                   href="reguler_list.do?b_code=${b_code}">자유게시판</a></li>
                <li class="breadcrumb-item active">글쓰기</li>
