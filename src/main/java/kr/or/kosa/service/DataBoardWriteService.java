@@ -57,8 +57,6 @@ public class DataBoardWriteService implements Action {
 		    String msg = "";
 			String url = "";
 		    
-			
-			
 			if(user == null) {
 		    	msg = "실패";
 				url = "/WebCafe_Project/login_view.do";

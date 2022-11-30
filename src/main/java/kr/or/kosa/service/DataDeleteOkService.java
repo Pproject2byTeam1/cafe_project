@@ -33,7 +33,7 @@ public class DataDeleteOkService implements Action {
 
 			String msg = "";
 			String url = "";
-			// board_delete.do?idx=" + ${board.idx}
+			
 			if (row < 0) {
 				msg = "삭제에 실패하였습니다";
 				url = "databoard_list.do?b_code"+ b_code;
