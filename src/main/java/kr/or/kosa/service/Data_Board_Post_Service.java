@@ -27,30 +27,39 @@ public class Data_Board_Post_Service implements Action {
 		try {
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("member");
+			
+			//Dao 불러오기
 			Board_Info_Dao infodao = new Board_Info_Dao();
-			List<Board_Info> infolist = infodao.getSideBoardList();
-			int idx = Integer.parseInt(request.getParameter("idx"));
-			int b_code = Integer.parseInt(request.getParameter("b_code"));
-			String ori_name = request.getParameter("ori_name");
 			UserDao udao = new UserDao();
 			DataBoardDao dao = new DataBoardDao();
 			Board_Dao bdao = new Board_Dao();
 			Yes_Dao ydao = new Yes_Dao();
+			
+			
+			
+			
+			List<Board_Info> infolist = infodao.getSideBoardList();
+			int idx = Integer.parseInt(request.getParameter("idx"));
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			String ori_name = request.getParameter("ori_name");
+
 			bdao.updateHits(idx);
 			DataBoard board = dao.getData_BoardByIdx(idx);
 			
 			User rank = udao.selectUserById(board.getEmail_id());
 			
+			//좋아요 기능 
 			if (user != null) {
 				Yes_Dao yesdao = new Yes_Dao();
 				String yes = yesdao.getYesEmailByIdxEmail(idx, user.getEmail_id());
 
 				if (yes != null) {
-					request.setAttribute("yes", yes);
+					request.setAttribute("yespark", yes);
 				} else {
-					request.setAttribute("yes", "no");
+					request.setAttribute("yespark", "no");
 				}
 			}
+			
 			int yes = ydao.getYesCountBy_idx(idx);
 			
 			request.setAttribute("infolist", infolist);

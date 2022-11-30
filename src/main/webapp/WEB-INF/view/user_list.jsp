@@ -47,39 +47,6 @@
 <script>
 
 
-	$(function(){
-		
-		
-		function del(data){
-		
-			$.ajax({
-				url:"DeleteUser",
-				data:data,
-				dataType:"html",
-				success:function(responsetxt){
-				
-					 $('#rapportlist').remove();
-					
-				}
-				
-		});
-				
-		};
-		
-		
-		
-		$(document).on('click', '.deletuser', function(){
-		
-			const data ={"email_id" : $('div').children('.id').val()};
-			
-			console.log(data);
-			del(data);
-			alert("강퇴되었습니다");
-	});
-	
-	});
-
-
 
 
 </script>
@@ -109,7 +76,8 @@
 		
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-1" >
+				<div class="col-md-1">
+				<div>
 					<form name="list">
 						<select class="form-select" name="ps" onchange="submit()">
 						   <c:forEach var="i" begin="5" end="20" step="5">
@@ -124,6 +92,7 @@
 						   </c:forEach>
 	   					</select>
 					</form>
+					
 				</div>
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
@@ -131,21 +100,14 @@
 						<div class="col-md-5"></div>
 						<div class="col-md-1"></div>
 						<div class="col-md-5">
-							<select class="form-select">
-								<option>전체조회</option>
-								<option>OO조회</option>
-								<option>OO조회</option>
-							</select>
+							
 						</div>
 					</div>
 				</div>
 	
 				<div class="col-md-3">
 					<div class="search-bar">
-						<form class="search-form d-flex align-items-center" method="POST" action="#">
-							<input type="text" name="query" placeholder="Search" class="form-control" title="Enter search keyword">
-							<button type="submit" title="Search" class="btn btn-secondary"> <i class="bi bi-search"></i></button>
-						</form>
+						
 					</div>
 				</div>
 				

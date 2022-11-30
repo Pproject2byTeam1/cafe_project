@@ -56,7 +56,7 @@
 				location.href="marketboard_write.do?b_code=" + b_code;
 				
 			});
-			
+		
 			
 	});
 			
@@ -69,13 +69,17 @@
   	
   	$(document).ready(function(){
 		
+  		let email_id = '<c:out value="${member.email_id}" />';
+        let yes = '<c:out value="${yes2}" />';
+        let idx = '<c:out value="${list.idx}" />'
+  		
   		/* 글삭제 */
 		$("#delete").click(function(){
 			let idx = "<c:out value='${list.idx}'/>";
 			let b_code = "<c:out value='${b_code}'/>";
 			console.log(idx);
 			console.log(b_code);
- 			location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + ${list.idx};
+ 			location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + idx;
 			
 		});
   		
@@ -85,13 +89,11 @@
 			let b_code = "<c:out value='${b_code}'/>";
 			let idx = "<c:out value='${list.idx}'/>";
 			console.log("edit 클릭");
-			location.href="marketboardEdit.do?b_code="  + b_code + "&idx=" + ${list.idx};
+			location.href="marketboardEdit.do?b_code="  + b_code + "&idx=" + idx;
 			
 		});
 		
-		let email_id = '<c:out value="${member.email_id}" />';
-        let yes = '<c:out value="${yes2}" />';
-        let idx = '<c:out value="${list.idx}" />'
+	
         
         /* 게시물 좋아요 비동기 처리 */
         $("#yesbtn").click(function(){
@@ -294,9 +296,35 @@
 		list();
 		
 		/* 댓글 끝 */
-        
 		
+        	/*신고  */
+		function rep(data7){
+
+			$.ajax({
+				url:"RepCount",
+				data:data7,
+				dataType:"html",
+				success:function(responsetxt){
+				
+					swal("신고","신고되었습니다","success");
+				}
+				
+		});
+				
+		};
+
+		$(document).on('click', '#report', function(){
+		
+			const data7 ={"idx":idx};
+			
+			console.log(data7);
+			rep(data7);
+			
+	});
   	});
+  
+	
+
   	
   	</script>
 
@@ -375,6 +403,7 @@
 										<hr>
 										<div align="right" class="col-md-12">
 											<div>
+											<input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> 
 												<button type="button" id="Write" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">글쓰기</button>
 												<!-- 본인확인 -->

@@ -10,8 +10,10 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.MarketBoardDao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
 
@@ -22,6 +24,10 @@ public class MarketBoardEditService implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
 			
 			Board_Info_Dao infodao = new Board_Info_Dao();
  			List<Board_Info> infolist = infodao.getSideBoardList();
@@ -32,7 +38,7 @@ public class MarketBoardEditService implements Action {
  			String url = "";
  			int b_code = Integer.parseInt(request.getParameter("b_code"));
  			int idx = Integer.parseInt(request.getParameter("idx"));
- 			int cp = Integer.parseInt(request.getParameter("cp"));
+ 			
  
  			
  			// 로그인 안할경우 로그인 페이지로
@@ -57,7 +63,7 @@ public class MarketBoardEditService implements Action {
 				request.setAttribute("marketboard", marketboard);
 				request.setAttribute("totalboardcount", totalboardcount);
 				request.setAttribute("soldcount", soldcount);
-				request.setAttribute("cp", cp);
+				
 				
 				url="/WEB-INF/view/marketboard_edit.jsp";
 	        	 

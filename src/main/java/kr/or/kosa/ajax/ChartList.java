@@ -36,6 +36,16 @@ public class ChartList extends HttpServlet {
     	
     	try {  		
     		
+    		if (chart.equals("boardUtilizationRate")) {
+    			String startDate = request.getParameter("BURstartDate");
+				String endDate = request.getParameter("BURendDate");
+				
+				ChartDao cdao = new ChartDao();
+				List <Chart> BURboard = cdao.getBoardUtilizationRate(startDate, endDate);
+				
+				jsonlist = JSONArray.fromObject(BURboard);
+			}
+    		
     		if (chart.equals("rankpointselect")) {
     			
 				int number = Integer.parseInt(request.getParameter("number"));

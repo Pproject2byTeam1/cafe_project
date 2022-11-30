@@ -8,7 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.MessageDao;
+import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Message;
 import kr.or.kosa.dto.User;
 
@@ -20,6 +24,14 @@ public class MessageListService implements Action {
 		ActionForward forward = new ActionForward();
 		
 		try {
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
+			
+			Board_Info_Dao infodao = new Board_Info_Dao();
+ 			List<Board_Info> infolist = infodao.getSideBoardList();
+ 			request.setAttribute("infolist", infolist);
 			
 			HttpSession session = request.getSession();
 			MessageDao dao = new MessageDao();

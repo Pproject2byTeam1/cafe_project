@@ -56,7 +56,7 @@
 	$(function(){
 		
 		let email_id = '<c:out value="${member.email_id}" />';
-        let yespark = '<c:out value="${yes}" />';
+        let yespark = '<c:out value="${yesark}" />';
         let idx = '<c:out value="${board.idx}" />';
         let b_code = '<c:out value="${b_code}" />';
         let depth = '<c:out value="${board.depth}" />';
@@ -66,63 +66,68 @@
 
 
         /* 게시물 좋아요 비동기 처리 */
-        $("#yesbtn").click(function(){
-           
-           if(yes == "no"){
+         $("#yesbtn").click(function(){
               
-              requestdata = {"idx": idx, "email_id": email_id};
+            
+              console.log("hahaha");
+              console.log(email_id);
+              console.log("sdfs" + yespark);
               
-              console.log(requestdata);
+              if(yespark == "no"){
+                 
+                 requestdata = {"idx": idx, "email_id": email_id};
+                 
+                 console.log(requestdata);
+                 
+                 $.ajax({
+                    type: "POST",
+                    url: "Yes",
+                  data: requestdata,
+                    dataType: "HTML",
+                    success: function(data){
+                       
+                       yespark = email_id;
+                       
+                       $("#yesbtn").empty();
+                       $("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
+                       swal(data);
+                    },
+                    beforeSend: function(){
+                     $('.wrap-load').removeClass('display-none');
+                  },
+                  complete: function(){
+                     $('.wrap-loading').addClass('display-none');
+                  }
+                 });
+                 
+              }else{
+                 
+                 requestdata = {"idx": idx, "email_id": email_id};
+                 
+                 $.ajax({
+                    type: "POST",
+                    url: "YesRemove",
+                  data: requestdata,
+                    dataType: "HTML",
+                    success: function(data){
+                       yespark = "no";
+                       
+                       $("#yesbtn").empty();
+                       $("#yesbtn").append('<i class="bi bi-heart"></i>');
+                       swal(data);
+                    },
+                    beforeSend: function(){
+                     $('.wrap-load').removeClass('display-none');
+                  },
+                  complete: function(){
+                     $('.wrap-loading').addClass('display-none');
+                  }
+                 });
+                 
+              }
               
-              $.ajax({
-                 type: "POST",
-                 url: "Yes",
-               data: requestdata,
-                 dataType: "HTML",
-                 success: function(data){
-                    
-                    yes = email_id;
-                    
-                    $("#yesbtn").empty();
-                    $("#yesbtn").append('<i class="bi bi-heart-fill"></i>');
-                    swal(data);
-                 },
-                 beforeSend: function(){
-                  $('.wrap-load').removeClass('display-none');
-               },
-               complete: function(){
-                  $('.wrap-loading').addClass('display-none');
-               }
-              });
               
-           }else{
-              
-              requestdata = {"idx": idx, "email_id": email_id};
-              
-              $.ajax({
-                 type: "POST",
-                 url: "YesRemove",
-               data: requestdata,
-                 dataType: "HTML",
-                 success: function(data){
-                    yes = "no";
-                    
-                    $("#yesbtn").empty();
-                    $("#yesbtn").append('<i class="bi bi-heart"></i>');
-                    swal(data);
-                 },
-                 beforeSend: function(){
-                  $('.wrap-load').removeClass('display-none');
-               },
-               complete: function(){
-                  $('.wrap-loading').addClass('display-none');
-               }
-              });
-              
-           }
-           
-           
-        });
+           });
         
         //신고
     	function rep(data7){
@@ -139,9 +144,7 @@
 		});
 				
 		};
-		
-		
-		
+
 		$(document).on('click', '#report', function(){
 		
 			const data7 ={"idx":idx};
@@ -227,7 +230,7 @@
 									
 						}
 					}
-				);
+				)
 		}
   		
   		function replyinser(data){
@@ -417,9 +420,10 @@
 													<c:choose>
 														<c:when
 															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
-															<button type="button"
+															<button type="button" onclick="location.href='image/board/${originalfilename}'" target="_blank"
 																class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
-															<a href="upload/${originalfilename}" target="_blank">미리보기</a>
+															<button type="button" onclick="location.href='filedownload.board?file_name=${originalfilename}'" id="download"
+																class="btn btn-secondary rounded-pill" id="preview">다운로드</button>
 															<a
 																href="filedownload.board?file_name=${originalfilename}"
 																id="download">다운로드</a>

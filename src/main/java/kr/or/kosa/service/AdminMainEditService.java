@@ -25,6 +25,10 @@ public class AdminMainEditService implements Action {
 		ActionForward forward = new ActionForward();
 
 		try { 
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
 			
 			//게시판 종류 정보 가져오기
 			Board_Info_Dao infodao = new Board_Info_Dao();

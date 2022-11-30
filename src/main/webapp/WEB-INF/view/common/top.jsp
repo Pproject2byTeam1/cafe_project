@@ -3,9 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.jsp" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">카페人중독</span>
+      <a href="cafemain.do" class="logo d-flex align-items-center">
+        <img src="upload/${banner.cafe_icon}" alt="icon" onerror="this.onerror=null; this.src='assets/img/logo.png'">
+        <span class="d-none d-lg-block">${banner.cafe_name}</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -226,6 +226,16 @@
               <a class="dropdown-item d-flex align-items-center" href="user_activity.do">
                 <i class="bi bi-person"></i>
                 <span>나의 활동 내역</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="memo_list.do">
+                <i class="ri-mail-line"></i>
+                <span>나의 쪽지함</span>
               </a>
             </li>
             <li>

@@ -14,8 +14,10 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.User;
 
 public class CheckBoardService implements Action {
@@ -73,6 +75,11 @@ public class CheckBoardService implements Action {
 		
 		
 		try {
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
+			
 			//사이드바 정보
 	        Board_Info_Dao infodao = new Board_Info_Dao();
 	        List<Board_Info> infolist = infodao.getSideBoardList();
