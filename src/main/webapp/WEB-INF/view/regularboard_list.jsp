@@ -155,7 +155,7 @@
 
 			<form name="list">
 				<input id="b_code" value="${b_code}" name="b_code" type="hidden" />
-						<button class="btn btn-success" id="write">글쓰기</button>
+						<button class="btn btn-success"   type="button" id="write">글쓰기</button>
 				<select class="selectpicker"  data-width="75px" name="ps" onchange="submit()">
 				   <c:forEach var="i" begin="5" end="20" step="5">
 				   		<c:choose>

@@ -296,9 +296,35 @@
 		list();
 		
 		/* 댓글 끝 */
-        
 		
+        	/*신고  */
+		function rep(data7){
+
+			$.ajax({
+				url:"RepCount",
+				data:data7,
+				dataType:"html",
+				success:function(responsetxt){
+				
+					swal("신고","신고되었습니다","success");
+				}
+				
+		});
+				
+		};
+
+		$(document).on('click', '#report', function(){
+		
+			const data7 ={"idx":idx};
+			
+			console.log(data7);
+			rep(data7);
+			
+	});
   	});
+  
+	
+
   	
   	</script>
 
@@ -377,6 +403,7 @@
 										<hr>
 										<div align="right" class="col-md-12">
 											<div>
+											<input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> 
 												<button type="button" id="Write" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">글쓰기</button>
 												<!-- 본인확인 -->

@@ -69,7 +69,7 @@ public class RapportListService implements Action {
 			
 			
 			List<AttendanceBoad> reportlist = dao.reportlist(cpage, pagesize);
-	
+			request.setAttribute("infolist", infolist);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);
