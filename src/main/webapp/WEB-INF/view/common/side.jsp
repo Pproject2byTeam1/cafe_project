@@ -53,7 +53,7 @@
 		<a class="card-title">카페 정보</a>
 			<div class="card-body ms-3">
 				<a class="card-title">관리자 
-					<span>| <img src="image/rank_icon/100.gif" alt="Profile"> 관리자 </span>
+					<span>| <img src="image/rank_icon/${member.rank}.gif" alt="Profile"> 관리자 </span>
 				</a><br> 
 				<a class="card-title">회원수<span> | 00 명 | <a href="user-grade.html">등급안내</a></span></a><br>
 				<c:if test="${member.isAdmin == 'M'}">

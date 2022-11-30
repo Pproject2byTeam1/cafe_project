@@ -10,13 +10,40 @@ public class Chart {
 	private int idx;
 	private int b_code;
 	private String email_id;
+	private int hits;
+	private String month;
+	private int count;
+	
+	
+	
+	
+	
+	
 	
 	
 	@Override
 	public String toString() {
 		return "Chart [rankpoint=" + rankpoint + ", title=" + title + ", nick=" + nick + ", w_date=" + w_date
 				+ ", b_name=" + b_name + ", hit_count=" + hit_count + ", idx=" + idx + ", b_code=" + b_code
-				+ ", email_id=" + email_id + "]";
+				+ ", email_id=" + email_id + ", hits=" + hits + ", month=" + month + ", count=" + count + "]";
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getHits() {
+		return hits;
+	}
+	public void setHits(int hits) {
+		this.hits = hits;
 	}
 	public int getIdx() {
 		return idx;

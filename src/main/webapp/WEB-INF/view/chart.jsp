@@ -49,10 +49,65 @@
 			allBoardTopView();
 			selectBoard();
 			boardUtilizationRate();
-			
+			boardCount();
+			monthBoardWrite();
 			
 			/* 변수 값 버리는 temp */
 			let splicetResult;
+			
+			
+			
+			
+			
+			/* 기간별 게시판 조회수 */
+			
+			let BC_bname = []; 
+			let BC_hitcount = [];
+			
+			
+						/* 함수시작 */
+			function boardCount(){
+				$("#boardCount").empty();
+				
+				const BCboard = { "chart": "boardCount"};
+				
+				
+					
+				$.ajax({
+  					type: "POST",
+  					url: "ChartList",
+  					data: BCboard,
+  					dataType: "JSON",
+  					success: function(data){
+  						
+  						splicetResult = BC_bname.splice(0);
+  						splicetResult = BC_hitcount.splice(0);
+  						
+  						$(data).each(function(){
+  							BC_bname.push(this.b_name);
+  							BC_hitcount.push(this.hit_count);
+  						});
+  						
+  						
+  						
+  						
+  						new ApexCharts(document.querySelector("#boardCount"), {
+  		                    series: BC_hitcount,
+  		                    chart: {
+  		                      height: 350,
+  		                      type: 'pie',
+  		                      toolbar: {
+  		                        show: true
+  		                      }
+  		                    },
+  		                    labels: BC_bname
+  		                  }).render();
+  						
+  					}
+ 				});
+			}
+			/* 기간별 게시판 조회수 종료 */
+			
 			
 			
 			
@@ -91,8 +146,6 @@
 							Bname.push(this.b_name);
   						});
   						
-  						console.log(Bhits)
-  						console.log(Bname)
   						
   						new ApexCharts(document.querySelector("#boardUtilizationRate"), {
   		                    series: Bhits,
@@ -116,7 +169,7 @@
   					}
  				});
 			}
-			/* 전체 게시판 조회수 상위 TOP 종료 */
+			/* 기간별 게시판 조회수 종료 */
 			
 			
 			
@@ -208,7 +261,91 @@
 				
 				
 		
+			/* 게시판별 월별 글수 TOP */
+			
+			let MBWmonth = []; 
+			let MBWcount = [];
+		
+			
+			
+			$("#MBWmonth").change(monthBoardWrite);
+			
+						/* 함수시작 */
+			function monthBoardWrite(){
+				$("#monthBoardWrite").empty();
 				
+				
+				let month = $('#MBWmonth').val();
+				const MBWnumber = {"MBWmonth": month,"chart": "monthBoardWrite"};
+				
+				$.ajax({
+  					type: "POST",
+  					url: "ChartList",
+  					data: MBWnumber,
+  					dataType: "JSON",
+  					success: function(data){
+						
+  						console.log(data);
+  						
+  						splicetResult = MBWmonth.splice(0);
+  						splicetResult = MBWcount.splice(0);
+  						
+  						$(data).each(function(){
+  							MBWmonth.push(this.month);
+							MBWcount.push(this.count);
+  						});
+  						
+  						console.log(data);
+  						
+  						
+  						new ApexCharts(document.querySelector("#monthBoardWrite"), {
+  		                    series: [{
+  		                      name: data[0].b_name,
+  		                      data: MBWcount
+  		                    }],
+  		                    chart: {
+  		                      height: 350,
+  		                      type: 'line',
+  		                      zoom: {
+  		                        enabled: false
+  		                      }
+  		                    },
+  		                    dataLabels: {
+  		                      enabled: false
+  		                    },
+  		                    stroke: {
+  		                      curve: 'smooth'
+  		                    },
+  		                    grid: {
+  		                      row: {
+  		                        colors: ['#ffffff', 'transparent'], // takes an array which will be repeated on columns
+  		                        opacity: 0.5
+  		                      },
+  		                    },
+  		                    xaxis: {
+  		                        categories: MBWmonth,
+  		                      },
+  		                    yaxis: {
+  			                      title: {
+  			                        text: 'view'
+  			                      }
+  		                    },
+  		                    fill: {
+  			                      opacity: 1
+  		                    },
+  		                    tooltip: {
+  			                      y: {
+  			                        formatter: function(val) {
+  			                          return " " + val + " view"
+  			                        }
+  			                      }
+  			                    }
+  		                  }).render();
+					}
+ 				});
+				
+			}
+			/* 게시판별 월별 글수 종료 */	
 			
 			
 			
@@ -217,6 +354,8 @@
 			
 			let hits = []; 
 			let title = [];
+			let b_name = [];
+			
 			
 			$("#allBoardTopView").change(allBoardTopView);
 			
@@ -233,20 +372,18 @@
   					data: BTnumber,
   					dataType: "JSON",
   					success: function(data){
-  							
+						
   						splicetResult = hits.splice(0);
   						splicetResult = title.splice(0);
   						
-  						$(data).each(function(){
+  						$(data[0]).each(function(){
 							hits.push(this.hits);
 							title.push(this.title);
   						});
   						
+  						
 						new ApexCharts(document.querySelector("#barChart"), {
-		                    series: [{
-		                      name: '전체게시판',
-		                      data: hits
-		                    }],
+		                    series: data[1],
 		                    chart: {
 		                      type: 'bar',
 		                      height: 350
@@ -258,23 +395,7 @@
 		                        borderRadius: 4,
 		                        horizontal: true,
 		                      }
-		                    },
-		                    dataLabels: {
-		                      enabled: true
-		                    },
-		                    xaxis: {
-		                      categories: title
-		                    },
-   		                    fill: {
-   		                      opacity: 1
-   		                    },
-   		                    tooltip: {
-   		                      y: {
-   		                        formatter: function(val) {
-   		                          return " " + val + " point"
-   		                        }
-   		                      }
-   		                    }
+		                    }
 		                  }).render();
 					}
  				});
@@ -381,7 +502,7 @@
 
       
 
-        <div class="col-lg-12">
+        <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
               <div class="col-md-12">
@@ -389,7 +510,7 @@
          		</div>
          			<div class="row">
          				<div class="col-md-5 d-flex justify-content-end align-items-center">
-         					<input type="date" id="BURstartDate" class="form-control" value="2022-11-01" />
+         					<input type="date" id="BURstartDate" class="form-control" value="2022-05-01" />
          				</div>
          				<div class="col-md-5 d-flex justify-content-end align-items-center">
          					<input type="date" id="BURendDate" class="form-control" value="2022-12-01" />
@@ -407,7 +528,51 @@
             </div>
           </div>
         </div>
+        
+        
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">게시판 별 count 수</h5>
 
+              <!-- Pie Chart -->
+              <div id="boardCount"></div>
+              <!-- End Pie Chart -->
+
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+            		<div class="col-md-7">
+            			<h5 class="card-title">게시판별 월별 글수</h5>
+            		</div>
+            		<div class="col-md-5 d-flex justify-content-end align-items-center">
+            			<select id="MBWmonth" class="form-select">
+            				<c:forEach var="boardlist" items="${boardlist}">
+            					<option value="${boardlist.b_code}">${boardlist.b_name}</option>
+            				</c:forEach>
+						</select>
+            		</div>
+            		
+            	</div>
+
+              <!-- Line Chart -->
+              <div id="monthBoardWrite"></div>
+
+              
+              <!-- End Line Chart -->
+
+            </div>
+          </div>
+        </div>
+
+       
+       
        
       </div>
     </section>
