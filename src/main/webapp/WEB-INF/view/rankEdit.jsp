@@ -41,6 +41,35 @@
 		var list = "<c:out value='${list}'/>";
 		var max = Number("<c:out value='${maxpoint}'/>");
 		
+		function list() {
+			
+			$.ajax({
+				type: "POST",
+				url: "MarketSearch",
+				data: ,
+				dataType: "JSON",
+				success: function(data){
+					
+					$("#ranklist").empty();
+					
+					html = 
+					for(let index in data){
+						
+					
+					}
+					
+				
+				
+					}
+					
+					
+				}
+			
+		}
+		
+		
+		
+		
 		$('#newRank').click(function addRank() {
 			
 			
@@ -65,7 +94,7 @@
 			newCell2.innerHTML = '<input type="text" class="form-control" placeholder="${rank.r_name}" value="${rank.r_name}" id="' + size + 'name"></td>';
 			newCell3.innerHTML = '<input type="text" class="form-control" placeholder="' + max + '점 이상" id="' + size + 'point">';
 			newCell4.innerHTML = '<button type="button" class="editRank btn btn btn-secondary" value="edit" style="float: right">수정하기</button>';
-			
+			list();
 			
 		});
 		
@@ -86,6 +115,7 @@
 			  
 			
 		    var _td = $(this).closest('tr').find('td');
+			 console.log(_td[0]);
 			 _td[0].find('td').
 			 if($(_td[0]) == "1"){
 				 
@@ -93,7 +123,7 @@
 				 _td[2].innerHTML = '<input type="text" class="form-control" id="point" placeholder="${rank.r_point}">';
 			 }
 		    
-		    _td[3].innerHTML = '<button type="button" class="saveRank btn btn btn-secondary" value="save" style="float: right">저장하기</button>';
+		    _td[3].innerHTML = '<button type="button" class="saveRank btn btn btn-secondary" value="save" style="float: right">저장하기</button>'; */
 
 		});
 					
@@ -138,8 +168,7 @@
 							<tr>
 								<th></th>
 								<th></th>
-								<th>	
-								</th>
+								<th></th>
 								<th>
 								<button type="button" class="btn float-right btn-success"
 										id="saveRank" value="save" style="float: right">저장하기</button>	
@@ -155,7 +184,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						${list}
+						
 							<c:forEach var="rank" items="${list}" varStatus="status">
 							
 								<c:if test="${rank.rank>0}">

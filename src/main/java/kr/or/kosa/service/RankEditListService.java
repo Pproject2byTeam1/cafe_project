@@ -24,8 +24,7 @@ public class RankEditListService implements Action {
 		ActionForward forward = new ActionForward();
 
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("member");
-		String userId = (String) session.getAttribute("userid");
+		
 		
 		try {
 			//top
@@ -38,12 +37,14 @@ public class RankEditListService implements Action {
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
 			Rank_Dao dao = new Rank_Dao();
+			User user = (User) session.getAttribute("member");
+
 			
 			String url = "";
 			//로그인 안한경우
 			if (user == null) {
 
-	            String board_msg = "로그인을 해주세요";
+	            String board_msg = "로그인 해주세요.";
 	            String board_url = "/WebCafe_Project/login_view.do";
 	               
 	            request.setAttribute("board_msg", board_msg);
@@ -51,40 +52,42 @@ public class RankEditListService implements Action {
 	              
 	            url="/WEB-INF/view/redirect.jsp";
 	           
+	         }else {
+	        	 
+	        	if (user.getIsAdmin().equals("M")) {
+	        		
+	        		url="/WEB-INF/view/rankEdit.jsp";
+	        		
+	        		//관리자일떄만
+					List<Rank> list = dao.getRankExecptionManager();
+					int size = list.size();
+					int max = 0;
+					for(Rank rank : list) {
+						if(rank.getR_point() > max) {
+							max = rank.getR_point();
+						}
+					}
+					
+					request.setAttribute("maxpoint", max);
+					request.setAttribute("list", list);
+					request.setAttribute("size", size);
+	        		
+	        		}else {
+	        			String board_msg = "관리자만 이용 가능합니다.";
+	     	            String board_url = "/WebCafe_Project/login_view.do";
+	     	               
+	     	            request.setAttribute("board_msg", board_msg);
+	     	            request.setAttribute("board_url", board_url);
+	     	              
+	     	            url="/WEB-INF/view/redirect.jsp";
+	        		}
+	
 	         }
-			//관리자일떄만
-			if(user.getIsAdmin().equals("M")){
-				
-					url="/WEB-INF/view/rankEdit.jsp";
-
-			}else {
-				
-				String board_msg ="권한이 없습니다.";
-				String board_url = "/WebCafe_Project/login_view.do";
-		        
-	            request.setAttribute("board_msg", board_msg);
-	            request.setAttribute("board_url", board_url);
-	              
-	            url="/WEB-INF/view/redirect.jsp";
-	    		
-			}
-			
-			List<Rank> list = dao.getRankListAll();
-			int size = list.size();
-			int max = 0;
-			for(Rank rank : list) {
-				if(rank.getR_point() > max) {
-					max = rank.getR_point();
-				}
-			}
-			
-			request.setAttribute("maxpoint", max);
-			request.setAttribute("list", list);
-			request.setAttribute("size", size);
 			
 			forward = new ActionForward();
     		forward.setRedirect(false);
     		forward.setPath(url);
+			
 
 		} catch (NamingException e) {
 		
