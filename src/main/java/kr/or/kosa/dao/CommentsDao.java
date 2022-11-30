@@ -61,18 +61,18 @@ public class CommentsDao {
 					commentslist.add(comments);
 				}while(rs.next());
 			}else {
-				System.out.println("조회 데이터 없음");
+				
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			try {
 				rs.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
+				e2.printStackTrace();
 			}
 		}
 		
@@ -136,7 +136,7 @@ public class CommentsDao {
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
+				e2.printStackTrace();
 			}
 		}
 		
@@ -196,7 +196,7 @@ public class CommentsDao {
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
+				e2.printStackTrace();
 			}
 		}
 		

@@ -804,6 +804,7 @@ public class Board_Dao {
 			return boardlist;
 		}
 			// 신고횟수 증가
+			
 			public int upReport(int idx) {
 				
 				Connection conn = null;

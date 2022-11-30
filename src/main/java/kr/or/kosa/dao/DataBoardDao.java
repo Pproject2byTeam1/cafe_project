@@ -73,7 +73,7 @@ import kr.or.kosa.dto.DataBoard;
 			}
 			
 		} catch (Exception e) {
-			System.out.println("오류 :" + e.getMessage());
+		e.printStackTrace();
 		}finally {
 			try {
 				pstmt.close();
@@ -129,18 +129,18 @@ import kr.or.kosa.dto.DataBoard;
             board.setStep(rs.getInt("step"));
             
          }else {
-            System.out.println("조회 데이터 없음");
+            
          }
          
       } catch (Exception e) {
-         System.out.println(e.getMessage());
+         e.printStackTrace();
       } finally {
          try {
             rs.close();
             pstmt.close();
             conn.close();
          } catch (Exception e2) {
-            System.out.println(e2.getMessage());
+           e2.printStackTrace();
          }
       }
       
