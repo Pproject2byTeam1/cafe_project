@@ -118,7 +118,7 @@
                   <h5 class="card-title">자유게시판 <span>| 막 글</span></h5>
 
                     <div class="ps-3">
-                      <table class="table table-hover table-sm datatable">
+                      <table class="table table-hover">
                       	<thead>
                       	<tr><th><span class="text-success pt-1 fw-bold">제목</span></th><th><span class="text-success pt-1 fw-bold">작성자</span></th><th><span class="text-success pt-1 fw-bold">작성일자</span></th><th><span class="text-success pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>
@@ -165,10 +165,10 @@
                   <h5 class="card-title">정보 게시판 <span>| 정보공유</span></h5>
 
                     <div class="ps-3">
-                    <table class="table table-hover table-sm datatable">
+                    <table class="table table-hover">
                       	<thead>
                       	<tr><th><span class="text-primary pt-1 fw-bold">제목</span></th><th><span class="text-primary pt-1 fw-bold">작성자</span></th><th><span class="text-primary pt-1 fw-bold">작성일자</span></th><th><span class="text-primary pt-1 fw-bold">조회수</span></th></tr>
-                      	</thead>
+                      	</thead>	
                       	<tbody>
                       	<c:forEach var="board" items="${data_list}" varStatus="status">
                       	<tr class="listrow">
