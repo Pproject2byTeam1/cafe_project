@@ -14,11 +14,11 @@ import kr.or.kosa.dao.ChartDao;
 import kr.or.kosa.dto.AttendanceBoad;
 import net.sf.json.JSONArray;
 
-@WebServlet("/Chart")
-public class Chart extends HttpServlet {
+@WebServlet("/ChartList")
+public class ChartList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
-    public Chart() {
+    public ChartList() {
         super();
  
     }

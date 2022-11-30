@@ -16,8 +16,7 @@
 	
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-	
-	
+  
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -47,24 +46,25 @@
   
   <script type="text/javascript">
 		$(document).ready(function(){
-
-			
-			let splicetResult;
-			let hits = []; 
-			let title = [];
+			allBoardTopView();
 			
 			
 			
-			/*  */
-			$("#number").change(function(){
-				$("#barChart").empty();
+			
+			/* 기간별 글 종류별 글 생성, 조회수  */
+			
+			$("#RankPointSelect").change(selectBoard);
+			
+			function selectBoard(){
+				let startDate = $("#startDate").val();
+				let endDate = $("#endDate").val();
+				let number = $('#RankPointSelect').val();
 				
-				let num = $('#number').val();
-				const number = {"number": num};
+				const number = {"startDate": startDate, "endDate": endDate, "number": number};
 				
 				$.ajax({
   					type: "POST",
-  					url: "Chart",
+  					url: "ChartList",
   					data: number,
   					dataType: "JSON",
   					success: function(data){
@@ -72,13 +72,10 @@
   						splicetResult = hits.splice(0);
   						splicetResult = title.splice(0);
   						
-  					
   						$(data).each(function(){
 							hits.push(this.hits);
 							title.push(this.title);
   						});
-  						
-  						
   						
 						new ApexCharts(document.querySelector("#barChart"), {
 		                    series: [{
@@ -102,10 +99,73 @@
 		                    ,
 		                    }
 		                  }).render();
-  					}
+					}
+ 				});
+			}
+				
+				
+		
+				
+			
+			
+			
+			
+			/* 모든 게시판 조회수 상위 TOP */
+			let splicetResult;
+			let hits = []; 
+			let title = [];
+			
+			$("#allBoardTopView").change(allBoardTopView);
+			
+						/* 함수시작 */
+			function allBoardTopView(){
+				$("#barChart").empty();
+				
+				let num = $('#allBoardTopView').val();
+				const number = {"number": num};
+				
+				$.ajax({
+  					type: "POST",
+  					url: "ChartList",
+  					data: number,
+  					dataType: "JSON",
+  					success: function(data){
+  							
+  						splicetResult = hits.splice(0);
+  						splicetResult = title.splice(0);
+  						
+  						$(data).each(function(){
+							hits.push(this.hits);
+							title.push(this.title);
+  						});
+  						
+						new ApexCharts(document.querySelector("#barChart"), {
+		                    series: [{
+		                      data: hits
+		                    }],
+		                    chart: {
+		                      type: 'bar',
+		                      height: 350
+		                    },
+		                    plotOptions: {
+		                      bar: {
+		                        borderRadius: 4,
+		                        horizontal: true,
+		                      }
+		                    },
+		                    dataLabels: {
+		                      enabled: false
+		                    },
+		                    xaxis: {
+		                      categories: title
+		                    ,
+		                    }
+		                  }).render();
+					}
  				});
 				
-			});
+			}
+			/* 모든 게시판 조회수 상위 TOP 종료 */
 			
 		});
   
@@ -126,6 +186,8 @@
      <!-- End Sidebar -->
      
   <main id="main" class="main">
+  
+
 
     <div class="pagetitle">
       <h1>ApexCharts</h1>
@@ -426,7 +488,7 @@
                         "02 Jun 2017",
                         "05 Jun 2017",
                         "06 Jun 2017",
-                        "07 Jun 2017",
+                        "07 Jun 2017", 	
                         "08 Jun 2017",
                         "09 Jun 2017",
                         "12 Jun 2017",
@@ -661,13 +723,15 @@
           <div class="card">
             <div class="card-body">
             	<div class="row">
-            		<div class="col-md-6">
-            			<h5 class="card-title">상위 Top 10 (Bar Chart)</h5>
+            		<div class="col-md-9">
+            			<h5 class="card-title">모든 게시판 조회수 상위 TOP</h5>
             		</div>
-            		<div class="col-md-6 d-flex justify-content-end align-items-center">
-            			<select name="number" id="number" class="">
+            		<div class="col-md-3 d-flex justify-content-end align-items-center">
+            			<select name="number" id="allBoardTopView" class="form-select">
 							<option value=5>5개</option>
 							<option value=10>10개</option>
+							<option value=15>15개</option>
+							<option value=20>20개</option>
 						</select>
             		</div>
             		
@@ -682,29 +746,28 @@
                 document.addEventListener("DOMContentLoaded", () => {
           
                 	
-                  new ApexCharts(document.querySelector("#barChart"), {
-                    series: [{
-                      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-                    }],
-                    chart: {
-                      type: 'bar',
-                      height: 350
-                    },
-                    plotOptions: {
-                      bar: {
-                        borderRadius: 4,
-                        horizontal: true,
-                      }
-                    },
-                    dataLabels: {
-                      enabled: false
-                    },
-                    xaxis: {
-                      categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-                        'United States', 'China', 'Germany'
-                      ],
-                    }
-                  }).render();
+                	new ApexCharts(document.querySelector("#barChart"), {
+	                    series: [{
+	                      data: []
+	                    }],
+	                    chart: {
+	                      type: 'bar',
+	                      height: 350
+	                    },
+	                    plotOptions: {
+	                      bar: {
+	                        borderRadius: 4,
+	                        horizontal: true,
+	                      }
+	                    },
+	                    dataLabels: {
+	                      enabled: false
+	                    },
+	                    xaxis: {
+	                      categories: []
+	                    ,
+	                    }
+	                  }).render();
                 });
               </script>
               <!-- End Bar Chart -->
@@ -716,7 +779,26 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Pie Chart</h5>
+       			<div class="col-md-12">
+         			<h5 class="card-title">모든 게시판 조회수 상위 TOP</h5>
+         		</div>
+         			<div class="row">
+         				<div class="col-md-5 d-flex justify-content-end align-items-center">
+         					<input type="date" id="startDate" class="form-control" value="2022-11-01" />
+         				</div>
+         				<div class="col-md-5 d-flex justify-content-end align-items-center">
+         					<input type="date" id="endDate" class="form-control" value="2022-12-01" />
+         				</div>
+	            		<div class="col-md-2 d-flex justify-content-end align-items-center">
+	            			<select name="number" id="RankPointSelect" class="form-select">
+								<option value=5>5개</option>
+								<option value=10>10개</option>
+								<option value=15>15개</option>
+								<option value=20>20개</option>
+							</select>
+	            		</div>
+            		
+            	</div>
 
               <!-- Pie Chart -->
               <div id="pieChart"></div>
@@ -997,7 +1079,12 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  
+  
+  
+  
 </body>
+
+
 
 </html>
