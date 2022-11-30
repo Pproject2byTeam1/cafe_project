@@ -131,7 +131,32 @@
               
               
            });
-           
+           //신고
+       	function rep(data7){
+
+   			$.ajax({
+   				url:"RepCount",
+   				data:data7,
+   				dataType:"html",
+   				success:function(responsetxt){
+   				
+   					swal(data7);
+   				}
+   				
+   		});
+   				
+   		};
+   		
+   		
+   		
+   		$(document).on('click', '#report', function(){
+   		
+   			const data7 ={"idx":idx};
+   			
+   			console.log(data7);
+   			rep(data7);
+   			
+   	});
            
            /* 답글 작성 */
            $("#replyWrite").click(function(){
@@ -377,6 +402,7 @@
                               <br>
                               <hr>
                                     <div class="d-flex justify-content-end">
+                                      <div align="left"> <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
                                     	<div>
                                     		<c:if test="${member != null}">
 	                                          <c:if test="${yespark == 'no'}">

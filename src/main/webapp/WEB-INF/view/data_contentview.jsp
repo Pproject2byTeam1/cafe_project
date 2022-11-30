@@ -15,7 +15,8 @@
 <meta content="" name="keywords">
 
 <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
@@ -47,7 +48,7 @@
 <link href="assets/css/marketboard_read.css" rel="stylesheet">
 
 <!-- 경고창 이쁜거 -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" >
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
 
 </script>
 
@@ -61,7 +62,7 @@
         let depth = '<c:out value="${board.depth}" />';
         let step = '<c:out value="${board.step}" />';
         let refer = '<c:out value="${board.refer}" />';
-        
+       
 
 
         /* 게시물 좋아요 비동기 처리 */
@@ -122,7 +123,34 @@
            
            
         });
+        
+        //신고
+    	function rep(data7){
 
+			$.ajax({
+				url:"RepCount",
+				data:data7,
+				dataType:"html",
+				success:function(responsetxt){
+				
+					swal(data7);
+				}
+				
+		});
+				
+		};
+		
+		
+		
+		$(document).on('click', '#report', function(){
+		
+			const data7 ={"idx":idx};
+			
+			console.log(data7);
+			rep(data7);
+			
+	});
+	
         //삭제
         $("#delete").click(function(){
 	
@@ -137,11 +165,14 @@
  			}
 			
 		});
-        
+  
         //수정
         $("#datamodify").click(function(){
         	location.href="databoard_edit.do?b_code=" + b_code + "&idx=" + idx + "&email_id=" + email_id;
         });
+  
+     
+        
     	
         /* 답글 작성 */
         
@@ -302,26 +333,28 @@
 
 <body>
 
-     <!-- ======= Header ======= -->
-     <header id="header" class="header fixed-top d-flex align-items-center">
-        <c:import url="/WEB-INF/view/common/top.jsp" />
-     </header><!-- End Header -->
-     
-     <!-- ======= Sidebar ======= -->
-     <c:import url="/WEB-INF/view/common/side.jsp" />
-     <!-- End Sidebar -->
+	<!-- ======= Header ======= -->
+	<header id="header" class="header fixed-top d-flex align-items-center">
+		<c:import url="/WEB-INF/view/common/top.jsp" />
+	</header>
+	<!-- End Header -->
+
+	<!-- ======= Sidebar ======= -->
+	<c:import url="/WEB-INF/view/common/side.jsp" />
+	<!-- End Sidebar -->
 
 	<main id="main" class="main">
 		<div class="pagetitle">
-               <h1>자료게시판</h1>
-               <!-- 게시판 이름 끌고오기 b_name -->
-               <nav>
-                  <ol class="breadcrumb">
-                     <li class="breadcrumb-item"><a href="databoard_list.do?b_code=6">자료게시판</a></li>
-                     <li class="breadcrumb-item active">${board.title}</li>
-                  </ol>
-               </nav>
-            </div>
+			<h1>자료게시판</h1>
+			<!-- 게시판 이름 끌고오기 b_name -->
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a
+						href="databoard_list.do?b_code=6">자료게시판</a></li>
+					<li class="breadcrumb-item active">${board.title}</li>
+				</ol>
+			</nav>
+		</div>
 
 
 		<div class="container-fluid">
@@ -338,17 +371,26 @@
 									<!-- 상단부 2/3으로 나눠 글 내용 시작 -->
 									<div class="col-md-12">
 										<div class="col-md-12">
-											<h1 id="marketB_Title">${board.title}</h1><br>
+											<h1 id="marketB_Title">${board.title}</h1>
+											<br>
 										</div>
-										
+
 										<div class="col-md-12">
 											<div class="row">
 												<div class="col-md-5">
-													<img src="./image/rank_icon/${rank.rank}.gif"><a data-bs-toggle="dropdown">${board.nick}</a>
-										             	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-									                    	<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
-									                    	<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
-									                    </ul>
+													<img src="./image/rank_icon/${rank.rank}.gif"><a
+														data-bs-toggle="dropdown">${board.nick}</a>
+													<ul
+														class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+														<li class="anw_memo"><a
+															class="dropdown-item sendToMemo"
+															href="write_memo.do?sender_id=${board.email_id}">답장
+																보내기</a></li>
+														<li class="view_user_activity"><a
+															class="dropdown-item viewActivity"
+															href="user_activity.do?email_id=${board.email_id}">활동
+																내역 보기</a></li>
+													</ul>
 												</div>
 												<div class="col-md-2">
 													<p class="text-right card-text">조회수:${board.hits}</p>
@@ -373,15 +415,18 @@
 												varStatus="status">
 												<c:if test="${status.last}">
 													<c:choose>
-										<c:when
+														<c:when
 															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
-															<button type="button" class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
+															<button type="button"
+																class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
 															<a href="upload/${originalfilename}" target="_blank">미리보기</a>
-															<a href="filedownload.board?file_name=${originalfilename}"
+															<a
+																href="filedownload.board?file_name=${originalfilename}"
 																id="download">다운로드</a>
 														</c:when>
 														<c:otherwise>
-															<a href="filedownload.board?file_name=${originalfilename}"
+															<a
+																href="filedownload.board?file_name=${originalfilename}"
 																id="download">${originalfilename}</a>
 														</c:otherwise>
 													</c:choose>
@@ -393,39 +438,57 @@
 										<div class="row">
 											<div class="col-lg-12">
 
-												<text class="form-control" style="height: 500px" readonly> ${board.content}</textarea>
-
+												<text class="form-control" style="height: 500px" id="text">
+												${board.content}</textarea>
 											</div>
 
 										</div>
 										<br>
 										<hr>
-										<div class="row">
-
-											<div  class="col-md-12">
-												<div class="row">
-													<div class="col-6"></div>
-													<div class="col-3">
-														<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
-															<button type="button" id="delete"class="btn btn-outline-secondary btn-sm rounded-pill" >삭제</button>
-					                                        <input id="datamodify" type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
-														</c:if>
-													</div>
-													<div class="col-3">
-														<c:if test="${yespark == 'no'}">
-	                                    					<button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button>
-	                                    				</c:if>
-	                                    				<c:if test="${yespark != 'no'}">
-	                                    					<button class="btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button>
-	                                    				</c:if>
-	                                    				<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글">
-														<button type="button" id="Top"class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
-													</div>
-													
-												</div>
-											</div>
-
-										</div>
+								
+									    <div class="d-flex justify-content-end">
+									    <div align="left"> <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
+	                                 
+                                    	<div>
+                                    			
+                                    		<c:if test="${member != null}">
+	                                          <c:if test="${yespark == 'no'}">
+	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
+	                                          </c:if>
+	                                          <c:if test="${yespark != 'no'}">
+	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
+	                                          </c:if>
+	                                        </c:if>	
+                                        </div>
+                                    	
+	                                   	
+	                                   	<!-- 답글 수정 목록 -->
+	                                   	
+	                                   	<c:if test="${member.email_id == board.email_id}">
+                                   		
+                                			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
+	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
+	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
+	                                          
+	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
+	                                       </form>
+	                                   	 &nbsp;
+	                                   	</c:if>
+	                                   		<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글"> &nbsp;
+                                   			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록"> &nbsp;
+                                   			
+                                   		<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
+	                                   		
+	                                          <input type="text" value="${board.b_code}" name="b_code" style="display: none;">
+	                                          <input type="text"  class="idx" name="idx" value="${idx}" name="idx" style="display: none;">
+	                                          
+	                                          <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill"   id="delete"
+	                                          value="삭제">
+	                             
+	                                     &nbsp;
+	                                   	</c:if>
+		                                       
+                                    </div>
 									</div>
 
 
@@ -437,7 +500,8 @@
 
 					</div>
 
-<input id="ori_name" name="ori_name" value="${board.ori_name}" type="hidden" />
+					<input id="ori_name" name="ori_name" value="${board.ori_name}"
+						type="hidden" />
 
 
 
@@ -449,114 +513,119 @@
 							<!-- columns -->
 							<div class="col-lg-12">
 
-							
-								
+
+
 								<!-- 댓글 목록 카드 섹션 시작 -->
 								<div class="ccard">
-							<div class="row">
-			<div class="col-1"></div>
+									<div class="row">
+										<div class="col-1"></div>
 
-			<div class="col-10">
+										<div class="col-10">
 
-				<section class="section dashboard">
-					<div class="row">
-						<!-- columns -->
-						<div class="col-lg-12">
-
-							<!-- 댓글 카드 섹션 -->
-							<div class="ccard">
-								<div class="comment-write">
-									<h5 class="card-title">댓글</h5>
-
-									<!-- 작성란 -->
-									<div class="form-floating">
-										<textarea id="replycontent" class="form-control"></textarea>
-										<label for="floatingTextarea">댓글을 작성해 주세요</label> <input
-											id="idx" value="${board.idx}" type="hidden" />
-									</div>
-									<nav aria-label="Page navigation example">
-										<ul class="pagination justify-content-end">
-
-											<div class="col-sm-2 text-lg-end">
-												<br>
-												<button type="button" id="replywritebtn"
-													class="btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>
-											</div>
-										</ul>
-									</nav>
-									<!-- End 작성란 -->
-								</div>
-							</div>
-
-							<!-- 댓글 목록 카드 섹션 시작 -->
-
-							<div class="ccard" id="reply">
-								<c:forEach var="comments" items="${comments}">
-									<c:if test="${comments.depth <= 0}">
-										<div class="comment-card">
-											<div class="comment-box">
+											<section class="section dashboard">
 												<div class="row">
-													<div class="col">
-														<h5 class="card-title" id='replynick'>
-															<img src="image/rank_icon/1.gif" alt="Profile"
-																class="rounded-circle">${comments.nick}
-														</h5>
+													<!-- columns -->
+													<div class="col-lg-12">
+
+														<!-- 댓글 카드 섹션 -->
+														<div class="ccard">
+															<div class="comment-write">
+																<h5 class="card-title">댓글</h5>
+
+																<!-- 작성란 -->
+																<div class="form-floating">
+																	<textarea id="replycontent" class="form-control"></textarea>
+																	<label for="floatingTextarea">댓글을 작성해 주세요</label> <input
+																		id="idx" value="${board.idx}" type="hidden" />
+																</div>
+																<nav aria-label="Page navigation example">
+																	<ul class="pagination justify-content-end">
+
+																		<div class="col-sm-2 text-lg-end">
+																			<br>
+																			<button type="button" id="replywritebtn"
+																				class="btn btn-outline-secondary btn-sm rounded-pill">작성하기</button>
+																		</div>
+																	</ul>
+																</nav>
+																<!-- End 작성란 -->
+															</div>
+														</div>
+
+														<!-- 댓글 목록 카드 섹션 시작 -->
+
+														<div class="ccard" id="reply">
+															<c:forEach var="comments" items="${comments}">
+																<c:if test="${comments.depth <= 0}">
+																	<div class="comment-card">
+																		<div class="comment-box">
+																			<div class="row">
+																				<div class="col">
+																					<h5 class="card-title" id='replynick'>
+																						<img src="image/rank_icon/1.gif" alt="Profile"
+																							class="rounded-circle">${comments.nick}
+																					</h5>
+																				</div>
+																				<div id='replydate' class="col comment-date">${comments.w_date}</div>
+																			</div>
+																			<h6 class="card-text" id='replycontent'>${comments.content}</h6>
+																			<h6></h6>
+
+																			<div align="right" class="actions">
+																				<input id="co_idx" value="${comments.co_idx}"
+																					type="hidden" /> <input id="idx"
+																					value="${comments.idx}" type="hidden" /> <input
+																					id="depth" value="${comments.depth}" type="hidden" />
+																				<input id="step" value="${comments.step}"
+																					type="hidden" />
+																				<button type="button" id='replyreplywrite'
+																					class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
+																				<c:if
+																					test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
+																					<button type="button" id="replydel"
+																						class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+																				</c:if>
+
+																			</div>
+																		</div>
+																	</div>
+																</c:if>
+																<c:if test="${comments.depth > 0}">
+																	<div class="Recomment-box">
+																		<div class="row">
+																			<div class="col">
+																				<h5 class="card-title">
+																					<i class="bi bi-arrow-return-right"></i> <img
+																						src="image/rank_icon/1.gif" alt="Profile"
+																						class="rounded-circle"> ${comments.nick}
+																				</h5>
+																			</div>
+																			<div class="col comment-date">${comments.w_date}</div>
+																		</div>
+																		<h6 class="Recomment-text">${comments.content}</h6>
+																		<h6></h6>
+
+																		<div align="right" class="actions">
+																			<c:if
+																				test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
+																				<input id="co_idx2" value="${comments.co_idx}"
+																					type="hidden" />
+																				<button type="button" id="replydel2"
+																					class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+																			</c:if>
+																		</div>
+																	</div>
+																</c:if>
+															</c:forEach>
+
+															<!-- 댓글 목록 카드 섹션 끝 -->
+
+														</div>
 													</div>
-													<div id='replydate' class="col comment-date">${comments.w_date}</div>
-												</div>
-												<h6 class="card-text" id='replycontent'>${comments.content}</h6>
-												<h6></h6>
-
-												<div align="right" class="actions">
-													<input id="co_idx" value="${comments.co_idx}" type="hidden" />
-													<input id="idx" value="${comments.idx}" type="hidden" /> <input
-														id="depth" value="${comments.depth}" type="hidden" /> <input
-														id="step" value="${comments.step}" type="hidden" />
-													<button type="button" id='replyreplywrite'
-														class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-													<c:if test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
-														<button type="button" id="replydel"
-															class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-													</c:if>
-
-												</div>
-											</div>
+											</section>
 										</div>
-									</c:if>
-									<c:if test="${comments.depth > 0}">
-										<div class="Recomment-box">
-											<div class="row">
-												<div class="col">
-													<h5 class="card-title">
-														<i class="bi bi-arrow-return-right"></i> <img
-															src="image/rank_icon/1.gif" alt="Profile"
-															class="rounded-circle"> ${comments.nick}
-													</h5>
-												</div>
-												<div class="col comment-date">${comments.w_date}</div>
-											</div>
-											<h6 class="Recomment-text">${comments.content}</h6>
-											<h6></h6>
-
-											<div align="right" class="actions">
-											<c:if test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
-												<input id="co_idx2" value="${comments.co_idx}" type="hidden" />
-												<button type="button" id="replydel2"
-													class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-											</c:if>
-											</div>
-										</div>
-									</c:if>
-								</c:forEach>
-
-								<!-- 댓글 목록 카드 섹션 끝 -->
-
-							</div>
-						</div>
-				</section>
-			</div>
-			<div class="col-1"></div>
-		</div>
+										<div class="col-1"></div>
+									</div>
 									<!-- 댓글 목록 카드 섹션 끝 -->
 
 								</div>
@@ -602,15 +671,15 @@
 
 	<!-- Vendor JS Files -->
 	<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/chart.js/chart.min.js"></script>
-<script src="assets/vendor/echarts/echarts.min.js"></script>
-<script src="assets/vendor/quill/quill.min.js"></script>
-<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="assets/vendor/tinymce/tinymce.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/vendor/chart.js/chart.min.js"></script>
+	<script src="assets/vendor/echarts/echarts.min.js"></script>
+	<script src="assets/vendor/quill/quill.min.js"></script>
+	<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+	<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+	<script src="assets/vendor/php-email-form/validate.js"></script>
+	<!-- Template Main JS File -->
+	<script src="assets/js/main.js"></script>
 
 </body>
 

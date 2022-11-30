@@ -803,5 +803,35 @@ public class Board_Dao {
 		
 			return boardlist;
 		}
-	
+			// 신고횟수 증가
+			public int upReport(int idx) {
+				
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				int row = 0;
+				
+				try {
+					
+					conn = ds.getConnection();
+					String sql = " update Board set report_count =(report_count+1)  where idx=?";
+					pstmt = conn.prepareStatement(sql);
+					
+					pstmt.setInt(1, idx);
+					
+					
+					row = pstmt.executeUpdate();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				} finally {
+					try {
+						 conn.setAutoCommit(true);
+						pstmt.close();
+						conn.close();
+					} catch (Exception e2) {
+						System.out.println(e2.getMessage());
+					}
+				}
+				
+				return row;
+			}
 }
