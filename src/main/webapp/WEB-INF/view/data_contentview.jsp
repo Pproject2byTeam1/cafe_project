@@ -133,7 +133,7 @@
 				dataType:"html",
 				success:function(responsetxt){
 				
-					swal(data7);
+					swal("신고","신고되었습니다","success");
 				}
 				
 		});
@@ -160,7 +160,7 @@
  			location.href="data_delete.do?idx=" + idx +"&b_code="+ b_code;
  			
  			if(idx == ${board.idx}){
- 				alert("삭제됩니다!");
+ 				swal("삭제","글이 삭제되었습니다","success");
  				
  			}
 			

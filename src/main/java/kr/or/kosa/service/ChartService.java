@@ -50,13 +50,6 @@ public class ChartService implements Action {
 			} else { 
 				
 				
-				ChartDao cdao = new ChartDao();
-				
-				List<AttendanceBoad> list = cdao.getTopViews(10);
-				JSONArray jsonlist = JSONArray.fromObject(list);
-				
-				request.setAttribute("list", list);
-				request.setAttribute("jsonlist", jsonlist);
 				url = "/WEB-INF/view/chart.jsp";
 				
 				

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.kosa.dao.ChartDao;
 import kr.or.kosa.dto.AttendanceBoad;
+import kr.or.kosa.dto.Chart;
 import net.sf.json.JSONArray;
 
 @WebServlet("/ChartList")
@@ -29,16 +30,38 @@ public class ChartList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
     	PrintWriter out = response.getWriter();
     	
+    	String chart = request.getParameter("chart");
+    	
+    	JSONArray jsonlist = null;
+    	
     	try {  		
-    		int number = Integer.parseInt(request.getParameter("number"));
-
-    		ChartDao cdao = new ChartDao();
-    		List<AttendanceBoad> topview = cdao.getTopViews(number);
-			
-			JSONArray jsonlist = JSONArray.fromObject(topview);
-			
-			out.print(jsonlist);
     		
+    		if (chart.equals("rankpointselect")) {
+    			
+				int number = Integer.parseInt(request.getParameter("number"));
+				String startDate = request.getParameter("startDate");
+				String endDate = request.getParameter("endDate");
+				
+				ChartDao cdao = new ChartDao();
+				List <Chart> rankpoint = cdao.getTopRankpoint(startDate, endDate, number);
+				
+				jsonlist = JSONArray.fromObject(rankpoint);
+				
+			}
+    		
+    		if (chart.equals("allboardtopview")) {
+    			int number = Integer.parseInt(request.getParameter("number"));
+
+        		ChartDao cdao = new ChartDao();
+        		List<AttendanceBoad> topview = cdao.getTopViews(number);
+    			
+    			jsonlist = JSONArray.fromObject(topview);
+    			
+			}
+    		
+    		
+    			//JSON으로 보내기
+    			out.print(jsonlist);
     	} catch(Exception e) {
     		System.out.println(e.getMessage());
     	}
