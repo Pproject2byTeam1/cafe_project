@@ -97,7 +97,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						${list}
+
 							<c:forEach var="rank" items="${list}" varStatus="status">
 							
 								<c:if test="${rank.rank>0}">
