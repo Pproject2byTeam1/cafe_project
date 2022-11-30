@@ -76,7 +76,7 @@
 		<!-- Card with an image overlay -->
           <div class="card">
           <div class="embed-responsive">
-            <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X500?text=Title+Image'">
+            <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X350?text=No+Image'">
           </div>
             <div class="card-img-overlay">
               <h5 class="card-title">${banner.cafe_name}</h5>

@@ -44,7 +44,6 @@ public class RankChangeService implements Action {
 			//관리자일떄만
 			if(user.getIsAdmin().equals("M")){
 				
-					
 					url="/WEB-INF/view/rankchange.jsp";
 
 			}else {
@@ -60,9 +59,11 @@ public class RankChangeService implements Action {
 	    		
 	    	
 			}
+			
 			List<Rank> list = dao.getRankListAll();
 			
 			request.setAttribute("list", list);
+			
 		
 			forward = new ActionForward();
     		forward.setRedirect(false);
