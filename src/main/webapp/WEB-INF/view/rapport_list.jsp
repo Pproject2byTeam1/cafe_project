@@ -18,6 +18,9 @@
 <link href="assets/img/favicon.png" rel="icon">
 <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+	<!-- ======= Sidebar ======= -->
+
+	<jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
 <!-- Google Fonts -->
 <link href="https://fonts.gstatic.com" rel="preconnect">
 <link
@@ -47,9 +50,7 @@
 
 	$(function(){
 		
-		
-
-		
+		/* 삭제  */
 		function del(data){
 		
 			$.ajax({
@@ -67,10 +68,6 @@
 		};
 			
 
-		
-		
-		
-		
 		$(document).on('click', '.deletebtn', function(){
 
 			const data = {"idx": $(this).parent().parent().children('.idx').val()};
@@ -79,15 +76,27 @@
 
 			del(data);
 
-
 		});
 	
-	
-		
 	});
 		
+/* 
+	$("#search").click(function(){
+		var requestdata ={nick: "nick"};
+		
+		
+		$.ajax({
+			type="POST",
+			url:"rapportList",
+			data:requestdata
+			
+			
+		});
+		
+	});
+ */
+	/* 검색  */
 
-	
 	
 
 	
@@ -106,16 +115,13 @@
 	<c:set var="cpage" value='<%=request.getAttribute("cpage")%>' />
 	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
 	<!-- ======= Header ======= -->
-	<header id="header" class="header fixed-top d-flex align-items-center">
-
-		<jsp:include page="/common/top.jsp"></jsp:include>
-
-	</header>
-	<!-- End Header -->
+	   <header id="header" class="header fixed-top d-flex align-items-center">
+        <c:import url="/WEB-INF/view/common/top.jsp" />
+     </header><!-- End Header -->
 
 	<!-- ======= Sidebar ======= -->
 
-	<jsp:include page="/common/side2.jsp"></jsp:include>
+   <jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
 
 	<!-- End Sidebar -->
 
@@ -136,22 +142,11 @@
 				<div class="col-md-4">
 					<div class="row">
 						<div class="col-md-5">
-							<select class=" form-select">
-								<option>전체등급</option>
-								<option>준회원</option>
-								<option>일반회원</option>
-							</select>
+							
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-5">
-							<select class="form-select">
-								<option>자유게시판</option>
-								<option>출석게시판</option>
-								<option>전체일정</option>
-								<option>사진공유</option>
-								<option>유로거래</option>
-								<option>자료공유</option>
-							</select>
+						
 						</div>
 					</div>
 				</div>
@@ -181,7 +176,7 @@
 					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 					<!-- Table with hoverable rows -->
 
-					<table class="table table-hover" id=dataTable1>
+					<table class="table table-hover table-sm datatable" id=dataTable1>
 						<tr>
 						
 							<th scope="col">글/댓글</th>

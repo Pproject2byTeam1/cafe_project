@@ -221,7 +221,7 @@ public class AdminDao {
 		}
 		return result;
 	}
-	// 이름으로 검색
+	// 닉네임으로 검색
 	public User getNick(String nick) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -255,6 +255,8 @@ public class AdminDao {
 		return userdto;
 
 	}
+
+	
 	
 	
 }
