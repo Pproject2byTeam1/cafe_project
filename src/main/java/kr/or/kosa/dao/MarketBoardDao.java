@@ -13,7 +13,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.or.kosa.dto.Comments;
-import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.utils.tagRemove;
 
@@ -162,6 +161,7 @@ public class MarketBoardDao {
 				System.out.println(e2.getMessage());
 			}
 		}
+		System.out.println(list);
 		return list;
 	}
 
@@ -174,6 +174,7 @@ public class MarketBoardDao {
 		List<MarketBoard> list = null;
 		
 		if (sold.equals("all") && search.equals("no")) {
+			System.out.println("searchmarket에서 listmarket 실행");
 			return listMarket(b_code, cpage, pagesize);
 			
 		} else {
@@ -203,7 +204,7 @@ public class MarketBoardDao {
 					    "b.report_count, b.email_id, b.b_code " +
 					    "from board b join market_board m on b.idx=m.idx order by b_idx desc) " +
 					    "where b_code=? and rn >= ?) " +
-					    "where rn <=? and sold=? and search=?"; // 판매중 , 검색
+					    "where rn <=? and sold=? and title like ?"; // 판매중 , 검색
 
 				if(sold.equals("all")) {
 					pstmt = conn.prepareStatement(sql1);
@@ -214,7 +215,7 @@ public class MarketBoardDao {
 				} else {
 					pstmt = conn.prepareStatement(sql3);
 					pstmt.setString(4, sold);
-					pstmt.setString(5, search);
+					pstmt.setString(5, "%" + search + "%");
 				}
 				int start = cpage * pagesize - (pagesize - 1);
 				int end = cpage * pagesize;
@@ -228,8 +229,8 @@ public class MarketBoardDao {
 				
 				list = new ArrayList<MarketBoard>();
 				
-				while (rs.next()) {
-
+				if (rs.next()) {
+				 do {
 					MarketBoard board = new MarketBoard();
 					board.setIdx(rs.getInt("idx"));
 					board.setB_idx(rs.getInt("b_idx"));
@@ -250,6 +251,9 @@ public class MarketBoardDao {
 					board.setEmail_id(rs.getString("email_id"));
 
 					list.add(board); 
+				   }while(rs.next());
+				}else {
+					System.out.println("조회 데이터 없음");
 				}
 
 			} catch (Exception e) {

@@ -34,7 +34,7 @@ public class Board_Info_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select b_code, b_name, side_idx, main_idx, b_type "
+			String sql = "select b_code, b_name, side_idx, main_idx, b_type, form "
 						+ "from board_info order by side_idx";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -82,7 +82,7 @@ public class Board_Info_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select b_code, b_name, side_idx, main_idx, b_type from Board_Info where b_code=?";
+			String sql = "select b_code, b_name, side_idx, main_idx, b_type, form from Board_Info where b_code=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, b_code);
@@ -95,6 +95,7 @@ public class Board_Info_Dao {
 				board_info.setSide_idx(rs.getInt("side_idx"));
 				board_info.setMain_idx(rs.getInt("main_idx"));
 				board_info.setB_type(rs.getString("b_type"));
+				board_info.setForm(rs.getString("form"));
 			}
 			
 			
@@ -114,20 +115,29 @@ public class Board_Info_Dao {
 	}
 	
 	//게시판 종류 수정
-	public int updateBoardInfo(Board_Info board_info) {
-		
+	public int updateBoardInfo(Board_Info info) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int row = 0;
 		
 		try {
 			
-			String sql = "update Board_Info set b_name=?, side_idx=?, main_idx=? where b_code=?";
-			pstmt = conn.prepareStatement(sql);
+			conn = ds.getConnection();
 			
-			pstmt.setString(1, board_info.getB_name());
-			pstmt.setInt(2, board_info.getSide_idx());
-			pstmt.setInt(3, board_info.getMain_idx());
+			if(info.getForm() == null) {
+				String sql = "update board_info set b_name=? where b_code=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, info.getB_name());
+				pstmt.setInt(2, info.getB_code());
+			}else {
+				String sql = "update board_info set b_name=?, form=? where b_code=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, info.getB_name());
+				pstmt.setString(2, info.getForm());
+				pstmt.setInt(3, info.getB_code());
+			}
 			
 			row = pstmt.executeUpdate();
 			
@@ -145,6 +155,71 @@ public class Board_Info_Dao {
 		return row;
 	}
 	
+	//게시판 사이드 순서 수정
+	public int updateBoardSideIndex(int[] info) {
+		
+		Connection conn = null;
+		int row = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
+			for(int i=0; i<info.length; i++) {
+				
+				PreparedStatement pstmt = null;
+				
+				try {
+					
+					String sql = "update board_info set side_idx = ? where b_code=?";
+					pstmt = conn.prepareStatement(sql);
+					
+					pstmt.setInt(1, i+1);
+					pstmt.setInt(2, info[i]);
+					
+					row = pstmt.executeUpdate();
+					
+				} catch (Throwable e) {
+					if(conn != null) {
+						try {
+							conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
+					}
+				} finally {
+					try {
+						conn.setAutoCommit(true);
+						pstmt.close();
+					} catch (Exception e2) {
+						System.out.println(e2.getMessage());
+					}
+				}
+
+			}
+			
+			
+		} catch (Throwable e) {
+			if(conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				conn.setAutoCommit(true);
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
 	//게시판 종류 삭제
 	public int deleteBoardInfo(int b_code) {
 		
@@ -153,7 +228,7 @@ public class Board_Info_Dao {
 		int row = 0;
 		
 		try {
-			
+			conn = ds.getConnection();
 			String sql = "delete from Board_Info where b_code=?";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -219,6 +294,38 @@ public class Board_Info_Dao {
 			try {
 				conn.setAutoCommit(true);
 				pstmt2.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return row;
+	}
+	
+	//게시판 추가
+	public int insertBoard(Board_Info info) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row=0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "insert into board_info(b_code, b_name, side_idx, b_type, form) "
+						+ "values(boardinfo_idx_seq.nextval, ?, boardinfo_idx_seq.currval, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, info.getB_name());
+			pstmt.setString(2, info.getB_type());
+			pstmt.setString(3, info.getForm());
+			
+			row = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {

@@ -45,14 +45,14 @@ public class MarketSearch extends HttpServlet {
          String search = request.getParameter("search");
          String sold = request.getParameter("sold");
          int b_code = Integer.parseInt(request.getParameter("b_code"));
-
+         System.out.println("1" + search);
          if (search == null || search.trim().equals("")) {
             search = "no";
          }
          if (sold == null || sold.trim().equals("")) {
             sold = "all";
          }
-
+         System.out.println("2" + search);
          MarketBoardDao market_dao = new MarketBoardDao();
          Yes_Dao ydao = new Yes_Dao();
          CommentsDao cdao = new CommentsDao();
@@ -61,7 +61,7 @@ public class MarketSearch extends HttpServlet {
          // 상세보기 >> 다시 LIST 넘어올때 >> 현재 페이지 설정
          String ps = request.getParameter("ps");
          String cp = request.getParameter("cp");
-
+         
          if (ps == null || ps.trim().equals("")) {
             ps = "8"; // List 페이지 처음 호출 경우 -> 8개씩
          }
@@ -89,7 +89,8 @@ public class MarketSearch extends HttpServlet {
          }
 
          List<MarketBoard> list = market_dao.searchMarket(b_code, cpage, pagesize, sold, search);
-
+         
+     	 //yes, 댓글수
          List<Integer> yescountlist = new ArrayList<Integer>();
          List<Integer> commentcountlist = new ArrayList<Integer>();
          List<Integer> ranklist = new ArrayList<Integer>();
@@ -129,6 +130,7 @@ public class MarketSearch extends HttpServlet {
          out.print(json);
 
       } catch (Exception e) {
+    	  System.out.println("marketsearch오류");
          System.out.println(e.getMessage());
       }
 
