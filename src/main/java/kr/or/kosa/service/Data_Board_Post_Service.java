@@ -42,7 +42,9 @@ public class Data_Board_Post_Service implements Action {
 			Board_Dao bdao = new Board_Dao();
 			Yes_Dao ydao = new Yes_Dao();
 			
-			
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
 			
 			
 			List<Board_Info> infolist = infodao.getSideBoardList();
@@ -75,6 +77,7 @@ public class Data_Board_Post_Service implements Action {
 			request.setAttribute("rank", rank);
 			request.setAttribute("yes", yes);
 			request.setAttribute("ori_name", ori_name);
+			request.setAttribute("banner", banner);//top
 			
 			forward = new ActionForward();
 			forward.setRedirect(false);

@@ -9,10 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Calender;
+import kr.or.kosa.dto.User;
 import kr.or.kosa.dto.Yes;
 import net.sf.json.JSONArray;
 
@@ -37,16 +39,21 @@ public class CalendarList extends HttpServlet {
 			
 			JSONArray jsonlist = JSONArray.fromObject(list);
 			
-			String email_id = request.getParameter("email_id");
-			
-			Yes_Dao yesdao = new Yes_Dao();
-			List<Yes> yes = yesdao.getYesBy_idx(email_id);
-			
-			JSONArray jsonlist1 = JSONArray.fromObject(yes);
-			
-			JSONArray json = new JSONArray();
+			HttpSession session = request.getSession();
+		    User user = (User) session.getAttribute("member");
+		    
+		    JSONArray json = new JSONArray();
 			json.add(jsonlist);
-			json.add(jsonlist1);
+			
+			if(user != null) {
+		    	 String email_id = user.getEmail_id();
+				
+				Yes_Dao yesdao = new Yes_Dao();
+				List<Yes> yes = yesdao.getYesBy_idx(email_id);
+				
+				JSONArray jsonlist1 = JSONArray.fromObject(yes);
+				json.add(jsonlist1);
+		    }
 			
 			out.print(json);
     		

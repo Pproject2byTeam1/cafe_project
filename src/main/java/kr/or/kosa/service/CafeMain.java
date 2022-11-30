@@ -44,6 +44,7 @@ public class CafeMain implements Action {
 			//사이드 바
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
+			
 			MarketBoardDao market_dao = new MarketBoardDao(); 
 			
 			//각종 보드리스트들 가져오기 (한 최근 것 50개?)

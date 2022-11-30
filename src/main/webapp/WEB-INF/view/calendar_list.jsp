@@ -181,6 +181,8 @@
 				data: requestdata,
 				dataType: "JSON",
 				success: function(data) {
+					
+					console.log(data);
 
 					let datelist = new Array();
 
@@ -223,10 +225,6 @@
 							$("#calend_date").val(info.dateStr);
 
 						},
-						selectable: true, // 달력 일자 드래그 설정가능
-						unselectAuto: true, //드래그 후 다른 곳 클릭 시 드래그 지우기
-						droppable: true,
-						editable: true,
 						nowIndicator: true, // 현재 시간 마크
 						locale: 'ko', // 한국어 설정
 						dayMaxEventRows: true,
@@ -254,6 +252,20 @@
   		loadlist();
   	});
   	
+  		//해당 일정의 참석 인원 얻기
+  		function getCountYes(idx){
+  			$.ajax({
+  				type: "POST",
+				url : "GetCountYes",
+				data : {"idx": idx},
+				dataType : "html",
+				success : function(data) {
+					$('#yescount').text('');
+  					$('#yescount').text(data + "  : 참석인원");
+				}
+			});
+  		}
+  	
   		
   		//일정 읽기
   		function calEventClick(info, mydateList, yesList) {
@@ -272,6 +284,10 @@
   					
   					idx = this.idx;
   					
+  					let realidx = this.idx;
+  					
+  					getCountYes(realidx);
+  					
   					$('#read-idx').val(idx);
 
   					if (this.finish == "F") {
@@ -286,9 +302,9 @@
   						$("#modifybtn").removeClass('visually-hidden');
   						$("#deletebtn").removeClass("visually-hidden");
   					}
-
+  					
   					$(yesList).each(function() {
-  						if (this.idx == idx) {
+  						if (this.idx == realidx) {
   							$("#gridCheck2").prop("checked", true);
   						}
   					});
@@ -483,17 +499,20 @@
   		//참석 여부
   		function yes() {
   			let b_code = "<c:out value='${b_code}'/>";
-  	  		let member = "<c:out value='${member}'/>";
+  	  		let member = "<c:out value='${member.email_id}'/>";
   			
-  			const requestdata1 = { "email_id": member.email_id, "idx": idx };
+  			const requestdata1 = { "email_id": member, "idx": idx };
   			
-  			$('#gridCheck2').click(function() {
+  			console.log(requestdata1);
+  			
+  			$(document).on('click', '#gridCheck2', function(){
   				if ($('#gridCheck2').is(':checked')) {
   					yesadd(requestdata1);
   				} else {
   					yesremove(requestdata1);
   				}
   			});
+  			
   		}
   		//참석 지우기
   		function yesremove(requestdata1) {
@@ -501,7 +520,7 @@
 				type: "POST",
 				url: "YesRemove",
 				data: requestdata1,
-				dataType: "JSON",
+				dataType: "HTML",
 				success: function(data) {
 					swal(data);
 				}, 
@@ -854,13 +873,14 @@
 											<div class="col-md-4"></div>
 											<div class="col-md-4"></div>
 											<div class="col-md-4">
-											<c:if test="${member != null}">
+												<c:if test="${member != null}">
 												<div class="form-check">
 													<input class="form-check-input" type="checkbox"
 														id="gridCheck2"> <label class="form-check-label"
 														for="gridCheck2">참석 여부</label>
 												</div>
-											</c:if>
+												<div id="yescount"></div>
+												</c:if>
 											</div>
 											<div class="text-center">
 												<c:if test="${member != null}">

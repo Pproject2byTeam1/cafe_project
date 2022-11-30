@@ -425,6 +425,7 @@
  					$("#infoboard").empty();
  					$("#infoboard").append(data);
  					$("#cateinsertview").empty();
+ 					dragsidebar();
  				}
  			});
  		}
@@ -590,32 +591,71 @@
  		
  		/* side_idx 수정 시작 */
  		
- 		const draggables = document.querySelectorAll(".draggable");
- 		const containers = document.querySelectorAll(".con");
+ 		function dragsidebar(){
+ 			const draggables = document.querySelectorAll(".draggable");
+ 			const containers = document.querySelectorAll(".con");
  		
- 		draggables.forEach(draggable => {
- 			draggable.addEventListener("dragstart", () => {
- 				draggable.classList.add("dragging");
- 			});
-
- 			draggable.addEventListener("dragend", () => {
- 				draggable.classList.remove("dragging");
- 			});
- 		});
-
- 		containers.forEach(container => {
- 			container.addEventListener("dragover", e => {
- 				e.preventDefault();
- 			    const afterElement = getDragAfterElement(container, e.clientY);
- 			    const draggable = document.querySelector(".dragging");
- 			    if (afterElement === undefined) {
- 			    	container.appendChild(draggable);
- 			    } else {
- 			    	container.insertBefore(draggable, afterElement);
- 			    }
- 			});
- 		});
-
+	 		draggables.forEach(draggable => {
+	 			draggable.addEventListener("dragstart", () => {
+	 				draggable.classList.add("dragging");
+	 			});
+	
+	 			draggable.addEventListener("dragend", () => {
+	 				draggable.classList.remove("dragging");
+	 			});
+	 		});
+	 		
+		 	containers.forEach(container => {
+	 			container.addEventListener("dragover", e => {
+	 				e.preventDefault();
+	 			    const afterElement = getDragAfterElement(container, e.clientY);
+	 			    const draggable = document.querySelector(".dragging");
+	 			    if (afterElement === undefined) {
+	 			    	container.appendChild(draggable);
+	 			    } else {
+	 			    	container.insertBefore(draggable, afterElement);
+	 			    }
+	 			});
+	 		});
+		 	
+		 	document.addEventListener("dragend", (event) => {
+	 		  	event.preventDefault();
+	 		  	
+	 		  	if(event.target.className === "maincard row m-2 draggable"){ //사이드 바
+	 		  		let target = $(event.target);
+	 		  		let children1 = $(target).children();
+	 	 			let ch = $(children1).children().eq(0);
+	 		  		
+	 		  		let supertag = target.closest("#infoboard");
+	 		  		let childtag = $(supertag).children();
+	 		  		
+	 		  		let arr = [];
+	 		  		let num = 0;
+	 		  		$(childtag).each(function(){
+	 		  			
+	 		  			let parkfor = $(this).children();
+	 		  			
+	 		  			$(parkfor).each(function(){
+	 		  				let ch2 = $(this).children().eq(0);
+	 		  				let ch3 = $(ch2).children().eq(0);
+	 		  				let ch4 = $(ch3)[0];
+	 		  				
+	 		  				arr.push($(ch4).val());
+	 		  				
+	 		  				num += 1;
+	 		  				
+	 		  			});
+	 		  			
+	 		  		});
+	 		  		
+	 		  		let requestdata4 = { ...arr, "max": num };
+	 		  		console.log(requestdata4);
+					sideuplaod(requestdata4);
+	 		  	}
+	 		});
+	 		
+ 		}
+ 		
  		function getDragAfterElement(container, y) {
  			const draggableElements = [
  				...container.querySelectorAll(".draggable:not(.dragging)"),
@@ -647,42 +687,7 @@
  			});
  		}
  		
- 		document.addEventListener("dragend", (event) => {
- 		  	event.preventDefault();
- 		  	
- 		  	if(event.target.className === "maincard row m-2 draggable"){ //사이드 바
- 		  		let target = $(event.target);
- 		  		let children1 = $(target).children();
- 	 			let ch = $(children1).children().eq(0);
- 		  		
- 		  		let supertag = target.closest("#infoboard");
- 		  		let childtag = $(supertag).children();
- 		  		
- 		  		let arr = [];
- 		  		let num = 0;
- 		  		$(childtag).each(function(){
- 		  			
- 		  			let parkfor = $(this).children();
- 		  			
- 		  			$(parkfor).each(function(){
- 		  				let ch2 = $(this).children().eq(0);
- 		  				let ch3 = $(ch2).children().eq(0);
- 		  				let ch4 = $(ch3)[0];
- 		  				
- 		  				arr.push($(ch4).val());
- 		  				
- 		  				num += 1;
- 		  				
- 		  			});
- 		  			
- 		  		});
- 		  		
- 		  		let requestdata4 = { ...arr, "max": num };
- 		  		console.log(requestdata4);
-				sideuplaod(requestdata4);
- 		  	}
- 		});
- 		
+ 		dragsidebar();
  		/* side_idx 수정 끝 */
  	});
   	
