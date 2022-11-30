@@ -76,11 +76,11 @@
 		<!-- Card with an image overlay -->
           <div class="card">
           <div class="embed-responsive">
-            <img src="image/sample/bulb.jpg" class="card-img-top" alt="...">
+            <img src="upload/${banner.cafe_img}" class="card-img-top" alt="..." onerror="this.onerror=null; this.src='https://via.placeholder.com/1800X350?text=No+Image'">
           </div>
             <div class="card-img-overlay">
-              <h5 class="card-title">대문 이름</h5>
-              <p class="card-text">설명란
+              <h5 class="card-title">${banner.cafe_name}</h5>
+              <p class="card-text">
             <c:forEach var="chart" items="${chart}" varStatus="status">
             <input type="text" id = "b_cnt${status.count}" value="${chart.b_code}" hidden="">
             <input type="text" id = "h_cnt${status.count}" value="${chart.c_count}" hidden="">
@@ -118,14 +118,19 @@
                   <h5 class="card-title">자유게시판 <span>| 막 글</span></h5>
 
                     <div class="ps-3">
-                      <table class="table table-hover table-sm datatable">
+                      <table class="table table-hover">
                       	<thead>
                       	<tr><th><span class="text-success pt-1 fw-bold">제목</span></th><th><span class="text-success pt-1 fw-bold">작성자</span></th><th><span class="text-success pt-1 fw-bold">작성일자</span></th><th><span class="text-success pt-1 fw-bold">조회수</span></th></tr>
                       	</thead>
                       	<tbody>
                       	<c:forEach var="board" items="${regular_list}" varStatus="status">
                       	<tr class="listrow">
-		                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-success rounded-pill">${board.c_count}</span></td>
+		                      	<td class="td1">
+			                      	<span class="d-none b_code">${board.b_code}</span>
+			                      	${board.title}
+			                      	<span class="d-none idx">${board.idx}</span>
+			                      	<span class="badge bg-success rounded-pill">${board.c_count}</span>
+		                      	</td>
 		                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
 		                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 									<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
@@ -168,7 +173,7 @@
                     <table class="table table-hover table-sm datatable">
                       	<thead>
                       	<tr><th><span class="text-primary pt-1 fw-bold">제목</span></th><th><span class="text-primary pt-1 fw-bold">작성자</span></th><th><span class="text-primary pt-1 fw-bold">작성일자</span></th><th><span class="text-primary pt-1 fw-bold">조회수</span></th></tr>
-                      	</thead>
+                      	</thead>	
                       	<tbody>
                       	<c:forEach var="board" items="${data_list}" varStatus="status">
                       	<tr class="listrow">
@@ -269,7 +274,7 @@
             <div class="col-12">
               <div class="card">
 
-                <div class="filter">
+                <!-- <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
@@ -280,68 +285,63 @@
                     <li><a class="dropdown-item" href="#">This Month</a></li>
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
-                </div>
+                </div> -->
                 <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Today</span></h5>
-                  
+                  <h5 class="card-title">Text Rank <span>/This Month</span></h5>
+                  <c:forEach var="chart" items="${rankchart}" varStatus="status">
+                  <hr>
                   <div class="d-flex align-items-center  revenue-card">
+                  <c:choose>
+                  	<c:when test="${status.count == 1}">
 					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color: #ffbd1b; background: #ffe8ba">
                       <i class="ri-trophy-line"></i>
                     </div>
                     <div class="ps-3">
-                    <h3 class="pt-1 fw-bold">Best Text</h3>
+                    <h3 class="pt-1 fw-bold">1st Text</h3>
                     </div>
-                    <div class="ps-3">
-                    <h5 class="card-title">글 제목</h5>
-                    </div>
-                    <div class="ps-3">
-                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">스탠드</a><span> | 2022-03-18</span>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
-						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
-					</ul>
-                    </div>
-                  </div>
-                  <hr>
-                  
-                  <div class="d-flex align-items-center sales-card">
-					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center"style="color: #c0c0c0">
+                    </c:when>
+                    <c:when test="${status.count == 2}">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"style="color: #c0c0c0; background: #eaeaea">
                       <i class="ri-trophy-line"></i>
                     </div>
                     <div class="ps-3">
-                    <h3 class="pt-1 fw-bold">Another Text</h3>
+                    <h3 class="pt-1 fw-bold">2nd Text</h3>
                     </div>
-                    <div class="ps-3">
-                    <h5 class="card-title">글 제목</h5>
-                    </div>
-                    <div class="ps-3">
-                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/4.gif" alt="아이콘">dddr2</a><span> | 2021-09-27</span>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
-						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
-					</ul>
-                    </div>
-                  </div>
-                  <hr>
-                  
-                  <div class="d-flex align-items-center  revenue-card">
-					<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color: #cd7f32; background: #f5d3b9">
+                    </c:when>
+                    <c:when test="${status.count == 3}">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color: #cd7f32; background: #f5d3b9">
                       <i class="ri-trophy-line"></i>
                     </div>
                     <div class="ps-3">
-                    <h3 class="pt-1 fw-bold">Best Text</h3>
+                    <h3 class="pt-1 fw-bold">3rd Text</h3>
+                    </div>
+                    </c:when>
+                    <c:otherwise>
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="ri-thumb-up-line"></i>
                     </div>
                     <div class="ps-3">
-                    <h5 class="card-title">글 제목</h5>
+                    <h3 class="pt-1 fw-bold">Good Text</h3>
+                    </div>
+                    </c:otherwise>
+                  </c:choose>
+                    <div class="ps-3">
+                    <h5 class="card-title clickrank">
+	                    <span class="d-none b_code">${chart.b_code}</span>
+	                    <span class="d-none idx">${chart.idx}</span>
+	                    <span class="d-none w_date">${chart.w_date}</span>
+	                    ${chart.title}
+                    </h5>
                     </div>
                     <div class="ps-3">
-                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">ddd</a><span> | 2022-03-25</span>
+                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">${chart.nick}</a><span> | ${chart.w_date}</span>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="#" >답장 보내기</a></li>
-						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="#" >활동 내역 보기</a></li>
+						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${chart.email_id}" >답장 보내기</a></li>
+						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${chart.email_id}" >활동 내역 보기</a></li>
 					</ul>
                     </div>
                   </div>
+                  </c:forEach>
                   
                   <!-- End Line Chart -->
 
@@ -493,27 +493,22 @@
 	<script src="assets/js/main.js"></script>
 	<script type="text/javascript">
 	$(function(){
-  		
-  		$('.pager').click(function(){
-  			clickLocation();
-  		});
-  		$('.dataTable-pagination-list').click(function(){
-  			clickLocation();
-  		});
-  		$('.dataTable-sorter').click(function(){
-  			clickLocation();
-  		});
-  		clickLocation();
+			$('.clickrank').click(function(){
+	  			const idx = $(this).children('.idx').text();
+	  			const b_code = $(this).children('.b_code').text();
+	  			const w_date = $(this).children(".w_date").text();
+	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+	  		});
+	  		$('.listrow').click(function(){
+	  			const idx = $(this).children('.td1').children('.idx').text();
+	  			const b_code = $(this).children('.td1').children('.b_code').text();
+	  			const w_date = $(this).children(".w_date").text();
+	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+	  		});
   	});
 	
-	function clickLocation(){
-		$('.listrow').click(function(){
-  			const idx = $(this).children('.td1').children('.idx').text();
-  			const b_code = $(this).children('.td1').children('.b_code').text();
-  			const w_date = $(this).children(".w_date").text();
-  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-  		});
-	}
+
+
 	var col1 = new Array();
 	col1.push($('#b_cnt1').val());
 	col1.push($('#b_cnt2').val());

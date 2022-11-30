@@ -121,7 +121,7 @@
 											name="phone" id="phone">
 									</div>
 									<div class="text-lg-end">
-										<button type="submit" class="btn btn btn-primary">등록</button>
+										<button type="submit" class="btn btn btn-primary" id="registerbtn">등록</button>
 									</div>
 								</form>
 							</div>
@@ -219,10 +219,10 @@
 					var text = responseText;
 					if(text.toString().replace(/\s/gi, "") == "true"){
 						$("#qqqq").html("<p class='text-danger'>사용이 불가합니다.</p>");
-						$("#chageInfo").attr("disabled",true);
+						$("#registerbtn").attr("disabled",true);
 					}else{
 						$("#qqqq").html("<p class='text-success'>사용 가능합니다.</p>");
-						$("#chageInfo").removeAttr("disabled");
+						$("#registerbtn").removeAttr("disabled");
 					}
 				}
 			});
@@ -231,19 +231,19 @@
 			//console.log("pwd: "+$('#rePassword').val());
 			if ($("#Password").val() != $("#rePassword").val() || $("#rePassword").val().length < 10) {
               $("#aaaa").html("<p class='text-danger' >비밀번호가 일치하지 않거나 10자 미만입니다.</p>");
-           	  $("#changepwd").attr("disabled",true);
+           	  $("#registerbtn").attr("disabled",true);
             } else {
               $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
-              $("#changepwd").removeAttr("disabled");
+              $("#registerbtn").removeAttr("disabled");
             }
         });
 		$('#tel').keyup(function(){
 			//console.log("tel: "+$('#tel').val());
 			//console.log("length: "+$('#tel').val().length);
 			if($('#tel').val().length != 11 || $('#tel').val() == null){
-				$("#chageInfo").attr("disabled",true);
+				$("#registerbtn").attr("disabled",true);
 			}else{
-				$("#chageInfo").removeAttr("disabled");
+				$("#registerbtn").removeAttr("disabled");
 			}
 		});
   });

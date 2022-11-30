@@ -40,8 +40,7 @@
 <link href="assets/css/style.css" rel="stylesheet">
 
   	<script type="text/javascript">
- 
-  	
+  	  	
   	</script>
 
 </head>
@@ -240,7 +239,7 @@
 												<button type="submit" id="submit" 
 													class="btn btn-outline-secondary btn-sm rounded-pill">등록</button>
 												<button type="button" id="List" 
-													class="btn btn-outline-secondary btn-sm rounded-pill">목록</button>
+													class="btn btn-outline-secondary btn-sm rounded-pill" onclick="history.go(-1)">이전</button>
 									
 											</div>
 										</div>

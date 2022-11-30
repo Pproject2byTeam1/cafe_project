@@ -1,6 +1,5 @@
 package kr.or.kosa.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -25,7 +24,6 @@ public class RankChangeService implements Action {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("member");
 		String userId = (String) session.getAttribute("userid");
-		String email_idx = request.getParameter("id");
 		
 		try {
 			Rank_Dao dao = new Rank_Dao();
@@ -46,7 +44,6 @@ public class RankChangeService implements Action {
 			//관리자일떄만
 			if(user.getIsAdmin().equals("M")){
 				
-					
 					url="/WEB-INF/view/rankchange.jsp";
 
 			}else {
@@ -62,9 +59,11 @@ public class RankChangeService implements Action {
 	    		
 	    	
 			}
+			
 			List<Rank> list = dao.getRankListAll();
 			
 			request.setAttribute("list", list);
+			
 		
 			forward = new ActionForward();
     		forward.setRedirect(false);

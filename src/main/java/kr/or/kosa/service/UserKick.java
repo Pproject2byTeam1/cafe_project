@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dto.Board_Info;
-import kr.or.kosa.dto.User;
+import kr.or.kosa.dto.CafeBanner;
 
 public class UserKick implements Action {
 
@@ -23,6 +24,10 @@ public class UserKick implements Action {
 		
 		
 		try {
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
 			
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();

@@ -12,12 +12,13 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.DataBoardDao;
-import kr.or.kosa.dao.MarketBoardDao;
 import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.User;
 
@@ -39,6 +40,11 @@ public class DataBoardListService implements Action {
 			// 관리자만 삭제가능하게
 			User user = (User) session.getAttribute("member");
 			request.setAttribute("member", user);
+			
+			//top
+			CafeBannerDao bannerdao = new CafeBannerDao();
+			CafeBanner banner = bannerdao.getCafeBanner();
+			request.setAttribute("banner", banner);//top
 			
 			// 사이드바
 			Board_Info_Dao infodao = new Board_Info_Dao();

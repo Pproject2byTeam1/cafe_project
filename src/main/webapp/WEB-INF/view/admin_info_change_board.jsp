@@ -42,14 +42,12 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
-
-  <jsp:include page="/common/top.jsp"></jsp:include>
-
-  </header><!-- End Header -->
+		<c:import url="/WEB-INF/view/common/top.jsp" />
+	</header>
 
   <!-- ======= Sidebar ======= -->
   
-   <jsp:include page="/common/side2.jsp"></jsp:include>
+   <c:import url="/WEB-INF/view/common/side.jsp" />
   
   <!-- End Sidebar -->
 

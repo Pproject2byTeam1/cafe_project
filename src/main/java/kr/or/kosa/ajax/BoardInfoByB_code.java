@@ -2,7 +2,7 @@ package kr.or.kosa.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dao.CafeBannerDao;
+import kr.or.kosa.dao.Board_Rank_Dao;
+import kr.or.kosa.dao.Rank_Dao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Board_Rank;
+import kr.or.kosa.dto.Rank;
 import kr.or.kosa.dto.User;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
@@ -65,6 +66,19 @@ public class BoardInfoByB_code extends HttpServlet {
 		    		json.put("b_type", info.getB_type());
 		    		json.put("form", info.getForm());
 		    		
+		    		//해당하는 게시판의 정보 가져오기
+		    		Board_Rank_Dao boardrankdao = new Board_Rank_Dao();
+		    		Board_Rank rank = boardrankdao.getBoardRank(b_code);
+		    		
+		    		json.put("rank", rank);
+		    		
+		    		//전체 등급정보 가져오기
+		    		Rank_Dao rankdao = new Rank_Dao();
+		    		List<Rank> ranklist = rankdao.getRankExecptionManager();
+		    		
+		    		JSONArray jsonlist = JSONArray.fromObject(ranklist);
+		    		
+		    		json.put("ranklist", jsonlist);
 		    	}
 		    }
 			

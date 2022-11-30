@@ -12,12 +12,6 @@ public class Chart {
 	private String email_id;
 	
 	
-	
-	
-	
-	
-	
-	
 	@Override
 	public String toString() {
 		return "Chart [rankpoint=" + rankpoint + ", title=" + title + ", nick=" + nick + ", w_date=" + w_date

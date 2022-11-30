@@ -12,6 +12,14 @@
   <title>카페人중독</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+     <c:import url="/WEB-INF/view/common/top.jsp" />
+  </header><!-- End Header -->
+  
+  <!-- ======= Sidebar ======= -->
+  <c:import url="/WEB-INF/view/common/side.jsp" />
+  <!-- End Sidebar -->
   
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
