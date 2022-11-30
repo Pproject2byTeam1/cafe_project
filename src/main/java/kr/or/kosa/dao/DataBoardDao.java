@@ -82,12 +82,57 @@ public class DataBoardDao {
 		return boardlist;
 	}
 
-	// 자료 게시판 특정 글 조회
-	public DataBoard getData_BoardByIdx(int idx) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		DataBoard board = new DataBoard();
+   try {
+         
+         conn = ds.getConnection();
+         String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'YYYY-MM-dd') w_date, b.report_count, b.notic, b.email_id, b.b_code, i.ori_name, i.save_name, i.volume, i.refer, i.depth, i.step "
+                  + "from board b join data_board i "
+                  + "on b.idx = i.idx "
+                  + "where b.idx = ?";
+         pstmt = conn.prepareStatement(sql);
+         
+         pstmt.setInt(1, idx);
+         
+         rs = pstmt.executeQuery();
+         
+         if(rs.next()) {
+            
+            board.setIdx(rs.getInt("idx"));
+            board.setTitle(rs.getString("title"));
+            board.setNick(rs.getString("nick"));
+            board.setContent(rs.getString("content"));
+            board.setHits(rs.getInt("hits"));
+            board.setW_date(rs.getString("w_date"));
+            board.setEmail_id(rs.getString("email_id"));
+            board.setReport_count(rs.getInt("report_count"));
+            board.setNotic(rs.getString("notic"));
+            board.setEmail_id(rs.getString("email_id"));
+            board.setOri_name(rs.getString("ori_name"));
+            board.setSave_name(rs.getString("save_name"));
+            
+            board.setVolume(rs.getInt("volume"));
+            board.setRefer(rs.getInt("refer"));
+            board.setDepth(rs.getInt("depth"));
+            board.setStep(rs.getInt("step"));
+            
+         }else {
+            System.out.println("조회 데이터 없음");
+         }
+         
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+      } finally {
+         try {
+            rs.close();
+            pstmt.close();
+            conn.close();
+         } catch (Exception e2) {
+            System.out.println(e2.getMessage());
+         }
+      }
+      
+      return board;
+   }
 
 		try {
 

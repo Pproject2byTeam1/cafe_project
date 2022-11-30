@@ -127,6 +127,7 @@
               
            });
         
+        
         //신고
     	function rep(data7){
 

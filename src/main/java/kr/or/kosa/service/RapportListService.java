@@ -38,7 +38,7 @@ public class RapportListService implements Action {
 			HttpSession session = request.getSession();
 	          User user = (User) session.getAttribute("member");
 			String userId = (String) session.getAttribute("userid");
-		
+			/* int b_code= Integer.parseInt(request.getParameter("b_code")); */
 			AdminDao dao = new AdminDao();
 			int totalreportcount = dao.totalreportCount();
 			String ps = request.getParameter("ps");
@@ -75,7 +75,7 @@ public class RapportListService implements Action {
 			request.setAttribute("pagecount", pagecount);
 			request.setAttribute("totalreportcount",totalreportcount);
 			request.setAttribute("reportlist", reportlist);
-			
+			/* request.setAttribute("b_code", b_code); */
 			url="/WEB-INF/view/rapport_list.jsp";
 			
 			

@@ -200,8 +200,8 @@
 							varStatus="status">
 							<tr id="rapportlist">
 
-								<input class="idx" name="idx" id="idx" value="${reportlist.idx}"
-									type="hidden" />
+								<input class="idx" name="idx" id="idx" value="${reportlist.idx}"type="hidden" />${reportlist.b_code}
+									<input class="b_code" name="b_code" id="b_code" value="${reportlist.b_code}"type="hidden" />
 								<c:choose>
 									<c:when test="${request.b_code eq'null'} ">
 										<td scope="col">댓글</td>
@@ -211,36 +211,67 @@
 									</c:otherwise>
 								</c:choose>
 								<c:choose>
-									<c:when test="${request.b_code eq'1'}">
-										<td scope="col">자유게시판</td>
+									<c:when test="${reportlist.b_code eq'1'}">
+										<th scope="col">자유게시판</th>
 									</c:when>
-									<c:when test="${request.b_code eq'2'}">
-										<td scope="col">출석게시판</td>
+									<c:when test="${reportlist.b_code eq'2'}">
+										<th scope="col">출석게시판</th>
 									</c:when>
-									<c:when test="${request.b_code eq'3'}">
-										<td scope="col">전체일정</td>
+									<c:when test="${reportlist.b_code eq'3'}">
+										<th scope="col">전체일정</th>
 									</c:when>
-									<c:when test="${request.b_code eq'4'}">
-										<td scope="col">사진공유</td>
+									<c:when test="${reportlist.b_code eq'4'}">
+										<th scope="col">사진공유</th>
 									</c:when>
-									<c:when test="${request.b_code eq'5'}">
-										<td scope="col">유로거래</td>
+									<c:when test="${reportlist.b_code eq'5'}">
+										<th scope="col">유로거래</th>
 									</c:when>
 									<c:otherwise>
-										<td scope="col">자료공유</td>
+										<th scope="col">자료게시판</th>
 									</c:otherwise>
 								</c:choose>
 
-								<td scope="col">${reportlist.title}</td>
-								<td scope="col">${reportlist.nick}</td>
-								<td scope="col">${reportlist.email_id}</td>
-								<td scope="col">${reportlist.hits}</td>
-								<td scope="col">${reportlist.report_count}</td>
-								<td scope="col">
-									<button type="button" class="btn btn-danger"
-										onclick="window.open('databoard_read.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+								<th scope="col">${reportlist.title}</th>
+								<th scope="col">${reportlist.nick}</th>
+								<th scope="col">${reportlist.email_id}</th>
+								<th scope="col">${reportlist.hits}</th>
+								<th scope="col">${reportlist.report_count}</th>
+								<th scope="col">
+									<c:choose>
+									<c:when test="${reportlist.b_code eq'1'}">
+										<button type="button" class="btn btn-danger"
+										onclick="window.open('regular_post.do?b_code=${reportlist.b_code}&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
 									<button type="button" class="btn btn-danger deletebtn">신고취소</button>
-								</td>
+									</c:when>
+									<c:when test="${reportlist.b_code eq'2'}">
+									<button type="button" class="btn btn-danger"
+										onclick="window.open('checkBoard.do?b_code=${reportlist.b_code}&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+									<button type="button" class="btn btn-danger deletebtn">신고취소</button>
+									</c:when>
+									<c:when test="${reportlist.b_code eq'3'}">
+										<button type="button" class="btn btn-danger"
+										onclick="window.open('checkBoard.do?b_code=${reportlist.b_code}&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+									<button type="button" class="btn btn-danger deletebtn">신고취소</button>
+									</c:when>
+									<c:when test="${reportlist.b_code eq'4'}">
+									<button type="button" class="btn btn-danger"
+										onclick="window.open('checkBoard.do?b_code=${reportlist.b_code}&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+									<button type="button" class="btn btn-danger deletebtn">신고취소</button>
+									</c:when>
+									<c:when test="${reportlist.b_code eq'5'}">
+										<button type="button" class="btn btn-danger"
+										onclick="window.open('marketboard_read.do?b_code=${reportlist.b_code}&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+									<button type="button" class="btn btn-danger deletebtn">신고취소</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="btn btn-danger"
+										onclick="window.open('databoard_read.do?b_code=${reportlist.b_code}&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+									<button type="button" class="btn btn-danger deletebtn">신고취소</button>
+									</c:otherwise>
+								</c:choose>
+								
+									
+								</th>
 							</tr>
 						</c:forEach>
 

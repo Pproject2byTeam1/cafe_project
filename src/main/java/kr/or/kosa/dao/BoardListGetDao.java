@@ -115,7 +115,7 @@ public class BoardListGetDao {//오로지 조회 용도 그 외에는 사용 xx
 				}
 				
 			} catch (Exception e) {
-				System.out.println("오류 :" + e.getMessage());
+				System.out.println( e.getMessage());
 			}finally {
 				try {
 					pstmt.close();
