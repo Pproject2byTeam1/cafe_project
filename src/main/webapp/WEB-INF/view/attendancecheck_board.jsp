@@ -137,6 +137,9 @@
 	          <div class="card">
 	            <h5 class="card-title">&nbsp;&nbsp;&nbsp;출석명단</h5>
 	            <div id = "boardlist">
+	            <c:if test="${boardlist.size() == 0}">
+							<div> 아직 출석한 회원이 없습니다</div>
+						</c:if>
 	            <c:forEach var="list" items="${boardlist}" varStatus="status">
 	            <!-- 1round -->
 	            <div class="card-body row">
@@ -255,7 +258,7 @@
 			//삭제
 			$('#attendanceDelete').click(function(){
 				const idx = $(this).parent().parent().parent().parent().parent().children('.idx').val();
-				console.log(idx);
+				
 				location.href="deleteAttendance.do?idx="+idx;
 			});
 			

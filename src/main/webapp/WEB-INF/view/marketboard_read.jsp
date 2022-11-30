@@ -52,7 +52,7 @@
       
          //글쓰기
          $("#Write").click(function(){
-            console.log("write 클릭");
+         
             location.href="marketboard_write.do?b_code=" + b_code;
             
          });
@@ -77,8 +77,8 @@
       $("#delete").click(function(){
          let idx = "<c:out value='${list.idx}'/>";
          let b_code = "<c:out value='${b_code}'/>";
-         console.log(idx);
-         console.log(b_code);
+         
+       
           location.href="marketboard_delete.do?b_code=" + b_code + "&idx=" + idx;
          
       });
