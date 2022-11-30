@@ -345,6 +345,7 @@ public class FrontController extends HttpServlet {
 		} else if (urlcommand.equals("/databoard_edit.do")) { // 자료 게시판 수정
 
 			action = new DataBoardEditService();
+			
 			forward = action.execute(request, response);
 
 		} else if (urlcommand.equals("/databoard_editok.do")) { // 자료 게시판 수정

@@ -89,7 +89,7 @@
 									<hr>
 									
 										<div>
-											<input type="file" class="form-control" accept="image/board/*" id="getfile" name="filename1" value="upload/${board.ori_name }" required>
+											<input type="file" class="form-control" accept="upload/*" id="getfile" name="filename1" value="upload/${board.ori_name }" required>
 										</div>
 										<div>
 
@@ -101,9 +101,9 @@
 											<!-- 글 내용 작성 -->
 											<div class="park-card p-4">
 												<div class="park-card-body row">
-													<textarea name="content" placeholder="내용을 입력해주세요.">${board.content}
+													<textarea name="content" placeholder="내용을 입력해주세요.">
 													
-													${board.save_name}
+												
 													</textarea>
 												</div>
 											</div>

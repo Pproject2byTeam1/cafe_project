@@ -167,13 +167,13 @@
 			
 		});
   
-        //수정
+        /* //수정
         $("#datamodify").click(function(){
         	location.href="databoard_edit.do?b_code=" + b_code + "&idx=" + idx + "&email_id=" + email_id;
         });
   
      
-        
+         */
     	
         /* 답글 작성 */
         
@@ -414,7 +414,7 @@
 												value="${fn:toLowerCase(originalfilename)}" />
 											<c:forTokens var="file" items="${lowerfilename}" delims="."
 												varStatus="status">
-												<c:if test="${status.last && members!=null}">    	
+												<c:if test="${status.last}">    	
 													<c:choose>
 														<c:when
 															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
@@ -467,11 +467,11 @@
 	                                   	
 	                                   	<c:if test="${member.email_id == board.email_id}">
                                    		
-                                			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
+                                			<form action="databoard_edit.do?b_code=${board.b_code}&idx=${board.idx}" method="post">
 	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
-	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
+	                                          <input type="text" value="${board.idx}" name="idx" style="display: none;">
 	                                          
-	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
+	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" id="datamodify" value="수정">
 	                                       </form>
 	                                   	 &nbsp;
 	                                   	</c:if>
