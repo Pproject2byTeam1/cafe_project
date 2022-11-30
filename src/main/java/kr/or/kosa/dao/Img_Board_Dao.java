@@ -196,6 +196,7 @@ public class Img_Board_Dao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
 		int row = 0;
 		
 		try {
@@ -225,6 +226,11 @@ public class Img_Board_Dao {
 			pstmt2 = conn.prepareStatement(sql2);
 			pstmt2.setString(1, img_board.getEmail_id());
 			row = pstmt2.executeUpdate();
+			
+			String sql3 = "update member set point = nvl(point + 10, 0) where email_id=?";
+			pstmt3 = conn.prepareStatement(sql3);
+			pstmt3.setString(1, img_board.getEmail_id());
+			row = pstmt3.executeUpdate();
 			
 			if(row <= 0) {
 				throw new Exception("img_board 삽입 실패");
