@@ -167,13 +167,7 @@
 			
 		});
   
-        /* //수정
-        $("#datamodify").click(function(){
-        	location.href="databoard_edit.do?b_code=" + b_code + "&idx=" + idx + "&email_id=" + email_id;
-        });
-  
-     
-         */
+   
     	
         /* 답글 작성 */
         
@@ -416,17 +410,19 @@
 												varStatus="status">
 												<c:if test="${status.last}">    	
 													<c:choose>
-														<c:when
-															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
+														<c:when test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
+														<c:if test="${member != null}">
 															<button type="button" onclick="location.href='upload/${originalfilename}'" target="_blank"
 																class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
 															<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
 																class="btn btn-secondary rounded-pill" >다운로드</button>
-															
+														</c:if>	
 														</c:when>
 														<c:otherwise>
+														<c:if test="${member != null}">
 														<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
 																class="btn btn-secondary rounded-pill" >${board.ori_name} 다운로드</button>
+														</c:if>	
 														</c:otherwise>
 													</c:choose>
 												</c:if>
