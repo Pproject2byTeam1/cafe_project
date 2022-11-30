@@ -714,7 +714,7 @@ public class Board_Dao {
 						+ "left join board_info i \r\n"
 						+ "on b.b_code = i.b_code \r\n"
 						+ "where i.b_code = ? order by b.idx desc))\r\n"
-						+ "where rn BETWEEN 1 and 50";
+						+ "where rn BETWEEN 1 and 5";
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setInt(1, b_code);

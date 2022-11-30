@@ -10,6 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import javax.swing.border.Border;
 
 import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Chart;
@@ -124,6 +125,10 @@ public List<Chart> getTopRankpoint(String startDate, String endDate, int number)
 					board.setNick(rs.getString("nick"));
 					board.setTitle(rs.getString("title"));
 					board.setW_date(rs.getString("w_date"));
+					board.setB_code(rs.getInt("b_code"));
+					board.setIdx(rs.getInt("idx"));
+					board.setB_name(rs.getString("b_name"));
+					board.setEmail_id(rs.getString("email_id"));
 					
 					boardlist.add(board);
 				}while(rs.next());
