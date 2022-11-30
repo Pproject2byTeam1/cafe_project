@@ -67,11 +67,9 @@
 
         /* 게시물 좋아요 비동기 처리 */
          $("#yesbtn").click(function(){
-              
+        	 
             
-              console.log("hahaha");
-              console.log(email_id);
-              console.log("sdfs" + yespark);
+            
               
               if(yespark == "no"){
                  
@@ -169,13 +167,7 @@
 			
 		});
   
-        //수정
-        $("#datamodify").click(function(){
-        	location.href="databoard_edit.do?b_code=" + b_code + "&idx=" + idx + "&email_id=" + email_id;
-        });
-  
-     
-        
+   
     	
         /* 답글 작성 */
         
@@ -416,22 +408,21 @@
 												value="${fn:toLowerCase(originalfilename)}" />
 											<c:forTokens var="file" items="${lowerfilename}" delims="."
 												varStatus="status">
-												<c:if test="${status.last}">
+												<c:if test="${status.last}">    	
 													<c:choose>
-														<c:when
-															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
-															<button type="button" onclick="location.href='image/board/${originalfilename}'" target="_blank"
+														<c:when test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
+														<c:if test="${member != null}">
+															<button type="button" onclick="location.href='upload/${originalfilename}'" target="_blank"
 																class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
-															<button type="button" onclick="location.href='filedownload.board?file_name=${originalfilename}'" id="download"
-																class="btn btn-secondary rounded-pill" id="preview">다운로드</button>
-															<a
-																href="filedownload.board?file_name=${originalfilename}"
-																id="download">다운로드</a>
+															<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
+																class="btn btn-secondary rounded-pill" >다운로드</button>
+														</c:if>	
 														</c:when>
 														<c:otherwise>
-															<a
-																href="filedownload.board?file_name=${originalfilename}"
-																id="download">${originalfilename}</a>
+														<c:if test="${member != null}">
+														<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
+																class="btn btn-secondary rounded-pill" >${board.ori_name} 다운로드</button>
+														</c:if>	
 														</c:otherwise>
 													</c:choose>
 												</c:if>
@@ -451,8 +442,10 @@
 										<hr>
 								
 									    <div class="d-flex justify-content-end">
-									    <div align="left"> <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
-	                                 
+									    <div align="left"> 
+										<c:if test="${member != null}">
+									    <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
+	                                  	</c:if>
                                     	<div>
                                     			
                                     		<c:if test="${member != null}">
@@ -470,11 +463,11 @@
 	                                   	
 	                                   	<c:if test="${member.email_id == board.email_id}">
                                    		
-                                			<form action="regular_edit.do?b_code=${board.b_code}&idx=${idx}" method="post">
+                                			<form action="databoard_edit.do?b_code=${board.b_code}&idx=${board.idx}" method="post">
 	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
-	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
+	                                          <input type="text" value="${board.idx}" name="idx" style="display: none;">
 	                                          
-	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
+	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" id="datamodify" value="수정">
 	                                       </form>
 	                                   	 &nbsp;
 	                                   	</c:if>

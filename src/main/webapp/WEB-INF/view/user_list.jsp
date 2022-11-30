@@ -58,6 +58,17 @@
      <c:import url="/WEB-INF/view/common/side.jsp" />
      <!-- End Sidebar -->
 
+      <jsp:include page="/common/top.jsp"></jsp:include>
+
+   </header>
+   <!-- End Header -->
+
+   <!-- ======= Sidebar ======= -->
+
+   <jsp:include page="/common/side.jsp"></jsp:include>
+
+   <!-- End Sidebar -->
+
 	<main id="main" class="main">
 		<div class="pagetitle">
 			<h1>회원조회</h1>

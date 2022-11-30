@@ -58,7 +58,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>User</h1>
+      <h1>${user.nick}님 마이페이지</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>

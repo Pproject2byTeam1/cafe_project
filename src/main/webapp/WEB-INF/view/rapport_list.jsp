@@ -13,14 +13,15 @@
 <meta content="" name="description">
 <meta content="" name="keywords">
 <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-	<!-- ======= Sidebar ======= -->
+<!-- ======= Sidebar ======= -->
 
-	<jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
 <!-- Google Fonts -->
 <link href="https://fonts.gstatic.com" rel="preconnect">
 <link
@@ -30,8 +31,9 @@
 <!-- Vendor CSS Files -->
 <link href="assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-	  <!-- 테이블 정렬 -->
-<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<!-- 테이블 정렬 -->
+<link href="vendor/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet">
 <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
 	rel="stylesheet">
 <link href="assets/vendor/boxicons/css/boxicons.min.css"
@@ -45,67 +47,58 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <link href="assets/css/free.css" rel="stylesheet">
 
- <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
 <script type="text/javascript">
+	$(function() {
 
-	$(function(){
-		
 		/* 삭제  */
-		function del(data){
-		
+		function del(data) {
+
 			$.ajax({
-				url:"Deleterapport",
-				data:data,
-				dataType:"html",
-				success:function(responsetxt){
-				
-					 $('#rapportlist').remove();
-					
+				url : "Deleterapport",
+				data : data,
+				dataType : "html",
+				success : function(responsetxt) {
+
+					$('#rapportlist').remove();
+
 				}
-				
-		});
-				
-		};
-			
 
-		$(document).on('click', '.deletebtn', function(){
+			});
 
-			const data = {"idx": $(this).parent().parent().children('.idx').val()};
-			
+		}
+		;
+
+		$(document).on('click', '.deletebtn', function() {
+
+			const data = {
+				"idx" : $(this).parent().parent().children('.idx').val()
+			};
+
 			console.log(data);
 
 			del(data);
 
 		});
+
+	});
+
+	/* 
+	 $("#search").click(function(){
+	 var requestdata ={nick: "nick"};
 	
-	});
-		
-/* 
-	$("#search").click(function(){
-		var requestdata ={nick: "nick"};
-		
-		
-		$.ajax({
-			type="POST",
-			url:"rapportList",
-			data:requestdata
-			
-			
-		});
-		
-	});
- */
+	
+	 $.ajax({
+	 type="POST",
+	 url:"rapportList",
+	 data:requestdata
+	
+	
+	 });
+	
+	 });
+	 */
 	/* 검색  */
-
-	
-
-	
-	
-	
-	
-
-	
-
 </script>
 
 </head>
@@ -115,13 +108,14 @@
 	<c:set var="cpage" value='<%=request.getAttribute("cpage")%>' />
 	<c:set var="pagecount" value='<%=request.getAttribute("pagecount")%>' />
 	<!-- ======= Header ======= -->
-	   <header id="header" class="header fixed-top d-flex align-items-center">
-        <c:import url="/WEB-INF/view/common/top.jsp" />
-     </header><!-- End Header -->
+	<header id="header" class="header fixed-top d-flex align-items-center">
+		<c:import url="/WEB-INF/view/common/top.jsp" />
+	</header>
+	<!-- End Header -->
 
 	<!-- ======= Sidebar ======= -->
 
-   <jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/view/common/side.jsp"></jsp:include>
 
 	<!-- End Sidebar -->
 
@@ -141,13 +135,9 @@
 				<div class="col-md-5"></div>
 				<div class="col-md-4">
 					<div class="row">
-						<div class="col-md-5">
-							
-						</div>
+
 						<div class="col-md-1"></div>
-						<div class="col-md-5">
-						
-						</div>
+						<div class="col-md-5"></div>
 					</div>
 				</div>
 
@@ -160,7 +150,31 @@
 								<i class="bi bi-search"></i>
 							</button>
 						</form> -->
+						<div align="right">
+
+							<form action="rapport_list.do?" method="post">
+
+								<select class="selectpicker" data-width="100" name="ps"
+									onchange="submit()">
+									<c:forEach var="i" begin="5" end="20" step="5">
+										<c:choose>
+											<c:when test="${pagesize == i}">
+												<option value="${i}" selected>${i}건</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${i}">${i}건</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+
+								</select>
+							</form>
+
+
+						</div>
 					</div>
+
+
 				</div>
 
 			</div>
@@ -171,14 +185,14 @@
 		<div class="container-fluid">
 			<div class="card">
 				<div></div>
-				
+
 				<div class="card-body">
 					<!-- <h5 class="card-title">Table with hoverable rows</h5>-->
 					<!-- Table with hoverable rows -->
 
 					<table class="table table-hover " id=dataTable1>
 						<tr>
-						
+
 							<th scope="col">글/댓글</th>
 							<th scope="col">게시판 종류</th>
 							<th scope="col">글제목</th>
@@ -190,16 +204,18 @@
 
 						</tr>
 
-				
+
 						<c:if test="${reportlist== null}">
 							<tr>
 								<td>데이터가 없습니다</td>
 							</tr>
 						</c:if>
-						<c:forEach var="reportlist" items="${reportlist}" varStatus="status">
+						<c:forEach var="reportlist" items="${reportlist}"
+							varStatus="status">
 							<tr id="rapportlist">
-								
-							<input class="idx" name="idx" id="idx" value="${reportlist.idx}" type="hidden"/>
+
+								<input class="idx" name="idx" id="idx" value="${reportlist.idx}"
+									type="hidden" />
 								<c:choose>
 									<c:when test="${request.b_code eq'null'} ">
 										<th scope="col">댓글</th>
@@ -235,48 +251,49 @@
 								<th scope="col">${reportlist.hits}</th>
 								<th scope="col">${reportlist.report_count}</th>
 								<th scope="col">
-									<button type="button" class="btn btn-danger"onclick="window.open('databoard_read.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
+									<button type="button" class="btn btn-danger"
+										onclick="window.open('databoard_read.do?b_code=6&idx=${reportlist.idx}&cp=${cpage}&ps=${pagesize}')">신고페이지</button>
 									<button type="button" class="btn btn-danger deletebtn">신고취소</button>
 								</th>
 							</tr>
 						</c:forEach>
 
 					</table>
-					
+
 
 					<!-- End Table with hoverable rows -->
 					<!-- 페이징  -->
-					
+
 					<!-- End Centered Pagination -->
 				</div>
 			</div>
 			<nav aria-label="Page navigation example">
-						<ul class="pagination justify-content-center">
+				<ul class="pagination justify-content-center">
 
-							<c:if test="${cpage > 1}">
+					<c:if test="${cpage > 1}">
+						<li class="page-item"><a class="page-link"
+							href="rapport_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1"
+							aria-disabled="true"><<</a></li>
+					</c:if>
+
+					<c:forEach var="i" begin="1" end="${pagecount}" step="1">
+						<c:choose>
+							<c:when test="${cpage==i}">
+								<li class="page-item"><a class="page-link active">${i}</a></li>
+							</c:when>
+							<c:otherwise>
 								<li class="page-item"><a class="page-link"
-									href="rapport_list.do?cp=${cpage-1}&ps=${pagesize}" tabindex="-1"
-									aria-disabled="true"><<</a></li>
-							</c:if>
+									href="rapport_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 
-							<c:forEach var="i" begin="1" end="${pagecount}" step="1">
-								<c:choose>
-									<c:when test="${cpage==i}">
-										<li class="page-item"><a class="page-link active">${i}</a></li>
-									</c:when>
-									<c:otherwise>
-										<li class="page-item"><a class="page-link"
-											href="rapport_list.do?cp=${i}&ps=${pagesize}">${i}</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-
-							<c:if test="${cpage < pagecount}">
-								<li class="page-item"><a class="page-link"
-									href="rapport_list.do?cp=${cpage+1}&ps=${pagesize}">>></a></li>
-							</c:if>
-						</ul>
-					</nav>
+					<c:if test="${cpage < pagecount}">
+						<li class="page-item"><a class="page-link"
+							href="rapport_list.do?cp=${cpage+1}&ps=${pagesize}">>></a></li>
+					</c:if>
+				</ul>
+			</nav>
 		</div>
 
 
@@ -315,11 +332,9 @@
 
 	<!-- Template Main JS File -->
 	<script src="assets/js/main.js"></script>
-<script>
-
-
-
-</script>
+	<script>
+		
+	</script>
 </body>
 
 </html>
