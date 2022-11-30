@@ -8,8 +8,8 @@
 	<ul class="sidebar-nav" id="sidebar-nav">
 
 		<!-- 카페 정보 시작-->
-			<div class="pagetitle">
-				<c:if test="${member != null }">
+	<div class="pagetitle">
+		<c:if test="${member != null }">
 			<div class="pagetitle card mt-2 pt-4">
 				<div class="card-body">
 					<div class="card d-flex justify-content-center pb-2">
@@ -25,7 +25,6 @@
 							<span>&ensp;&ensp;&ensp; ${member.point}&nbsp;POINT</span><br> 
 							<a href="user_activity.do">활동 내역</a> | 
 							<a href="memo_list.do">쪽지함</a>	<br>
-							
 						</div>
 					</div>
 					<c:if test="${member.isAdmin == 'M'}">
@@ -33,7 +32,7 @@
 							<div class="card-body mt-4 ms-3 ps-4">
 								<a href="adminmaineditservice.do">카페 관리</a> | 
 								<a href="chart.do">통계</a> <br>
-								<a class="card-title">회원수<span> | 00 명 
+								<a class="card-title">회원수<span> | ${totalUser} 명 
 							</div>
 						</div>
 					 </c:if>

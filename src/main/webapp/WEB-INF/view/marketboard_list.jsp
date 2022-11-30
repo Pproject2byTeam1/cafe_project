@@ -178,7 +178,7 @@
 							</select>
 						</li>
 						<li class="nav-item" role="presentation">
-							<input class="flex-fill" type="text" id="searchInput" placeholder="Search" title="Enter search keyword">
+							<input class="flex-fill form-control" type="text" id="searchInput" placeholder="Search" title="Enter search keyword">
 						</li>
 						<li class="nav-item" role="presentation">
 						  &nbsp&nbsp<button type="button" id="listselectbtn" 
