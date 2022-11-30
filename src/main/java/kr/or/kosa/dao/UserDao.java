@@ -37,8 +37,8 @@ public class UserDao {
 					+ "(select rownum rn, m.rank, m.email_id, m.nick, m.name, u.phone, to_char(u.year_birth, 'yyMMdd') as year_birth, m.isadmin "
 					+ "from member m join user_details u "
 					+ "on m.email_id = u.email_id "
-					+ "where not m.email_id ='admin@admin' "
-					+ "order by email_id) where rn <= ? and rn >= ?";
+					+ "where not m.isadmin ='M' "
+					+ "order by isadmin) where rn <= ? and rn >= ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -169,7 +169,7 @@ public class UserDao {
 			return user;
 		}
 	
-	//admin을 제외한 총 유저 인원 구하기
+	////총 회원수 구하기 ('M' 등급 제외한)
 	public int totalUserCount() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -177,11 +177,11 @@ public class UserDao {
 		int totalcount = 0;
 		try {
 			conn = ds.getConnection(); //dbcp 연결객체 얻기
-			String sql="select count(*) cnt from member where NOT email_id ='admin@admin'";
+			String sql="select count(*) count from member where not isadmin = 'M' ";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				totalcount = rs.getInt("cnt");
+				totalcount = rs.getInt("count");
 			}
 		}catch (Exception e) {
 			

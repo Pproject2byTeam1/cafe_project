@@ -700,7 +700,7 @@
 
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
-		<c:import url="/WEB-INF/view/common/admintop.jsp" />
+		<c:import url="/WEB-INF/view/common/top.jsp" />
 	</header>
 	<!-- End Header -->
 

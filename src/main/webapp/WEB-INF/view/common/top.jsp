@@ -50,13 +50,7 @@
        </c:if>
        <c:if test="${member.isAdmin eq 'M'}">
        		<ul class="header-nav ms-auto">
-           		<li class="nav-item dropdown">
-               		<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>통계</a>
-               		<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                   		<li><a class="dropdown-item" href="#!">활동 분석</a></li>
-                   		<li><a class="dropdown-item" href="chart.do">회원 분석</a></li>
-               		</ul>
-           		</li>
+           		
        		</ul>
        </c:if>
 
@@ -65,7 +59,7 @@
 
 
 		<c:if test="${member != null}">        
-        <li class="nav-item dropdown pe-3">
+        <li class="nav-item dropdown pe-3 ps-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="image/rank_icon/${member.rank}.gif" alt="Profile" class="">
@@ -74,9 +68,9 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><img src="image/rank_icon/${member.rank}.gif" alt="Profile" class="">${member.nick }</h6>
-              <span>RANK_NAME (POINT)</span>
-            </li>
+              <h6><img src="image/rank_icon/${member.rank}.gif" alt="Profile" class="">&nbsp ${member.nick }</h6>
+              <span>POINT: ${member.point }</span>
+            </li>	
             <li>
               <hr class="dropdown-divider">
             </li>
