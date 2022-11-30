@@ -67,43 +67,6 @@ DataSource ds = null;
 		return ranklist;
 	}
 	
-	//등급 조건 조회
-	public Rank getRankById(int rank) {
-	
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Rank rankdto = new Rank();
-		
-		try {
-			
-			conn = ds.getConnection();
-			String sql = "select rank, r_name, r_point from Rank where rank=?";
-			
-			pstmt.setInt(1, rank);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				rankdto.setRank(rs.getInt("rank"));
-				rankdto.setR_name(rs.getString("r_name"));
-				rankdto.setR_point(rs.getInt("r_point"));
-			}
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return rankdto;
-	}
 	
 	//스텝이나  관리자 뺀 등급 전체 조회
 	public List<Rank> getRankExecptionManager() {
@@ -180,38 +143,7 @@ DataSource ds = null;
 		return row;
 	}
 	
-	//등급 수정
-	public int updateRank(Rank rank) {
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int row = 0;
-		
-		try {
-			
-			conn = ds.getConnection();
-			String sql = "update Rank set rank=, r_name=?, r_point=?";
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, rank.getRank());
-			pstmt.setString(2, rank.getR_name());
-			pstmt.setInt(3, rank.getR_point());
-			
-			row = pstmt.executeUpdate();
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				System.out.println(e2.getMessage());
-			}
-		}
-		
-		return row;
-	}
+
 	
 	//등급 삭제
 	public int deleteRank(int rank) {
