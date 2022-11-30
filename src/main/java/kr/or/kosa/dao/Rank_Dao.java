@@ -105,6 +105,49 @@ DataSource ds = null;
 		return rankdto;
 	}
 	
+	//스텝이나  관리자 뺀 등급 전체 조회
+	public List<Rank> getRankExecptionManager() {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Rank> ranklist = null;
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select rank, r_name, r_point from rank where rank >= 1";
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			ranklist = new ArrayList<Rank>();
+			
+			if(rs.next()) {
+				do {
+					Rank rank = new Rank();
+					rank.setRank(rs.getInt("rank"));
+					rank.setR_name(rs.getString("r_name"));
+					rank.setR_point(rs.getInt("r_point"));
+					
+					ranklist.add(rank);
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return ranklist;
+	}
+	
 	//등급 삽입
 	public int insertRank(Rank rank) {
 		

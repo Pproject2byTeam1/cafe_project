@@ -2,7 +2,6 @@ package kr.or.kosa.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,14 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 import kr.or.kosa.dao.Board_Info_Dao;
-import kr.or.kosa.dao.CafeBannerDao;
+import kr.or.kosa.dao.Board_Rank_Dao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Board_Rank;
 import kr.or.kosa.dto.User;
-import net.sf.json.JSONObject;
 
 @WebServlet("/UpdateInfoByB_code")
 public class UpdateInfoByB_code extends HttpServlet {
@@ -54,9 +50,11 @@ public class UpdateInfoByB_code extends HttpServlet {
 		    		String b_name = request.getParameter("b_name");
 		    		String form = request.getParameter("form");
 		    		int b_code = Integer.parseInt(request.getParameter("b_code"));
+		    		int w_rank = Integer.parseInt(request.getParameter("w_rank"));
+		    		int re_rank = Integer.parseInt(request.getParameter("re_rank"));
 		    		
 		    		if(form == null || form.equals("")) {
-		    			form = null;
+		    			form = "!";
 		    		}
 		    		
 		    		Board_Info_Dao dao = new Board_Info_Dao();
@@ -66,8 +64,16 @@ public class UpdateInfoByB_code extends HttpServlet {
 		    		info.setForm(form);
 		    		info.setB_code(b_code);
 		    		
-			    	int row = dao.updateBoardInfo(info);
-					
+		    		Board_Rank rank = new Board_Rank();
+		    		rank.setW_rank(w_rank);
+		    		rank.setB_code(b_code);
+		    		rank.setRe_rank(re_rank);
+		    		
+		    		System.out.println(rank);
+		    		System.out.println(info);
+		    		
+			    	int row = dao.updateBoardInfo(info, rank);
+			    	
 					if(row > 0) {
 						msg = "게시판 정보가 수정되었습니다.";
 					}else {
