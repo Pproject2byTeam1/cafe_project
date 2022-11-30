@@ -342,7 +342,7 @@
       <h1>회원 분석</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+          <li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
           <li class="breadcrumb-item">통계</li>
           <li class="breadcrumb-item active">회원분석</li>
         </ol>

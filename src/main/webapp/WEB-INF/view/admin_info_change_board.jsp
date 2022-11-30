@@ -61,7 +61,7 @@
       <h1>${user.nick}님 마이페이지</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
           <li class="breadcrumb-item active">Admin 정보 변경</li>
         </ol>
       </nav>

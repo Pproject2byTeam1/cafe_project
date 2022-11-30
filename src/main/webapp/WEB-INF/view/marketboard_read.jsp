@@ -345,7 +345,7 @@
          <h1>거래 게시판</h1>
          <nav>
             <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">전체글 : 000</a></li>
+               <li class="breadcrumb-item"><a href="cafemain.do">전체글 : 000</a></li>
                <li class="breadcrumb-item active">판매중 : 000</li>
                <li class="breadcrumb-item">판매완료 : 000</li>
             </ol>

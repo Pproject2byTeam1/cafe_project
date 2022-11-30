@@ -660,7 +660,7 @@
 					<!-- 게시판 이름 끌고오기 b_name -->
 					<nav>
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
+							<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
 							<c:forEach var="boardinfo" items="infolist">
 								<li class="breadcrumb-item active">Calendar</li>
 							</c:forEach>
