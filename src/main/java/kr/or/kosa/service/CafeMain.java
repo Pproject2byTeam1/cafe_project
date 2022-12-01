@@ -67,6 +67,11 @@ public class CafeMain implements Action {
 			Date befdate = new Date(cal1.getTimeInMillis());
 			String Beforeday = format.format(befdate);
 			
+			cal1.setTime(date);
+			cal1.add(Calendar.DATE, +2); //날짜 +1일
+			Date date2 = new Date(cal1.getTimeInMillis());
+			String days2 = format.format(date2);
+			
 			Calendar cal2 = Calendar.getInstance();
 			cal2.setTime(date);
 			cal2.add(Calendar.MONTH, -1); //날짜 -1달
@@ -82,10 +87,10 @@ public class CafeMain implements Action {
 			//각종 보드리스트들 가져오기 (한 최근 것 5개?)
 			Board_Dao dao = new Board_Dao(); 
 			
-			List<Board> board1 = dao.getBoardList(b1,BeforeMonthday,nowday);
-			List<Board> board2 = dao.getBoardList(b2,BeforeMonthday,nowday);
-			List<Board> board3 = dao.getBoardList(b3,BeforeMonthday,nowday);
-			List<Board> board4 = dao.getBoardList(b4,BeforeMonthday,nowday);
+			List<Board> board1 = dao.getBoardList(b1,BeforeMonthday,days2);
+			List<Board> board2 = dao.getBoardList(b2,BeforeMonthday,days2);
+			List<Board> board3 = dao.getBoardList(b3,BeforeMonthday,days2);
+			List<Board> board4 = dao.getBoardList(b4,BeforeMonthday,days2);
 			List<MarketBoard> market_list = market_dao.listMarket(5, 1, 7);//거래게시판(7개만..)
 			List<Board> chart = dao.viewchart();
 			
