@@ -34,6 +34,7 @@
 								<a href="chart.do">통계</a> <br>
 								<a href="user_list.do">회원 조회</a> | 
 								<a href="rapport_list.do">신고 현황</a>
+								<a href="rankedit.do">등급 관리</a>
 							</div>
 						</div>
 					 </c:if>

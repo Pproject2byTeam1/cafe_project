@@ -40,7 +40,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 			int highrank = dao.highRank();
 			
 			//추가 제한 로직
-			if(rank < highrank) {
+			if(rank > highrank) {
 				msg = "삭제하려는 등급의 순번(" + highrank + " 순위)보다 높은 등급의 순번(" + rank + ")이 있습니다.";
 			}else {
 				int result = dao.deleteRank(rank);
