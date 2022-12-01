@@ -157,7 +157,7 @@ public class Regular_Board_Dao {
 					pointlist.add(rs1.getInt("r_point"));
 				}while(rs1.next());
 			}
-			int rank = 1;
+			int rank = 0;
 			for(int i=0; i<pointlist.size()-1; i++) {
 				int min = pointlist.get(i);
 				int max = pointlist.get(i+1);
@@ -289,7 +289,7 @@ public class Regular_Board_Dao {
 						pointlist.add(rs1.getInt("r_point"));
 					}while(rs1.next());
 				}
-				int rank = 1;
+				int rank = 0;
 				for(int i=0; i<pointlist.size()-1; i++) {
 					int min = pointlist.get(i);
 					int max = pointlist.get(i+1);
@@ -423,7 +423,7 @@ public class Regular_Board_Dao {
 				}while(rs1.next());
 			}
 			
-			int rank = 1;
+			int rank = 0;
 			for(int i=0; i<pointlist.size()-1; i++) {
 				int min = pointlist.get(i);
 				int max = pointlist.get(i+1);
