@@ -117,14 +117,12 @@
 								<h5 class="card-title">Register</h5>
 								<p>소셜 로그인 및 이메일로 가입할 수 있습니다.</p>
 								<hr>
-								<a href="#"><img alt=""
-									src="image/login_img/google_login.png" class="w-100 p-3"></a>
+								<a href="snsLogin.do"><img alt=""
+									src="image/login_img/register.jpg" class="w-100 p-3"></a>
 								<!-- 네이버 로그인 버튼 노출 영역 (근데 작다..)-->
     							<div id="naver_id_login" style="display: none;"></div>
     							<a href="#no"><img alt=""
 									src="image/login_img/naver_login.png" class="w-100 p-3 naver-login" id="naverLogin"></a>
-								<a href="#"><img alt=""
-									src="image/login_img/kakao_login.png" class="w-100 p-3"></a>
 									
 							</div>
 						</div>
