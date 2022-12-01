@@ -43,6 +43,7 @@
                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>회원</a>
                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                    <li><a class="dropdown-item" href="user_list.do">회원 조회</a></li>
+                   <li><a class="dropdown-item" href="rankedit.do">등급 관리</a></li>
                    <li><a class="dropdown-item" href="rapport_list.do">신고 현황</a></li>
                </ul>
            </li>

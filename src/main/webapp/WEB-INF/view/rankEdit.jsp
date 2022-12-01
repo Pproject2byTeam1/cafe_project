@@ -46,7 +46,7 @@
 		let list = "<c:out value='${list}'/>";
 		let max = Number("<c:out value='${maxpoint}'/>");
 		
-		$('#refresh').click(function ajaxlist() {
+		function ajaxlist() {
 			
 			$.ajax({
 				type: "POST",
@@ -57,22 +57,22 @@
 					$("#ranklist").empty();
 					$("#ranklist").append(data);
 					
-					let size = $(".size").val();
-					let max = $(".max").val();
+					let size = Number($(".size").val());
+					let max = Number($(".max").val());
 					
 					}
 				});
-		});
+		};
 		
-
+		//신규 랭크 등록 기능 활성화
 		$('#newRank').click(function newRank() {
 			
-			let check = $('tr:eq(' + (size+1) + ')>td:eq(4) input').val();
-			console.log(check);
-			if(check == "등록하기"){
-				alert("등록하지 않은 등급이 있습니다. 먼저 등록 해주세요.");
+			let check = $('tr:eq(' + (size+2) + ')>td:eq(3) input').val();
+
+			if((check == "저장") || check == "등록"){
+				alert("추가할 수 없습니다. 저장 또는 등록을 마무리해주세요.");
 			}else{
-			
+				
 			// table element 찾기
 			const table = document.getElementById('ranklist');
 			// 새 행(Row) 추가
@@ -84,24 +84,24 @@
 			const newCell3 = newRow.insertCell(2);
 			const newCell4 = newRow.insertCell(3);
 		
-			// Cell에 텍스트 추가
-			newRow.setAttribute("class" , size);
-			newCell1.innerHTML = size+1;
 			
-			newCell2.innerHTML = '<input type="text" class="form-control" placeholder="" value="" id="' + size+1 + 'name"></td>';
-			newCell3.innerHTML = '<input type="text" class="form-control" placeholder="' + max + '" id="' + size + 'point">';
-			newCell4.innerHTML = '<input type="button" class="addRank btn btn btn-success" value="등록하기" style="float: right">';
-		
+			// Cell에 텍스트 추가
+			newRow.setAttribute("class" , size+1);
+			newCell1.innerHTML = size+1
+			
+			newCell2.innerHTML = '<input type="text" class="form-control" placeholder="" value="" id="name"></td>';
+			newCell3.innerHTML = '<input type="text" class="form-control" placeholder="" value="" id="point">';
+			newCell4.innerHTML = '<input type="button" class="addRank btn btn btn-success" value="등록" style="float: right">';
+			
 			}	
 		});
 		
+		//기존 랭크 수정 기능 활성화
 		$(document).on('click', '.editRank', function(){
 			let td = $(this).closest('tr').find('td');
 			let td0 = td.eq(0).text();
 			let editpoint = td.eq(2).text();
-			console.log(td);
-			console.log(td0);
-			console.log(editpoint);
+
 			if(td0 == "1"){
 				td[1].innerHTML = '<input type="text" class="form-control" id="name" value="" required><input type="hidden" class="r_name" value="false">';
 			}else {
@@ -109,17 +109,18 @@
 				td[2].innerHTML = '<input type="number" class="form-control" id="point" value="" required><input type="hidden" class="r_point" value="false">';
 			}
 			
-			td[3].innerHTML = '<input type="button" class="updateRank btn btn btn-success" value="저장하기" style="float: right">'; 
+			td[3].innerHTML = '<input type="button" class="updateRank btn btn btn-success" value="저장" style="float: right">'; 
 			
 		});
 		
+		//기존 랭크 삭제
 		$(document).on('click', '.delRank', function() {
 			
 			let check = $('tr:eq(' + (size+1) + ')>td:eq(3) input').val();
 			let rank = $('tr:eq(' + (size+1) + ')>td:eq(0)').text();
-			
-			if((check == "저장하기")){
-				alert("수정 중에는 삭제할 수 없습니다. 마지막 등급을 저장해주세요.");
+
+			if((check == "저장") || check == "등록"){
+				alert("삭제할 수 없습니다. 저장 또는 등록을 마무리해주세요.");
 			}else{
 				
 			Swal.fire({
@@ -165,23 +166,19 @@
 	    });
 		
 		
+		//기존 랭크 수정 완료
 		$(document).on('click', '.updateRank', function () {
 			
 			let td = $(this).closest('tr').find('td');
 			let rank = td.eq(0).text();
-			let r_name = td.eq(1).text();
-			let r_point = $('tr:eq(' + (rank+1) + ')>td:eq(2) input').val();
-			
-			console.log(td);
-			console.log(rank);
-			console.log(r_name);
-			console.log(r_point);
-			
+			let r_name = $('#name').val();
+			let r_point = $('#point').val();
+						
 			 var requestdata = {"rank": rank, "r_name": r_name, "r_point" : r_point};
 			
 			 Swal.fire({
 				   title: '저장하시겠습니까?',
-				   text: rank + ' 순위' + r_name + '의 점수를 ' + r_point + '로 수정합니다',
+				   text: rank + ' 순위 ' + r_name + '의 점수를 ' + r_point + '로 수정합니다',
 				   icon: 'warning',
 				   
 				   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
@@ -193,28 +190,71 @@
 				   reverseButtons: true, // 버튼 순서 거꾸로
 				   
 				}).then(result => {
-			 
-				$.ajax({
-					type: "POST",
-					url: "RankEdit",
-					data: requestdata,
-					dataType: "TEXT",
-					success: function(data){
+					if (result.isConfirmed) {
+						$.ajax({
+							type: "POST",
+							url: "RankEdit",
+							data: requestdata,
+							dataType: "TEXT",
+							success: function(data){
+								
+								alert(data);
+
+								}
+					
+							});
+					}
 						
-						alert(data);
-	
-						
-						ajaxlist();
-						
-						}
-					});
-			
+				ajaxlist();
 			
 			});
 			 
+		});
+				
+		$(document).on('click', '.addRank', function () {
+			
+			let td = $(this).closest('tr').find('td');
+			let rank = td.eq(0).text();
+			let r_name = $('#name').val();
+			let r_point = $('#point').val();
+						
+			 var requestdata = {"rank": rank, "r_name": r_name, "r_point" : r_point};
+			
+			 Swal.fire({
+				   title: '새로운 등급을 등록하시겠습니까?',
+				   text: rank + ' 순위 ' + r_name + '의 점수를 ' + r_point + '로 등록합니다',
+				   icon: 'warning',
+				   
+				   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+				   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+				   confirmButtonText: '네', // confirm 버튼 텍스트 지정
+				   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+				   
+				   reverseButtons: true, // 버튼 순서 거꾸로
+				   
+				}).then(result => {
+					if (result.isConfirmed) {
+						$.ajax({
+							type: "POST",
+							url: "RankAdd",
+							data: requestdata,
+							dataType: "TEXT",
+							success: function(data){
+								
+								alert(data);
+
+								}
+					
+							});
+					}
+						
+				ajaxlist();
+			
+			});
 			 
 		});
-							
+		
 		
 	});
 </script>
@@ -249,9 +289,10 @@
 			<div class="container-fluid">
 				<div class="card">
 				<div class="card-body">
-				<p><p>
-					<button type="button" class="btn btn btn-primary"
-										id="refresh" value="new">새로고침</button>
+				
+				<p><p><p><p><p>
+					<h3>등급 관리</h3>
+				
 				<form onclick="" style="cursor: pointer">
 					<table class="table text-center" id='ranklist'>
 						<thead class="thead-light">
@@ -296,7 +337,7 @@
 										</td>
 										<td>				
 										<input type="button" class="editRank btn btn btn-secondary"
-											value="수정하기" style="float: right">
+											value="수정" style="float: right">
 										</td>
 
 									</tr>

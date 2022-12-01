@@ -107,7 +107,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 						}
 					out.print("</td>");
 					out.print("<td>");
-					out.print("<input type='button' class='editRank btn btn btn-secondary' value='수정하기' style='float: right'>");
+					out.print("<input type='button' class='editRank btn btn btn-secondary' value='수정' style='float: right'>");
 					out.print("</td>");
 					
 				out.print("</tr>");
