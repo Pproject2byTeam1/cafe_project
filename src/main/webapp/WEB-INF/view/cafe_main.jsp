@@ -499,48 +499,55 @@
 	<script src="assets/js/main.js"></script>
 	<script type="text/javascript">
 	$(function(){
-			$('.clickrank').click(function(){
-	  			const idx = $(this).children('.idx').text();
-	  			const b_code = $(this).children('.b_code').text();
-	  			const w_date = $(this).children(".w_date").text();
-	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-	  		});
-	  		$('.td1').click(function(){
-	  			const idx = $(this).children('.idx').text();
-	  			const b_code = $(this).children('.b_code').text();
-	  			const w_date = $(this).parents().children(".w_date").text();
-	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-	  		});
-	  		window,addEventListener("keydown",function(event){
-				  if(event.defaultPrevented){
-					  return;
-				  }
-				  var handled = false;
-				  if(event.keyCode == 123)
-					  handled = true;
-				  if(handled){
-					  swal("경고","F12키를 누르지 마십시오",'error');
-					  event.preventDefault();
-				  }
-			  },true);
-	  		$('.dropdown-item').click(function(){
-	  			const b_code = $(this).parents().children('.b_code').text();
-	  			const date = $(this).parents().children('.date').text();
-	  			const loc = $(this).parents().parents().parents().parents().children('.card-body').children('.ps-3').children('.table').children('.board');
-	  			$.ajax({
-	  				url:"getBoardList.do",
-	  				data:{
-	  					"b_code": b_code,
-	  					"date":date},
-	  				type: "POST",
-	  				dataType:"html",
-	  				success: function(responseText){
-	  					loc.empty();
-	  					loc.append(responseText);
-	  				}
-	  			})
-	  		});
+		//랭크 페이지에서 이동
+		$('.clickrank').click(function(){
+  			const idx = $(this).children('.idx').text();
+  			const b_code = $(this).children('.b_code').text();
+  			const w_date = $(this).children(".w_date").text();
+  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+  		});
+		//테이블에서 이동
+	  	clickLocation();
+		
+  		window,addEventListener("keydown",function(event){
+			  if(event.defaultPrevented){
+				  return;
+			  }
+			  var handled = false;
+			  if(event.keyCode == 123)
+				  handled = true;
+			  if(handled){
+				  swal("경고","F12키를 누르지 마십시오",'error');
+				  event.preventDefault();
+			  }
+		  },true);
+  		$('.dropdown-item').click(function(){
+  			const b_code = $(this).parents().children('.b_code').text();
+  			const date = $(this).parents().children('.date').text();
+  			const loc = $(this).parents().parents().parents().parents().children('.card-body').children('.ps-3').children('.table').children('.board');
+  			$.ajax({
+  				url:"getBoardList.do",
+  				data:{
+  					"b_code": b_code,
+  					"date":date},
+  				type: "POST",
+  				dataType:"html",
+  				success: function(responseText){
+  					loc.empty();
+  					loc.append(responseText);
+  					clickLocation();
+  				}
+  			})
+  		});
   	});
+	function clickLocation(){
+		$('.td1').click(function(){
+			const idx = $(this).children('.idx').text();
+			const b_code = $(this).children('.b_code').text();
+			const w_date = $(this).parents().children(".w_date").text();
+			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+		});
+	}
 	</script>
 
 </html>

@@ -42,7 +42,7 @@ public class MessageListService implements Action {
 			 if (user2 == null) {
 					
 		        	String board_msg = "권한이 없습니다.";
-		            String board_url = "/WebCafe_Project/windowclose.do";
+		            String board_url = "/WebCafe_Project/login_view.do";
 		              
 		            request.setAttribute("board_msg", board_msg);
 		            request.setAttribute("board_url", board_url);

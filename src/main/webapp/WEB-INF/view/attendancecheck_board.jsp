@@ -254,7 +254,7 @@
 				location.href="deleteAttendance.do?idx="+idx;
 			});
 			
-			window,addEventListener("keydown",function(event){
+			window.addEventListener("keydown",function(event){
 				  if(event.defaultPrevented){
 					  return;
 				  }
