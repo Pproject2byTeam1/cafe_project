@@ -42,15 +42,27 @@ public class ChartList extends HttpServlet {
     			
     			int month = Integer.parseInt(request.getParameter("MBWmonth"));
     			
-    			System.out.println(month);
 				ChartDao cdao = new ChartDao();
 				List <Chart> monthBoardWrite = cdao.getMonth(month);
 				
-				System.out.println(monthBoardWrite);
 				realjsonlist = JSONArray.fromObject(monthBoardWrite);
 				
 				
 			}
+    		
+    		if (chart.equals("monthBoardView")) {
+    			
+    			int month = Integer.parseInt(request.getParameter("MBVmonth"));
+    			
+				ChartDao cdao = new ChartDao();
+				List <Chart> monthBoardView = cdao.getMonthView(month);
+				
+				realjsonlist = JSONArray.fromObject(monthBoardView);
+				
+				
+			}
+    		
+    		
     		
     		if (chart.equals("boardCount")) {
     			

@@ -50,6 +50,7 @@
 			boardUtilizationRate();
 			boardCount();
 			monthBoardWrite();
+			monthBoardView();
 			
 			/* 변수 값 버리는 temp */
 			let splicetResult;
@@ -217,21 +218,22 @@
   		                      data: MBWcount
   		                    }],
   		                    chart: {
+  		                    	
+    		                  colors: ['#E91E63', '#E91E63', '#9C27B0'],
   		                      height: 350,
   		                      type: 'line',
   		                      zoom: {
-  		                        enabled: false
+  		                        enabled: true
   		                      }
   		                    },
   		                    dataLabels: {
-  		                      enabled: false
+  		                      enabled: true
   		                    },
   		                    stroke: {
   		                      curve: 'smooth'
   		                    },
   		                    grid: {
   		                      row: {
-  		                        colors: ['#ffffff', 'transparent'], // takes an array which will be repeated on columns
   		                        opacity: 0.5
   		                      },
   		                    },
@@ -241,6 +243,88 @@
   		                    yaxis: {
   			                      title: {
   			                        text: 'write'
+  			                      }
+  		                    },
+  		                    fill: {
+  			                      opacity: 1
+  		                    },
+  		                    tooltip: {
+  			                      y: {
+  			                        formatter: function(val) {
+  			                          return " " + val + " write"
+  			                        }
+  			                      }
+  			                    }
+  		                    
+  		                  }).render();
+					}
+ 				});
+				
+			}
+			/* 게시판별 월별 글수 종료 */	
+			
+			
+			
+			/* 게시판별 월별 조회수 TOP */
+			
+			let MBVmonth = []; 
+			let MBVcount = [];
+		
+			
+			
+			$("#MBVmonth").change(monthBoardView);
+			
+						/* 함수시작 */
+			function monthBoardView(){
+				$("#monthBoardView").empty();
+				
+				
+				let month = $('#MBVmonth').val();
+				const MBVnumber = {"MBVmonth": month,"chart": "monthBoardView"};
+				
+				$.ajax({
+  					type: "POST",
+  					url: "ChartList",
+  					data: MBVnumber,
+  					dataType: "JSON",
+  					success: function(data){
+						
+  				
+  						
+  						splicetResult = MBVmonth.splice(0);
+  						splicetResult = MBVcount.splice(0);
+  						
+  						$(data).each(function(){
+  							MBVmonth.push(this.month);
+							MBVcount.push(this.count);
+  						});
+  						
+  						
+  						
+  						new ApexCharts(document.querySelector("#monthBoardView"), {
+  		                    series: [{
+  		                      name: data[0].b_name,
+  		                      data: MBVcount
+  		                    }],
+  		                    chart: {
+  		                      height: 350,
+  		                      type: 'line',
+  		                      zoom: {
+  		                        enabled: true
+  		                      },colors: ['#fffff', 'transparent']
+  		                    },
+  		                    dataLabels: {
+  		                      enabled: true
+  		                    },
+  		                    stroke: {
+  		                      curve: 'smooth'
+  		                    },
+  		                    xaxis: {
+  		                        categories: MBVmonth,
+  		                      },
+  		                    yaxis: {
+  			                      title: {
+  			                        text: 'view'
   			                      }
   		                    },
   		                    fill: {
@@ -259,8 +343,6 @@
 				
 			}
 			/* 게시판별 월별 글수 종료 */	
-			
-			
 			
 			
 			/* 전체 게시판 조회수 상위 TOP */
@@ -356,32 +438,7 @@
 
         
 
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-            	<div class="row">
-            		<div class="col-md-9">
-            			<h5 class="card-title">전체 게시판 조회수 상위 TOP</h5>
-            		</div>
-            		<div class="col-md-3 d-flex justify-content-end align-items-center">
-            			<select name="number" id="allBoardTopView" class="form-select">
-							<option value=5>5개</option>
-							<option value=10>10개</option>
-							<option value=15>15개</option>
-							<option value=20>20개</option>
-						</select>
-            		</div>
-            		
-            	</div>
-              
-				
-              <!-- Bar Chart -->
-             	 <div id="barChart"></div>
-              <!-- End Bar Chart -->
-
-            </div>
-          </div>
-        </div>
+       
 
       
       	<div class="col-lg-6">
@@ -403,6 +460,31 @@
 
               <!-- Line Chart -->
               <div id="monthBoardWrite"></div>
+              <!-- End Line Chart -->
+
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+            		<div class="col-md-7">
+            			<h5 class="card-title">게시판별 월별 조회수</h5>
+            		</div>
+            		<div class="col-md-5 d-flex justify-content-end align-items-center">
+            			<select id="MBVmonth" class="form-select">
+            				<c:forEach var="boardlist" items="${boardlist}">
+            					<option value="${boardlist.b_code}" >${boardlist.b_name}</option>
+            				</c:forEach>
+						</select>
+            		</div>
+            		
+            	</div>
+
+              <!-- Line Chart -->
+              <div id="monthBoardView"></div>
               <!-- End Line Chart -->
 
             </div>
@@ -443,7 +525,8 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">게시판 별 count 수</h5>
+              <h5 class="card-title">게시판 별 조회수</h5>
+              <br>
 
               <!-- Pie Chart -->
               <div id="boardCount"></div>
@@ -454,7 +537,32 @@
         </div>
         
         
-        
+         <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+            	<div class="row">
+            		<div class="col-md-9">
+            			<h5 class="card-title">전체 게시판 조회수 상위 TOP</h5>
+            		</div>
+            		<div class="col-md-3 d-flex justify-content-end align-items-center">
+            			<select name="number" id="allBoardTopView" class="form-select">
+							<option value=5>5개</option>
+							<option value=10>10개</option>
+							<option value=15>15개</option>
+							<option value=20>20개</option>
+						</select>
+            		</div>
+            		
+            	</div>
+              
+				
+              <!-- Bar Chart -->
+             	 <div id="barChart"></div>
+              <!-- End Bar Chart -->
+
+            </div>
+          </div>
+        </div>
 
        
        
