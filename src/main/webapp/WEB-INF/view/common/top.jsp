@@ -129,7 +129,7 @@
         <c:if test="${member == null}">
         
         	<div class="row m-4 pt-3">
-        		<p class="col-6"><a href="snsLogin.do">JOIN</a></p>
+        		<p class="col-6"><a href="snsLogin.do">Register</a></p>
     			<p class="col-6"><a href="login_view.do">LOGIN</a></p>
         	</div>
         
