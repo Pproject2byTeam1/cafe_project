@@ -112,6 +112,7 @@ public class DataBoardDao {
 				board.setEmail_id(rs.getString("email_id"));
 				board.setOri_name(rs.getString("ori_name"));
 				board.setSave_name(rs.getString("save_name"));
+				board.setB_code(rs.getInt("b_code"));
 
 				board.setVolume(rs.getInt("volume"));
 				board.setRefer(rs.getInt("refer"));
