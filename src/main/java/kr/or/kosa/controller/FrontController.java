@@ -49,6 +49,7 @@ import kr.or.kosa.service.MessageListService;
 import kr.or.kosa.service.MessageWriteService;
 import kr.or.kosa.service.Message_Add_Service;
 import kr.or.kosa.service.RankEditListService;
+import kr.or.kosa.service.RankInfoService;
 import kr.or.kosa.service.RapportListService;
 import kr.or.kosa.service.RegularBoardDeleteService;
 import kr.or.kosa.service.RegularBoardEditOkService;
@@ -436,7 +437,12 @@ public class FrontController extends HttpServlet {
 			forward = action.execute(request, response);
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
-		}  
+		} else if (urlcommand.equals("/inforank.do")) { // 등급안내페이지
+
+			action = new RankInfoService();
+			forward = action.execute(request, response);
+
+		} 
 		
 		if (forward != null) {
 			if (forward.isRedirect()) { // true 페이지 재 요청 (location.href="페이지"
