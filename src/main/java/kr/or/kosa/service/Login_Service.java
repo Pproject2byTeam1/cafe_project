@@ -42,15 +42,35 @@ public class Login_Service implements Action {
 			String url = "";
 			
 			if(password.equals("") || email_id.equals("")) {
-				url = "/WEB-INF/view/login.jsp";
+				String board_msg = "값을 정확히 넣어주세요.";
+	            String board_url = "/WebCafe_Project/login_view.do";
+	              
+	            request.setAttribute("board_msg", board_msg);
+	            request.setAttribute("board_url", board_url);
+	              
+	            url="/WEB-INF/view/redirect.jsp";
 			}else if(dao.isCheckById(email_id).equals("false")) {
-				url = "/WEB-INF/view/login.jsp";
+				String board_msg = "아이디를 다시 입력해주세요.";
+	            String board_url = "/WebCafe_Project/login_view.do";
+	              
+	            request.setAttribute("board_msg", board_msg);
+	            request.setAttribute("board_url", board_url);
+	              
+	            url="/WEB-INF/view/redirect.jsp";
 			}else {
 				if(user.getPassword().equals(password)) {
 					session.setAttribute("member", user);
 					url = "cafemain.do";
 				}else {
-					url = "/WEB-INF/view/login.jsp";
+					
+					
+					String board_msg = "비밀번호를 다시 입력해주세요.";
+		            String board_url = "/WebCafe_Project/login_view.do";
+		              
+		            request.setAttribute("board_msg", board_msg);
+		            request.setAttribute("board_url", board_url);
+		              
+		            url="/WEB-INF/view/redirect.jsp";
 				}
 			}
 			

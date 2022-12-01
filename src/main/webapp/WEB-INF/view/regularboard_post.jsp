@@ -72,10 +72,6 @@
               
         	   list();
               
-        
-           
-        
-              
               if(yespark == "no"){
                  
                  requestdata = {"idx": idx, "email_id": email_id};

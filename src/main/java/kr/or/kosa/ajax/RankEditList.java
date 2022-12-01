@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import kr.or.kosa.dao.Rank_Dao;
 import kr.or.kosa.dto.Rank;
 import kr.or.kosa.dto.User;
+import net.sf.json.JSONObject;
 
 
 @WebServlet("/RankEditList")
@@ -122,7 +123,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 		out.print("</table>");
 
 			
-			//JSONObject json = new JSONObject();
+			JSONObject json = new JSONObject();
 			json.put("list", list);
 			json.put("size", size);
 			json.put("max", max);

@@ -37,7 +37,7 @@ public class Logout_Service implements Action {
 			
 			forward = new ActionForward();
 			forward.setRedirect(false);
-			forward.setPath("/WEB-INF/view/login.jsp");
+			forward.setPath("login_view.do");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
