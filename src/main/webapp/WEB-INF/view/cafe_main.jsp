@@ -505,10 +505,10 @@
 	  			const w_date = $(this).children(".w_date").text();
 	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
 	  		});
-	  		$('.listrow').click(function(){
-	  			const idx = $(this).children('.td1').children('.idx').text();
-	  			const b_code = $(this).children('.td1').children('.b_code').text();
-	  			const w_date = $(this).children(".w_date").text();
+	  		$('.td1').click(function(){
+	  			const idx = $(this).children('.idx').text();
+	  			const b_code = $(this).children('.b_code').text();
+	  			const w_date = $(this).parents().children(".w_date").text();
 	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
 	  		});
 	  		window,addEventListener("keydown",function(event){
