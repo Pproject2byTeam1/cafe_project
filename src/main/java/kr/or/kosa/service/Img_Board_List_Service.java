@@ -27,13 +27,22 @@ public class Img_Board_List_Service implements Action {
 			CafeBanner banner = bannerdao.getCafeBanner();
 			request.setAttribute("banner", banner);//top
 			
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			
 			//사이드 바
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			
-			Board_Dao dao = new Board_Dao(); 
+			Board_Info boardinfo = new Board_Info();
+
+	        for(Board_Info info : infolist) {
+	        	if(info.getB_code() == b_code) {
+	        		boardinfo.setB_name(info.getB_name());
+	        		boardinfo.setB_type(info.getB_type());
+	        	}
+	        }
 			
-			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			Board_Dao dao = new Board_Dao(); 
 			
 			//게시물 총 건수
 			int totalboardcount = dao.totalBoardCountByB_code(b_code);
@@ -63,6 +72,7 @@ public class Img_Board_List_Service implements Action {
 			
 			List<Img_Board> list = dao.getImg_boardList(b_code, cpage, pagesize);
 			
+			request.setAttribute("boardinfo", boardinfo);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
 			request.setAttribute("pagecount", pagecount);

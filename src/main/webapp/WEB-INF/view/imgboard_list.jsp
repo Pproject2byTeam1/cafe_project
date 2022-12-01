@@ -119,12 +119,12 @@
 		</header>
 
 		<div class="pagetitle">
-			<h1>이미지 게시판</h1>
+			<h1>${boardinfo.b_name}</h1>
 			<!-- 게시판 이름 끌고오기 b_name -->
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
-					<li class="breadcrumb-item active">이미지 게시판</li>
+					<li class="breadcrumb-item active">${boardinfo.b_name}</li>
 				</ol>
 			</nav>
 		</div>

@@ -44,7 +44,6 @@ public class Regular_Board_Post_Service implements Action {
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
-			
 			// DAO 불러오기
 			Regular_Board_Dao dao = new Regular_Board_Dao();
 			UserDao udao = new UserDao();
@@ -80,6 +79,16 @@ public class Regular_Board_Post_Service implements Action {
 			ViewCountPrevent prevent = new ViewCountPrevent();
 			prevent.viewCountPrevent(idx, request, response);
 			
+	        Board_Info boardinfo = new Board_Info();
+
+	        for(Board_Info info : infolist) {
+	        	if(info.getB_code() == b_code) {
+	        		boardinfo.setB_name(info.getB_name());
+	        		boardinfo.setB_type(info.getB_type());
+	        	}
+	        }
+			
+	        request.setAttribute("boardinfo", boardinfo);
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);
 			request.setAttribute("comments", comments);

@@ -142,11 +142,11 @@
 	<main id="main" class="main">
 
 		<div class="pagetitle">
-			<h1>자유 게시판</h1>
+			<h1>${boardinfo.b_name}</h1>
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
-					<li class="breadcrumb-item active">자유게시판</li>
+					<li class="breadcrumb-item active">${boardinfo.b_name}</li>
 				</ol>
 			</nav>
 		</div>
@@ -204,7 +204,7 @@
 						<c:forEach var="board" items="${list}" varStatus="status">
 							<tr>
 								<div>
-										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}&b_code=${board.b_code}'" style="cursor:pointer">
+										<td onclick="location.href='regular_post.do?b_code=${board.b_code}&idx=${board.idx}&b_code=${board.b_code}'" style="cursor:pointer">
 										<span class="mt-4 parent">
 										<h4 class="ref${board.refer}">
 											<c:if test="${board.depth > 0}">
