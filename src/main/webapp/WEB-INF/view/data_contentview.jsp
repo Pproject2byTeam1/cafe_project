@@ -313,8 +313,8 @@
 			<!-- 게시판 이름 끌고오기 b_name -->
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a
-						href="databoard_list.do?b_code=6">자료게시판</a></li>
+					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
+					<li class="breadcrumb-item"><a href="databoard_list.do?b_code=6">자료게시판</a></li>
 					<li class="breadcrumb-item active">${board.title}</li>
 				</ol>
 			</nav>

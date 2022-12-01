@@ -376,7 +376,7 @@
                     </h5>
                     </div>
                     <div class="ps-3">
-                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">${chart.nick}</a><span> | ${chart.w_date}</span>
+                    <a data-bs-toggle="dropdown">${chart.nick}</a><span> | ${chart.w_date}</span>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${chart.email_id}" >답장 보내기</a></li>
 						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${chart.email_id}" >활동 내역 보기</a></li>

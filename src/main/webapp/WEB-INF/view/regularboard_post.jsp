@@ -353,6 +353,7 @@
                <!-- 게시판 이름 끌고오기 b_name -->
                <nav>
                   <ol class="breadcrumb">
+                  	 <li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
                      <li class="breadcrumb-item"><a href="regular_list.do?b_code=1">자유게시판</a></li>
                      <li class="breadcrumb-item active">${board.title}</li>
                   </ol>
@@ -424,9 +425,11 @@
 	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
 	                                       </form>
 	                                   	 &nbsp;
+	                                   	 </c:if>
+	                                   	 <c:if test="${member.isAdmin eq 'M' || member.isAdmin eq 'S'}">
 	                                   	 <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill" id="delete" value="삭제">
 	                                   	 &nbsp;
-	                                   	</c:if>
+	                                   	 </c:if>
 
                                     	<div>
                                     		<c:if test="${member != null}">
