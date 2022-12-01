@@ -25,6 +25,7 @@
 							<span>&ensp;&ensp;&ensp; ${member.point}&nbsp;POINT</span><br> 
 							<a href="user_activity.do">활동 내역</a> | 
 							<a href="memo_list.do">쪽지함</a>	<br>
+							<a href="inforank.do">등급안내</a> <br>
 						</div>
 					</div>
 					<c:if test="${member.isAdmin == 'M'}">
@@ -53,8 +54,16 @@
 							<a href="snsLogin.do">회원가입</a>
 						</div>
 					</div>
+					</div>
 				</div>
-			</div>
+				<div class="pagetitle card mt-2 pt-4">
+					<div class="card-body">
+					<div class="row p-3 ms-1">
+						<a href="inforank.do">등급안내</a> <br>
+					</div>
+					</div>
+				</div>
+			
 		</c:if>
 			</div>
 			<!-- 카페 정보 끝 -->
