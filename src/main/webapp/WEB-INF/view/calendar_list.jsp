@@ -253,10 +253,27 @@
   				type: "POST",
 				url : "GetCountYes",
 				data : {"idx": idx},
-				dataType : "html",
+				dataType : "JSON",
 				success : function(data) {
+					myhtml = '<p><a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">';
+					myhtml += '참석자 확인</a></p>';
+					myhtml2 = '<div class="collapse" id="collapseExample">';
+					myhtml2 += '<div class="card card-body p-2">';
+					
+					for(let z=0; z<data.nicklist.length; z++){
+						myhtml2 += data.nicklist[z] + ' ';
+					}
+					
+					myhtml2 += '</div></div>';
+					
+					$('#yesmember').empty();
+					$('#yesmember').append(myhtml);
+					
+					$('#yesmember2').empty();
+					$('#yesmember2').append(myhtml2);
+					
 					$('#yescount').text('');
-  					$('#yescount').text(data + "  : 참석인원");
+  					$('#yescount').text(data.count + "  : 참석인원");
 				}
 			});
   		}
@@ -875,8 +892,14 @@
 														for="gridCheck2">참석 여부</label>
 												</div>
 												<div id="yescount"></div>
+												<div id="yesmember"></div>
 												</c:if>
 											</div>
+											<c:if test="${member != null}">
+											<div id="yesmember2" class="text-center">
+											
+											</div>
+											</c:if>
 											<div class="text-center">
 												<c:if test="${member != null}">
 													<button type="button" id="modifybtn" class="btn btn-primary visually-hidden">수정</button>

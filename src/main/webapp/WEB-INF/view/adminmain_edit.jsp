@@ -129,27 +129,27 @@
  		
  		/* 배너 이미지 파일 드래그앤 드랍 업로드 시작 */
  		
- 		var input = document.getElementById("input");
- 		var initLabel = document.getElementById("label");
+ 		var input = document.getElementById("input"); //hidden 시켜놓은 input 태그 파일 
+ 		var initLabel = document.getElementById("label"); //input 위를 덮은 드랍할 부분 태그
 
- 		input.addEventListener("change", (event) => {
+ 		input.addEventListener("change", (event) => { //드랍하면 
  			const files = changeEvent(event);
  		  	handleUpdate(files);
  		});
 
- 		initLabel.addEventListener("mouseover", (event) => {
+ 		initLabel.addEventListener("mouseover", (event) => { //마우스 올리면 색 변화
  		  	event.preventDefault();
  		  	const label = document.getElementById("label");
  		  	label?.classList.add("label--hover");
  		});
 
- 		initLabel.addEventListener("mouseout", (event) => {
+ 		initLabel.addEventListener("mouseout", (event) => { //마우스 나가면 색 변화
  		  	event.preventDefault();
  		  	const label = document.getElementById("label");
  		  	label?.classList.remove("label--hover");
  		});
 
- 		document.addEventListener("dragenter", (event) => {
+ 		document.addEventListener("dragenter", (event) => { //마우스 들어가면 색 변화
  		  	event.preventDefault();
  		  	if (event.target.className === "inner") {
  		    	event.target.style.background = "#616161";
@@ -160,7 +160,7 @@
  		  	event.preventDefault();
  		});
 
- 		document.addEventListener("dragleave", (event) => {
+ 		document.addEventListener("dragleave", (event) => { //마우스 떠나면 색변화
  		  	event.preventDefault();
  		  	if (event.target.className === "inner") {
  		    	event.target.style.background = "#3a3a3a";
@@ -203,7 +203,7 @@
  			 });
  			 
  			 
- 			 bannerUpload(formData);
+ 			 bannerUpload(formData); //배너 이미지 변경 비동기 철
  		};
  		
  		function bannerUpload(formData){
