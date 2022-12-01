@@ -422,4 +422,54 @@ public class Board_Info_Dao {
 		return list;
 	}
 	
+	//게시판의 메인위치 출력2
+	public List<Board_Info> getBoardindex(){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Board_Info> list = new ArrayList<Board_Info>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			String sql = "select b_code, B_TYPE_NAME, b_name, main_idx \r\n"
+					+ "from Board_Info i left join board_type t\r\n"
+					+ "on i.b_type = t.b_type\r\n"
+					+ "where main_idx > 0\r\n"
+					+ "order by b_code ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					
+					Board_Info info = new Board_Info();
+					
+					info.setB_code(rs.getInt("b_code"));
+					info.setB_name(rs.getString("B_TYPE_NAME"));
+					info.setB_type(rs.getString("b_name"));
+					info.setMain_idx(rs.getInt("main_idx"));
+					
+					list.add(info);
+				}while(rs.next());
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		
+		return list;
+	}
+	
 }
