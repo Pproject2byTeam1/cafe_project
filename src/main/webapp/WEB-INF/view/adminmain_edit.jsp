@@ -725,7 +725,6 @@
 								<div class="col-md-5">
 									<div class="ms-5 ps-5 pt-4">
 										<a class="logo d-flex align-items-center"> 
-											<img src="assets/img/logo.png" alt="">
 											<input type="text" class="form-control" id="inputname" value="${cafebanner.cafe_name}"></input>
 										</a> 
 										<span id="size"></span>
@@ -746,7 +745,7 @@
 								<button type="submit" id="topedit" 
 									class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
 								<button type="button" id="topreset" 
-									class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>
+									class="btn btn-outline-danger btn-sm rounded-pill">취소</button>
 							</div>
 						</div>
 					</div>

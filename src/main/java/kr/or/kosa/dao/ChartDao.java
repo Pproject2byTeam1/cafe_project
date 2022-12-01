@@ -27,10 +27,6 @@ public class ChartDao {
 	
 	//--b_code로 조회하는 게시판별 월별 글수
 	//-- where의 b_code = 을 물음표로하세요
-		/**
-		 * @param number
-		 * @return
-		 */
 		public List<Chart> getMonth(int month){
 			
 			Connection conn = null;
@@ -87,6 +83,61 @@ public class ChartDao {
 		}
 	
 	
+		//--b_code로 조회하는 게시판별 월별 글수
+		//-- where의 b_code = 을 물음표로하세요
+			public List<Chart> getMonthView(int month){
+				
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				List<Chart> boardlist = new ArrayList<Chart>();
+				
+				try {
+					
+					conn = ds.getConnection();
+					String sql = "select substr(w_date, 4, 2) as \"month\", b_name, sum(hits) count "
+							+ "from (select b.idx, b.nick, b.hits, b.w_date, substr(b.w_date, 4,2) as \"month\", i.b_code, i.b_name, b.title "
+							+ "    from board b left join board_info i "
+							+ "    on b.b_code = i.b_code "
+							+ "    where i.b_code = ?) "
+							+ "group by substr(w_date, 4,2), b_name "
+							+ "order by substr(w_date, 4,2) ";
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					pstmt.setInt(1, month);
+					rs = pstmt.executeQuery();
+					
+					if(rs.next()) {
+						do {
+							
+							Chart board = new Chart();
+							
+							board.setMonth(rs.getString("month"));
+							board.setB_name(rs.getString("b_name"));
+							board.setCount(rs.getInt("count"));
+							
+							boardlist.add(board);
+						}while(rs.next());
+					}else {
+						System.out.println("조회 데이터 없음");
+					}
+					
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				} finally {
+					try {
+						rs.close();
+						pstmt.close();
+						conn.close();
+					} catch (Exception e2) {
+						System.out.println(e2.getMessage());
+					}
+				}
+			
+				return boardlist;
+			}	
+		
 	
 	//모든 게시판 조회수 상위 TOP
 	public List<Chart> getTopViews(int number){
