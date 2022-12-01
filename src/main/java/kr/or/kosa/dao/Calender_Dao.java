@@ -95,6 +95,7 @@ public class Calender_Dao {
 		} finally {
 			try {
 				conn.setAutoCommit(true);
+				pstmt3.close();
 				pstmt2.close();
 				pstmt.close();
 				conn.close();

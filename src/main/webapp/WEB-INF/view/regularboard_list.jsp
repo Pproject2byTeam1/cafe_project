@@ -202,7 +202,7 @@
 								<div>
 										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}'" style="cursor:pointer">
 										<span class="mt-4 parent">
-										<h4>
+										<h4 class="ref${board.refer}">
 											<c:if test="${board.depth > 0}">
 												<c:forEach var="index" begin="1" end="${board.depth}">
 													<img src="image/re.gif" width="12" height="15">

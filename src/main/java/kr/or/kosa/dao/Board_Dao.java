@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import javax.swing.border.Border;
 
 import kr.or.kosa.dto.AttendanceBoad;
 import kr.or.kosa.dto.Board;
@@ -134,6 +134,7 @@ public class Board_Dao {
 				board.setReport_count(rs.getInt("report_count"));
 				board.setEmail_id(rs.getString("email_id"));
 				board.setB_code(rs.getInt("b_code"));
+				board.setRefer(rs.getInt("refer"));
 				board.setDepth(rs.getInt("depth"));
 				
 				
@@ -231,7 +232,7 @@ public class Board_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.notic, b.email_id, b.b_code, c.b_idx, to_char(c.start_date, 'yyyy-MM-dd') as start_date, to_char(c.end_date, 'yyyy-MM-dd') as end_date, c.finish "
+			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.email_id, b.b_code, c.b_idx, to_char(c.start_date, 'yyyy-MM-dd') as start_date, to_char(c.end_date, 'yyyy-MM-dd') as end_date, c.finish "
 						+ "from board b join calender c "
 						+ "on b.idx = c.idx "
 						+ "where b.b_code=? and c.start_date between to_date(?, 'YY/MM/DD') and to_date(?, 'YY/MM/DD')";
@@ -239,38 +240,40 @@ public class Board_Dao {
 			
 			pstmt.setInt(1, b_code);
 			String req1 = year.concat("/").concat(month).concat("/").concat("01");
+			
 			pstmt.setString(2, req1);
 			
-			int[] maxDate = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-			int y = Integer.parseInt(year);
-			if(y % 4 ==0 && y % 100 !=0 || y % 400 ==0) {
-				maxDate[1]=29; // 윤년일 경우
-			}
-			int date = maxDate[Integer.parseInt(month)]-1;
+			Calendar calendar= Calendar.getInstance();
+			calendar.add(Calendar.MONTH, Integer.parseInt(month)-1);  
+			int date = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+			
 			String req2 = year.concat("/").concat(month).concat("/").concat(String.valueOf(date));
+			
 			pstmt.setString(3, req2);
 			
 			rs = pstmt.executeQuery();
 			
 			calenderlist = new ArrayList<Calender>();
 			
-			while(rs.next()) {
-				Calender board = new Calender();
-				board.setIdx(rs.getInt("idx"));
-				board.setTitle(rs.getString("title"));
-				board.setNick(rs.getString("nick"));
-				board.setContent(rs.getString("content"));
-				board.setHits(rs.getInt("hits"));
-				board.setW_date(rs.getString("w_date"));
-				board.setReport_count(rs.getInt("report_count"));
-				board.setEmail_id(rs.getString("email_id"));
-				board.setB_code(rs.getInt("b_code"));
-				board.setB_idx(rs.getInt("b_idx"));
-				board.setStart_date(rs.getString("start_date"));
-				board.setEnd_date(rs.getString("end_date"));
-				board.setFinish(rs.getString("finish"));
-				
-				calenderlist.add(board);
+			if(rs.next()) {
+				do {
+					Calender board = new Calender();
+					board.setIdx(rs.getInt("idx"));
+					board.setTitle(rs.getString("title"));
+					board.setNick(rs.getString("nick"));
+					board.setContent(rs.getString("content"));
+					board.setHits(rs.getInt("hits"));
+					board.setW_date(rs.getString("w_date"));
+					board.setReport_count(rs.getInt("report_count"));
+					board.setEmail_id(rs.getString("email_id"));
+					board.setB_code(rs.getInt("b_code"));
+					board.setB_idx(rs.getInt("b_idx"));
+					board.setStart_date(rs.getString("start_date"));
+					board.setEnd_date(rs.getString("end_date"));
+					board.setFinish(rs.getString("finish"));
+					
+					calenderlist.add(board);
+				}while(rs.next());
 			}
 			
 		} catch (Exception e) {

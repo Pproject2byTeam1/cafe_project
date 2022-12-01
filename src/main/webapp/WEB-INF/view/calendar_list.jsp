@@ -85,7 +85,7 @@
   					"nick": nick,
   					"b_code": b_code
   			};
-
+  			
   			$.ajax({
   				type: "POST",
   				url: "AddCalender",
@@ -182,7 +182,7 @@
 				dataType: "JSON",
 				success: function(data) {
 					
-					
+					console.log(data[0]);
 
 					let datelist = new Array();
 
