@@ -38,6 +38,7 @@ public class ChartList extends HttpServlet {
     	
     	try {  		
     		
+    		//게시판별 월별 글수 TOP
     		if (chart.equals("monthBoardWrite")) {
     			
     			int month = Integer.parseInt(request.getParameter("MBWmonth"));
@@ -47,9 +48,9 @@ public class ChartList extends HttpServlet {
 				
 				realjsonlist = JSONArray.fromObject(monthBoardWrite);
 				
-				
 			}
     		
+    		//게시판별 월별 조회수 TOP
     		if (chart.equals("monthBoardView")) {
     			
     			int month = Integer.parseInt(request.getParameter("MBVmonth"));
@@ -59,10 +60,7 @@ public class ChartList extends HttpServlet {
 				
 				realjsonlist = JSONArray.fromObject(monthBoardView);
 				
-				
 			}
-    		
-    		
     		
     		if (chart.equals("boardCount")) {
     			
@@ -74,6 +72,7 @@ public class ChartList extends HttpServlet {
 			}
     		
     		if (chart.equals("boardUtilizationRate")) {
+    			
     			String startDate = request.getParameter("BURstartDate");
 				String endDate = request.getParameter("BURendDate");
 				
@@ -81,6 +80,7 @@ public class ChartList extends HttpServlet {
 				List <Chart> BURboard = cdao.getBoardUtilizationRate(startDate, endDate);
 				
 				realjsonlist = JSONArray.fromObject(BURboard);
+				
 			}
     		
     		if (chart.equals("rankpointselect")) {
@@ -111,8 +111,6 @@ public class ChartList extends HttpServlet {
         			datalist.add(parkchart.getHits());
         			
         			json.put("data", datalist);
-        			
-        			
         			
         			jsonlist.add(json);
         		}
