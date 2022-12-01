@@ -39,7 +39,8 @@
   <link href="assets/css/style.css" rel="stylesheet">
   
   <!-- 경고창 이쁜거 -->
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 </head>
 
@@ -253,7 +254,7 @@
 				location.href="deleteAttendance.do?idx="+idx;
 			});
 			
-			window,addEventListener("keydown",function(event){
+			window.addEventListener("keydown",function(event){
 				  if(event.defaultPrevented){
 					  return;
 				  }
@@ -261,7 +262,7 @@
 				  if(event.keyCode == 123)
 					  handled = true;
 				  if(handled){
-					  swal("경고","F12키를 누르지 마십시오",'error');
+					  Swal.fire("경고","F12키를 누르지 마십시오",'error');
 					  event.preventDefault();
 				  }
 			  },true);
@@ -272,11 +273,46 @@
 		       
 		       function check() {
 					if (!bbs.content.value || bbs.content.value == "") {
-						swal("경고","내용을 입력하세요","warning");
+						Swal.fire("경고","내용을 입력하세요","warning");
 						loginForm.email_id.focus();
 						return false;
 					}
-					document.bbs.submit();
+					const Toast = Swal.mixin({
+					      toast: true,
+					      position: 'center-center',
+					      showConfirmButton: false,
+					      timer: 500,
+					      timerProgressBar: true,
+					      didOpen: (toast) => {
+					        toast.addEventListener('mouseenter', Swal.stopTimer)
+					        toast.addEventListener('mouseleave', Swal.resumeTimer)
+					      }
+					    })
+					Toast.fire({
+						title: '알림',
+						text: '출석 중...',
+						icon: 'info'}).then(function(){
+							$.ajax({
+			  					type: "POST",
+			  					url: "AttendenceCheck",
+			  					dataType: "TEXT",
+			  					success: function(data){
+			  						if(data > 0){
+			  							Swal.fire("경고","이미 출석했습니다.","warning");
+			  							return false;
+			  						}else{
+			  							Swal.fire({
+			  								title: '성공!',
+			  								text: '출석 완료',
+			  								icon: 'success'}).then(function(){
+			  									document.bbs.submit();
+			  								});
+			  							
+			  						}
+			  					}
+			  				});
+				});
+					
 				}
 		});
 	</script>
