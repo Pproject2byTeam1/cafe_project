@@ -100,7 +100,12 @@ public class Regular_Board_Post_Service implements Action {
 				request.setAttribute("board_url", board_url);
 				
 				url = "/WEB-INF/view/redirect.jsp";
-			}else if(user1.getRank() < boardrank.getW_rank() || !(user1.getIsAdmin().equals('M'))) {
+			}else if(user1.getRank() >= boardrank.getW_rank() || user1.getIsAdmin().equals("M")) {
+				
+				request.setAttribute("b_code", b_code);
+				url = "/WEB-INF/view/regularboard_post.jsp";
+				
+			}else {
 				
 				String board_msg = boardrank.getW_rank() + "등급부터 확인 가능합니다.";
 				String board_url = "/WebCafe_Project/regular_list.do?b_code="+b_code;
@@ -109,10 +114,6 @@ public class Regular_Board_Post_Service implements Action {
 				request.setAttribute("board_url", board_url);
 				
 				url = "/WEB-INF/view/redirect.jsp";
-				
-			}else {
-				request.setAttribute("b_code", b_code);
-				url = "/WEB-INF/view/regularboard_post.jsp";
 			}
 		
 			

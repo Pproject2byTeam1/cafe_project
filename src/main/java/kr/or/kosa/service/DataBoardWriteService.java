@@ -13,9 +13,11 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.Board_Rank_Dao;
 import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Board_Rank;
 import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.User;
@@ -58,7 +60,7 @@ public class DataBoardWriteService implements Action {
 			String url = "";
 		    
 			if(user == null) {
-		    	msg = "실패";
+		    	msg = "로그인이 필요한 기능입니다.";
 				url = "/WebCafe_Project/login_view.do";
 		    }else {
 		    	Enumeration filenames = multi.getFileNames();

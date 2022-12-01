@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import kr.or.kosa.dao.Board_Rank_Dao;
 import kr.or.kosa.dao.Calender_Dao;
+import kr.or.kosa.dto.Board_Rank;
 import kr.or.kosa.dto.Calender;
 import kr.or.kosa.dto.User;
 
@@ -41,11 +43,15 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 			HttpSession session = request.getSession();
 		    User user = (User) session.getAttribute("member");
 		    
+		    Board_Rank_Dao boardrankdao = new Board_Rank_Dao();
+			Board_Rank boardrank = boardrankdao.getBoardRank(b_code);
+		    
 		    String msg = "";
 		    
 		    if(user == null) {
 		    	msg = "로그인이 필요한 기능입니다.";
-		    }else {
+		    } else if(user.getRank() >= boardrank.getW_rank() || user.getIsAdmin().equals("M")) {
+		    	
 		    	Calender calender = new Calender();
 				calender.setTitle(title);
 				calender.setNick(nick);
@@ -64,6 +70,11 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 				}else {
 					msg = "실패";
 				}
+				
+		    } else {
+		    	
+		    	msg = boardrank.getW_rank() + "등급부터 작성가능합니다.";
+		    	
 		    }
 			
 			out.print(msg);

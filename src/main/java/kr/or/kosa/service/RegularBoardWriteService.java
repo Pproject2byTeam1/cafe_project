@@ -53,8 +53,13 @@ public class RegularBoardWriteService implements Action {
 
 				url = "/WEB-INF/view/redirect.jsp";
 
-			} else if (user.getRank() < boardrank.getW_rank() || !(user.getIsAdmin().equals('M'))) {
+			} else if (user.getRank() >= boardrank.getW_rank() || user.getIsAdmin().equals("M")) {
 
+				request.setAttribute("b_code", b_code);
+				url = "/WEB-INF/view/regularboard_write.jsp";
+				
+			} else {
+				
 				String board_msg = boardrank.getW_rank() + "등급부터 작성가능합니다.";
 				String board_url = "/WebCafe_Project/regular_list.do?b_code="+b_code;
 
@@ -62,11 +67,6 @@ public class RegularBoardWriteService implements Action {
 				request.setAttribute("board_url", board_url);
 
 				url = "/WEB-INF/view/redirect.jsp";
-
-			} else {
-
-				request.setAttribute("b_code", b_code);
-				url = "/WEB-INF/view/regularboard_write.jsp";
 			}
 
 			request.setAttribute("infolist", infolist);

@@ -44,10 +44,8 @@ public class BoardInfoLoad extends HttpServlet {
 						out.print("<div align='right' class='col-md-2 pt-2'>");
 							if(!info.getB_type().equals("b2")) {
 								out.print("<h4><i class='bi bi-trash3 trash'></i></h4>");
-							}else {
-								out.print("<h4><i class='bi bi-trash3 trash' hidden></i></h4>");
+								out.print("<h4><i class='bi bi-arrow-down-square moreinfo'></i></h4>");
 							}
-							out.print("<h4><i class='bi bi-arrow-down-square moreinfo'></i></h4>");
 						out.print("</div>");
 					out.print("</div>");
 				out.print("</div>");
