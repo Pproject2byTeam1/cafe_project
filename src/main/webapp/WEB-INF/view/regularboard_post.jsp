@@ -434,6 +434,7 @@
                                     	<div>
                                     		<c:if test="${member != null}">
                                     		    <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고">
+                                    	
 	                                          <c:if test="${yespark == 'no'}">
 	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
 	                                          </c:if>
