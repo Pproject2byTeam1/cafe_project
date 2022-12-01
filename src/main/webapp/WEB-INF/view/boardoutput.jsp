@@ -31,7 +31,7 @@ ${board.title}
 </td>
 <td><a data-bs-toggle="dropdown">${board.nick}</a>
 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >쪽지 보내기</a></li>
 <li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
 </ul>
 </td>

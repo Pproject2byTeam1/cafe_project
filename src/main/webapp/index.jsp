@@ -752,20 +752,6 @@
   <script src="assets/js/main.js"></script>
   <script type="text/javascript">
 	  function new_window() {
-	    window.open(
-	      "memo_list.do",
-	      "쪽지함",
-	      "width=500, height=600, top=100, left=300"
-	    );
-	  }
-	  $(function(){
-		  $('#writememo').click(function(){
-			  window.open(
-			      "write_memo.do",
-			      "쪽지함",
-			      "width=500, height=600, top=100, left=300"
-			    );
-		  });
 		  window,addEventListener("keydown",function(event){
 			  if(event.defaultPrevented){
 				  return;
