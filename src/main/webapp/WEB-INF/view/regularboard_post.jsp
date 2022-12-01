@@ -326,7 +326,7 @@
            
         });
         
-        
+    	console.log(${boardinfo});
 </script>
 
 
@@ -349,17 +349,16 @@
 
    <main id="main" class="main">
       <div class="pagetitle">
-               <h1>자유 게시판</h1>
+               <h1>${boardinfo.b_name}</h1>
                <!-- 게시판 이름 끌고오기 b_name -->
                <nav>
                   <ol class="breadcrumb">
                   	 <li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
-                     <li class="breadcrumb-item"><a href="regular_list.do?b_code=1">자유게시판</a></li>
+                     <li class="breadcrumb-item"><a href="regular_list.do?b_code=${board.b_code }">${boardinfo.b_name}</a></li>
                      <li class="breadcrumb-item active">${board.title}</li>
                   </ol>
                </nav>
             </div>
-
 
       <div class="container-fluid">
          <div class="row">

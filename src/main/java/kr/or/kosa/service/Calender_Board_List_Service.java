@@ -35,6 +35,13 @@ public class Calender_Board_List_Service implements Action {
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 
+			String b_name = "";
+	        for(Board_Info info : infolist) {
+	        	if(info.getB_code() == b_code) {
+	        		b_name = info.getB_name();
+	        	}
+	        }
+	        request.setAttribute("parkname", b_name);
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("b_code", b_code);
 

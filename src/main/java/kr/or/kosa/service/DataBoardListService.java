@@ -50,6 +50,16 @@ public class DataBoardListService implements Action {
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 
+			Board_Info boardinfo = new Board_Info();
+
+	        for(Board_Info info : infolist) {
+	        	if(info.getB_code() == b_code) {
+	        		boardinfo.setB_name(info.getB_name());
+	        		boardinfo.setB_type(info.getB_type());
+	        	}
+	        }
+			
+	        request.setAttribute("boardinfo", boardinfo);
 			request.setAttribute("infolist", infolist);
 
 			int totalboardcount = boarddao.totalBoardCountByB_code(b_code);

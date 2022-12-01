@@ -274,12 +274,12 @@
   	
 
 		<div class="pagetitle">
-			<h1>IMG BOARD</h1>
+			<h1>${boardinfo.b_name}</h1>
 			<!-- 게시판 이름 끌고오기 b_name -->
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
-					<li class="breadcrumb-item"><a href="img_board_list.do?b_code=${b_code}">이미지게시판</a></li>
+					<li class="breadcrumb-item"><a href="img_board_list.do?b_code=${b_code}">${boardinfo.b_name}</a></li>
 					<li class="breadcrumb-item active">${imgboard.title}</li>
 				</ol>
 			</nav>
