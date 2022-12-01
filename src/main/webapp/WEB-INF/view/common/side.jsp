@@ -22,7 +22,9 @@
 					<div class="card justify-content-center">
 						<div class="card-body mt-4 ms-3 ps-4">
 							<span>글 ${member.w_count}개 | 댓글 ${member.re_count}개 </span><br>
-							<span>&ensp;&ensp;&ensp; ${member.point}&nbsp;POINT</span><br> 
+							<c:if test="${member.isAdmin ne 'M' }">
+								<span>&ensp;&ensp;&ensp; ${member.point}&nbsp;POINT</span><br> 
+							</c:if>
 							<a href="user_activity.do">활동 내역</a> | 
 							<a href="memo_list.do">쪽지함</a>	<br>
 						</div>
