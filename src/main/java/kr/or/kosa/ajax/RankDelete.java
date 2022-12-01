@@ -35,20 +35,18 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
     	try {
     		String msg = "";
 			int rank= Integer.parseInt(request.getParameter("rank"));
-			String r_name= request.getParameter("r_name");
-			int r_point= Integer.parseInt(request.getParameter("r_point"));
-    		
+			
 			Rank_Dao dao = new Rank_Dao();
 			int highrank = dao.highRank();
 			
 			//추가 제한 로직
-			if(rank <= highrank) {
-				msg = "삭제하려는 등급의 순번(" + highrank + " 순위)보다 기존 등급의 순번(" + rank + ")이 높습니다. 가장 높은 등급을 먼저 지우세요.";
+			if(rank < highrank) {
+				msg = "삭제하려는 등급의 순번(" + highrank + " 순위)보다 높은 등급의 순번(" + rank + ")이 있습니다.";
 			}else {
 				int result = dao.deleteRank(rank);
 				
 				if(result > 0) {
-					msg = highrank + " 번째 " + r_name + "등급이 삭제되었습니다";
+					msg = " " + rank + " 번째 등급이 삭제되었습니다";
 				} else {
 					msg = "등급이 제거되지 않았습니다.";
 				}

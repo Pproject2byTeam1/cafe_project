@@ -59,7 +59,7 @@
 			    
 			    var sold = $("#sold option:selected").val();
 			    var ps = $("#listselect option:selected").val();
-			    var search = $("#searchInput").val();
+			    var search = $("#sarchInput").val();
 			    var requestdata = {"b_code": b_code, "sold": sold, "search" : search, "ps" : ps};	
 			  
 			    
