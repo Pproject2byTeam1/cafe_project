@@ -53,7 +53,6 @@ public class ChartDao {
 				
 				pstmt = conn.prepareStatement(sql);
 				
-				System.out.println(month);
 				pstmt.setInt(1, month);
 				rs = pstmt.executeQuery();
 				

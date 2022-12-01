@@ -48,7 +48,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	    					out.print("<div class='row'>");
 	    						out.print("<div class='col'>");
 	    							out.print("<a data-bs-toggle=\"dropdown\"><h5 class='card-title' id='replynick'>");
-	    								out.print("<img src='image/rank_icon/1.gif' alt='Profile' class='rounded-circle'>"+reply.getNick());
+	    								out.print(reply.getNick());
 	    							out.print("</h5></a>");
 	    							out.print("<ul class=\"dropdown-menu dropdown-menu-end dropdown-menu-arrow\">\r\n"
 	    									+ "		<li class=\"anw_memo\"><a class=\"dropdown-item sendToMemo\" href=\"write_memo.do?sender_id=${board.email_id}\" >답장 보내기</a></li>\r\n"
@@ -64,10 +64,15 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	    						out.print("<input id='idx' value='" + reply.getIdx() + "' type='hidden' />");
 	    						out.print("<input id='depth' value='" + reply.getDepth() + "' type='hidden' />");
 	    						out.print("<input id='step' value='" + reply.getStep() + "' type='hidden' />");
-	    						out.print("<button type='button' id='replyreplywrite' class='btn btn-outline-secondary btn-sm rounded-pill'>대댓글</button>");
-	    						out.print("<c:if test='${member.email_id eq comments.email_id }'>");
-	    							out.print("<button type='button' id='replydel' class='btn btn-outline-secondary btn-sm rounded-pill'>삭제</button>");
-	    						out.print("</c:if>");
+	    						
+			    						if (user != null) {
+			    							out.print("<button type='button' id='replyreplywrite' class='btn btn-outline-secondary btn-sm rounded-pill'>대댓글</button>");
+				    						if(user.getEmail_id().equals(reply.getEmail_id())) {
+				    							out.print("<button type='button' id='replydel' class='btn btn-outline-secondary btn-sm rounded-pill'>삭제</button>");
+				    						}
+				    						
+										}
+			    								
 	    					out.print("</div>");
 	    				out.print("</div>");
 	    			out.print("</div>");
@@ -77,18 +82,20 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	    					out.print("<div class='col'>");
 	    						out.print("<h5 class='card-title'>");
 	    							out.print("<i class='bi bi-arrow-return-right'></i>");
-	    							out.print("<img src='image/rank_icon/1.gif' alt='Profile' class='rounded-circle'>"+reply.getNick());
+	    							out.print(reply.getNick());
 	    						out.print("</h5>");	
 	    					out.print("</div>");
 	    					out.print("<div class='col comment-date'>"+reply.getW_date()+"</div>");
 	    				out.print("</div>");
 	    				out.print("<h6 class='Recomment-text'>"+reply.getContent()+"</h6>");
 	    				out.print("<h6></h6>");
+	    				if (user != null) {
 	    				out.print("<div align='right' class='actions'>");
-	    					if(user.getEmail_id().equals(reply.getEmail_id())) {
 	    						out.print("<input id='co_idx2' value='" + reply.getCo_idx() + "' type='hidden' />");
+	    						if(user.getEmail_id().equals(reply.getEmail_id())) {
 	    						out.print("<button type='button' id='replydel2' class='btn btn-outline-secondary btn-sm rounded-pill'>삭제</button>");
-	    					}	
+	    						}
+	    					}
 	    				out.print("</div>");
 	    			out.print("</div>");
     			}

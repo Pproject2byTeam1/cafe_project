@@ -383,11 +383,11 @@ public class Board_Info_Dao {
 		try {
 			
 			conn = ds.getConnection();
-			String sql = "select b_code, B_TYPE_NAME, b_name, main_idx \r\n"
-					+ "from Board_Info i left join board_type t\r\n"
-					+ "on i.b_type = t.b_type\r\n"
-					+ "where main_idx > 0\r\n"
-					+ "order by main_idx";
+			String sql = "select b_code, B_TYPE_NAME, b_name, main_idx "
+					+ "from Board_Info i left join board_type t "
+					+ "on i.b_type = t.b_type "
+					+ "where main_idx > 0 "
+					+ "order by main_idx ";
 			
 			pstmt = conn.prepareStatement(sql);
 			

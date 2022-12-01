@@ -168,7 +168,6 @@ public class Img_Board_Dao {
 					board.setB_idx(rs.getInt("b_idx"));
 					board.setImg_name(rs.getString("img_name"));
 					
-					System.out.println(board.getTitle());
 					
 					imglist.add(board);
 				}while(rs.next());
