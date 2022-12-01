@@ -177,8 +177,6 @@ public class DataBoardDao {
 				data.setStep(rs.getInt("step"));
 				data.setDepth(rs.getInt("depth"));
 
-				System.out.println(data.getTitle());
-
 				datalist.add(data);
 
 			}

@@ -303,9 +303,16 @@
 		   	
 		   	/* 댓글 끝 */
 			
+		
 			
-			
-			
+	   		/* 글 삭제 */
+           $("#delete").click(function(){
+            
+                let link = "/WebCafe_Project/regulardelete.do?b_code="+b_code+"&idx="+idx;
+              
+              location.href=link;
+              
+           });
            
         });
         
@@ -407,7 +414,7 @@
 	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" value="수정">
 	                                       </form>
 	                                   	 &nbsp;
-	                                   	 <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill" value="삭제">
+	                                   	 <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill" id="delete" value="삭제">
 	                                   	 &nbsp;
 	                                   	</c:if>
 
@@ -426,16 +433,6 @@
 	                                   		<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글"> &nbsp;
                                    			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록"> &nbsp;
                                    			
-                                   		<c:if test="${member.isAdmin == 'S' || member.isAdmin =='M'}">
-	                                   		<form action="regulardelete.do?" method="get">
-	                                          <input type="text" value="${board.b_code}" name="b_code" style="display: none;">
-	                                          <input type="text" value="${idx}" name="idx" style="display: none;">
-	                                          
-	                                          
-	                                       </form>
-	                                     &nbsp;
-	                                   	</c:if>
-		                                       
                                     </div>
                               </div>
 
@@ -502,8 +499,7 @@
 															<div class="row">
 																<div class="col">
 																	<h5 class="card-title" id='replynick'>
-																		<img src="image/rank_icon/1.gif" alt="Profile"
-																			class="rounded-circle">${comments.nick}
+																		${comments.nick}
 																	</h5>
 																</div>
 																<div id='replydate' class="col comment-date">${comments.w_date}</div>
@@ -531,9 +527,7 @@
 														<div class="row">
 															<div class="col">
 																<h5 class="card-title">
-																	<i class="bi bi-arrow-return-right"></i> <img
-																		src="image/rank_icon/1.gif" alt="Profile"
-																		class="rounded-circle"> ${comments.nick}
+																	<i class="bi bi-arrow-return-right"></i>${comments.nick}
 																</h5>
 															</div>
 															<div class="col comment-date">${comments.w_date}</div>
