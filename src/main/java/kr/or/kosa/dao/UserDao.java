@@ -149,7 +149,7 @@ public class UserDao {
 				} while (rs2.next());
 			}
 			
-			int rank = 1;
+			int rank = 0;
 			for (int i = 0; i < pointlist.size() - 1; i++) {
 				int min = pointlist.get(i);
 				int max = pointlist.get(i + 1);

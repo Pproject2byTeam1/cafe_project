@@ -32,11 +32,12 @@
 							<div class="card-body mt-4 ms-3 ps-4">
 								<a href="adminmaineditservice.do">카페 관리</a> | 
 								<a href="chart.do">통계</a> <br>
-								<a class="card-title">회원수<span> | ${totalUser} 명 
+								<a href="user_list.do">회원 조회</a> | 
+								<a href="rapport_list.do">신고 현황</a>
 							</div>
 						</div>
 					 </c:if>
-				</div>
+				</div>	
 			</div>
 		</c:if>
 		

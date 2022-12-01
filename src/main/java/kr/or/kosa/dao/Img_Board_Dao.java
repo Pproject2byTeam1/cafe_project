@@ -168,7 +168,6 @@ public class Img_Board_Dao {
 					board.setB_idx(rs.getInt("b_idx"));
 					board.setImg_name(rs.getString("img_name"));
 					
-					System.out.println(board.getTitle());
 					
 					imglist.add(board);
 				}while(rs.next());
@@ -264,7 +263,7 @@ public class Img_Board_Dao {
 					pointlist.add(rs1.getInt("r_point"));
 				}while(rs1.next());
 			}
-			int rank = 1;
+			int rank = 0;
 			for(int i=0; i<pointlist.size()-1; i++) {
 				int min = pointlist.get(i);
 				int max = pointlist.get(i+1);
@@ -418,7 +417,7 @@ public class Img_Board_Dao {
 					pointlist.add(rs1.getInt("r_point"));
 				}while(rs1.next());
 			}
-			int rank = 1;
+			int rank = 0;
 			for(int i=0; i<pointlist.size()-1; i++) {
 				int min = pointlist.get(i);
 				int max = pointlist.get(i+1);

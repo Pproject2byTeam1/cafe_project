@@ -19,6 +19,7 @@ import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.Img_Board;
 import kr.or.kosa.dto.User;
+import kr.or.kosa.utils.ViewCountPrevent;
 
 public class Img_Board_Read_Service implements Action {
 
@@ -40,8 +41,9 @@ public class Img_Board_Read_Service implements Action {
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
-			Board_Dao bdao = new Board_Dao();
-			bdao.updateHits(idx);
+			//조회수 증가
+			ViewCountPrevent prevent = new ViewCountPrevent();
+			prevent.viewCountPrevent(idx, request, response);
 			
 			Img_Board_Dao dao = new Img_Board_Dao();
 			Img_Board imgboard = dao.getImg_BoardByIdx(idx);

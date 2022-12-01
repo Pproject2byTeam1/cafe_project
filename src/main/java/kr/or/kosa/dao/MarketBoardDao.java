@@ -101,7 +101,7 @@ public class MarketBoardDao {
 					pointlist.add(rs1.getInt("r_point"));
 				}while(rs1.next());
 			}
-			int rank = 1;
+			int rank = 0;
 			for(int i=0; i<pointlist.size()-1; i++) {
 				int min = pointlist.get(i);
 				int max = pointlist.get(i+1);
@@ -177,8 +177,6 @@ public class MarketBoardDao {
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 			
-			System.out.println("출력 시작번호 : " + start);
-			System.out.println("출력 끝번호 : " + end);
 			
 			rs = pstmt.executeQuery();
 			
@@ -218,7 +216,6 @@ public class MarketBoardDao {
 				System.out.println(e2.getMessage());
 			}
 		}
-		System.out.println(list);
 		return list;
 	}
 
@@ -231,7 +228,6 @@ public class MarketBoardDao {
 		List<MarketBoard> list = null;
 		
 		if (sold.equals("all") && search.equals("no")) {
-			System.out.println("searchmarket에서 listmarket 실행");
 			return listMarket(b_code, cpage, pagesize);
 			
 		} else {
@@ -357,7 +353,6 @@ public class MarketBoardDao {
 
 			}
 		}
-		System.out.println(countmarket);
 		return countmarket;
 	}
 
@@ -494,7 +489,7 @@ public class MarketBoardDao {
 					pointlist.add(rs1.getInt("r_point"));
 				}while(rs1.next());
 			}
-			int rank = 1;
+			int rank = 0;
 			for(int i=0; i<pointlist.size()-1; i++) {
 				int min = pointlist.get(i);
 				int max = pointlist.get(i+1);
@@ -524,7 +519,6 @@ public class MarketBoardDao {
 			pstmt2 = conn.prepareStatement(delmarket);
 			pstmt2.setInt(1, idx);
 			row = pstmt2.executeUpdate();
-			System.out.println("거래삭제 row = " + row);
 			
 			if (row < 0) {
 				throw new Exception("거래게시판 삭제 실패");
@@ -535,7 +529,6 @@ public class MarketBoardDao {
 			pstmt3 = conn.prepareStatement(delboard);
 			pstmt3.setInt(1, idx);
 			row = pstmt3.executeUpdate();
-			System.out.println("보드삭제 row = " + row);
 			
 			if (row < 0) {
 				throw new Exception("보드게시판 삭제 실패");

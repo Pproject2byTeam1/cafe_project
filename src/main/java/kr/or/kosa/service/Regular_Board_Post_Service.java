@@ -20,6 +20,7 @@ import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.Regular_Board;
 import kr.or.kosa.dto.User;
+import kr.or.kosa.utils.ViewCountPrevent;
 
 public class Regular_Board_Post_Service implements Action {
 
@@ -44,7 +45,6 @@ public class Regular_Board_Post_Service implements Action {
 			// DAO 불러오기
 			Regular_Board_Dao dao = new Regular_Board_Dao();
 			UserDao udao = new UserDao();
-			Board_Dao bdao = new Board_Dao();
 			Yes_Dao ydao = new Yes_Dao();
 			CommentsDao cdao = new CommentsDao();
 			
@@ -74,17 +74,15 @@ public class Regular_Board_Post_Service implements Action {
 			int yes = ydao.getYesCountBy_idx(idx);
 			
 			//조회수 증가
-			bdao.updateHits(idx);
+			ViewCountPrevent prevent = new ViewCountPrevent();
+			prevent.viewCountPrevent(idx, request, response);
 			
-		
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);
 			request.setAttribute("comments", comments);
 			request.setAttribute("idx", idx);
 			request.setAttribute("user", user);
 			request.setAttribute("yes", yes);
-			
-			
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
