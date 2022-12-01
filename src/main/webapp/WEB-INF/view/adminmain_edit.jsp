@@ -461,7 +461,6 @@
  			html2 += '<input type="text" class="form-control" id="catename" placeholder="카테고리 이름을 입력해 주세요" required></input><br>';
  			html2 += '<select class="form-select" aria-label="Default select example" id="btypeselected">';
  				html2 += '<option value="b1">자유게시판</option>';
- 				html2 += '<option value="b2">출석게시판</option>';
  				html2 += '<option value="b3">사진게시판</option>';
  				html2 += '<option value="b4">자료게시판</option>';
  				html2 += '<option value="b5">거래게시판</option>';
@@ -687,6 +686,7 @@
  			});
  		}
  		
+ 		cateload();
  		dragsidebar();
  		/* side_idx 수정 끝 */
  	});

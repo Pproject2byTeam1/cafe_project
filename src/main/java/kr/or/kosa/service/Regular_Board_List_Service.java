@@ -5,16 +5,19 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.Board_Rank_Dao;
 import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Board_Rank;
 import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Regular_Board;
 import kr.or.kosa.dto.User;
@@ -89,7 +92,8 @@ public class Regular_Board_List_Service implements Action {
 				ranklist.add(rank);
 			}
 			
-		
+			String url = "/WEB-INF/view/regularboard_list.jsp";
+			
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);
@@ -104,7 +108,7 @@ public class Regular_Board_List_Service implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/regularboard_list.jsp");
+		  	forward.setPath(url);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

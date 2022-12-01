@@ -10,12 +10,14 @@ import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
 import kr.or.kosa.dao.Board_Dao;
 import kr.or.kosa.dao.Board_Info_Dao;
+import kr.or.kosa.dao.Board_Rank_Dao;
 import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.DataBoardDao;
 import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
+import kr.or.kosa.dto.Board_Rank;
 import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.User;
@@ -77,9 +79,39 @@ public class Data_Board_Post_Service implements Action {
 			request.setAttribute("ori_name", ori_name);
 			request.setAttribute("banner", banner);//top
 			
+			Board_Rank_Dao boardrankdao = new Board_Rank_Dao();
+			Board_Rank boardrank = boardrankdao.getBoardRank(b_code);
+			
+			String url = "";
+			
+			if(user == null) {
+				String board_msg = "로그인이 필요한 기능입니다.";
+				String board_url = "/WebCafe_Project/login_view.do";
+				
+				request.setAttribute("board_msg", board_msg);
+				request.setAttribute("board_url", board_url);
+				
+				url = "/WEB-INF/view/redirect.jsp";
+			}else if(user.getRank() >= boardrank.getW_rank() || user.getIsAdmin().equals("M")) {
+
+				request.setAttribute("b_code", b_code);
+				url = "/WEB-INF/view/data_contentview.jsp";
+				
+			}else {
+				
+				String board_msg = boardrank.getW_rank() + "등급부터 확인 가능합니다.";
+				String board_url = "/WebCafe_Project/databoard_list.do?b_code="+b_code;
+
+				request.setAttribute("board_msg", board_msg);
+				request.setAttribute("board_url", board_url);
+				
+				url = "/WEB-INF/view/redirect.jsp";
+			}
+
+			
 			forward = new ActionForward();
 			forward.setRedirect(false);
-			forward.setPath("/WEB-INF/view/data_contentview.jsp");
+			forward.setPath(url);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
