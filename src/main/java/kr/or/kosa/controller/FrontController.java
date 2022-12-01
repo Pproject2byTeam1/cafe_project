@@ -73,6 +73,7 @@ import kr.or.kosa.service.User_Edit;
 import kr.or.kosa.service.User_details;
 import kr.or.kosa.service.adminInfoService;
 import kr.or.kosa.service.adminUpdateService;
+import kr.or.kosa.service.getBoardList;
 import kr.or.kosa.service.idVerification;
 import kr.or.kosa.service.nickVerification;
 import kr.or.kosa.service.userVerification;
@@ -429,6 +430,12 @@ public class FrontController extends HttpServlet {
 			action = new idVerification();
 			forward = action.execute(request, response);
 
+		}  else if (urlcommand.equals("/getBoardList.do")) { // 아이디 검증
+
+			action = new getBoardList();
+			forward = action.execute(request, response);
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			
 		}  
 		
 		if (forward != null) {

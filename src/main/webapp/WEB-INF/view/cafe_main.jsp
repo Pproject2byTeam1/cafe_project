@@ -48,7 +48,9 @@
 
 <!-- 경고창 이쁜거 -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
 
+</script>
 </head>
 
 <body>
@@ -106,9 +108,9 @@
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-                    <li><a class="dropdown-item">Today</a><span class="d-none">${board1info.b_code}</span></li>
-                    <li><a class="dropdown-item">This Month</a><span class="d-none">${board1info.b_code}</span></li>
-                    <li><a class="dropdown-item">This Year</a><span class="d-none">${board1info.b_code}</span></li>
+                    <li><a class="dropdown-item">Today</a><span class="d-none b_code">${board1info.b_code}</span><span class="d-none date">${Beforeday}</span></li>
+                    <li><a class="dropdown-item">This Month</a><span class="d-none b_code">${board1info.b_code}</span><span class="d-none date">${BeforeMonth}</span></li>
+                    <li><a class="dropdown-item">This Year</a><span class="d-none b_code">${board1info.b_code}</span><span class="d-none date">${BeforeYear}</span></li>
                   </ul>
                 </div>
 
@@ -215,9 +217,9 @@
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-                    <li><a class="dropdown-item">Today</a><span class="d-none">${board3info.b_code}</span></li>
-                    <li><a class="dropdown-item">This Month</a><span class="d-none">${board3info.b_code}</span></li>
-                    <li><a class="dropdown-item">This Year</a><span class="d-none">${board3info.b_code}</span></li>
+                    <li><a class="dropdown-item">Today</a><span class="d-none b_code">${board3info.b_code}</span><span class="d-none date">${Beforeday}</span></li>
+                    <li><a class="dropdown-item">This Month</a><span class="d-none b_code">${board3info.b_code}</span><span class="d-none date">${BeforeMonth}</span></li>
+                    <li><a class="dropdown-item">This Year</a><span class="d-none b_code">${board3info.b_code}</span><span class="d-none date">${BeforeYear}</span></li>
                   </ul>
                 </div>
                 <div class="card-body">
@@ -265,9 +267,9 @@
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-                    <li><a class="dropdown-item">Today</a><span class="d-none">${board4info.b_code}</span></li>
-                    <li><a class="dropdown-item">This Month</a><span class="d-none">${board4info.b_code}</span></li>
-                    <li><a class="dropdown-item">This Year</a><span class="d-none">${board4info.b_code}</span></li>
+                    <li><a class="dropdown-item">Today</a><span class="d-none b_code">${board4info.b_code}</span><span class="d-none date">${Beforeday}</span></li>
+                    <li><a class="dropdown-item">This Month</a><span class="d-none b_code">${board4info.b_code}</span><span class="d-none date">${BeforeMonth}</span></li>
+                    <li><a class="dropdown-item">This Year</a><span class="d-none b_code">${board4info.b_code}</span><span class="d-none date">${BeforeYear}</span></li>
                   </ul>
                 </div>
 
@@ -394,21 +396,8 @@
             <div class="col-12">
               <div class="card top-selling overflow-auto">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
                 <div class="card-body pb-0">
-                  <h5 class="card-title">거래게시판 <span>| 주간 장터</span></h5>
+                  <h5 class="card-title">거래게시판 <span>| Today</span></h5>
 
                   <table class="table table-borderless table-hover">
                     <thead class="table-warning">
@@ -537,17 +526,17 @@
 	  		$('.dropdown-item').click(function(){
 	  			const b_code = $(this).parents().children('.b_code').text();
 	  			const date = $(this).parents().children('.date').text();
+	  			const loc = $(this).parents().parents().parents().parents().children('.card-body').children('.ps-3').children('.table').children('.board');
 	  			$.ajax({
-	  				url:"getBoardList",
+	  				url:"getBoardList.do",
 	  				data:{
 	  					"b_code": b_code,
 	  					"date":date},
 	  				type: "POST",
-	  				dataType:"json",
+	  				dataType:"html",
 	  				success: function(responseText){
-	  					console.log(responseText);
-	  					
-	  					//$(this).parents().parents().parents().children('.card-body').children('.ps-3').children('.table').children('.board').append(html);
+	  					loc.empty();
+	  					loc.append(responseText);
 	  				}
 	  			})
 	  		});
