@@ -313,8 +313,8 @@
 			<!-- 게시판 이름 끌고오기 b_name -->
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a
-						href="databoard_list.do?b_code=6">자료게시판</a></li>
+					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
+					<li class="breadcrumb-item"><a href="databoard_list.do?b_code=${board.b_code}">자료게시판</a></li>
 					<li class="breadcrumb-item active">${board.title}</li>
 				</ol>
 			</nav>
@@ -419,15 +419,25 @@
 										<hr>
 
 										<div class="d-flex justify-content-end">
+										<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
+
+												<input type="text" value="${board.b_code}" name="b_code"
+													style="display: none;">
+												<input type="text" class="idx" name="idx" value="${idx}"
+													name="idx" style="display: none;">
+
+												<input type="submit"
+													class="btn btn-outline-danger btn-sm rounded-pill"
+													id="delete" value="삭제"> &nbsp;
+	                                   		</c:if>
 											<div align="left">
 												<c:if test="${member != null}">
 													<input type="submit"
 														class="btn btn-outline-danger btn-sm rounded-pill "
-														id="report" value="신고">
+														id="report" value="신고"> &nbsp;
+												</c:if>
 											</div>
-											&nbsp;
-											</c:if>
-											<div>
+										<div>
 
 												<c:if test="${member != null}">
 													<c:if test="${yespark == 'no'}">
@@ -451,7 +461,6 @@
 											<!-- 답글 수정 목록 -->
 
 											<c:if test="${member.email_id == board.email_id}">
-
 												<form
 													action="databoard_edit.do?b_code=${board.b_code}&idx=${board.idx}"
 													method="post">
@@ -463,30 +472,16 @@
 														class="btn btn-outline-secondary btn-sm rounded-pill"
 														id="datamodify" value="수정">
 												</form>
-	                                   	 &nbsp;
-	                                   	</c:if>
+		                                   	 &nbsp;
+		                                   	</c:if>
+		                                   	
 											<input type="button"
 												class="btn btn-outline-secondary btn-sm rounded-pill"
 												id="replyWrite" value="답글"> &nbsp; <input
 												type="button"
 												class="btn btn-outline-secondary btn-sm rounded-pill"
-												onClick="location.href='databoard_list.do?b_code=6'" value="목록"> &nbsp;
+												onClick="location.href='databoard_list.do?b_code=${board.b_code}'" value="목록"> &nbsp;
 										
-											<c:if
-												test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
-
-												<input type="text" value="${board.b_code}" name="b_code"
-													style="display: none;">
-												<input type="text" class="idx" name="idx" value="${idx}"
-													name="idx" style="display: none;">
-
-												<input type="submit"
-													class="btn btn-outline-danger btn-sm rounded-pill"
-													id="delete" value="삭제">
-	                             
-	                                     &nbsp;
-	                                   	</c:if>
-
 										</div>
 									</div>
 

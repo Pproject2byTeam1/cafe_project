@@ -833,4 +833,41 @@ public class Board_Dao {
 				
 				return row;
 			}
+			
+		//정해진 날짜의 출석여부(출석판용)
+		public int AttendenceCheckMe(String startdate, String enddate, String email_id) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int count=0;
+			
+			try {
+				
+				conn = ds.getConnection();
+				String sql = "select count(idx) cnt from board WHERE board.b_code = 2 and w_date between ? and ? and board.email_id = ?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, startdate);
+				pstmt.setString(2, enddate);
+				pstmt.setString(3, email_id);
+				
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt("cnt");
+				}else {
+					System.out.println("조회 데이터 없음");
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				try {
+					pstmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			
+			return count;
+		}
 }

@@ -298,18 +298,25 @@
 								<img src="upload/${imgboard.img_name}">
 							</div>
 							<div class="col-md-6">
-								<div class="ps-2 ms-10 row">
-									<div class="col navbar-nav">
+								<div class="row ps-2 ms-10">
+									<div class="col-9 navbar-nav">
 										<div class="row mt-2">
 											<h3 class="col-3 nav-item mt-1"><i class="bi bi-cloud-arrow-down"></i></h3>
-											<h3 class="col-3 nav-item"><i class="bi bi-exclamation-triangle"></i></h3>
-											<p>조회수: ${imgboard.hits} &ensp;</p>
-											<span>작성일자: ${imgboard.w_date}</span>
-											<span>작성자:<%-- <img src="./image/rank_icon/${user1.rank}.gif" > --%> &nbsp;${imgboard.nick}</span>
-										                 
+											<h3 class="col-3 nav-item"><i class="bi bi-exclamation-triangle"></i></h3>          
+										</div>
+										<div class="row mt-2"><p>조회수: ${imgboard.hits} &ensp;</p></div>
+										<div class="row mt-2"><p>작성일자: ${imgboard.w_date}</p></div>
+										<div>
+											<a data-bs-toggle="dropdown">
+											작성자: <img src="./image/rank_icon/${user1.rank}.gif" style="object-fit: none; width: 24px">${imgboard.nick}
+											</a>
+											<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+												<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${user1.email_id}" >답장 보내기</a></li>
+												<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${user1.email_id}" >활동 내역 보기</a></li>
+											</ul>
 										</div>
 									</div>
-									<div class="col mt-2">
+									<div class="col-3 mt-2">
 										<c:if test="${member != null}">
 											<div class="row">
 												<c:if test="${yes == 'no'}">

@@ -24,14 +24,10 @@ public class getBoardList implements Action {
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			//저장된 보드 정보 가져오기
 			List<Board_Info> info = infodao.getBoardindex();
-			System.out.println("index");
-			
 			
 			String date = request.getParameter("date");
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
-			System.out.println(b_code);
 			int b = info.get(b_code-1).getMain_idx();
-			System.out.println("index: "+b);
 			//날짜계산 준비
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date nowdate =  new Date();
@@ -42,7 +38,6 @@ public class getBoardList implements Action {
 			
 		    request.setAttribute("board", board);
 		    request.setAttribute("b", b);
-		    System.out.println(board);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

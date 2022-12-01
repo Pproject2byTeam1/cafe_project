@@ -376,7 +376,7 @@
                     </h5>
                     </div>
                     <div class="ps-3">
-                    <a data-bs-toggle="dropdown"><img src="image/rank_icon/3.gif" alt="아이콘">${chart.nick}</a><span> | ${chart.w_date}</span>
+                    <a data-bs-toggle="dropdown">${chart.nick}</a><span> | ${chart.w_date}</span>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${chart.email_id}" >답장 보내기</a></li>
 						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${chart.email_id}" >활동 내역 보기</a></li>
@@ -499,48 +499,55 @@
 	<script src="assets/js/main.js"></script>
 	<script type="text/javascript">
 	$(function(){
-			$('.clickrank').click(function(){
-	  			const idx = $(this).children('.idx').text();
-	  			const b_code = $(this).children('.b_code').text();
-	  			const w_date = $(this).children(".w_date").text();
-	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-	  		});
-	  		$('.td1').click(function(){
-	  			const idx = $(this).children('.idx').text();
-	  			const b_code = $(this).children('.b_code').text();
-	  			const w_date = $(this).parents().children(".w_date").text();
-	  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
-	  		});
-	  		window,addEventListener("keydown",function(event){
-				  if(event.defaultPrevented){
-					  return;
-				  }
-				  var handled = false;
-				  if(event.keyCode == 123)
-					  handled = true;
-				  if(handled){
-					  swal("경고","F12키를 누르지 마십시오",'error');
-					  event.preventDefault();
-				  }
-			  },true);
-	  		$('.dropdown-item').click(function(){
-	  			const b_code = $(this).parents().children('.b_code').text();
-	  			const date = $(this).parents().children('.date').text();
-	  			const loc = $(this).parents().parents().parents().parents().children('.card-body').children('.ps-3').children('.table').children('.board');
-	  			$.ajax({
-	  				url:"getBoardList.do",
-	  				data:{
-	  					"b_code": b_code,
-	  					"date":date},
-	  				type: "POST",
-	  				dataType:"html",
-	  				success: function(responseText){
-	  					loc.empty();
-	  					loc.append(responseText);
-	  				}
-	  			})
-	  		});
+		//랭크 페이지에서 이동
+		$('.clickrank').click(function(){
+  			const idx = $(this).children('.idx').text();
+  			const b_code = $(this).children('.b_code').text();
+  			const w_date = $(this).children(".w_date").text();
+  			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+  		});
+		//테이블에서 이동
+	  	clickLocation();
+		
+  		window,addEventListener("keydown",function(event){
+			  if(event.defaultPrevented){
+				  return;
+			  }
+			  var handled = false;
+			  if(event.keyCode == 123)
+				  handled = true;
+			  if(handled){
+				  swal("경고","F12키를 누르지 마십시오",'error');
+				  event.preventDefault();
+			  }
+		  },true);
+  		$('.dropdown-item').click(function(){
+  			const b_code = $(this).parents().children('.b_code').text();
+  			const date = $(this).parents().children('.date').text();
+  			const loc = $(this).parents().parents().parents().parents().children('.card-body').children('.ps-3').children('.table').children('.board');
+  			$.ajax({
+  				url:"getBoardList.do",
+  				data:{
+  					"b_code": b_code,
+  					"date":date},
+  				type: "POST",
+  				dataType:"html",
+  				success: function(responseText){
+  					loc.empty();
+  					loc.append(responseText);
+  					clickLocation();
+  				}
+  			})
+  		});
   	});
+	function clickLocation(){
+		$('.td1').click(function(){
+			const idx = $(this).children('.idx').text();
+			const b_code = $(this).children('.b_code').text();
+			const w_date = $(this).parents().children(".w_date").text();
+			window.location.href = 'boardContent.do?idx='+idx+'&b_code='+b_code+'&w_date='+w_date;
+		});
+	}
 	</script>
 
 </html>

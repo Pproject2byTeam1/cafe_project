@@ -461,7 +461,6 @@
  			html2 += '<input type="text" class="form-control" id="catename" placeholder="카테고리 이름을 입력해 주세요" required></input><br>';
  			html2 += '<select class="form-select" aria-label="Default select example" id="btypeselected">';
  				html2 += '<option value="b1">자유게시판</option>';
- 				html2 += '<option value="b2">출석게시판</option>';
  				html2 += '<option value="b3">사진게시판</option>';
  				html2 += '<option value="b4">자료게시판</option>';
  				html2 += '<option value="b5">거래게시판</option>';
@@ -687,6 +686,7 @@
  			});
  		}
  		
+ 		cateload();
  		dragsidebar();
  		/* side_idx 수정 끝 */
  	});
@@ -725,7 +725,6 @@
 								<div class="col-md-5">
 									<div class="ms-5 ps-5 pt-4">
 										<a class="logo d-flex align-items-center"> 
-											<img src="assets/img/logo.png" alt="">
 											<input type="text" class="form-control" id="inputname" value="${cafebanner.cafe_name}"></input>
 										</a> 
 										<span id="size"></span>
@@ -746,7 +745,7 @@
 								<button type="submit" id="topedit" 
 									class="btn btn-outline-secondary btn-sm rounded-pill">수정</button>
 								<button type="button" id="topreset" 
-									class="btn btn-outline-secondary btn-sm rounded-pill">취소</button>
+									class="btn btn-outline-danger btn-sm rounded-pill">취소</button>
 							</div>
 						</div>
 					</div>
