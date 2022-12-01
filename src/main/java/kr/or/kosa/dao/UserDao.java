@@ -88,11 +88,19 @@ public class UserDao {
 	public UserDetails selectUserById(String userid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt4 = null;
+		PreparedStatement pstmt5 = null;
+		PreparedStatement pstmt6 = null;
 		ResultSet rs = null;
+		ResultSet rs1 = null;
+		ResultSet rs2 = null;
 		UserDetails user = null;
+		int row = 0;
 		
 		try {
 			conn = ds.getConnection(); //dbcp 연결객체 얻기
+			conn.setAutoCommit(false);
+			
 			String sql="select m.email_id, m.password, m.name, m.nick, to_char(m.birth, 'yyyyMMdd') as birth, m.point, m.isadmin, m.rank, ud.w_count, ud.re_count "
 						+ "from member m join user_details ud "
 						+ "on m.email_id = ud.email_id where m.email_id = ?";
@@ -113,15 +121,78 @@ public class UserDao {
 				user.setW_count(rs.getInt("w_count"));
 				user.setRe_count(rs.getInt("re_count"));
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
+			
+			// 해당 유저의 포인트 조회
+			String sql4 = "select point from member where email_id = ?";
+			pstmt4 = conn.prepareStatement(sql4);
+			pstmt4.setString(1, userid);
+			rs1 = pstmt4.executeQuery();
+
+			int point = 0;
+
+			if (rs1.next()) {
+				point = rs1.getInt("point");
+			}
+			
+			// 포인트 정보 가져오기
+			String sql5 = "select r_point from rank where rank >= 1";
+			pstmt5 = conn.prepareStatement(sql5);
+			rs2 = pstmt5.executeQuery();
+
+			List<Integer> pointlist = new ArrayList<Integer>();
+
+			if (rs2.next()) {
+				do {
+					int number = rs2.getInt("r_point");
+
+					pointlist.add(number);
+				} while (rs2.next());
+			}
+			
+			int rank = 1;
+			for (int i = 0; i < pointlist.size() - 1; i++) {
+				int min = pointlist.get(i);
+				int max = pointlist.get(i + 1);
+
+				if (point < max) {
+					if (point >= min)
+						rank = i + 1;
+				}
+			}
+			
+			// 해당 회원의 rank 수정
+			String sql6 = "update member set rank = ? where email_id = ?";
+			pstmt6 = conn.prepareStatement(sql6);
+			pstmt6.setInt(1, rank);
+			pstmt6.setString(2, userid);
+			row = pstmt6.executeUpdate();
+
+			if (row < 0) {
+				throw new Exception("자료게시판 작성 실패");
+			} else {
+				conn.commit();
+			}
+			
+			
+		} catch (Throwable e) {
+			if (conn != null) {
+				try {
+					conn.rollback(); // 트랜잭션 실행 이전 상태로 돌리기
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		} finally {
 			try {
-				pstmt.close();
+				conn.setAutoCommit(true);
+				rs1.close();
 				rs.close();
-				conn.close();//반환  connection pool 에 반환하기
-			}catch (Exception e) {
-				e.printStackTrace();
+				pstmt5.close();
+				pstmt4.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
 			}
 		}
 		

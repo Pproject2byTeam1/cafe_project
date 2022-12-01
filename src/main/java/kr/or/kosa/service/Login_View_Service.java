@@ -33,7 +33,7 @@ public class Login_View_Service implements Action {
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);
-		  	forward.setPath("/WEB-INF/view/login.jsp");
+		  	forward.setPath("WEB-INF/view/login.jsp");
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

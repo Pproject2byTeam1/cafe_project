@@ -44,7 +44,7 @@ public class ReplyDeleteOk extends HttpServlet {
 		    }else {
 			    CommentsDao codao = new CommentsDao();
 	    		
-	    		int result = codao.deleteCommentByCo_idx(idx, user.getEmail_id());
+	    		int result = codao.userdeleteCommentByCo_idx(idx, user.getEmail_id());
 	    		
 	    		if(result > 0) {
 	    			msg = "성공";

@@ -72,10 +72,6 @@
               
         	   list();
               
-        
-           
-        
-              
               if(yespark == "no"){
                  
                  requestdata = {"idx": idx, "email_id": email_id};
@@ -250,20 +246,14 @@
 		   	/* 댓글 삭제 버튼 클릭 */
 		   	$(document).on('click', '#replydel', function(){
 		   		const tag = this.closest("div");
-		   		
 		   		const data2 = {"idx": $(tag).children("#co_idx").val()};
-		   		
-		   	
 		   		
 		   		del(data2);
 		   		
 		   	});
 		   	$(document).on('click', '#replydel2', function(){
 		   		const tag2 = this.closest("div");
-		   		
 		   		const data2 = {"idx": $(tag2).children("#co_idx2").val()};
-		   		
-		   	
 		   		
 		   		del(data2);
 		   		

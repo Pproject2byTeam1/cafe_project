@@ -67,9 +67,6 @@
 
         /* 게시물 좋아요 비동기 처리 */
          $("#yesbtn").click(function(){
-        	 
-            
-            
               
               if(yespark == "no"){
                  
@@ -134,47 +131,30 @@
 				data:data7,
 				dataType:"html",
 				success:function(responsetxt){
-				
 					swal("신고","신고되었습니다","success");
 				}
-				
-		});
-				
+			});
 		};
 
 		$(document).on('click', '#report', function(){
-		
 			const data7 ={"idx":idx};
-			
 			rep(data7);
-			
-	});
+		});
 	
         //삭제
         $("#delete").click(function(){
-	
-			
  			location.href="data_delete.do?idx=" + idx +"&b_code="+ b_code;
- 			
  			if(idx == ${board.idx}){
  				swal("삭제","글이 삭제되었습니다","success");
- 				
  			}
 			
 		});
   
-   
-    	
         /* 답글 작성 */
-        
     	$("#replyWrite").click(function(){
-
 			location.href="databoard_rewrite.do?b_code="+b_code+"&idx="+idx+"&refer="+refer+"&depth="+depth+"&step="+step;
-			
 		});
      
-        
-        
 		function inser(data){
   			$.ajax({
 				url : "ReplyOk",
@@ -189,13 +169,13 @@
   		}
   		
   		function del(data2){
+  			console.log(data2);
 			$.ajax(
 					{
 						url: "ReplyDeleteOk",
 						data: data2,
 						dataType: "html",
 						success: function(data){
-						
 							list();
 							swal(data);
 					}
@@ -206,19 +186,15 @@
   		function list(){
 			const req2 = {"idx": idx};
 			
-				$.ajax(
-						{
-							url: "ReplyList",
-							data: req2,
-							dataType: "html",
-							success: function(responseText){
-							
-								$("#reply").empty();
-								$("#reply").append(responseText.trim());
-									
-						}
-					}
-				)
+			$.ajax({
+				url: "ReplyList",
+				data: req2,
+				dataType: "html",
+				success: function(responseText){
+					$("#reply").empty();
+					$("#reply").append(responseText.trim());
+				}
+			});
 		}
   		
   		function replyinser(data){
@@ -401,31 +377,36 @@
 												value="${fn:toLowerCase(originalfilename)}" />
 											<c:forTokens var="file" items="${lowerfilename}" delims="."
 												varStatus="status">
-												<c:if test="${status.last}">    	
+												<c:if test="${status.last}">
 													<c:choose>
-														<c:when test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
-														<c:if test="${member != null}">
-															<button type="button" onclick="location.href='upload/${originalfilename}'" target="_blank"
-																class="btn btn-secondary rounded-pill" id="preview">미리보기</button>
-															<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
-															
-																class="btn btn-secondary rounded-pill" >다운로드</button>
+														<c:when
+															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
+															<c:if test="${member != null}">
+																<button type="button"
+																	onclick="location.href='upload/${originalfilename}'"
+																	target="_blank" class="btn btn-secondary rounded-pill"
+																	id="preview">미리보기</button>
+																<button type="button"
+																	onclick="location.href='filedownload.board?ori_name=${originalfilename}'"
+																	id="download" class="btn btn-secondary rounded-pill">다운로드</button>
 																<hr>
-														</c:if>	
+															</c:if>
 														</c:when>
 														<c:otherwise>
-														<c:if test="${member != null}">
-														<button type="button" onclick="location.href='filedownload.board?ori_name=${originalfilename}'" id="download"
-																class="btn btn-secondary rounded-pill" >${board.ori_name} 다운로드</button>
+															<c:if test="${member != null}">
+																<button type="button"
+																	onclick="location.href='filedownload.board?ori_name=${originalfilename}'"
+																	id="download" class="btn btn-secondary rounded-pill">${board.ori_name}
+																	다운로드</button>
 																<hr>
-														</c:if>	
+															</c:if>
 														</c:otherwise>
 													</c:choose>
 												</c:if>
 											</c:forTokens>
 
 										</div>
-										
+
 										<div class="row">
 											<div class="col-lg-12">
 
@@ -436,52 +417,77 @@
 										</div>
 										<br>
 										<hr>
-								
-									    <div class="d-flex justify-content-end">
-									    <div align="left"> 
-										<c:if test="${member != null}">
-									    <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill "   id="report"  value="신고"> </div>&nbsp;
-	                                  	</c:if>
-                                    	<div>
-                                    			
-                                    		<c:if test="${member != null}">
-	                                          <c:if test="${yespark == 'no'}">
-	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart"></i></button> &nbsp;
+
+										<div class="d-flex justify-content-end">
+											<div align="left">
+												<c:if test="${member != null}">
+													<input type="submit"
+														class="btn btn-outline-danger btn-sm rounded-pill "
+														id="report" value="신고">
+											</div>
+											&nbsp;
+											</c:if>
+											<div>
+
+												<c:if test="${member != null}">
+													<c:if test="${yespark == 'no'}">
+														<button
+															class="col btn btn-outline-secondary btn-sm rounded-pill"
+															type="button" id="yesbtn">
+															<i class="bi bi-heart"></i>
+														</button> &nbsp;
 	                                          </c:if>
-	                                          <c:if test="${yespark != 'no'}">
-	                                               <button class="col btn btn-outline-secondary btn-sm rounded-pill" type="button" id="yesbtn"><i class="bi bi-heart-fill"></i></button> &nbsp;
+													<c:if test="${yespark != 'no'}">
+														<button
+															class="col btn btn-outline-secondary btn-sm rounded-pill"
+															type="button" id="yesbtn">
+															<i class="bi bi-heart-fill"></i>
+														</button> &nbsp;
 	                                          </c:if>
-	                                        </c:if>	
-                                        </div>
-                                    	
-	                                   	
-	                                   	<!-- 답글 수정 목록 -->
-	                                   	
-	                                   	<c:if test="${member.email_id == board.email_id}">
-                                   		
-                                			<form action="databoard_edit.do?b_code=${board.b_code}&idx=${board.idx}" method="post">
-	                                          <input type="text" value="${board.email_id}" name="id" style="display: none;">
-	                                          <input type="text" value="${board.idx}" name="idx" style="display: none;">
-	                                          
-	                                          <input type="submit" class="btn btn-outline-secondary btn-sm rounded-pill" id="datamodify" value="수정">
-	                                       </form>
+												</c:if>
+											</div>
+
+
+											<!-- 답글 수정 목록 -->
+
+											<c:if test="${member.email_id == board.email_id}">
+
+												<form
+													action="databoard_edit.do?b_code=${board.b_code}&idx=${board.idx}"
+													method="post">
+													<input type="text" value="${board.email_id}" name="id"
+														style="display: none;"> <input type="text"
+														value="${board.idx}" name="idx" style="display: none;">
+
+													<input type="submit"
+														class="btn btn-outline-secondary btn-sm rounded-pill"
+														id="datamodify" value="수정">
+												</form>
 	                                   	 &nbsp;
 	                                   	</c:if>
-	                                   		<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글"> &nbsp;
-                                   			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록"> &nbsp;
-                                   			
-                                   		<c:if test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
-	                                   		
-	                                          <input type="text" value="${board.b_code}" name="b_code" style="display: none;">
-	                                          <input type="text"  class="idx" name="idx" value="${idx}" name="idx" style="display: none;">
-	                                          
-	                                          <input type="submit" class="btn btn-outline-danger btn-sm rounded-pill"   id="delete"
-	                                          value="삭제">
+											<input type="button"
+												class="btn btn-outline-secondary btn-sm rounded-pill"
+												id="replyWrite" value="답글"> &nbsp; <input
+												type="button"
+												class="btn btn-outline-secondary btn-sm rounded-pill"
+												onClick="history.go(-1)" value="목록"> &nbsp;
+
+											<c:if
+												test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
+
+												<input type="text" value="${board.b_code}" name="b_code"
+													style="display: none;">
+												<input type="text" class="idx" name="idx" value="${idx}"
+													name="idx" style="display: none;">
+
+												<input type="submit"
+													class="btn btn-outline-danger btn-sm rounded-pill"
+													id="delete" value="삭제">
 	                             
 	                                     &nbsp;
 	                                   	</c:if>
-		                                       
-                                    </div>
+
+										</div>
 									</div>
 
 
