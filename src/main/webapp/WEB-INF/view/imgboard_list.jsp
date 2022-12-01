@@ -142,7 +142,7 @@
 	            		<a href="img_board_read.do?idx=${list.idx}&b_code=${list.b_code}">
 	            			<img src="upload/${list.img_name}">
 	            		</a>
-	            		<figcaption>${list.title}</figcaption>
+	            		<figcaption>${list.title}</figcaption> 
 	        		</figure>
   				</c:forEach>
   				

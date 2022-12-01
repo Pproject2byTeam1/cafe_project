@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kosa.action.Action;
 import kr.or.kosa.action.ActionForward;
@@ -14,6 +15,7 @@ import kr.or.kosa.dto.Board;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Rank;
+import kr.or.kosa.dto.User;
 import kr.or.kosa.utils.BoardFactory;
 import net.sf.json.JSONObject;
 
@@ -29,7 +31,9 @@ public class AdminMainEditService implements Action {
 			CafeBannerDao bannerdao = new CafeBannerDao();
 			CafeBanner banner = bannerdao.getCafeBanner();
 			request.setAttribute("banner", banner);//top
-			
+			//세션정보
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("member");
 			//게시판 종류 정보 가져오기
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();

@@ -696,10 +696,14 @@ public class Board_Dao {
 		//입력값에 따른, 보드 종류별 리스트 출력
 		public List<Board> getBoardList(int b_code, String start, String end){
 			
+			
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			List<Board> boardlist = new ArrayList<Board>();
+			
+			
+			
 			
 			try {
 				

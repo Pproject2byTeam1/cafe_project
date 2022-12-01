@@ -700,17 +700,21 @@
 
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
-		<c:import url="/WEB-INF/view/common/top.jsp" />
-	</header>
+		<c:import url="/WEB-INF/view/common/admintop.jsp" />
+	</header> 
 	<!-- End Header -->
-
+ 			
 	<main id="main" class="main">
-
-		<div class="pagetitle"></div>
+		
+		<div class="pagetitle">
+		
+	
+		</div>
 		<!-- End Page Title -->
-
+	
+   
 		<!-- 관리자 메인페이지 관리 시작 -->
-
+		
 
 		<div class="row">
 			<div class="container-fluid">

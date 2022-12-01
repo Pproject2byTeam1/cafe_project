@@ -26,7 +26,7 @@
       <c:if test="${member != null}">
 
         <li class="nav-item d-block d-lg-none"></li><!-- End Search Icon-->
-        
+       
 		<c:if test="${member.isAdmin eq 'M'}">
        		<ul class="header-nav ms-auto">
         	   <li class="nav-item dropdown">
