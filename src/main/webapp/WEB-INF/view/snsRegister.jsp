@@ -198,17 +198,15 @@ const nickregix = /^[가-힣a-zA-Z0-9]+$/;
 		  if(mobile != null){
 			  $('#phone').val(mobile.replace("-",""));
 			}else{
-				alert("전화번호 정보를 가져오는데 실패하였습니다");
+				Swal.fire("error","전화번호 정보를 가져오는데 실패하였습니다",'error');
 				$('#phone').val("010");
 			}
 		  
 		  if(birthday != null && birthyear != null){
 			  $('#date').val(birthyear + "-" + birthday);
 		  }else{
-			  alert("생년월을 정보를 가져오는데 실패하였습니다");
-			  birthday = "01-01";
-			  birthyear = "2000";
-			  $('#date').val(birthyear + "-" + birthday);
+			  Swal.fire("error","생년월을 정보를 가져오는데 실패하였습니다",'error');
+			  $('#date').val("2000-01-01");
 		  }
 		 
 	  }

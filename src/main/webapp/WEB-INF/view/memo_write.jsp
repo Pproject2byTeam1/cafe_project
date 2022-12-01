@@ -142,7 +142,7 @@
 	  $("#allSend").click(function(){
 		  if($(this).is (':checked')){
 			  $('#respond_Id').attr('value','ALL');
-			  $('#respond_Id').attr('readonly',true);
+			  $('#respond_Id').attr('readonly');
 		  }else {
 			  $('#respond_Id').attr('value', "");
 		  }

@@ -334,7 +334,7 @@
 
       <!-- Page Title -->
       <div class="pagetitle">
-         <h1>거래 게시판</h1>
+         <h1>${boardinfo.b_name}</h1>
          <nav>
             <ol class="breadcrumb">
                <li class="breadcrumb-item"><a href="cafemain.do">전체글 : 000</a></li>

@@ -35,16 +35,24 @@ public class Regular_Board_List_Service implements Action {
 			CafeBanner banner = bannerdao.getCafeBanner();
 			request.setAttribute("banner", banner);//top
 			
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			
 			Board_Info_Dao infodao = new Board_Info_Dao();
 	        List<Board_Info> infolist = infodao.getSideBoardList();
+	        
+	        Board_Info boardinfo = new Board_Info();
 
+	        for(Board_Info info : infolist) {
+	        	if(info.getB_code() == b_code) {
+	        		boardinfo.setB_name(info.getB_name());
+	        		boardinfo.setB_type(info.getB_type());
+	        	}
+	        }
 	        
 			Board_Dao dao = new Board_Dao(); 
 			Yes_Dao ydao = new Yes_Dao();
 			CommentsDao cdao = new CommentsDao();
 			UserDao udao = new UserDao();
-			
-			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			
 			//게시물 총 건수
 			int totalboardcount = dao.totalBoardCountByB_code(b_code);
@@ -94,6 +102,7 @@ public class Regular_Board_List_Service implements Action {
 			
 			String url = "/WEB-INF/view/regularboard_list.jsp";
 			
+			request.setAttribute("boardinfo", boardinfo);
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("pagesize", pagesize);
 			request.setAttribute("cpage", cpage);

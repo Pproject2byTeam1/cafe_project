@@ -48,6 +48,15 @@ public class Data_Board_Post_Service implements Action {
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			String ori_name = request.getParameter("ori_name");
+			
+			Board_Info boardinfo = new Board_Info();
+
+	        for(Board_Info info : infolist) {
+	        	if(info.getB_code() == b_code) {
+	        		boardinfo.setB_name(info.getB_name());
+	        		boardinfo.setB_type(info.getB_type());
+	        	}
+	        }
 
 			//조회수 증가
 			ViewCountPrevent prevent = new ViewCountPrevent();
@@ -71,6 +80,7 @@ public class Data_Board_Post_Service implements Action {
 			
 			int yes = ydao.getYesCountBy_idx(idx);
 			
+			request.setAttribute("boardinfo", boardinfo);
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("board", board);
 			request.setAttribute("b_code", b_code);

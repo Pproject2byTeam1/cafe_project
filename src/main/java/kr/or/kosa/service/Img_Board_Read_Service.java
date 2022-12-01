@@ -32,6 +32,8 @@ public class Img_Board_Read_Service implements Action {
 		ActionForward forward = new ActionForward();
 
 		try {
+			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			
 			// top
 			CafeBannerDao bannerdao = new CafeBannerDao();
 			CafeBanner banner = bannerdao.getCafeBanner();
@@ -41,9 +43,16 @@ public class Img_Board_Read_Service implements Action {
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			List<Board_Info> infolist = infodao.getSideBoardList();
 
-			int idx = Integer.parseInt(request.getParameter("idx"));
-			int b_code = Integer.parseInt(request.getParameter("b_code"));
+			Board_Info boardinfo = new Board_Info();
 
+	        for(Board_Info info : infolist) {
+	        	if(info.getB_code() == b_code) {
+	        		boardinfo.setB_name(info.getB_name());
+	        		boardinfo.setB_type(info.getB_type());
+	        	}
+	        }
+			
+			int idx = Integer.parseInt(request.getParameter("idx"));
 			// 조회수 증가
 			ViewCountPrevent prevent = new ViewCountPrevent();
 			prevent.viewCountPrevent(idx, request, response);
@@ -73,6 +82,7 @@ public class Img_Board_Read_Service implements Action {
 			CommentsDao codao = new CommentsDao();
 			List<Comments> comments = codao.getCommentListByIdx(idx);
 
+			request.setAttribute("boardinfo", boardinfo);
 			request.setAttribute("comments", comments);
 			request.setAttribute("imgboard", imgboard);
 			request.setAttribute("b_code", b_code);

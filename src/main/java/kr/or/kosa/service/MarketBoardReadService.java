@@ -46,6 +46,15 @@ public class MarketBoardReadService implements Action {
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			int cp = Integer.parseInt(request.getParameter("cp"));
 			
+			Board_Info boardinfo = new Board_Info();
+
+	        for(Board_Info info : infolist) {
+	        	if(info.getB_code() == b_code) {
+	        		boardinfo.setB_name(info.getB_name());
+	        		boardinfo.setB_type(info.getB_type());
+	        	}
+	        }
+			
 			//DAO 불러오기
 			MarketBoardDao dao = new MarketBoardDao();
 			UserDao udao = new UserDao();
@@ -80,6 +89,7 @@ public class MarketBoardReadService implements Action {
 			ViewCountPrevent prevent = new ViewCountPrevent();
 			prevent.viewCountPrevent(idx, request, response);
 			
+			request.setAttribute("boardinfo", boardinfo);
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("list", list);
 			request.setAttribute("b_code", b_code);
