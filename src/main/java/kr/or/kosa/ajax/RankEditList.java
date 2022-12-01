@@ -53,9 +53,8 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 					max = rank.getR_point();
 				}
 			}
-			
-			out.print("<table class=‘table text-center’ id=‘ranklist’>");
-			out.print("<thead class=‘thead-light’>");
+
+			out.print("<thead class='thead-light'>");
 				out.print("<tr>");
 					out.print("<th>");
 					out.print("</th>");
@@ -64,11 +63,10 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 					out.print("<th>");
 					out.print("</th>");
 					out.print("<th>");
-					out.print("<button type=‘button’ class=‘btn float-right btn-success’");
-					out.print("id=‘saveRank’ value=‘save’ style=‘float: right’>저장하기(</button>");	
 					out.print("</th>");
 				out.print("</tr>");
-
+				out.print("<input type='hidden' class='max' value='" + max + "'>");
+				out.print("<input type='hidden' class='size' value='" + size + "'>");
 				out.print("<tr>");
 					out.print("<th>");
 					out.print("등급레벨");
@@ -80,7 +78,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 					out.print("등급 포인트 기준");
 					out.print("</th>");
 					out.print("<th>");
-					out.print("수정/삭제");
+					out.print("수정/저장");
 					out.print("</th>");
 
 				out.print("</tr>");
@@ -92,11 +90,11 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 					out.print("<tr class='" + rank.getRank() + "'>");
 					
 						out.print("<td class='" + rank.getRank() + "'>" + rank.getRank() + ""); 
-						out.print("<input type=‘hidden’ class=‘r_rank’ value=‘" + rank.getRank() + "’>");
+						out.print("<input type='hidden' class='r_rank' value='" + rank.getRank() + "'>");
 						out.print("</td>");
 						out.print("<td>");
 							out.print(rank.getR_name());
-							out.print("<input type=‘hidden’ class=‘r_name’ value=‘" + rank.getR_name() + "’>");
+							out.print("<input type='hidden' class='r_name' value='" + rank.getR_name() + "'>");
 						out.print("</td>");
 							
 					out.print("<td>");
@@ -104,13 +102,12 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 						if(rank.getRank() == '1') {
 							out.print("0 점 이상");
 						}else {
-							out.print(rank.getR_point());
-							out.print("<input type=‘hidden’ class=‘r_point’ value=‘" + rank.getR_point() + "’>");
-							
+							out.print(rank.getR_point() + " 점 이상");
+							out.print("<input type='hidden' class='r_point' value='" + (rank.getR_point()+1) + "'>");
 						}
 					out.print("</td>");
 					out.print("<td>");
-					out.print("<input type=‘button’ class=‘editRank btn btn btn-secondary’ value=‘수정하기’ style=‘float: right’>");
+					out.print("<input type='button' class='editRank btn btn btn-secondary' value='수정하기' style='float: right'>");
 					out.print("</td>");
 					
 				out.print("</tr>");
@@ -118,9 +115,7 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 					
 				}
 			out.print("</tbody>");
-		out.print("</table>");
-		out.print("<input type=‘hidden’ class=‘max’ value=‘" + max + "’>");
-		out.print("<input type=‘hidden’ class=‘size’ value=‘" + size + "’>");
+
 					
     	} catch(Exception e) {
     		System.out.println(e.getMessage());

@@ -34,6 +34,11 @@
 
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
+
+<!-- 경고창 이쁜거 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 
@@ -41,27 +46,32 @@
 		let list = "<c:out value='${list}'/>";
 		let max = Number("<c:out value='${maxpoint}'/>");
 		
-		function ajaxlist() {
+		$('#refresh').click(function ajaxlist() {
 			
 			$.ajax({
 				type: "POST",
-				url: "MarketSearch",
+				url: "RankEditList",
 				dataType: "TEXT",
 				success: function(data){
 					
 					$("#ranklist").empty();
 					$("#ranklist").append(data);
 					
-					let sizeajx = $(".size").val();
-					let maxajx = $(".max").val();
+					let size = $(".size").val();
+					let max = $(".max").val();
 					
 					}
 				});
-		}
+		});
 		
 
-		$('#newRank').click(function addRank() {
+		$('#newRank').click(function newRank() {
 			
+			let check = $('tr:eq(' + (size+1) + ')>td:eq(4) input').val();
+			console.log(check);
+			if(check == "등록하기"){
+				alert("등록하지 않은 등급이 있습니다. 먼저 등록 해주세요.");
+			}else{
 			
 			// table element 찾기
 			const table = document.getElementById('ranklist');
@@ -73,62 +83,136 @@
 			const newCell2 = newRow.insertCell(1);
 			const newCell3 = newRow.insertCell(2);
 			const newCell4 = newRow.insertCell(3);
-			size += 1;
-			max += 1;
 		
 			// Cell에 텍스트 추가
 			newRow.setAttribute("class" , size);
-			newCell1.innerHTML = size;
+			newCell1.innerHTML = size+1;
 			
-			newCell2.innerHTML = '<input type="text" class="form-control" placeholder="" value="" id="' + size + 'name"></td>';
-			newCell3.innerHTML = '<input type="text" class="form-control" placeholder="' + max + '점 이상" id="' + size + 'point">';
-			newCell4.innerHTML = '<button type="button" class="saveRank btn btn btn-success" value="edit" style="float: right">저장하기</button>';
-
-			
+			newCell2.innerHTML = '<input type="text" class="form-control" placeholder="" value="" id="' + size+1 + 'name"></td>';
+			newCell3.innerHTML = '<input type="text" class="form-control" placeholder="' + max + '" id="' + size + 'point">';
+			newCell4.innerHTML = '<input type="button" class="addRank btn btn btn-success" value="등록하기" style="float: right">';
+		
+			}	
 		});
 		
-		$('.editRank').click(function editRank(){
-			
+		$(document).on('click', '.editRank', function(){
 			let td = $(this).closest('tr').find('td');
 			let td0 = td.eq(0).text();
-			
+			let editpoint = td.eq(2).text();
+			console.log(td);
+			console.log(td0);
+			console.log(editpoint);
 			if(td0 == "1"){
-				td[1].innerHTML = '<input type="text" class="form-control" id="name"><input type="hidden" class="isReg" value="false">';
+				td[1].innerHTML = '<input type="text" class="form-control" id="name" value="" required><input type="hidden" class="r_name" value="false">';
 			}else {
-				td[1].innerHTML = '<input type="text" class="form-control" id="point"><input type="hidden" class="isReg" value="false">';
-				td[2].innerHTML = '<input type="text" class="form-control" id="name"><input type="hidden" class="isReg" value="false">';
+				td[1].innerHTML = '<input type="text" class="form-control" id="name" value="" required><input type="hidden" class="r_name" value="false">';
+				td[2].innerHTML = '<input type="number" class="form-control" id="point" value="" required><input type="hidden" class="r_point" value="false">';
 			}
 			
-			td[3].innerHTML = '<button type="button" class="saveRank btn btn btn-success" value="save" style="float: right">저장하기</button>';
+			td[3].innerHTML = '<input type="button" class="updateRank btn btn btn-success" value="저장하기" style="float: right">'; 
 			
 		});
 		
-		$('.delRank').click(function delRank() {
+		$(document).on('click', '.delRank', function() {
 			
-			const table = document.getElementById('ranklist');
-	    	  
-	    	  // 행(Row) 삭제
-	    	const newRow = table.deleteRow(-1);
-    	
-		    	
+			let check = $('tr:eq(' + (size+1) + ')>td:eq(3) input').val();
+			let rank = $('tr:eq(' + (size+1) + ')>td:eq(0)').text();
+			
+			if((check == "저장하기")){
+				alert("수정 중에는 삭제할 수 없습니다. 마지막 등급을 저장해주세요.");
+			}else{
+				
+			Swal.fire({
+				   title: '마지막 등급을 삭제하시겠습니까?',
+				   text: '다시 되돌릴 수 없습니다. 신중하세요.',
+				   icon: 'warning',
+				   
+				   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+				   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+				   confirmButtonText: '네', // confirm 버튼 텍스트 지정
+				   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+				   
+				   reverseButtons: true, // 버튼 순서 거꾸로
+				   
+				}).then(result => {
+				   // 만약 Promise리턴을 받으면,
+				   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+				   	 
+					  $.ajax({
+							type: "POST",
+							url: "RankDelete",
+							data : {"rank": rank},
+							dataType: "TEXT",
+							success: function(data){
+								
+								Swal.fire( data, '', 'success');
+								alert(data);
+
+								ajaxlist();
+								
+								const table = document.getElementById('ranklist');
+								const newRow = table.deleteRow('-1');
+								
+								}
+					
+					  });
+
+			    	
+				   }
+				});
+			} 
 	    });
 		
-		$('.saveRank').click(function saveRank(){
+		
+		$(document).on('click', '.updateRank', function () {
 			
-			$.ajax({
-				type: "POST",
-				url: "RankEdit",
-				dataType: "TEXT",
-				success: function(data){
-					
-					alert("data");
-
-					
-					ajaxlist();
-					
-					}
-				});
+			let td = $(this).closest('tr').find('td');
+			let rank = td.eq(0).text();
+			let r_name = td.eq(1).text();
+			let r_point = $('tr:eq(' + (rank+1) + ')>td:eq(2) input').val();
 			
+			console.log(td);
+			console.log(rank);
+			console.log(r_name);
+			console.log(r_point);
+			
+			 var requestdata = {"rank": rank, "r_name": r_name, "r_point" : r_point};
+			
+			 Swal.fire({
+				   title: '저장하시겠습니까?',
+				   text: rank + ' 순위' + r_name + '의 점수를 ' + r_point + '로 수정합니다',
+				   icon: 'warning',
+				   
+				   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+				   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+				   confirmButtonText: '네', // confirm 버튼 텍스트 지정
+				   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+				   
+				   reverseButtons: true, // 버튼 순서 거꾸로
+				   
+				}).then(result => {
+			 
+				$.ajax({
+					type: "POST",
+					url: "RankEdit",
+					data: requestdata,
+					dataType: "TEXT",
+					success: function(data){
+						
+						alert(data);
+	
+						
+						ajaxlist();
+						
+						}
+					});
+			
+			
+			});
+			 
+			 
 		});
 							
 		
@@ -165,25 +249,24 @@
 			<div class="container-fluid">
 				<div class="card">
 				<div class="card-body">
+				<p><p>
+					<button type="button" class="btn btn btn-primary"
+										id="refresh" value="new">새로고침</button>
 				<form onclick="" style="cursor: pointer">
-					
 					<table class="table text-center" id='ranklist'>
 						<thead class="thead-light">
 							<tr>
 								<th></th>
 								<th></th>
 								<th></th>
-								<th>
-								<button type="button" class="btn float-right btn-success"
-										id="saveRank" value="save" style="float: right">저장하기</button>	
-								</th>
+								<th></th>
 							</tr>
 
 							<tr>
 								<th>등급레벨</th>
 								<th>등급 이름</th>
 								<th>등급 포인트 기준</th>
-								<th>수정/삭제</th>
+								<th>수정/저장</th>
 
 							</tr>
 						</thead>
@@ -194,13 +277,10 @@
 								<c:if test="${rank.rank>0}">
 									<tr class="${rank.rank}">
 
-										<td class="${rank.rank}">
-										${rank.rank}
-										<input type="hidden" class="r_rank" value="${rank.rank}">
-										</td>
+										<td class="${rank.rank}">${rank.rank}<input type="hidden" class="r_rank" value="${rank.rank}"></td>
 										<td>
-											${rank.r_name}
-											<input type="hidden" class="r_name" value="${rank.r_name}">
+										${rank.r_name}
+										<input type="hidden" class="r_name" value="${rank.r_name}">
 										</td>
 										<td>
 											<c:choose>
@@ -209,7 +289,7 @@
 												      </c:when>
 
 												<c:otherwise>
-													${rank.r_point}
+													${rank.r_point} 점 이상
 													<input type="hidden" class="r_point" value="${rank.r_point}">
 												</c:otherwise>
 											</c:choose>
@@ -228,8 +308,8 @@
 					<div style="display: inline-block; margin: 0 5px;  float: right;">
 					<button type="button" class="btn btn btn-primary"
 										id="newRank" value="new">추가하기</button>
-					<button type="button" class="btn btn btn-danger"
-										id="delRank" value="new">삭제하기</button>
+					<button type="button" class="delRank btn btn btn-danger"
+										id="delRank" value="del">삭제하기</button>
 					</div>		
 				</form>
 				</div>
