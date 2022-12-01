@@ -20,6 +20,7 @@ import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.Comments;
 import kr.or.kosa.dto.MarketBoard;
 import kr.or.kosa.dto.User;
+import kr.or.kosa.utils.ViewCountPrevent;
 
 public class MarketBoardReadService implements Action {
 
@@ -46,7 +47,6 @@ public class MarketBoardReadService implements Action {
 			//DAO 불러오기
 			MarketBoardDao dao = new MarketBoardDao();
 			UserDao udao = new UserDao();
-			Board_Dao bdao = new Board_Dao();
 			Yes_Dao ydao = new Yes_Dao();
 			CommentsDao cdao = new CommentsDao();
 
@@ -75,7 +75,8 @@ public class MarketBoardReadService implements Action {
 			int yes = ydao.getYesCountBy_idx(idx);
 			
 			//조회수 증가
-			bdao.updateHits(idx);
+			ViewCountPrevent prevent = new ViewCountPrevent();
+			prevent.viewCountPrevent(idx, request, response);
 			
 			request.setAttribute("infolist", infolist);
 			request.setAttribute("list", list);

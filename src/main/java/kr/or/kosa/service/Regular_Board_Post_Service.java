@@ -73,6 +73,7 @@ public class Regular_Board_Post_Service implements Action {
 			User user = udao.selectUserById(board.getEmail_id());
 			int yes = ydao.getYesCountBy_idx(idx);
 			
+			//조회수 증가
 			ViewCountPrevent prevent = new ViewCountPrevent();
 			prevent.viewCountPrevent(idx, request, response);
 			

@@ -19,6 +19,7 @@ import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.CafeBanner;
 import kr.or.kosa.dto.DataBoard;
 import kr.or.kosa.dto.User;
+import kr.or.kosa.utils.ViewCountPrevent;
 
 public class Data_Board_Post_Service implements Action {
 
@@ -39,17 +40,17 @@ public class Data_Board_Post_Service implements Action {
 			Board_Info_Dao infodao = new Board_Info_Dao();
 			UserDao udao = new UserDao();
 			DataBoardDao dao = new DataBoardDao();
-			Board_Dao bdao = new Board_Dao();
 			Yes_Dao ydao = new Yes_Dao();
 
-			
-			
 			List<Board_Info> infolist = infodao.getSideBoardList();
 			int idx = Integer.parseInt(request.getParameter("idx"));
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
 			String ori_name = request.getParameter("ori_name");
 
-			bdao.updateHits(idx);
+			//조회수 증가
+			ViewCountPrevent prevent = new ViewCountPrevent();
+			prevent.viewCountPrevent(idx, request, response);
+			
 			DataBoard board = dao.getData_BoardByIdx(idx);
 			
 			User rank = udao.selectUserById(board.getEmail_id());
