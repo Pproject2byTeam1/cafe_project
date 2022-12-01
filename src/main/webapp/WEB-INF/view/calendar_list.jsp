@@ -49,9 +49,6 @@
   		
   		let today = new Date();
 
-  		let year = today.getFullYear();
-  		let month = today.getMonth() + 1;
-
   		let idx = "";
   		
   		//일정 읽기 사리게 하기
@@ -173,7 +170,7 @@
   			let b_code = "<c:out value='${b_code}'/>";
   	  		let member = "<c:out value='${member}'/>";
   			
-  			const requestdata = { "b_code": b_code, "year": year, "month": month, "email_id": member.email_id};
+  			const requestdata = { "b_code": b_code, "email_id": member.email_id};
   			
 			$.ajax({
 				type: "POST",
@@ -181,8 +178,6 @@
 				data: requestdata,
 				dataType: "JSON",
 				success: function(data) {
-					
-					console.log(data[0]);
 
 					let datelist = new Array();
 

@@ -222,7 +222,7 @@ public class Board_Dao {
 	}
 	
 	//일정 관리 캘린더 전체 조회
-	public List<Calender> getCalender_list(int b_code, String year, String month){
+	public List<Calender> getCalender_list(int b_code){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -235,21 +235,10 @@ public class Board_Dao {
 			String sql = "select b.idx, b.title, b.nick, b.content, b.hits, to_char(b.w_date, 'yyyy-MM-dd') as w_date, b.report_count, b.email_id, b.b_code, c.b_idx, to_char(c.start_date, 'yyyy-MM-dd') as start_date, to_char(c.end_date, 'yyyy-MM-dd') as end_date, c.finish "
 						+ "from board b join calender c "
 						+ "on b.idx = c.idx "
-						+ "where b.b_code=? and c.start_date between to_date(?, 'YY/MM/DD') and to_date(?, 'YY/MM/DD')";
+						+ "where b.b_code=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, b_code);
-			String req1 = year.concat("/").concat(month).concat("/").concat("01");
-			
-			pstmt.setString(2, req1);
-			
-			Calendar calendar= Calendar.getInstance();
-			calendar.add(Calendar.MONTH, Integer.parseInt(month)-1);  
-			int date = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-			
-			String req2 = year.concat("/").concat(month).concat("/").concat(String.valueOf(date));
-			
-			pstmt.setString(3, req2);
 			
 			rs = pstmt.executeQuery();
 			
