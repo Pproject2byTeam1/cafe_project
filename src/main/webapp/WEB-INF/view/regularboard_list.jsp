@@ -14,6 +14,10 @@
 <meta content="" name="description">
 <meta content="" name="keywords">
 
+<!-- 경고창 이쁜거 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
@@ -200,7 +204,7 @@
 						<c:forEach var="board" items="${list}" varStatus="status">
 							<tr>
 								<div>
-										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}'" style="cursor:pointer">
+										<td onclick="location.href='regular_post.do?b_code=1&idx=${board.idx}&b_code=${board.b_code}'" style="cursor:pointer">
 										<span class="mt-4 parent">
 										<h4 class="ref${board.refer}">
 											<c:if test="${board.depth > 0}">
