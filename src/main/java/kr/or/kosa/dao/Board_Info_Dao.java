@@ -372,6 +372,7 @@ public class Board_Info_Dao {
 		return row;
 	}
 	
+	
 	//게시판의 메인위치 출력
 	public List<Board_Info> getBoardNameList(){
 		

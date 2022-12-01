@@ -23,6 +23,7 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
       
+      <c:if test="${member != null}">
 
         <li class="nav-item d-block d-lg-none"></li><!-- End Search Icon-->
         

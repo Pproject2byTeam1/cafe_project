@@ -383,7 +383,7 @@
 															test="${file eq 'jpg' || file eq 'png' || file eq 'gif'}">
 															<c:if test="${member != null}">
 																<button type="button"
-																	onclick="location.href='upload/${originalfilename}'"
+																	onclick="window.open('upload/${originalfilename}')"
 																	target="_blank" class="btn btn-secondary rounded-pill"
 																	id="preview">미리보기</button>
 																<button type="button"
@@ -470,8 +470,8 @@
 												id="replyWrite" value="답글"> &nbsp; <input
 												type="button"
 												class="btn btn-outline-secondary btn-sm rounded-pill"
-												onClick="history.go(-1)" value="목록"> &nbsp;
-
+												onClick="location.href='databoard_list.do?b_code=6'" value="목록"> &nbsp;
+										
 											<c:if
 												test="${board.email_id==member.email_id || member.isAdmin == 'S' || member.isAdmin =='M'}">
 
@@ -579,10 +579,12 @@
 																					type="hidden" />
 																				<button type="button" id='replyreplywrite'
 																					class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
+																				<c:if test='${member != null }'>
 																				<c:if
 																					test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
 																					<button type="button" id="replydel"
 																						class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+																				</c:if>
 																				</c:if>
 
 																			</div>
@@ -605,12 +607,13 @@
 																		<h6></h6>
 
 																		<div align="right" class="actions">
-																			<c:if
-																				test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
+																			<c:if test='${member  != null}'>
+																			<c:if test="${member.email_id == comments.email_id || member.isAdmin == 'M' || member.isAdmin == 'S'}">
 																				<input id="co_idx2" value="${comments.co_idx}"
 																					type="hidden" />
 																				<button type="button" id="replydel2"
 																					class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
+																			</c:if>
 																			</c:if>
 																		</div>
 																	</div>

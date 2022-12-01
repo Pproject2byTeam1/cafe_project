@@ -304,7 +304,9 @@
 											<h3 class="col-3 nav-item mt-1"><i class="bi bi-cloud-arrow-down"></i></h3>
 											<h3 class="col-3 nav-item"><i class="bi bi-exclamation-triangle"></i></h3>
 											<p>조회수: ${imgboard.hits} &ensp;</p>
-											<p>작성일자: ${imgboard.w_date} </p>
+											<span>작성일자: ${imgboard.w_date}</span>
+											<span>작성자:<%-- <img src="./image/rank_icon/${user1.rank}.gif" > --%> &nbsp;${imgboard.nick}</span>
+										                 
 										</div>
 									</div>
 									<div class="col mt-2">
