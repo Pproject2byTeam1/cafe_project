@@ -29,7 +29,7 @@ public class BoardFactory {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
 			Date nowdate = new Date();
-			String nowday = nowday = format.format(nowdate);
+			String nowday = format.format(nowdate);
 			
 			Date date=null;
 			try {
@@ -40,10 +40,6 @@ public class BoardFactory {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 			
-			int year = cal.get(Calendar.YEAR);
-			String y = String.valueOf(year);
-			int month = cal.get(Calendar.MONTH)+1;
-			String m = String.valueOf(month);
 			
 			cal.add(Calendar.DATE, 1);
 			Date nexdate = new Date(cal.getTimeInMillis());
@@ -83,7 +79,7 @@ public class BoardFactory {
 				
 				board = new ArrayList<Calender>();
 				Board_Dao dao = new Board_Dao();
-				board = dao.getCalender_list(b_code, y, m);
+				board = dao.getCalender_list(b_code);
 				
 			}
 			
