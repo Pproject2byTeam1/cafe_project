@@ -66,7 +66,7 @@
 	<main id="main" class="main">
 
 		<div class="pagetitle">
-			<h1>로그인</h1>
+			<h1>회원가입</h1>
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
@@ -100,21 +100,21 @@
 									</div>
 									<div class="input-group mb-3">
 				                     <span class="input-group-text">비밀번호</span>
-				                        <input name="password" type="password" class="form-control" id="Password" min="10">
+				                        <input name="password" type="password" class="form-control" id="Password" min="10" oninput="this.value = this.value.replace(/[^a-zA-Z\\d`~!@#$%^&*()-_=+.]/g, '').replace(/(\..*)\./g, '$1');">
 				                    </div>
 									<p>사용자의 비밀번호는 문자종류 상관없이 10자 이상</p>
 				
 				                    <div class="input-group mb-3">
 				                      <span class="input-group-text">비밀번호 확인</span>
-				                        <input name="repassword" type="password" class="form-control" id="rePassword">
+				                        <input name="repassword" type="password" class="form-control" id="rePassword" oninput="this.value = this.value.replace(/[^a-zA-Z\\d`~!@#$%^&*()-_=+.]/g, '').replace(/(\..*)\./g, '$1');">
 				                    </div>
 				                    <div id = "aaaa"></div>
 									<div class="input-group mb-3">
 										<span class="input-group-text">닉네임</span>
-										<input type="text" class="form-control" name="nick" id="nick">
-										<p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능(한글 2자, 영문 4자 이상)</p>
-										<div id = "qqqq"></div>
+										<input type="text" class="form-control" name="nick" id="nick"  onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" >
 									</div>
+									<p>사용자의 닉네임은 공백없이 한글, 영문, 숫자만 입력 가능</p>
+									<div id = "qqqq"></div>
 									<div class="input-group mb-3">
 										<span class="input-group-text">출생년도</span>
 										<input type="date" class="form-control"
@@ -123,7 +123,7 @@
 									<div class="input-group mb-3">
 										<span class="input-group-text">전화번호</span>
 										<input type="tel" class="form-control"
-											name="phone" id="phone">
+											name="phone" id="phone" pattern="[0-9]{11}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 									</div>
 									<div class="text-lg-end">
 										<button type="button" class="btn btn btn-primary" id="registerbtn">등록</button>
@@ -175,41 +175,54 @@
 	<script src="assets/js/main.js"></script>
 	
 <script type="text/javascript">
+const nickregix = /^[가-힣a-zA-Z0-9]+$/;
   var naver_id_login = new naver_id_login("OGifRqdUtHJWY_oTLDrQ", "http://localhost:8090/WebCafe_Project/login_view.do");
   // 접근 토큰 값 출력
   //alert(naver_id_login.oauthParams.access_token);
   // 네이버 사용자 프로필 조회
   naver_id_login.get_naver_userprofile("naverSignInCallback()");
-  
-  // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-  function naverSignInCallback() {
-	  const email = naver_id_login.getProfileData('email');
-	  const name = naver_id_login.getProfileData('name');
-	  var birthday = naver_id_login.getProfileData('birthday');
-	  var birthyear = naver_id_login.getProfileData('birthyear');
-	  var mobile = naver_id_login.getProfileData('mobile');
-	  $('#email_id').val(email);
-	  $('#email_id').prop("readonly",true);
-	  $('#name').val(name);
-	  $('#name').prop("readonly",true);
-	  if(mobile != null){
-		  $('#phone').val(mobile.replace("-",""));
-		}else{
-			alert("전화번호 정보를 가져오는데 실패하였습니다");
-			$('#phone').val("010");
-		}
-	  
-	  if(birthday != null && birthyear != null){
-		  $('#date').val(birthyear + "-" + birthday);
-	  }else{
-		  alert("생년월을 정보를 가져오는데 실패하였습니다");
-		  birthday = "01-01";
-		  birthyear = "2000";
-		  $('#date').val(birthyear + "-" + birthday);
+  if(naver_id_login != null){
+	  // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+	  function naverSignInCallback() {
+		  const email = naver_id_login.getProfileData('email');
+		  const name = naver_id_login.getProfileData('name');
+		  const birthday = naver_id_login.getProfileData('birthday');
+		  const birthyear = naver_id_login.getProfileData('birthyear');
+		  const mobile = naver_id_login.getProfileData('mobile');
+		  
+		  
+		  $('#email_id').val(email);
+		  $('#email_id').prop("readonly",true);
+		  $('#name').val(name);
+		  $('#name').prop("readonly",true);
+		  if(mobile != null){
+			  $('#phone').val(mobile.replace("-",""));
+			}else{
+				alert("전화번호 정보를 가져오는데 실패하였습니다");
+				$('#phone').val("010");
+			}
+		  
+		  if(birthday != null && birthyear != null){
+			  $('#date').val(birthyear + "-" + birthday);
+		  }else{
+			  alert("생년월을 정보를 가져오는데 실패하였습니다");
+			  birthday = "01-01";
+			  birthyear = "2000";
+			  $('#date').val(birthyear + "-" + birthday);
+		  }
+		 
 	  }
-	 
-  }
+	}
+   function characterCheck(obj){
+		  var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi; 
+		  if( regExp.test(obj.value) ){
+		  	//obj.value = obj.value.substring( 0 , obj.value.length - 1 ); // 입력한 특수문자 한자리 지움
+		  	obj.value = obj.value.replace(regExp,'');
+		  	}
+	  }
+  
   $(function(){
+	 
 	  $('#nick').keyup(function(){
 			//서버처리결과받기
 			$.ajax({
@@ -266,7 +279,7 @@
 	 		  if(event.keyCode == 123)
 	 			  handled = true;
 	 		  if(handled){
-	 			  swal("특정 행위를 감지","F12키를 누르지 마십시오",'error');
+	 			 Swal.fire("특정 행위를 감지","F12키를 누르지 마십시오",'error');
 	 			  event.preventDefault();
 	 		  }
 	 	  },true);
@@ -304,13 +317,24 @@
 				registerForm.phone.focus();
 			     return false;
 			 }
-			Swal.fire({
-				title:"성공!",
-				text: "회원가입 성공",
-				type:"success"}).then(function(){
-				document.registerForm.submit();
-			});
-			
+			 const Toast = Swal.mixin({
+			      toast: true,
+			      position: 'center-center',
+			      showConfirmButton: false,
+			      timer: 300,
+			      timerProgressBar: true,
+			      didOpen: (toast) => {
+			        toast.addEventListener('mouseenter', Swal.stopTimer)
+			        toast.addEventListener('mouseleave', Swal.resumeTimer)
+			 	}
+			 });
+		     Toast.fire({
+		    	 title:"처리중!",
+				 text: "회원가입 처리합니다.",
+				 imageUrl: 'image/Rolling-1s-200px.gif',
+				 imageAlt: '로딩 image'}).then(function(){
+				 document.registerForm.submit();
+		      })
 		}
   });
 </script>

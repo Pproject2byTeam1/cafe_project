@@ -213,8 +213,24 @@
 				loginForm.password.focus();
 			     return false;
 			 }
-			document.loginForm.submit();
-			
+			const Toast = Swal.mixin({
+			      toast: true,
+			      position: 'center-center',
+			      showConfirmButton: false,
+			      timer: 300,
+			      timerProgressBar: true,
+			      didOpen: (toast) => {
+			        toast.addEventListener('mouseenter', Swal.stopTimer)
+			        toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			});
+			Toast.fire({
+				title:"처리중!",
+				text: "로그인 처리중...",
+				imageUrl: 'image/Rolling-1s-200px.gif',
+				imageAlt: '로딩 이미지'}).then(function(){
+					document.loginForm.submit();
+			});
 		}
 </script>
 </body>

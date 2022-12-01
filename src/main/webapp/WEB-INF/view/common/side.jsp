@@ -73,7 +73,7 @@
 				
 				<!-- 출석게시판 -->
 				<c:if test="${infolist.b_type eq 'b2'}">
-					<a class="nav-link " href="checkBoard.do"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
+					<a class="nav-link " href="checkBoard.do?b_code=${infolist.b_code}"> <i class="bi bi-grid"></i> <span>${infolist.b_name}</span>
 					</a>
 				</c:if> 
 				
