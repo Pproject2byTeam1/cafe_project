@@ -774,7 +774,7 @@
 			  if(event.keyCode == 123)
 				  handled = true;
 			  if(handled){
-				  swal("경고","F12키를 누르지 마십시오",'error');
+				  Swal.fire("경고","F12키를 누르지 마십시오",'error');
 				  event.preventDefault();
 			  }
 		  },true);
