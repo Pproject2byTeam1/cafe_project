@@ -138,7 +138,7 @@
 		                      	</td>
 		                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
 		                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-									<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+									<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >쪽지 보내기</a></li>
 									<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
 								</ul>
 		                      	</td>
@@ -190,7 +190,7 @@
 	                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-primary rounded-pill">${board.c_count}</span></td>
 	                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
 	                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >쪽지 보내기</a></li>
 								<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
 							</ul>
 	                      	</td>
@@ -240,7 +240,7 @@
 	                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-danger rounded-pill">${board.c_count}</span></td>
 	                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
 	                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >쪽지 보내기</a></li>
 								<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
 							</ul>
 	                      	</td>
@@ -292,7 +292,7 @@
 	                      	<td class="td1"><span class="d-none b_code">${board.b_code}</span><span class="d-none idx">${board.idx}</span>${board.title}<span class="badge bg-warning rounded-pill">${board.c_count}</span></td>
 	                      	<td><a data-bs-toggle="dropdown">${board.nick}</a>
 	                      	<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+								<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >쪽지 보내기</a></li>
 								<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
 							</ul>
 	                      	</td>
@@ -378,7 +378,7 @@
                     <div class="ps-3">
                     <a data-bs-toggle="dropdown">${chart.nick}</a><span> | ${chart.w_date}</span>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${chart.email_id}" >답장 보내기</a></li>
+						<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${chart.email_id}" >쪽지 보내기</a></li>
 						<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${chart.email_id}" >활동 내역 보기</a></li>
 					</ul>
                     </div>
