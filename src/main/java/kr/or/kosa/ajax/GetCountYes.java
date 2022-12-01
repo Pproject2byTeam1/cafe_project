@@ -2,21 +2,16 @@ package kr.or.kosa.ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
-import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.Yes_Dao;
-import kr.or.kosa.dto.User;
+import net.sf.json.JSONObject;
 
 @WebServlet("/GetCountYes")
 public class GetCountYes extends HttpServlet {
@@ -40,10 +35,13 @@ public class GetCountYes extends HttpServlet {
 		    
 		    Yes_Dao yesdao = new Yes_Dao();
 		    int row = yesdao.boardYesCount(idx);
+		    List<String> nicklist = yesdao.getYesMember(idx);
 		    
-		    msg = String.valueOf(row);
+		    JSONObject json = new JSONObject();
+		    json.put("count", row);
+		    json.put("nicklist", nicklist);
 			
-			out.print(msg);
+			out.print(json);
 			
     		
     	} catch(Exception e) {
