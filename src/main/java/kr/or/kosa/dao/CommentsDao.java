@@ -206,6 +206,7 @@ public class CommentsDao {
 	}
 
 	// 댓글 삭제
+	
 	public int userdeleteCommentByCo_idx(int co_idx, String email_id) {
 
 		Connection conn = null;
@@ -230,6 +231,8 @@ public class CommentsDao {
 			pstmt4.setString(1, email_id);
 			rs = pstmt4.executeQuery();
 			
+			System.out.println("pstmt4");
+			
 			int point = 0;
 			
 			if(rs.next()) {
@@ -238,16 +241,21 @@ public class CommentsDao {
 			
 			point -= 2;
 			
+			System.out.println("point " + point);
+			
 			//해당 유저 포인트 감소
-			String sql3 = "update member set point = nvl(point - 2, 0) where email_id=?";
+			String sql3 = "update member set point = ? where email_id=?";
 			pstmt3 = conn.prepareStatement(sql3);
-			pstmt4.setString(1, email_id);
+			pstmt3.setInt(1, point);			
+			pstmt3.setString(2, email_id);
 			row = pstmt3.executeUpdate();
+			System.out.println("pstmt3");
 			
 			//포인트 정보 가져오기
 			String sql5 = "select r_point from rank where rank >= 1";
 			pstmt5 = conn.prepareStatement(sql5);
 			rs1 = pstmt5.executeQuery();
+			System.out.println("pstmt5");
 			
 			List<Integer> pointlist = new ArrayList<Integer>();
 		
@@ -273,6 +281,7 @@ public class CommentsDao {
 			pstmt6.setInt(1, rank);
 			pstmt6.setString(2, email_id);
 			row = pstmt6.executeUpdate();
+			System.out.println("pstmt6");
 
 			//글 삭제
 
@@ -320,28 +329,88 @@ public class CommentsDao {
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
-				e2.printStackTrace();
+				System.out.println(e2.getMessage());
 			}
 		}
 
 		return row;
 	}
-
+/*
 	// 관리자, 스태프 댓글 삭제(댓글수 카운트 안됨)
 	public int deleteCommentByCo_idx(int co_idx, String email_id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt3 = null;
+		PreparedStatement pstmt4 = null;
+		PreparedStatement pstmt5 = null;
+		PreparedStatement pstmt6 = null;
 		ResultSet rs = null;
+		ResultSet rs1 = null;
+		ResultSet rs2 = null;
 		int row = 0;
 
 		try {
+			
+			conn = ds.getConnection();
+			conn.setAutoCommit(false);
+			
+			//해당 유저의 포인트 조회
+			String sql4 = "select point from member where email_id = ?";
+			pstmt4 = conn.prepareStatement(sql4);
+			pstmt4.setString(1, email_id);
+			rs2 = pstmt4.executeQuery();
+			
+			int point = 0;
+			
+			if(rs2.next()) {
+				point = rs2.getInt("point");
+			}
+			
+			point -= 2;
+			
+			//해당 유저 포인트 감소
+			String sql3 = "update member set point = ? where email_id=?";
+			pstmt3 = conn.prepareStatement(sql3);
+			pstmt3.setInt(1, point);			
+			pstmt3.setString(2, email_id);
+			row = pstmt3.executeUpdate();
+			
+			//포인트 정보 가져오기
+			String sql5 = "select r_point from rank where rank >= 1";
+			pstmt5 = conn.prepareStatement(sql5);
+			rs1 = pstmt5.executeQuery();
+			
+			List<Integer> pointlist = new ArrayList<Integer>();
+			
+			if(rs1.next()) {
+				do {
+					pointlist.add(rs1.getInt("r_point"));
+				}while(rs1.next());
+			}
+			int rank = 1;
+			for(int i=0; i<pointlist.size()-1; i++) {
+				int min = pointlist.get(i);
+				int max = pointlist.get(i+1);
+				
+				if(point < max && point >= min) {
+					rank = i+1;
+				}
+			}
+			
+			//해당 회원의 rank 수정
+			String sql6 = "update member set rank = ? where email_id = ?";
+			pstmt6 = conn.prepareStatement(sql6);
+			pstmt6.setInt(1, rank);
+			pstmt6.setString(2, email_id);
+			row = pstmt6.executeUpdate();
+
+			//글 삭제
+			
 
 			String checkadmin = "select isadmin from member where email_id=?";
 			String delAdminComment = "update comments set content = '관리자가 삭제한 댓글입니다.' where co_idx=?";
 			String delStaffComment = "update comments set content = '스탭이 삭제한 댓글입니다.' where co_idx=?";
-
-			conn = ds.getConnection();
-
+			
 			pstmt = conn.prepareStatement(checkadmin);
 			pstmt.setString(1, email_id);
 			rs = pstmt.executeQuery();
@@ -378,14 +447,19 @@ public class CommentsDao {
 		} finally {
 			try {
 				pstmt.close();
+				rs1.close();
 				rs.close();
-				conn.close();// 반환
+				pstmt5.close();
+				pstmt4.close();
+				pstmt3.close();
+				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
 		return row;
-	}
+	}*/
 
 	// 대댓글 삽입
 	public int insertReplyReply(Comments comments) {
