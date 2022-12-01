@@ -53,8 +53,7 @@
            		
        		</ul>
        </c:if>
-
-        
+</c:if>        
 
 
 		<c:if test="${member != null}">        
