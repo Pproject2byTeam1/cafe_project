@@ -325,6 +325,54 @@
   				}
   			})
           });
+  		
+  		$("#newPassword").keyup(function () {
+  	  		
+  			$.ajax({
+  				url:"userVerification.do",
+  				data:{password: $('#currentPassword').val()},
+  				type: "POST",
+  				dataType:"json",
+  				success: function(responseText){
+  					var text = responseText;
+  					if(text.toString().replace(/\s/gi, "") == "true"){
+	  					if ($("#newPassword").val() != $("#renewPassword").val() || $("#renewPassword").val().length < 10) {
+			              $("#aaaa").html("<p class='text-danger' >비밀번호가 일치하지 않거나 10자 미만입니다.</p>");
+			           	  $("#changepwd").attr("disabled",true);
+			            } else {
+			              $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
+			              $("#changepwd").removeAttr("disabled");
+			            }
+	  				}else{
+	  					$("#aaaa").html("<p class='text-danger' >비밀번호가 정확하지 않습니다.</p>");
+	  				}
+  				}
+  			})
+          });
+  		
+  		$("#currentPassword").keyup(function () {
+  	  		
+  			$.ajax({
+  				url:"userVerification.do",
+  				data:{password: $('#currentPassword').val()},
+  				type: "POST",
+  				dataType:"json",
+  				success: function(responseText){
+  					var text = responseText;
+  					if(text.toString().replace(/\s/gi, "") == "true"){
+	  					if ($("#newPassword").val() != $("#renewPassword").val() || $("#renewPassword").val().length < 10) {
+			              $("#aaaa").html("<p class='text-danger' >비밀번호가 일치하지 않거나 10자 미만입니다.</p>");
+			           	  $("#changepwd").attr("disabled",true);
+			            } else {
+			              $("#aaaa").html("<p class='text-success' >일치합니다.</p>");
+			              $("#changepwd").removeAttr("disabled");
+			            }
+	  				}else{
+	  					$("#aaaa").html("<p class='text-danger' >비밀번호가 정확하지 않습니다.</p>");
+	  				}
+  				}
+  			})
+          });
   		$('#tel').keyup(function(){
   			
   			if($('#tel').val().length != 11 || $('#tel').val() == null){

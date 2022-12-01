@@ -326,7 +326,6 @@
            
         });
         
-    	console.log(${boardinfo});
 </script>
 
 
