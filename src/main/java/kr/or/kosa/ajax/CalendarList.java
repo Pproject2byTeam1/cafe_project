@@ -31,11 +31,9 @@ public class CalendarList extends HttpServlet {
     	
     	try {  		
     		int b_code = Integer.parseInt(request.getParameter("b_code"));
-			String year = request.getParameter("year");
-			String month = request.getParameter("month");
 			
 			Board_Dao dao = new Board_Dao(); 
-			List<Calender> list = dao.getCalender_list(b_code, year, month);
+			List<Calender> list = dao.getCalender_list(b_code);
 			
 			JSONArray jsonlist = JSONArray.fromObject(list);
 			
