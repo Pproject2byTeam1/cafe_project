@@ -13,6 +13,7 @@ import kr.or.kosa.dao.Board_Info_Dao;
 import kr.or.kosa.dao.CafeBannerDao;
 import kr.or.kosa.dao.CommentsDao;
 import kr.or.kosa.dao.Img_Board_Dao;
+import kr.or.kosa.dao.UserDao;
 import kr.or.kosa.dao.Yes_Dao;
 import kr.or.kosa.dto.Board_Info;
 import kr.or.kosa.dto.CafeBanner;
@@ -51,6 +52,10 @@ public class Img_Board_Read_Service implements Action {
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("member");
 			
+			//특정 유저 단순정보 조회
+			UserDao udao = new UserDao();
+	
+			User user1 = udao.selectUserById(imgboard.getEmail_id());
 	        if(user != null) {
 	        	Yes_Dao yesdao = new Yes_Dao();
 				String yes = yesdao.getYesEmailByIdxEmail(idx , user.getEmail_id());
@@ -70,6 +75,7 @@ public class Img_Board_Read_Service implements Action {
 			request.setAttribute("imgboard", imgboard);
 			request.setAttribute("b_code", b_code);
 			request.setAttribute("infolist", infolist);
+			request.setAttribute("user1", user1);
 			
 			forward = new ActionForward();
 		  	forward.setRedirect(false);

@@ -40,7 +40,6 @@ public class getBoardList implements Action {
 			Board_Dao dao = new Board_Dao(); 
 			List<Board> board = dao.getBoardList(b_code,date,nowday);
 			
-			//JSONArray jsonlist = JSONArray.fromObject(board);
 		    request.setAttribute("board", board);
 		    request.setAttribute("b", b);
 		    System.out.println(board);

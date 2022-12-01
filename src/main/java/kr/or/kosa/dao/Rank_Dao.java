@@ -284,7 +284,7 @@ DataSource ds = null;
 		return highpoint;
 	}
 	
-	// 등급 포인트 기준 변경시 가능한 포인트 구하기
+	// 등급 포인트 기준 변경시 포인트 초과 기준 구하기
 	public int possiblePoint(int rank){
 		
 		Connection conn = null;

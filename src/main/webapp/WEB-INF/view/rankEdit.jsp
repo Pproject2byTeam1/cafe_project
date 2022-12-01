@@ -37,39 +37,29 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-		var size = Number("<c:out value='${size}'/>");
-		var list = "<c:out value='${list}'/>";
-		var max = Number("<c:out value='${maxpoint}'/>");
+		let size = Number("<c:out value='${size}'/>");
+		let list = "<c:out value='${list}'/>";
+		let max = Number("<c:out value='${maxpoint}'/>");
 		
-		function list() {
+		function ajaxlist() {
 			
 			$.ajax({
 				type: "POST",
 				url: "MarketSearch",
-				data: ,
-				dataType: "JSON",
+				dataType: "TEXT",
 				success: function(data){
 					
 					$("#ranklist").empty();
+					$("#ranklist").append(data);
 					
-					html = 
-					for(let index in data){
-						
+					let sizeajx = $(".size").val();
+					let maxajx = $(".max").val();
 					
 					}
-					
-				
-				
-					}
-					
-					
-				}
-			
+				});
 		}
 		
-		
-		
-		
+
 		$('#newRank').click(function addRank() {
 			
 			
@@ -86,47 +76,61 @@
 			size += 1;
 			max += 1;
 		
-			
 			// Cell에 텍스트 추가
 			newRow.setAttribute("class" , size);
 			newCell1.innerHTML = size;
 			
-			newCell2.innerHTML = '<input type="text" class="form-control" placeholder="${rank.r_name}" value="${rank.r_name}" id="' + size + 'name"></td>';
+			newCell2.innerHTML = '<input type="text" class="form-control" placeholder="" value="" id="' + size + 'name"></td>';
 			newCell3.innerHTML = '<input type="text" class="form-control" placeholder="' + max + '점 이상" id="' + size + 'point">';
-			newCell4.innerHTML = '<button type="button" class="editRank btn btn btn-secondary" value="edit" style="float: right">수정하기</button>';
-			list();
-			
-		});
-		
-		
-		$('#delRank').click(function delRank() {
-			
-				  // table element 찾기
-				  const table = document.getElementById('ranklist');
-				  
-				  // 행(Row) 삭제
-				  const newRow = table.deleteRow(-1);
-				  size -= 1;
-				  max -= 1;
-			
-		});
-		
-		$('.editRank').click(function(){
-			  
-			
-		    var _td = $(this).closest('tr').find('td');
-			 console.log(_td[0]);
-			 _td[0].find('td').
-			 if($(_td[0]) == "1"){
-				 
-			 }else {
-				 _td[2].innerHTML = '<input type="text" class="form-control" id="point" placeholder="${rank.r_point}">';
-			 }
-		    
-		    _td[3].innerHTML = '<button type="button" class="saveRank btn btn btn-secondary" value="save" style="float: right">저장하기</button>'; */
+			newCell4.innerHTML = '<button type="button" class="saveRank btn btn btn-success" value="edit" style="float: right">저장하기</button>';
 
+			
 		});
+		
+		$('.editRank').click(function editRank(){
+			
+			let td = $(this).closest('tr').find('td');
+			let td0 = td.eq(0).text();
+			
+			if(td0 == "1"){
+				td[1].innerHTML = '<input type="text" class="form-control" id="name"><input type="hidden" class="isReg" value="false">';
+			}else {
+				td[1].innerHTML = '<input type="text" class="form-control" id="point"><input type="hidden" class="isReg" value="false">';
+				td[2].innerHTML = '<input type="text" class="form-control" id="name"><input type="hidden" class="isReg" value="false">';
+			}
+			
+			td[3].innerHTML = '<button type="button" class="saveRank btn btn btn-success" value="save" style="float: right">저장하기</button>';
+			
+		});
+		
+		$('.delRank').click(function delRank() {
+			
+			const table = document.getElementById('ranklist');
+	    	  
+	    	  // 행(Row) 삭제
+	    	const newRow = table.deleteRow(-1);
+    	
+		    	
+	    });
+		
+		$('.saveRank').click(function saveRank(){
+			
+			$.ajax({
+				type: "POST",
+				url: "RankEdit",
+				dataType: "TEXT",
+				success: function(data){
 					
+					alert("data");
+
+					
+					ajaxlist();
+					
+					}
+				});
+			
+		});
+							
 		
 	});
 </script>
@@ -163,7 +167,7 @@
 				<div class="card-body">
 				<form onclick="" style="cursor: pointer">
 					
-					<table class="table text-center" id="ranklist">
+					<table class="table text-center" id='ranklist'>
 						<thead class="thead-light">
 							<tr>
 								<th></th>
@@ -190,10 +194,14 @@
 								<c:if test="${rank.rank>0}">
 									<tr class="${rank.rank}">
 
-										<td class="${rank.rank}">${rank.rank}</td>
-										<td><input type="text" class="form-control" id="name"
-											placeholder="${rank.r_name}" value="${rank.r_name}" readonly></td>
-											<input type="hidden" class="isReg" value="false">
+										<td class="${rank.rank}">
+										${rank.rank}
+										<input type="hidden" class="r_rank" value="${rank.rank}">
+										</td>
+										<td>
+											${rank.r_name}
+											<input type="hidden" class="r_name" value="${rank.r_name}">
+										</td>
 										<td>
 											<c:choose>
 												<c:when test="${rank.rank == 1}">
@@ -201,9 +209,8 @@
 												      </c:when>
 
 												<c:otherwise>
-													<input type="text" class="form-control" id="point"
-														placeholder="${rank.r_point}" readonly>
-														<input type="hidden" class="isReg" value="false">
+													${rank.r_point}
+													<input type="hidden" class="r_point" value="${rank.r_point}">
 												</c:otherwise>
 											</c:choose>
 										</td>
@@ -219,7 +226,7 @@
 						</tbody>
 					</table>
 					<div style="display: inline-block; margin: 0 5px;  float: right;">
-					<button type="button" class="btn btn btn-secondary"
+					<button type="button" class="btn btn btn-primary"
 										id="newRank" value="new">추가하기</button>
 					<button type="button" class="btn btn btn-danger"
 										id="delRank" value="new">삭제하기</button>

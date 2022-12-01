@@ -86,50 +86,42 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 				out.print("</tr>");
 			out.print("</thead>");
 			out.print("<tbody>");
-			
-				out.print("<c:forEach var=‘rank’ items=‘${list}’ varStatus=‘status’>");
-				
-					out.print("<c:if test=‘${rank.rank>;0}’>");
-						out.print("<tr class=‘${rank.rank}’>");
-
-							out.print("<td class=‘${rank.rank}’>“);${rank.rank}");
-							out.print("</td>");
-							out.print("<td>");
-							out.print("<input type=‘text’ class=‘form-control’ id=‘name’ placeholder=‘${rank.r_name}’ value=‘${rank.r_name}’ readonly>");
-							out.print("</td>");
-								out.print("<input type=‘hidden’ class=‘isReg’ value=‘false’>");
-							out.print("<td>");
-								out.print("<c:choose>");
-									out.print("<c:when test=‘${rank.rank == 1}’>");
-									out.print("0 점 이상");
-									      out.print("</c:when>");
-
-									out.print("<c:otherwise>");
-										out.print("<input type=‘text’ class=‘form-control’ id=‘point’");
-											out.print("placeholder=‘${rank.r_point}’ readonly>");
-											out.print("<input type=‘hidden’ class=‘isReg’ value=‘false’>");
-									out.print("</c:otherwise>");
-								out.print("</c:choose>");
-							out.print("</td>");
-							out.print("<td>");				
-							out.print("<input type=‘button’ class=‘editRank btn btn btn-secondary’ value=‘수정하기’ style=‘float: right’>");
-							out.print("</td>");
-
-						out.print("</tr>");
-					out.print("</c:if>");
-				out.print("</c:forEach>");
-						
+				for(Rank rank : list) {
+					
+				if(rank.getRank()>0) {
+					out.print("<tr class='" + rank.getRank() + "'>");
+					
+						out.print("<td class='" + rank.getRank() + "'>" + rank.getRank() + ""); 
+						out.print("<input type=‘hidden’ class=‘r_rank’ value=‘" + rank.getRank() + "’>");
+						out.print("</td>");
+						out.print("<td>");
+							out.print(rank.getR_name());
+							out.print("<input type=‘hidden’ class=‘r_name’ value=‘" + rank.getR_name() + "’>");
+						out.print("</td>");
+							
+					out.print("<td>");
+					
+						if(rank.getRank() == '1') {
+							out.print("0 점 이상");
+						}else {
+							out.print(rank.getR_point());
+							out.print("<input type=‘hidden’ class=‘r_point’ value=‘" + rank.getR_point() + "’>");
+							
+						}
+					out.print("</td>");
+					out.print("<td>");
+					out.print("<input type=‘button’ class=‘editRank btn btn btn-secondary’ value=‘수정하기’ style=‘float: right’>");
+					out.print("</td>");
+					
+				out.print("</tr>");
+					}
+					
+				}
 			out.print("</tbody>");
 		out.print("</table>");
-
-			
-			JSONObject json = new JSONObject();
-			json.put("list", list);
-			json.put("size", size);
-			json.put("max", max);
-			
-			out.print(json);
-			
+		out.print("<input type=‘hidden’ class=‘max’ value=‘" + max + "’>");
+		out.print("<input type=‘hidden’ class=‘size’ value=‘" + size + "’>");
+					
     	} catch(Exception e) {
     		System.out.println(e.getMessage());
     	}
