@@ -274,12 +274,12 @@
   	
 
 		<div class="pagetitle">
-			<h1>IMG BOARD</h1>
+			<h1>${boardinfo.b_name}</h1>
 			<!-- 게시판 이름 끌고오기 b_name -->
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
-					<li class="breadcrumb-item"><a href="img_board_list.do?b_code=${b_code}">이미지게시판</a></li>
+					<li class="breadcrumb-item"><a href="img_board_list.do?b_code=${b_code}">${boardinfo.b_name}</a></li>
 					<li class="breadcrumb-item active">${imgboard.title}</li>
 				</ol>
 			</nav>
@@ -311,7 +311,7 @@
 											작성자: <img src="./image/rank_icon/${user1.rank}.gif" style="object-fit: none; width: 24px">${imgboard.nick}
 											</a>
 											<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-												<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${user1.email_id}" >답장 보내기</a></li>
+												<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${user1.email_id}" >쪽지 보내기</a></li>
 												<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${user1.email_id}" >활동 내역 보기</a></li>
 											</ul>
 										</div>

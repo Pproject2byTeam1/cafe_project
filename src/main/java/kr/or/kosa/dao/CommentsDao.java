@@ -138,8 +138,9 @@ public class CommentsDao {
 			String sql3 = "update member set point = nvl(point + 2, 0) where email_id=?";
 			pstmt3 = conn.prepareStatement(sql3);
 			pstmt3.setString(1, comments.getEmail_id());
+			
 			row = pstmt3.executeUpdate();
-
+			
 			// 포인트 정보 가져오기
 			String sql5 = "select r_point from rank where rank >= 1";
 			pstmt5 = conn.prepareStatement(sql5);

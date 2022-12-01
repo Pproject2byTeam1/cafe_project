@@ -314,7 +314,7 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
-					<li class="breadcrumb-item"><a href="databoard_list.do?b_code=${board.b_code}">자료게시판</a></li>
+					<li class="breadcrumb-item"><a href="databoard_list.do?b_code=${b_code}">자료게시판</a></li>
 					<li class="breadcrumb-item active">${board.title}</li>
 				</ol>
 			</nav>

@@ -326,7 +326,6 @@
            
         });
         
-        
 </script>
 
 
@@ -349,17 +348,16 @@
 
    <main id="main" class="main">
       <div class="pagetitle">
-               <h1>자유 게시판</h1>
+               <h1>${boardinfo.b_name}</h1>
                <!-- 게시판 이름 끌고오기 b_name -->
                <nav>
                   <ol class="breadcrumb">
                   	 <li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
-                     <li class="breadcrumb-item"><a href="regular_list.do?b_code=1">자유게시판</a></li>
+                     <li class="breadcrumb-item"><a href="regular_list.do?b_code=${board.b_code }">${boardinfo.b_name}</a></li>
                      <li class="breadcrumb-item active">${board.title}</li>
                   </ol>
                </nav>
             </div>
-
 
       <div class="container-fluid">
          <div class="row">
@@ -383,7 +381,7 @@
                                     <div class="col-md-5">
                                        <img src="./image/rank_icon/${user.rank}.gif"><a data-bs-toggle="dropdown">${board.nick}</a>
 										<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-											<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >답장 보내기</a></li>
+											<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${board.email_id}" >쪽지 보내기</a></li>
 											<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${board.email_id}" >활동 내역 보기</a></li>
 										</ul>
                                     </div>

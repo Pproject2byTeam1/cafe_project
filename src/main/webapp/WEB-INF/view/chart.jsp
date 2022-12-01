@@ -270,8 +270,6 @@
 			let MBVmonth = []; 
 			let MBVcount = [];
 		
-			
-			
 			$("#MBVmonth").change(monthBoardView);
 			
 						/* 함수시작 */

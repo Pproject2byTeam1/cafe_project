@@ -148,7 +148,7 @@
 	              <div class="col-sm-2">
 	            	  <a data-bs-toggle="dropdown"><h5 class="card-title"><img src="image/rank_icon/${list.hits}.gif" alt="랭크 아이콘">${list.nick}</h5></a>
 	            	  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${list.email_id}" >답장 보내기</a></li>
+							<li class="anw_memo"><a class="dropdown-item sendToMemo" href="write_memo.do?sender_id=${list.email_id}" >쪽지 보내기</a></li>
 							<li class="view_user_activity"><a class="dropdown-item viewActivity" href="user_activity.do?email_id=${list.email_id}" >활동 내역 보기</a></li>
 						</ul>
 	              </div>

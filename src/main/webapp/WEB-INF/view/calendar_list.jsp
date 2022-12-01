@@ -668,13 +668,13 @@
   			<div class="park-card-body">
   			
 				<div class="pagetitle">
-					<h1>Calendar</h1>
+					<h1>${parkname}</h1>
 					<!-- 게시판 이름 끌고오기 b_name -->
 					<nav>
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
 							<c:forEach var="boardinfo" items="infolist">
-								<li class="breadcrumb-item active">Calendar</li>
+								<li class="breadcrumb-item active">${parkname}</li>
 							</c:forEach>
 						</ol>
 					</nav>
