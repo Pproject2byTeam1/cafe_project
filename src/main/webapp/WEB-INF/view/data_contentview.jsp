@@ -314,7 +314,7 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="cafemain.do">Home</a></li>
-					<li class="breadcrumb-item"><a href="databoard_list.do?b_code=6">자료게시판</a></li>
+					<li class="breadcrumb-item"><a href="databoard_list.do?b_code=${board.b_code}">자료게시판</a></li>
 					<li class="breadcrumb-item active">${board.title}</li>
 				</ol>
 			</nav>
@@ -480,7 +480,7 @@
 												id="replyWrite" value="답글"> &nbsp; <input
 												type="button"
 												class="btn btn-outline-secondary btn-sm rounded-pill"
-												onClick="location.href='databoard_list.do?b_code=6'" value="목록"> &nbsp;
+												onClick="location.href='databoard_list.do?b_code=${board.b_code}'" value="목록"> &nbsp;
 										
 										</div>
 									</div>

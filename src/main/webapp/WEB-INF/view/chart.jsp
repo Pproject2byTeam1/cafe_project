@@ -240,7 +240,7 @@
   		                      },
   		                    yaxis: {
   			                      title: {
-  			                        text: 'view'
+  			                        text: 'write'
   			                      }
   		                    },
   		                    fill: {
@@ -356,7 +356,7 @@
 
         
 
-        <div class="col-lg-12">
+        <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
             	<div class="row">
@@ -384,7 +384,7 @@
         </div>
 
       
-      	<div class="col-lg-12">
+      	<div class="col-lg-6">
           <div class="card">
             <div class="card-body">
               <div class="row">
@@ -394,7 +394,7 @@
             		<div class="col-md-5 d-flex justify-content-end align-items-center">
             			<select id="MBWmonth" class="form-select">
             				<c:forEach var="boardlist" items="${boardlist}">
-            					<option value="${boardlist.b_code}">${boardlist.b_name}</option>
+            					<option value="${boardlist.b_code}" >${boardlist.b_name}</option>
             				</c:forEach>
 						</select>
             		</div>
