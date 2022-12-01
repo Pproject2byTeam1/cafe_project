@@ -64,10 +64,15 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	    						out.print("<input id='idx' value='" + reply.getIdx() + "' type='hidden' />");
 	    						out.print("<input id='depth' value='" + reply.getDepth() + "' type='hidden' />");
 	    						out.print("<input id='step' value='" + reply.getStep() + "' type='hidden' />");
-	    						out.print("<button type='button' id='replyreplywrite' class='btn btn-outline-secondary btn-sm rounded-pill'>대댓글</button>");
-	    						out.print("<c:if test='${member.email_id eq comments.email_id }'>");
-	    							out.print("<button type='button' id='replydel' class='btn btn-outline-secondary btn-sm rounded-pill'>삭제</button>");
-	    						out.print("</c:if>");
+	    						
+			    						if (user != null) {
+			    							out.print("<button type='button' id='replyreplywrite' class='btn btn-outline-secondary btn-sm rounded-pill'>대댓글</button>");
+				    						if(user.getEmail_id().equals(reply.getEmail_id())) {
+				    							out.print("<button type='button' id='replydel' class='btn btn-outline-secondary btn-sm rounded-pill'>삭제</button>");
+				    						}
+				    						
+										}
+			    								
 	    					out.print("</div>");
 	    				out.print("</div>");
 	    			out.print("</div>");
@@ -84,11 +89,13 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 	    				out.print("</div>");
 	    				out.print("<h6 class='Recomment-text'>"+reply.getContent()+"</h6>");
 	    				out.print("<h6></h6>");
+	    				if (user != null) {
 	    				out.print("<div align='right' class='actions'>");
-	    					if(user.getEmail_id().equals(reply.getEmail_id())) {
 	    						out.print("<input id='co_idx2' value='" + reply.getCo_idx() + "' type='hidden' />");
+	    						if(user.getEmail_id().equals(reply.getEmail_id())) {
 	    						out.print("<button type='button' id='replydel2' class='btn btn-outline-secondary btn-sm rounded-pill'>삭제</button>");
-	    					}	
+	    						}
+	    					}
 	    				out.print("</div>");
 	    			out.print("</div>");
     			}

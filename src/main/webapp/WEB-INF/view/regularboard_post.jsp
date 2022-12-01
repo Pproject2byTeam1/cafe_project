@@ -162,8 +162,6 @@
            $("#replyWrite").click(function(){
             
                 let link = "/WebCafe_Project/regular_reWriteView.do?refer="+refer+"&b_code="+b_code+"&depth="+depth+"&step="+step+"&idx="+idx;
-                
-              
               location.href=link;
               
            });
@@ -313,6 +311,18 @@
               location.href=link;
               
            });
+		   	
+		   	
+           /* 목록 */
+           $("#back").click(function(){
+            
+                let link = "/WebCafe_Project/regular_list.do?b_code="+b_code;
+              
+              location.href=link;
+              
+           });
+           
+           list();
            
         });
         
@@ -431,7 +441,7 @@
                                         </div>
                                     	
 	                                   		<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="replyWrite" value="답글"> &nbsp;
-                                   			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onClick="history.go(-1)" value="목록"> &nbsp;
+                                   			<input type="button" class="btn btn-outline-secondary btn-sm rounded-pill" id="back" value="목록"> &nbsp;
                                    			
                                     </div>
                               </div>
@@ -492,59 +502,7 @@
 										<!-- 댓글 목록 카드 섹션 시작 -->
 			
 										<div class="ccard" id="reply">
-											<c:forEach var="comments" items="${comments}">
-												<c:if test="${comments.depth <= 0}">
-													<div class="comment-card">
-														<div class="comment-box">
-															<div class="row">
-																<div class="col">
-																	<h5 class="card-title" id='replynick'>
-																		${comments.nick}
-																	</h5>
-																</div>
-																<div id='replydate' class="col comment-date">${comments.w_date}</div>
-															</div>
-															<h6 class="card-text" id='replycontent'>${comments.content}</h6>
-															<h6></h6>
-			
-															<div align="right" class="actions">
-																<input id="co_idx" value="${comments.co_idx}" type="hidden" />
-																<input id="idx" value="${comments.idx}" type="hidden" /> <input
-																	id="depth" value="${comments.depth}" type="hidden" /> <input
-																	id="step" value="${comments.step}" type="hidden" />
-																<button type="button" id='replyreplywrite'
-																	class="btn btn-outline-secondary btn-sm rounded-pill">대댓글</button>
-																<c:if test='${member.email_id eq comments.email_id} || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
-																	<button type="button" id="replydel"
-																		class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-																</c:if>
-															</div>
-														</div>
-													</div>
-												</c:if>
-												<c:if test="${comments.depth > 0}">
-													<div class="Recomment-box">
-														<div class="row">
-															<div class="col">
-																<h5 class="card-title">
-																	<i class="bi bi-arrow-return-right"></i>${comments.nick}
-																</h5>
-															</div>
-															<div class="col comment-date">${comments.w_date}</div>
-														</div>
-														<h6 class="Recomment-text">${comments.content}</h6>
-														<h6></h6>
-
-														<div align="right" class="actions">
-														<c:if test='${member.email_id eq comments.email_id } || ${member.isAdmin == "M"} || ${member.isAdmin == "S"}'>
-															<input id="co_idx2" value="${comments.co_idx}" type="hidden" />
-															<button type="button" id="replydel2"
-																class="btn btn-outline-secondary btn-sm rounded-pill">삭제</button>
-														</c:if>
-														</div>
-													</div>
-												</c:if>
-											</c:forEach>
+											
 			
 											<!-- 댓글 목록 카드 섹션 끝 -->
 			
