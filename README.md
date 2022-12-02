@@ -34,4 +34,13 @@
 <img width="1030" alt="DTO 영문 final" src="https://user-images.githubusercontent.com/80095068/205228157-b0bf9337-418e-4e14-9047-8e24edda41e5.PNG">
 
 ---------------------------------------
+### ER모델링 영문버전
 
+<img width="976" alt="ER모델링 영문버전" src="https://user-images.githubusercontent.com/80095068/205229044-f5f62cb7-1d19-4a6d-b2a5-a2173a78f74f.png">
+
+---------------------------------------
+### 사전 체크리스트
+
+![image](https://user-images.githubusercontent.com/80095068/205233221-fa939c0d-d3ad-496a-8717-7e1c070cf591.png)
+
+---------------------------------------
