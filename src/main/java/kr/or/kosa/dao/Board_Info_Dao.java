@@ -438,7 +438,7 @@ public class Board_Info_Dao {
 					+ "from Board_Info i left join board_type t\r\n"
 					+ "on i.b_type = t.b_type\r\n"
 					+ "where main_idx > 0\r\n"
-					+ "order by b_code ";
+					+ "order by main_idx ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
