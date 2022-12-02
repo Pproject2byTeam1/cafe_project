@@ -97,7 +97,7 @@ public class CafeMain implements Action {
 			//랭크차트
 			ChartDao chartdao = new ChartDao();
 			
-			List<Chart> rankchart = chartdao.getTopRankpoint(BeforeMonthday, nowday, 5);
+			List<Chart> rankchart = chartdao.getTopRankpoint(BeforeMonthday, days2, 5);
 			request.setAttribute("board1info", info.get(0));
 			request.setAttribute("board1", board1);
 			request.setAttribute("board2info", info.get(1));

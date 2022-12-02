@@ -29,7 +29,8 @@ public class getBoardList implements Action {
 			
 			String date = request.getParameter("date");
 			int b_code = Integer.parseInt(request.getParameter("b_code"));
-			int b = info.get(b_code-1).getMain_idx();
+			int index = Integer.parseInt(request.getParameter("index"));
+			
 			//날짜계산 준비
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date nowdate =  new Date();
@@ -52,7 +53,7 @@ public class getBoardList implements Action {
 			List<Board> board = dao.getBoardList(b_code,date,aftereday);
 			
 		    request.setAttribute("board", board);
-		    request.setAttribute("b", b);
+		    request.setAttribute("b", index);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

@@ -97,10 +97,20 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="userinfo.do">
+            <c:choose>
+            <c:when test="${member.isAdmin eq 'S' || member.isAdmin eq 'M'}">
+              <a class="dropdown-item d-flex align-items-center" href="adminInfo.do">
+                <i class="bi bi-gear"></i>
+                <span>관리자 정보</span>
+              </a>
+            </c:when>
+            <c:otherwise>
+            <a class="dropdown-item d-flex align-items-center" href="userinfo.do">
                 <i class="bi bi-gear"></i>
                 <span>나의 정보</span>
               </a>
+            </c:otherwise>
+            </c:choose>
             </li>
             <li>
               <hr class="dropdown-divider">
