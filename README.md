@@ -29,6 +29,7 @@
 - GitKraken
 
 ---------------------------------------
+### 클래스 다이어그램
 
 <img width="1030" alt="DTO 영문 final" src="https://user-images.githubusercontent.com/80095068/205228157-b0bf9337-418e-4e14-9047-8e24edda41e5.PNG">
 
