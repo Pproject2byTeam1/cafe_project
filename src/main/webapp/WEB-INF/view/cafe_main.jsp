@@ -106,7 +106,7 @@
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
+                      <h6>Filter</h6><span class="d-none index">1</span>
                     </li>
                     <li><a class="dropdown-item">Today</a><span class="d-none b_code">${board1info.b_code}</span><span class="d-none date">${Beforeday}</span></li>
                     <li><a class="dropdown-item">This Month</a><span class="d-none b_code">${board1info.b_code}</span><span class="d-none date">${BeforeMonth}</span></li>
@@ -165,7 +165,7 @@
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
+                      <h6>Filter</h6><span class="d-none index">2</span>
                     </li>
                     <li><a class="dropdown-item">Today</a><span class="d-none b_code">${board2info.b_code}</span><span class="d-none date">${Beforeday}</span></li>
                     <li><a class="dropdown-item">This Month</a><span class="d-none b_code">${board2info.b_code}</span><span class="d-none date">${BeforeMonth}</span></li>
@@ -215,7 +215,7 @@
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
+                      <h6>Filter</h6><span class="d-none index">3</span>
                     </li>
                     <li><a class="dropdown-item">Today</a><span class="d-none b_code">${board3info.b_code}</span><span class="d-none date">${Beforeday}</span></li>
                     <li><a class="dropdown-item">This Month</a><span class="d-none b_code">${board3info.b_code}</span><span class="d-none date">${BeforeMonth}</span></li>
@@ -265,7 +265,7 @@
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
+                      <h6>Filter</h6><span class="d-none index">4</span>
                     </li>
                     <li><a class="dropdown-item">Today</a><span class="d-none b_code">${board4info.b_code}</span><span class="d-none date">${Beforeday}</span></li>
                     <li><a class="dropdown-item">This Month</a><span class="d-none b_code">${board4info.b_code}</span><span class="d-none date">${BeforeMonth}</span></li>
@@ -525,11 +525,14 @@
   			const b_code = $(this).parents().children('.b_code').text();
   			const date = $(this).parents().children('.date').text();
   			const loc = $(this).parents().parents().parents().parents().children('.card-body').children('.ps-3').children('.table').children('.board');
+  			const index = $(this).parents().parents().children('.text-start').children('.index').text();
+  			
   			$.ajax({
   				url:"getBoardList.do",
   				data:{
   					"b_code": b_code,
-  					"date":date},
+  					"date":date,
+  					"index":index},
   				type: "POST",
   				dataType:"html",
   				success: function(responseText){
