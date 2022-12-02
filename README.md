@@ -1,3 +1,5 @@
+<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=카페in중독&fontSize=90" />
+
 # KOSA 교육과정의 2차 프로젝트입니다.
 
 
@@ -9,7 +11,7 @@
 ## 📍 기술스택
 
 ### 언어
-- Java (1.8)  <img src="https://img.shields.io/badge/JavaScript-#F7DF1E?style=flat&logo=JavaScript&logoColor=white"/>
+- Java (1.8) 
 - Javascript (ES6+)
 - Jquery (3.6.1)
 
