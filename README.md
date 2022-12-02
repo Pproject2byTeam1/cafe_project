@@ -11,9 +11,10 @@
 ## 📍 기술스택
 
 ### 언어
-- Java (1.8)  
+- Java (1.8) <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">
 - Javascript (ES6+) ![JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=black)
 - Jquery (3.6.1) ![jQuery](https://img.shields.io/badge/jQuery-#0769AD?style=flat-square&logo=jQuery&logoColor=black)
+- Oracle <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white">
 
 ### 서버
 - Apache Tomcat (9.0)
