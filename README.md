@@ -28,3 +28,9 @@
 - Git & Github ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=Git&logoColor=black)
 - GitKraken
 
+---------------------------------------
+
+<img width="1030" alt="DTO 영문 final" src="https://user-images.githubusercontent.com/80095068/205228157-b0bf9337-418e-4e14-9047-8e24edda41e5.PNG">
+
+---------------------------------------
+
