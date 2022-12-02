@@ -9,7 +9,7 @@
 ## 📍 기술스택
 
 ### 언어
-- Java (1.8)
+- Java (1.8)  <img src="https://img.shields.io/badge/JavaScript-#F7DF1E?style=flat&logo=JavaScript&logoColor=white"/>
 - Javascript (ES6+)
 - Jquery (3.6.1)
 
